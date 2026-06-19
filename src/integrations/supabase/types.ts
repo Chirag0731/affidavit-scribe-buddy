@@ -14,7 +14,119 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      affidavits: {
+        Row: {
+          client_name: string
+          created_at: string
+          form_data: Json
+          generated_content: string
+          id: string
+          matter_reference: string | null
+          status: string
+          template_id: string | null
+          template_name: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          client_name: string
+          created_at?: string
+          form_data?: Json
+          generated_content?: string
+          id?: string
+          matter_reference?: string | null
+          status?: string
+          template_id?: string | null
+          template_name?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          client_name?: string
+          created_at?: string
+          form_data?: Json
+          generated_content?: string
+          id?: string
+          matter_reference?: string | null
+          status?: string
+          template_id?: string | null
+          template_name?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "affidavits_template_id_fkey"
+            columns: ["template_id"]
+            isOneToOne: false
+            referencedRelation: "templates"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          firm_name: string | null
+          full_name: string | null
+          id: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          firm_name?: string | null
+          full_name?: string | null
+          id: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          firm_name?: string | null
+          full_name?: string | null
+          id?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      templates: {
+        Row: {
+          body_template: string
+          category: string
+          created_at: string
+          description: string | null
+          id: string
+          is_active: boolean
+          merge_fields: Json
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          body_template: string
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          merge_fields?: Json
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          body_template?: string
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          is_active?: boolean
+          merge_fields?: Json
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
