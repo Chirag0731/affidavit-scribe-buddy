@@ -1,0 +1,98 @@
+import { useState } from "react";
+import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
+import { useQueryClient } from "@tanstack/react-query";
+import { FileText, Save, Settings, LogOut, Menu, X, ChevronRight } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+
+const navItems = [
+  { icon: FileText, label: "New Affidavit", to: "/dashboard" as const, exact: true },
+  { icon: Save, label: "Saved Affidavits", to: "/dashboard/saved" as const },
+  { icon: Settings, label: "Settings", to: "/dashboard/settings" as const },
+];
+
+export function DashboardSidebar() {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const handleLogout = async () => {
+    setLoading(true);
+    await queryClient.cancelQueries();
+    queryClient.clear();
+    await supabase.auth.signOut();
+    navigate({ to: "/auth", replace: true });
+  };
+
+  const isActive = (href: string, exact = false) =>
+    exact ? pathname === href : pathname.startsWith(href);
+
+  return (
+    <>
+      <div className="lg:hidden fixed top-0 right-0 z-50 p-4">
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="p-2 rounded-lg border border-gray-200 bg-white hover:bg-gray-50"
+        >
+          {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+        </button>
+      </div>
+
+      {mobileOpen && (
+        <div className="fixed inset-0 bg-black/50 z-30 lg:hidden" onClick={() => setMobileOpen(false)} />
+      )}
+
+      <aside
+        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 transform transition-transform lg:transform-none ${
+          mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+        }`}
+      >
+        <div className="h-full flex flex-col">
+          <div className="p-6 border-b border-gray-200">
+            <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-smooth">
+              <div className="w-8 h-8 bg-black rounded flex items-center justify-center">
+                <span className="text-gold font-serif font-bold text-sm">N</span>
+              </div>
+              <span className="font-serif font-bold text-gray-900">Neptora</span>
+            </Link>
+          </div>
+
+          <nav className="flex-1 px-4 py-6 space-y-1">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const active = isActive(item.to, item.exact);
+              return (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  onClick={() => setMobileOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-smooth ${
+                    active ? "bg-black text-white" : "text-gray-700 hover:bg-gray-100"
+                  }`}
+                >
+                  <Icon className="w-5 h-5" />
+                  <span className="font-medium flex-1">{item.label}</span>
+                  {active && <ChevronRight className="w-4 h-4" />}
+                </Link>
+              );
+            })}
+          </nav>
+
+          <div className="p-4 border-t border-gray-200">
+            <button
+              onClick={handleLogout}
+              disabled={loading}
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-smooth font-medium disabled:opacity-50"
+            >
+              <LogOut className="w-5 h-5" />
+              {loading ? "Signing out..." : "Sign Out"}
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <div className="lg:hidden h-16" />
+    </>
+  );
+}
