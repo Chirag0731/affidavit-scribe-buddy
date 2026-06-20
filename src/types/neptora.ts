@@ -166,12 +166,13 @@ export interface Deponent {
 }
 
 export interface AffidavitDoc {
-  title: string;              // "AFFIDAVIT OF MARRIAGE"
-  prettyDate: string;         // "May 7th, 2026"
-  dayOfMonth: string;         // "7th day of May 2026"
-  city: string;               // "Brampton"
-  deponents: Deponent[];      // 1 or 2
-  facts: string[];            // numbered facts (already merged)
+  title: string;
+  prettyDate: string;
+  dayOfMonth: string;
+  city: string;
+  deponents: Deponent[];
+  facts: string[];
+  layout: TemplateLayout;
 }
 
 /** Build the structured affidavit doc from a template + form values. */
@@ -207,6 +208,7 @@ export function buildAffidavitDoc(
     city: (data.city || "").trim(),
     deponents,
     facts,
+    layout: withLayoutDefaults(template.layout),
   };
 }
 
