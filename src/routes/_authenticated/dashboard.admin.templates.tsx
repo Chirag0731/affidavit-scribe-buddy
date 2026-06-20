@@ -58,6 +58,7 @@ function AdminTemplatesPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [editing, setEditing] = useState<EditableTemplate | null>(null);
+  const [editTab, setEditTab] = useState<"content" | "layout">("content");
   const [saving, setSaving] = useState(false);
   const [extracting, setExtracting] = useState(false);
 
