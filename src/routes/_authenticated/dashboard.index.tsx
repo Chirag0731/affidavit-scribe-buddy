@@ -1,13 +1,24 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
-  ChevronRight, FileText, Loader2, AlertCircle, CheckCircle, Download, ArrowLeft,
+  ChevronRight,
+  FileText,
+  Loader2,
+  AlertCircle,
+  CheckCircle,
+  Download,
+  ArrowLeft,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import {
-  type Template, type MergeField, renderTemplate, downloadText,
+  type Template,
+  type MergeField,
+  renderTemplate,
+  safeFilename,
 } from "@/types/neptora";
+import { generateDocx, generatePdf } from "@/lib/doc-generator";
+import { uploadAffidavitFile, downloadStorageFile } from "@/lib/storage";
 
 export const Route = createFileRoute("/_authenticated/dashboard/")({
   component: NewAffidavitPage,
@@ -27,8 +38,12 @@ function NewAffidavitPage() {
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState("");
   const [generatedContent, setGeneratedContent] = useState("");
+  const [docxPath, setDocxPath] = useState<string | null>(null);
+  const [pdfPath, setPdfPath] = useState<string | null>(null);
 
-  useEffect(() => { fetchTemplates(); }, []);
+  useEffect(() => {
+    fetchTemplates();
+  }, []);
 
   const fetchTemplates = async () => {
     try {
@@ -68,7 +83,10 @@ function NewAffidavitPage() {
       setError(`Please fill in required fields: ${missing.map((f) => f.label).join(", ")}`);
       return;
     }
-    if (!clientName.trim()) { setError("Client name is required"); return; }
+    if (!clientName.trim()) {
+      setError("Client name is required");
+      return;
+    }
 
     setError("");
     setGenerating(true);
@@ -76,8 +94,23 @@ function NewAffidavitPage() {
       const content = renderTemplate(selectedTemplate.body_template, formData);
       setGeneratedContent(content);
 
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
       if (!user) throw new Error("Not authenticated");
+
+      // Generate DOCX + PDF and upload to Cloud Storage
+      const base = `${safeFilename(clientName)}-${Date.now()}`;
+      const [docxBlob, pdfBlob] = await Promise.all([
+        generateDocx(content),
+        generatePdf(content),
+      ]);
+      const [uploadedDocx, uploadedPdf] = await Promise.all([
+        uploadAffidavitFile(user.id, `${base}.docx`, docxBlob),
+        uploadAffidavitFile(user.id, `${base}.pdf`, pdfBlob),
+      ]);
+      setDocxPath(uploadedDocx);
+      setPdfPath(uploadedPdf);
 
       const { error: insertErr } = await supabase
         .from("affidavits" as never)
@@ -89,6 +122,8 @@ function NewAffidavitPage() {
           matter_reference: matterReference || null,
           form_data: formData,
           generated_content: content,
+          docx_path: uploadedDocx,
+          pdf_path: uploadedPdf,
           status: "generated",
         } as never);
       if (insertErr) throw insertErr;
@@ -110,6 +145,8 @@ function NewAffidavitPage() {
     setMatterReference("");
     setError("");
     setGeneratedContent("");
+    setDocxPath(null);
+    setPdfPath(null);
   };
 
   if (step === "template-selection") {
@@ -151,7 +188,9 @@ function NewAffidavitPage() {
                   <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gold transition-smooth" />
                 </div>
                 <h3 className="font-semibold text-gray-900 mb-2">{template.name}</h3>
-                {template.description && <p className="text-sm text-gray-600 mb-4">{template.description}</p>}
+                {template.description && (
+                  <p className="text-sm text-gray-600 mb-4">{template.description}</p>
+                )}
                 <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
                   {template.merge_fields.length} fields
                 </span>
@@ -174,7 +213,10 @@ function NewAffidavitPage() {
             <ArrowLeft className="w-4 h-4" /> Back to Templates
           </button>
           <h1 className="section-heading mb-2">{selectedTemplate.name}</h1>
-          <p className="text-gray-600">Fill in the information below to generate your affidavit.</p>
+          <p className="text-gray-600">
+            Fill in the information below. The legal wording is fixed — only these variables are
+            replaced.
+          </p>
         </div>
 
         {error && (
@@ -185,42 +227,67 @@ function NewAffidavitPage() {
         )}
 
         <form
-          onSubmit={(e) => { e.preventDefault(); handleGenerate(); }}
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleGenerate();
+          }}
           className="bg-white border border-gray-200 rounded-lg p-8 space-y-8"
         >
           <div>
-            <h3 className="font-semibold text-gray-900 mb-4 pb-3 border-b border-gray-200">Basic Information</h3>
+            <h3 className="font-semibold text-gray-900 mb-4 pb-3 border-b border-gray-200">
+              Basic Information
+            </h3>
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Client Name *</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  Client Name *
+                </label>
                 <input
-                  type="text" value={clientName} onChange={(e) => setClientName(e.target.value)}
-                  placeholder="Full name" required className="input-base" disabled={generating}
+                  type="text"
+                  value={clientName}
+                  onChange={(e) => setClientName(e.target.value)}
+                  placeholder="Full name (used for the saved file name)"
+                  required
+                  className="input-base"
+                  disabled={generating}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Matter Reference</label>
+                <label className="block text-sm font-medium text-gray-900 mb-2">
+                  Matter Reference
+                </label>
                 <input
-                  type="text" value={matterReference} onChange={(e) => setMatterReference(e.target.value)}
-                  placeholder="e.g., John Doe vs Jane Smith" className="input-base" disabled={generating}
+                  type="text"
+                  value={matterReference}
+                  onChange={(e) => setMatterReference(e.target.value)}
+                  placeholder="e.g., OSAP 2026"
+                  className="input-base"
+                  disabled={generating}
                 />
               </div>
             </div>
           </div>
 
           <div>
-            <h3 className="font-semibold text-gray-900 mb-4 pb-3 border-b border-gray-200">Affidavit Details</h3>
+            <h3 className="font-semibold text-gray-900 mb-4 pb-3 border-b border-gray-200">
+              Merge Variables
+            </h3>
             <div className="grid md:grid-cols-2 gap-6">
               {selectedTemplate.merge_fields.map((field: MergeField) => (
-                <div key={field.key} className={field.type === "textarea" ? "md:col-span-2" : ""}>
+                <div
+                  key={field.key}
+                  className={field.type === "textarea" ? "md:col-span-2" : ""}
+                >
                   <label className="block text-sm font-medium text-gray-900 mb-2">
-                    {field.label}{field.required && " *"}
+                    {field.label}
+                    {field.required && " *"}
                   </label>
                   {field.type === "textarea" ? (
                     <textarea
                       value={formData[field.key] || ""}
                       onChange={(e) => handleFormChange(field.key, e.target.value)}
                       required={field.required}
+                      placeholder={field.placeholder}
                       rows={4}
                       className="input-base"
                       disabled={generating}
@@ -234,7 +301,11 @@ function NewAffidavitPage() {
                       disabled={generating}
                     >
                       <option value="">Select an option</option>
-                      {field.options?.map((opt) => <option key={opt} value={opt}>{opt}</option>)}
+                      {field.options?.map((opt) => (
+                        <option key={opt} value={opt}>
+                          {opt}
+                        </option>
+                      ))}
                     </select>
                   ) : (
                     <input
@@ -242,6 +313,7 @@ function NewAffidavitPage() {
                       value={formData[field.key] || ""}
                       onChange={(e) => handleFormChange(field.key, e.target.value)}
                       required={field.required}
+                      placeholder={field.placeholder}
                       className="input-base"
                       disabled={generating}
                     />
@@ -252,11 +324,20 @@ function NewAffidavitPage() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
-            <button type="submit" disabled={generating} className="btn-primary flex items-center gap-2">
+            <button
+              type="submit"
+              disabled={generating}
+              className="btn-primary flex items-center gap-2"
+            >
               {generating && <Loader2 className="w-4 h-4 animate-spin" />}
-              {generating ? "Generating..." : "Generate Affidavit"}
+              {generating ? "Generating DOCX & PDF..." : "Generate Affidavit"}
             </button>
-            <button type="button" onClick={() => setStep("template-selection")} className="btn-secondary" disabled={generating}>
+            <button
+              type="button"
+              onClick={() => setStep("template-selection")}
+              className="btn-secondary"
+              disabled={generating}
+            >
               Cancel
             </button>
           </div>
@@ -266,13 +347,16 @@ function NewAffidavitPage() {
   }
 
   // preview
+  const baseName = safeFilename(clientName) || "affidavit";
   return (
     <div className="space-y-8 animate-fade-in">
       <div className="flex items-start gap-3 p-4 bg-green-50 border border-green-200 rounded-lg">
         <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
         <div>
           <h3 className="font-medium text-green-900">Affidavit saved</h3>
-          <p className="text-sm text-green-800">Your generated affidavit has been added to Saved Affidavits.</p>
+          <p className="text-sm text-green-800">
+            Your DOCX and PDF have been generated and stored securely.
+          </p>
         </div>
       </div>
 
@@ -289,15 +373,25 @@ function NewAffidavitPage() {
 
       <div className="flex flex-col sm:flex-row gap-3">
         <button
-          onClick={() => downloadText(`${clientName || "affidavit"}-${Date.now()}`, generatedContent)}
+          onClick={() => pdfPath && downloadStorageFile(pdfPath, `${baseName}.pdf`)}
+          disabled={!pdfPath}
           className="btn-primary flex items-center gap-2"
         >
-          <Download className="w-4 h-4" /> Download as .txt
+          <Download className="w-4 h-4" /> Download PDF
+        </button>
+        <button
+          onClick={() => docxPath && downloadStorageFile(docxPath, `${baseName}.docx`)}
+          disabled={!docxPath}
+          className="btn-secondary flex items-center gap-2"
+        >
+          <Download className="w-4 h-4" /> Download DOCX
         </button>
         <button onClick={() => navigate({ to: "/dashboard/saved" })} className="btn-secondary">
           View Saved Affidavits
         </button>
-        <button onClick={handleReset} className="btn-secondary">Create Another</button>
+        <button onClick={handleReset} className="btn-secondary">
+          Create Another
+        </button>
       </div>
     </div>
   );
