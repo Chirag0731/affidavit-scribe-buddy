@@ -71,3 +71,162 @@ export function extractMergeKeys(body: string): string[] {
 export function safeFilename(name: string): string {
   return name.replace(/[^\w\-]+/g, "_").replace(/^_+|_+$/g, "") || "affidavit";
 }
+
+// ----- Date helpers (used by the renderer and the PDF generator) -----
+
+const MONTHS = [
+  "January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December",
+];
+
+function dayOrdinal(d: number): string {
+  if (d >= 11 && d <= 13) return `${d}th`;
+  switch (d % 10) {
+    case 1: return `${d}st`;
+    case 2: return `${d}nd`;
+    case 3: return `${d}rd`;
+    default: return `${d}th`;
+  }
+}
+
+/** Parse a YYYY-MM-DD (or already-pretty) string into a Date or null. */
+function parseDate(v: string | undefined | null): Date | null {
+  if (!v) return null;
+  const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(v);
+  if (m) return new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]));
+  const d = new Date(v);
+  return isNaN(d.getTime()) ? null : d;
+}
+
+/** "April 16th, 2026" */
+export function formatPrettyDate(v: string | undefined | null): string {
+  const d = parseDate(v);
+  if (!d) return (v ?? "").toString();
+  return `${MONTHS[d.getMonth()]} ${dayOrdinal(d.getDate())}, ${d.getFullYear()}`;
+}
+
+/** "16th day of April 2026" */
+export function formatDayOfMonth(v: string | undefined | null): string {
+  const d = parseDate(v);
+  if (!d) return (v ?? "").toString();
+  return `${dayOrdinal(d.getDate())} day of ${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+// ----- Affidavit structured model -----
+
+export interface Deponent {
+  name: string;
+  dob?: string; // already formatted pretty
+}
+
+export interface AffidavitDoc {
+  title: string;              // "AFFIDAVIT OF MARRIAGE"
+  prettyDate: string;         // "May 7th, 2026"
+  dayOfMonth: string;         // "7th day of May 2026"
+  city: string;               // "Brampton"
+  deponents: Deponent[];      // 1 or 2
+  facts: string[];            // numbered facts (already merged)
+}
+
+/** Build the structured affidavit doc from a template + form values. */
+export function buildAffidavitDoc(
+  template: Template,
+  data: Record<string, string>,
+): AffidavitDoc {
+  const prettyDate = formatPrettyDate(data.affidavit_date);
+  const dayOfMonth = formatDayOfMonth(data.affidavit_date);
+
+  const d1: Deponent = {
+    name: (data.deponent_1_name || "").trim(),
+    dob: data.deponent_1_dob ? formatPrettyDate(data.deponent_1_dob) : undefined,
+  };
+  const deponents: Deponent[] = [d1];
+  if (data.deponent_2_name) {
+    deponents.push({
+      name: (data.deponent_2_name || "").trim(),
+      dob: data.deponent_2_dob ? formatPrettyDate(data.deponent_2_dob) : undefined,
+    });
+  }
+
+  const body = renderTemplate(template.body_template, data);
+  const facts = body
+    .split(/\n{2,}/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  return {
+    title: template.name.toUpperCase(),
+    prettyDate,
+    dayOfMonth,
+    city: (data.city || "").trim(),
+    deponents,
+    facts,
+  };
+}
+
+/** Plain-text rendering of the full affidavit (used as the saved DB record). */
+export function renderAffidavitText(doc: AffidavitDoc): string {
+  const lines: string[] = [];
+  lines.push(doc.title);
+  lines.push("");
+  lines.push(doc.prettyDate);
+  lines.push("");
+
+  const intro = buildIntroSentence(doc);
+  lines.push(intro);
+  lines.push("");
+
+  doc.facts.forEach((f, i) => {
+    lines.push(`${i + 1}. ${f}`);
+    lines.push("");
+  });
+
+  lines.push("");
+  doc.deponents.forEach((d) => {
+    lines.push("_________________________");
+    lines.push(d.name);
+    lines.push("");
+  });
+
+  lines.push("NOTARY ACKNOWLEDGEMENT");
+  lines.push(buildNotarySentence(doc));
+  lines.push("");
+  lines.push(
+    `Sworn/Declared Remotely from the City of ${doc.city} in the Province of Ontario before me in the city of Toronto in the Province of Ontario & Country of Canada This ${doc.dayOfMonth} in accordance with O. Reg 431/20 Administering Oath or Declaration Remotely Ontario.`,
+  );
+  lines.push("");
+  lines.push("NOTARY PUBLIC — MARYANA IVANIVN DUBANOVYCH");
+  lines.push("A Notary Public/Commissioner for Oaths in and for the Province of Ontario");
+  lines.push("Expiry Date: September 8, 2026 — LSO Licence No. P14522");
+  lines.push("");
+  lines.push("Reliance Notary Public — 2711-25 Mabelle Avenue, Etobicoke, Ontario M9A 4Y1 Canada — 437-263-4264");
+
+  return lines.join("\n");
+}
+
+export function buildIntroSentence(doc: AffidavitDoc): string {
+  const parts: string[] = [];
+  if (doc.deponents.length === 1) {
+    const d = doc.deponents[0];
+    parts.push(`I, ${d.name}`);
+    if (d.dob) parts.push(`born on ${d.dob}`);
+  } else {
+    const segs = doc.deponents.map((d) => {
+      return d.dob ? `${d.name}, born on ${d.dob}` : d.name;
+    });
+    parts.push(`We, ${segs.join(", and ")}`);
+  }
+  parts.push(`of the City of ${doc.city}`);
+  parts.push("in the Province of Ontario");
+  return parts.join(", ") + ", MAKE OATH AND SAY AS FOLLOWS:";
+}
+
+export function buildNotarySentence(doc: AffidavitDoc): string {
+  const names =
+    doc.deponents.length === 1
+      ? doc.deponents[0].name
+      : doc.deponents.slice(0, -1).map((d) => d.name).join(", ") +
+        " and " + doc.deponents[doc.deponents.length - 1].name;
+  const isAre = doc.deponents.length === 1 ? "is" : "are";
+  return `This affidavit was acknowledged before me on this ${doc.dayOfMonth}, by ${names}, who ${isAre} personally known to me or have produced satisfactory evidence of identity.`;
+}
