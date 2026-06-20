@@ -256,6 +256,7 @@ function AdminTemplatesPage() {
                       category: t.category,
                       body_template: t.body_template,
                       merge_fields: t.merge_fields,
+                      layout: { ...DEFAULT_LAYOUT, ...(t.layout ?? {}) } as TemplateLayout,
                       is_active: t.is_active,
                     })
                   }
