@@ -156,11 +156,9 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
     }) + 4;
   });
 
-  const sigCount = doc.deponents.length;
   const sigGap = 30;
   const perLineW = L.signatureLine.width ?? 220;
-  const totalSigW = perLineW * sigCount + sigGap * (sigCount - 1);
-  const sigStartX = MARGIN + Math.max(0, (CONTENT_W - totalSigW) / 2);
+  const sigStartX = L.signatureLine.x ?? MARGIN;
   const signatureLineTop = Math.max(L.signatureLine.top, factTop + 12);
   const signatureLineY = PAGE_H - signatureLineTop;
   doc.deponents.forEach((_, i) => {
