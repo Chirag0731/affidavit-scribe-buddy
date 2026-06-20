@@ -39,7 +39,7 @@ export const DEFAULT_LAYOUT: TemplateLayout = {
   date: { top: 85, size: 10.5 },
   intro: { top: 105, size: 10.5, lh: 14 },
   facts: { top: 141, size: 10.5, lh: 14 },
-  signatureLine: { top: 277.5 },
+  signatureLine: { top: 277.5, width: 220 },
   ackTitle: { top: 491, size: 11 },
   ackText: { top: 508.7, size: 10, lh: 13 },
   sworn: { top: 683.5, x: 54, width: 234, size: 8.5, lh: 12 },

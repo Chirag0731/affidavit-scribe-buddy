@@ -158,20 +158,22 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
 
   const sigCount = doc.deponents.length;
   const sigGap = 30;
-  const sigLineW = (CONTENT_W - sigGap * (sigCount - 1)) / sigCount;
+  const perLineW = L.signatureLine.width ?? 220;
+  const totalSigW = perLineW * sigCount + sigGap * (sigCount - 1);
+  const sigStartX = MARGIN + Math.max(0, (CONTENT_W - totalSigW) / 2);
   const signatureLineTop = Math.max(L.signatureLine.top, factTop + 12);
   const signatureLineY = PAGE_H - signatureLineTop;
   doc.deponents.forEach((_, i) => {
-    const x0 = MARGIN + i * (sigLineW + sigGap);
+    const x0 = sigStartX + i * (perLineW + sigGap);
     page.drawLine({
       start: { x: x0, y: signatureLineY },
-      end: { x: x0 + sigLineW, y: signatureLineY },
+      end: { x: x0 + perLineW, y: signatureLineY },
       thickness: 0.7,
       color: rgb(0, 0, 0),
     });
   });
   doc.deponents.forEach((d, i) => {
-    const x0 = MARGIN + i * (sigLineW + sigGap);
+    const x0 = sigStartX + i * (perLineW + sigGap);
     drawTextTop(d.name, x0, signatureLineTop + 15.5, BODY);
   });
 
@@ -269,7 +271,8 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
     );
   });
 
-  const colW = Math.floor(9000 / doc.deponents.length);
+  const sigLineWPt = doc.layout.signatureLine.width ?? 220;
+  const colW = Math.round(sigLineWPt * 20);
   const noBorder = {
     top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
     bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
@@ -302,7 +305,7 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
   );
   children.push(
     new Table({
-      width: { size: 9000, type: WidthType.DXA },
+      width: { size: colW * doc.deponents.length, type: WidthType.DXA },
       columnWidths: doc.deponents.map(() => colW),
       rows: [new TableRow({ children: sigCells }), new TableRow({ children: nameCells })],
     }),

@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { RotateCcw, Copy, ClipboardPaste, Wand2 } from "lucide-react";
+import { RotateCcw, Copy, ClipboardPaste, Wand2, Layers } from "lucide-react";
 import { toast } from "sonner";
 import {
   DEFAULT_LAYOUT,
@@ -53,11 +53,13 @@ export function TemplateLayoutEditor({
   onChange,
   templates = [],
   currentTemplateId,
+  onApplyToAll,
 }: {
   value: Partial<TemplateLayout> | null | undefined;
   onChange: (v: TemplateLayout) => void;
   templates?: Template[];
   currentTemplateId?: string;
+  onApplyToAll?: (layout: TemplateLayout) => void | Promise<void>;
 }) {
   const layout = withLayoutDefaults(value);
   const [selected, setSelected] = useState<ElKey>("title");
@@ -184,6 +186,23 @@ export function TemplateLayoutEditor({
           <button type="button" onClick={reset} className="text-sm text-gray-700 hover:text-gray-900 flex items-center gap-1.5 border border-gray-300 rounded px-3 py-1.5">
             <RotateCcw className="w-3.5 h-3.5" /> Reset
           </button>
+          {onApplyToAll && (
+            <button
+              type="button"
+              onClick={async () => {
+                const otherCount = templates.filter((t) => t.id !== currentTemplateId).length;
+                if (otherCount === 0) {
+                  toast.info("No other templates to apply to");
+                  return;
+                }
+                if (!window.confirm(`Apply this layout to all ${otherCount} other template${otherCount === 1 ? "" : "s"}? This overwrites their saved layouts.`)) return;
+                await onApplyToAll(layout);
+              }}
+              className="text-sm text-white bg-gold hover:opacity-90 flex items-center gap-1.5 rounded px-3 py-1.5"
+            >
+              <Layers className="w-3.5 h-3.5" /> Apply to all templates
+            </button>
+          )}
         </div>
       </div>
 
