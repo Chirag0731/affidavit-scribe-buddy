@@ -9,6 +9,51 @@ export interface MergeField {
   placeholder?: string;
 }
 
+export interface ElementPos {
+  top: number;
+  x?: number;
+  size?: number;
+  width?: number;
+  lh?: number;
+}
+
+export interface TemplateLayout {
+  title: ElementPos;
+  date: ElementPos;
+  intro: ElementPos;
+  facts: ElementPos;
+  signatureLine: ElementPos;
+  ackTitle: ElementPos;
+  ackText: ElementPos;
+  sworn: ElementPos;
+  notaryImage: ElementPos;
+}
+
+export const PAGE_W = 612;
+export const PAGE_H = 792;
+export const MARGIN = 54;
+
+export const DEFAULT_LAYOUT: TemplateLayout = {
+  title: { top: 57.9, size: 14 },
+  date: { top: 85, size: 10.5 },
+  intro: { top: 105, size: 10.5, lh: 14 },
+  facts: { top: 141, size: 10.5, lh: 14 },
+  signatureLine: { top: 277.5 },
+  ackTitle: { top: 491, size: 11 },
+  ackText: { top: 508.7, size: 10, lh: 13 },
+  sworn: { top: 683.5, x: 54, width: 234, size: 8.5, lh: 12 },
+  notaryImage: { top: 601, x: 308, width: 248 },
+};
+
+export function withLayoutDefaults(partial?: Partial<TemplateLayout> | null): TemplateLayout {
+  const p = partial ?? {};
+  const out = {} as TemplateLayout;
+  (Object.keys(DEFAULT_LAYOUT) as (keyof TemplateLayout)[]).forEach((k) => {
+    out[k] = { ...DEFAULT_LAYOUT[k], ...(p[k] ?? {}) };
+  });
+  return out;
+}
+
 export interface Template {
   id: string;
   name: string;
@@ -16,6 +61,7 @@ export interface Template {
   category: string;
   body_template: string;
   merge_fields: MergeField[];
+  layout?: Partial<TemplateLayout> | null;
   is_active: boolean;
   created_at: string;
   updated_at: string;
@@ -120,12 +166,13 @@ export interface Deponent {
 }
 
 export interface AffidavitDoc {
-  title: string;              // "AFFIDAVIT OF MARRIAGE"
-  prettyDate: string;         // "May 7th, 2026"
-  dayOfMonth: string;         // "7th day of May 2026"
-  city: string;               // "Brampton"
-  deponents: Deponent[];      // 1 or 2
-  facts: string[];            // numbered facts (already merged)
+  title: string;
+  prettyDate: string;
+  dayOfMonth: string;
+  city: string;
+  deponents: Deponent[];
+  facts: string[];
+  layout: TemplateLayout;
 }
 
 /** Build the structured affidavit doc from a template + form values. */
@@ -161,6 +208,7 @@ export function buildAffidavitDoc(
     city: (data.city || "").trim(),
     deponents,
     facts,
+    layout: withLayoutDefaults(template.layout),
   };
 }
 

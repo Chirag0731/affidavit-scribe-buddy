@@ -115,16 +115,15 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
     return lineTop;
   };
 
-  // This renderer intentionally mirrors the approved reference PDF coordinates
-  // on a US Letter page. Legal wording still comes only from templates/variables.
+  const L = doc.layout;
 
   {
-    const size = 14;
+    const size = L.title.size ?? 14;
     const tw = bold.widthOfTextAtSize(doc.title, size);
-    drawTextTop(doc.title, (PAGE_W - tw) / 2, 57.9, size, bold);
+    drawTextTop(doc.title, (PAGE_W - tw) / 2, L.title.top, size, bold);
   }
 
-  drawTextTop(doc.prettyDate, MARGIN, 85, BODY);
+  drawTextTop(doc.prettyDate, L.date.x ?? MARGIN, L.date.top, L.date.size ?? BODY);
 
   const intro = buildIntroSentence(doc);
   const idx = intro.indexOf("MAKE OATH AND SAY AS FOLLOWS:");
@@ -135,26 +134,32 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
           { text: "MAKE OATH AND SAY AS FOLLOWS:", bold: true },
         ]
       : [{ text: intro }];
-  const afterIntroTop = drawSegmentsTop(introSegs, 105, { size: BODY, lh: LH });
+  const afterIntroTop = drawSegmentsTop(introSegs, L.intro.top, {
+    x: L.intro.x ?? MARGIN,
+    size: L.intro.size ?? BODY,
+    lh: L.intro.lh ?? LH,
+  });
 
   const NUM_W = 22;
   const FACT_INDENT = MARGIN + NUM_W;
   const FACT_W = CONTENT_W - NUM_W;
-  let factTop = Math.max(141, afterIntroTop + 8);
+  const factSize = L.facts.size ?? BODY;
+  const factLh = L.facts.lh ?? LH;
+  let factTop = Math.max(L.facts.top, afterIntroTop + 8);
   doc.facts.forEach((fact, i) => {
-    drawTextTop(`${i + 1}.`, MARGIN, factTop, BODY);
+    drawTextTop(`${i + 1}.`, MARGIN, factTop, factSize);
     factTop = drawSegmentsTop([{ text: fact }], factTop, {
       x: FACT_INDENT,
       maxW: FACT_W,
-      size: BODY,
-      lh: LH,
+      size: factSize,
+      lh: factLh,
     }) + 4;
   });
 
   const sigCount = doc.deponents.length;
   const sigGap = 30;
   const sigLineW = (CONTENT_W - sigGap * (sigCount - 1)) / sigCount;
-  const signatureLineTop = Math.max(277.5, factTop + 12);
+  const signatureLineTop = Math.max(L.signatureLine.top, factTop + 12);
   const signatureLineY = PAGE_H - signatureLineTop;
   doc.deponents.forEach((_, i) => {
     const x0 = MARGIN + i * (sigLineW + sigGap);
@@ -170,30 +175,24 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
     drawTextTop(d.name, x0, signatureLineTop + 15.5, BODY);
   });
 
-  const RIGHT_COL_W = 250;
-  const LEFT_COL_W = CONTENT_W - RIGHT_COL_W - 20;
-  const LEFT_X = MARGIN;
-  const RIGHT_X = 308;
-
-  const blockW = 248;
+  const blockW = L.notaryImage.width ?? 248;
   const blockH = (blockW * notaryBlockImg.height) / notaryBlockImg.width;
-  const blockTop = 735 - blockH;
   page.drawImage(notaryBlockImg, {
-    x: RIGHT_X,
-    y: PAGE_H - blockTop - blockH,
+    x: L.notaryImage.x ?? 308,
+    y: PAGE_H - L.notaryImage.top - blockH,
     width: blockW,
     height: blockH,
   });
 
   const ackTitle = "NOTARY ACKNOWLEDGEMENT";
-  const ackTitleSize = 11;
+  const ackTitleSize = L.ackTitle.size ?? 11;
   const ackTitleW = bold.widthOfTextAtSize(ackTitle, ackTitleSize);
-  drawTextTop(ackTitle, (PAGE_W - ackTitleW) / 2, 491, ackTitleSize, bold);
+  drawTextTop(ackTitle, (PAGE_W - ackTitleW) / 2, L.ackTitle.top, ackTitleSize, bold);
 
-  drawSegmentsTop([{ text: buildNotarySentence(doc) }], 508.7, {
+  drawSegmentsTop([{ text: buildNotarySentence(doc) }], L.ackText.top, {
     maxW: CONTENT_W - 40,
-    size: 10,
-    lh: 13,
+    size: L.ackText.size ?? 10,
+    lh: L.ackText.lh ?? 13,
     center: true,
   });
 
@@ -202,11 +201,11 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
     `before me in the city of Toronto in the Province of Ontario & Country of Canada ` +
     `This ${doc.dayOfMonth} in accordance with O. Reg 431/20 Administering Oath or ` +
     `Declaration Remotely Ontario.`;
-  drawSegmentsTop([{ text: swornText }], 683.5, {
-    x: LEFT_X,
-    maxW: LEFT_COL_W,
-    size: 8.5,
-    lh: 12,
+  drawSegmentsTop([{ text: swornText }], L.sworn.top, {
+    x: L.sworn.x ?? MARGIN,
+    maxW: L.sworn.width ?? 234,
+    size: L.sworn.size ?? 8.5,
+    lh: L.sworn.lh ?? 12,
   });
 
   const bytes = await pdf.save();
