@@ -324,8 +324,9 @@ function TemplateEditor({
   onCancel: () => void;
   saving: boolean;
   extracting: boolean;
+  initialTab?: "content" | "layout";
 }) {
-  const [tab, setTab] = useState<"content" | "layout">("content");
+  const [tab, setTab] = useState<"content" | "layout">(initialTab ?? "content");
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-8 space-y-6">
       <div className="flex items-center justify-between">
