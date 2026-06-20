@@ -339,6 +339,7 @@ function TemplateEditor({
   extracting,
   initialTab,
   templates,
+  onApplyLayoutToAll,
 }: {
   value: EditableTemplate;
   onChange: (v: EditableTemplate) => void;
@@ -351,6 +352,7 @@ function TemplateEditor({
   extracting: boolean;
   initialTab?: "content" | "layout";
   templates: Template[];
+  onApplyLayoutToAll?: (layout: TemplateLayout) => void | Promise<void>;
 }) {
   const [tab, setTab] = useState<"content" | "layout">(initialTab ?? "content");
 
