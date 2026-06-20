@@ -14,6 +14,7 @@ export interface ElementPos {
   x?: number;
   size?: number;
   width?: number;
+  height?: number;
   lh?: number;
 }
 
