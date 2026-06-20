@@ -14,7 +14,8 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   type Template,
   type MergeField,
-  renderTemplate,
+  buildAffidavitDoc,
+  renderAffidavitText,
   safeFilename,
 } from "@/types/neptora";
 import { generateDocx, generatePdf } from "@/lib/doc-generator";
