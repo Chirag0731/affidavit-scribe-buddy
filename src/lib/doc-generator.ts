@@ -175,22 +175,14 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
   const LEFT_X = MARGIN;
   const RIGHT_X = 308;
 
-  const sealW = 129.5;
-  const sealH = (sealW * sealImg.height) / sealImg.width;
-  page.drawImage(sealImg, {
-    x: 368.3,
-    y: PAGE_H - 568.8 - sealH,
-    width: sealW,
-    height: sealH,
-  });
-
-  const sigW = 107.5;
-  const sigH = (sigW * sigImg.height) / sigImg.width;
-  page.drawImage(sigImg, {
-    x: 379.1,
-    y: PAGE_H - 516.5 - sigH,
-    width: sigW,
-    height: sigH,
+  const blockW = 248;
+  const blockH = (blockW * notaryBlockImg.height) / notaryBlockImg.width;
+  const blockTop = 735 - blockH;
+  page.drawImage(notaryBlockImg, {
+    x: RIGHT_X,
+    y: PAGE_H - blockTop - blockH,
+    width: blockW,
+    height: blockH,
   });
 
   const ackTitle = "NOTARY ACKNOWLEDGEMENT";
@@ -216,34 +208,6 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
     size: 8.5,
     lh: 12,
   });
-
-  drawSegmentsTop(
-    [{ text: "NOTARY PUBLIC — MARYANA IVANIVN DUBANOVYCH", bold: true }],
-    657,
-    { x: RIGHT_X, maxW: RIGHT_COL_W, size: 9, lh: 11 },
-  );
-  drawSegmentsTop(
-    [{ text: "A Notary Public/Commissioner for Oaths in and for the Province of Ontario" }],
-    668.4,
-    { x: RIGHT_X, maxW: RIGHT_COL_W, size: 8.5, lh: 11 },
-  );
-  drawSegmentsTop(
-    [{ text: "Expiry Date: September 8, 2026 — LSO Licence No. P14522" }],
-    690.4,
-    { x: RIGHT_X, maxW: RIGHT_COL_W, size: 8.5, lh: 11 },
-  );
-  drawSegmentsTop([{ text: "Reliance Notary Public", bold: true }], 709.9, {
-    x: RIGHT_X,
-    maxW: RIGHT_COL_W,
-    size: 8.5,
-    lh: 11,
-  });
-  drawSegmentsTop(
-    [{ text: "2711-25 Mabelle Avenue, Etobicoke, Ontario M9A 4Y1 Canada" }],
-    720.9,
-    { x: RIGHT_X, maxW: RIGHT_COL_W, size: 8.5, lh: 11 },
-  );
-  drawTextTop("437-263-4264", RIGHT_X, 731.9, 8.5);
 
   const bytes = await pdf.save();
   return new Blob([bytes as BlobPart], { type: "application/pdf" });
