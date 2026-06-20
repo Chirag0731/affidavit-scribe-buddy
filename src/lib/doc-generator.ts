@@ -15,8 +15,7 @@ import {
   LevelFormat,
 } from "docx";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
-import sealUrl from "@/assets/notary-seal.png";
-import notarySigUrl from "@/assets/notary-signature.png";
+import notaryBlockAsset from "@/assets/notary-block.png.asset.json";
 import type { AffidavitDoc } from "@/types/neptora";
 import { buildIntroSentence, buildNotarySentence } from "@/types/neptora";
 
@@ -42,12 +41,8 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
   const BODY = 10.5;
   const LH = 14;
 
-  const [sealBytes, sigBytes] = await Promise.all([
-    fetchBytes(sealUrl),
-    fetchBytes(notarySigUrl),
-  ]);
-  const sealImg = await pdf.embedPng(sealBytes);
-  const sigImg = await pdf.embedPng(sigBytes);
+  const notaryBlockBytes = await fetchBytes(notaryBlockAsset.url);
+  const notaryBlockImg = await pdf.embedPng(notaryBlockBytes);
 
   const page = pdf.addPage([PAGE_W, PAGE_H]);
 
@@ -180,22 +175,14 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
   const LEFT_X = MARGIN;
   const RIGHT_X = 308;
 
-  const sealW = 129.5;
-  const sealH = (sealW * sealImg.height) / sealImg.width;
-  page.drawImage(sealImg, {
-    x: 368.3,
-    y: PAGE_H - 568.8 - sealH,
-    width: sealW,
-    height: sealH,
-  });
-
-  const sigW = 107.5;
-  const sigH = (sigW * sigImg.height) / sigImg.width;
-  page.drawImage(sigImg, {
-    x: 379.1,
-    y: PAGE_H - 516.5 - sigH,
-    width: sigW,
-    height: sigH,
+  const blockW = 248;
+  const blockH = (blockW * notaryBlockImg.height) / notaryBlockImg.width;
+  const blockTop = 735 - blockH;
+  page.drawImage(notaryBlockImg, {
+    x: RIGHT_X,
+    y: PAGE_H - blockTop - blockH,
+    width: blockW,
+    height: blockH,
   });
 
   const ackTitle = "NOTARY ACKNOWLEDGEMENT";
@@ -222,34 +209,6 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
     lh: 12,
   });
 
-  drawSegmentsTop(
-    [{ text: "NOTARY PUBLIC — MARYANA IVANIVN DUBANOVYCH", bold: true }],
-    657,
-    { x: RIGHT_X, maxW: RIGHT_COL_W, size: 9, lh: 11 },
-  );
-  drawSegmentsTop(
-    [{ text: "A Notary Public/Commissioner for Oaths in and for the Province of Ontario" }],
-    668.4,
-    { x: RIGHT_X, maxW: RIGHT_COL_W, size: 8.5, lh: 11 },
-  );
-  drawSegmentsTop(
-    [{ text: "Expiry Date: September 8, 2026 — LSO Licence No. P14522" }],
-    690.4,
-    { x: RIGHT_X, maxW: RIGHT_COL_W, size: 8.5, lh: 11 },
-  );
-  drawSegmentsTop([{ text: "Reliance Notary Public", bold: true }], 709.9, {
-    x: RIGHT_X,
-    maxW: RIGHT_COL_W,
-    size: 8.5,
-    lh: 11,
-  });
-  drawSegmentsTop(
-    [{ text: "2711-25 Mabelle Avenue, Etobicoke, Ontario M9A 4Y1 Canada" }],
-    720.9,
-    { x: RIGHT_X, maxW: RIGHT_COL_W, size: 8.5, lh: 11 },
-  );
-  drawTextTop("437-263-4264", RIGHT_X, 731.9, 8.5);
-
   const bytes = await pdf.save();
   return new Blob([bytes as BlobPart], { type: "application/pdf" });
 }
@@ -259,10 +218,8 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
 // =====================================================================
 
 export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
-  const [sealBytes, sigBytes] = await Promise.all([
-    fetchBytes(sealUrl),
-    fetchBytes(notarySigUrl),
-  ]);
+  const notaryBlockBytes = await fetchBytes(notaryBlockAsset.url);
+
 
   const intro = buildIntroSentence(doc);
   const idx = intro.indexOf("MAKE OATH AND SAY AS FOLLOWS:");
@@ -386,8 +343,8 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
     ],
   });
 
-  const sigH = Math.round((110 * 116) / 255);
-  const sealHpx = Math.round((150 * 264) / 434);
+  const blockW = 240;
+  const blockH = Math.round((blockW * 202) / 361);
 
   const rightCell = new TableCell({
     width: { size: 4560, type: WidthType.DXA },
@@ -399,67 +356,11 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
         children: [
           new ImageRun({
             type: "png",
-            data: sigBytes,
-            transformation: { width: 110, height: sigH },
-            altText: { title: "Notary signature", description: "Notary signature", name: "notary_sig" },
+            data: notaryBlockBytes,
+            transformation: { width: blockW, height: blockH },
+            altText: { title: "Notary block", description: "Notary signature and seal", name: "notary_block" },
           }),
         ],
-      }),
-      new Paragraph({
-        alignment: AlignmentType.CENTER,
-        children: [
-          new ImageRun({
-            type: "png",
-            data: sealBytes,
-            transformation: { width: 150, height: sealHpx },
-            altText: { title: "Notary seal", description: "Notary seal", name: "notary_seal" },
-          }),
-        ],
-      }),
-      new Paragraph({
-        spacing: { before: 120 },
-        children: [
-          new TextRun({
-            text: "NOTARY PUBLIC — MARYANA IVANIVN DUBANOVYCH",
-            bold: true,
-            font: "Calibri",
-            size: 18,
-          }),
-        ],
-      }),
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: "A Notary Public/Commissioner for Oaths in and for the Province of Ontario",
-            font: "Calibri",
-            size: 17,
-          }),
-        ],
-      }),
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: "Expiry Date: September 8, 2026 — LSO Licence No. P14522",
-            font: "Calibri",
-            size: 17,
-          }),
-        ],
-      }),
-      new Paragraph({
-        spacing: { before: 120 },
-        children: [new TextRun({ text: "Reliance Notary Public", bold: true, font: "Calibri", size: 17 })],
-      }),
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: "2711-25 Mabelle Avenue, Etobicoke, Ontario M9A 4Y1 Canada",
-            font: "Calibri",
-            size: 17,
-          }),
-        ],
-      }),
-      new Paragraph({
-        children: [new TextRun({ text: "437-263-4264", font: "Calibri", size: 17 })],
       }),
     ],
   });
