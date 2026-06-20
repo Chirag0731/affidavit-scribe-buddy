@@ -14,7 +14,8 @@ import { supabase } from "@/integrations/supabase/client";
 import {
   type Template,
   type MergeField,
-  renderTemplate,
+  buildAffidavitDoc,
+  renderAffidavitText,
   safeFilename,
 } from "@/types/neptora";
 import { generateDocx, generatePdf } from "@/lib/doc-generator";
@@ -91,7 +92,8 @@ function NewAffidavitPage() {
     setError("");
     setGenerating(true);
     try {
-      const content = renderTemplate(selectedTemplate.body_template, formData);
+      const affDoc = buildAffidavitDoc(selectedTemplate, formData);
+      const content = renderAffidavitText(affDoc);
       setGeneratedContent(content);
 
       const {
@@ -102,8 +104,8 @@ function NewAffidavitPage() {
       // Generate DOCX + PDF and upload to Cloud Storage
       const base = `${safeFilename(clientName)}-${Date.now()}`;
       const [docxBlob, pdfBlob] = await Promise.all([
-        generateDocx(content),
-        generatePdf(content),
+        generateDocx(affDoc),
+        generatePdf(affDoc),
       ]);
       const [uploadedDocx, uploadedPdf] = await Promise.all([
         uploadAffidavitFile(user.id, `${base}.docx`, docxBlob),
