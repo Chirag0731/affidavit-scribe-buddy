@@ -19,9 +19,12 @@ import {
   type Template,
   type MergeField,
   type FieldType,
+  type TemplateLayout,
+  DEFAULT_LAYOUT,
   extractMergeKeys,
 } from "@/types/neptora";
 import { extractPdfText } from "@/lib/pdf-text";
+import { TemplateLayoutEditor } from "@/components/template-layout-editor";
 
 export const Route = createFileRoute("/_authenticated/dashboard/admin/templates")({
   component: AdminTemplatesPage,
@@ -34,6 +37,7 @@ interface EditableTemplate {
   category: string;
   body_template: string;
   merge_fields: MergeField[];
+  layout: TemplateLayout;
   is_active: boolean;
 }
 
@@ -43,6 +47,7 @@ const EMPTY: EditableTemplate = {
   category: "osap",
   body_template: "",
   merge_fields: [],
+  layout: { ...DEFAULT_LAYOUT },
   is_active: true,
 };
 
