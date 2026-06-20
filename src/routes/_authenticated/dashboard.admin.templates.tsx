@@ -302,6 +302,7 @@ function TemplateEditor({
   saving: boolean;
   extracting: boolean;
 }) {
+  const [tab, setTab] = useState<"content" | "layout">("content");
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-8 space-y-6">
       <div className="flex items-center justify-between">
@@ -340,85 +341,111 @@ function TemplateEditor({
         </div>
       </div>
 
-      <div className="border border-dashed border-gray-300 rounded-lg p-4 flex items-center justify-between gap-4">
-        <div className="text-sm text-gray-700">
-          <p className="font-medium text-gray-900">Import from PDF (optional)</p>
-          <p>Extract text from a PDF, then add <code className="px-1 bg-gray-100 rounded">{`{{variables}}`}</code> manually.</p>
-        </div>
-        <label className="btn-secondary flex items-center gap-2 cursor-pointer">
-          {extracting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
-          {extracting ? "Extracting..." : "Upload PDF"}
-          <input
-            type="file"
-            accept="application/pdf"
-            className="hidden"
-            disabled={extracting}
-            onChange={(e) => {
-              const f = e.target.files?.[0];
-              if (f) onPdfUpload(f);
-              e.target.value = "";
-            }}
-          />
-        </label>
+      <div className="flex border-b border-gray-200">
+        <button
+          type="button"
+          onClick={() => setTab("content")}
+          className={`px-4 py-2 -mb-px border-b-2 text-sm font-medium ${tab === "content" ? "border-gold text-gray-900" : "border-transparent text-gray-500 hover:text-gray-700"}`}
+        >
+          Content & Variables
+        </button>
+        <button
+          type="button"
+          onClick={() => setTab("layout")}
+          className={`px-4 py-2 -mb-px border-b-2 text-sm font-medium ${tab === "layout" ? "border-gold text-gray-900" : "border-transparent text-gray-500 hover:text-gray-700"}`}
+        >
+          PDF Layout
+        </button>
       </div>
 
-      <div>
-        <label className="block text-sm font-medium text-gray-900 mb-2">
-          Template Body * <span className="text-gray-500">— use {`{{variable_name}}`} for merge fields</span>
-        </label>
-        <textarea
-          className="input-base font-mono text-sm"
-          rows={18}
-          value={value.body_template}
-          onChange={(e) => onBodyChange(e.target.value)}
-        />
-      </div>
-
-      <div>
-        <h3 className="font-semibold text-gray-900 mb-3">
-          Detected Merge Fields ({value.merge_fields.length})
-        </h3>
-        {value.merge_fields.length === 0 ? (
-          <p className="text-sm text-gray-500 italic">
-            No {`{{variables}}`} detected yet. Add them in the body above.
-          </p>
-        ) : (
-          <div className="space-y-2">
-            {value.merge_fields.map((f, idx) => (
-              <div key={f.key} className="grid md:grid-cols-12 gap-2 items-center bg-gray-50 p-3 rounded">
-                <code className="md:col-span-3 text-xs bg-white border border-gray-200 rounded px-2 py-1 truncate">
-                  {f.key}
-                </code>
-                <input
-                  className="md:col-span-4 input-base !py-2"
-                  value={f.label}
-                  placeholder="Label"
-                  onChange={(e) => onFieldChange(idx, { label: e.target.value })}
-                />
-                <select
-                  className="md:col-span-3 input-base !py-2"
-                  value={f.type}
-                  onChange={(e) => onFieldChange(idx, { type: e.target.value as FieldType })}
-                >
-                  <option value="text">Text</option>
-                  <option value="textarea">Textarea</option>
-                  <option value="date">Date</option>
-                  <option value="email">Email</option>
-                  <option value="number">Number</option>
-                </select>
-                <label className="md:col-span-2 flex items-center gap-2 text-sm">
-                  <input
-                    type="checkbox"
-                    checked={f.required}
-                    onChange={(e) => onFieldChange(idx, { required: e.target.checked })}
-                  />
-                  Required
-                </label>
-              </div>
-            ))}
+      {tab === "content" ? (
+        <div className="space-y-6">
+          <div className="border border-dashed border-gray-300 rounded-lg p-4 flex items-center justify-between gap-4">
+            <div className="text-sm text-gray-700">
+              <p className="font-medium text-gray-900">Import from PDF (optional)</p>
+              <p>Extract text from a PDF, then add <code className="px-1 bg-gray-100 rounded">{`{{variables}}`}</code> manually.</p>
+            </div>
+            <label className="btn-secondary flex items-center gap-2 cursor-pointer">
+              {extracting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
+              {extracting ? "Extracting..." : "Upload PDF"}
+              <input
+                type="file"
+                accept="application/pdf"
+                className="hidden"
+                disabled={extracting}
+                onChange={(e) => {
+                  const f = e.target.files?.[0];
+                  if (f) onPdfUpload(f);
+                  e.target.value = "";
+                }}
+              />
+            </label>
           </div>
-        )}
-      </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-900 mb-2">
+              Template Body * <span className="text-gray-500">— use {`{{variable_name}}`} for merge fields</span>
+            </label>
+            <textarea
+              className="input-base font-mono text-sm"
+              rows={18}
+              value={value.body_template}
+              onChange={(e) => onBodyChange(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <h3 className="font-semibold text-gray-900 mb-3">
+              Detected Merge Fields ({value.merge_fields.length})
+            </h3>
+            {value.merge_fields.length === 0 ? (
+              <p className="text-sm text-gray-500 italic">
+                No {`{{variables}}`} detected yet. Add them in the body above.
+              </p>
+            ) : (
+              <div className="space-y-2">
+                {value.merge_fields.map((f, idx) => (
+                  <div key={f.key} className="grid md:grid-cols-12 gap-2 items-center bg-gray-50 p-3 rounded">
+                    <code className="md:col-span-3 text-xs bg-white border border-gray-200 rounded px-2 py-1 truncate">
+                      {f.key}
+                    </code>
+                    <input
+                      className="md:col-span-4 input-base !py-2"
+                      value={f.label}
+                      placeholder="Label"
+                      onChange={(e) => onFieldChange(idx, { label: e.target.value })}
+                    />
+                    <select
+                      className="md:col-span-3 input-base !py-2"
+                      value={f.type}
+                      onChange={(e) => onFieldChange(idx, { type: e.target.value as FieldType })}
+                    >
+                      <option value="text">Text</option>
+                      <option value="textarea">Textarea</option>
+                      <option value="date">Date</option>
+                      <option value="email">Email</option>
+                      <option value="number">Number</option>
+                    </select>
+                    <label className="md:col-span-2 flex items-center gap-2 text-sm">
+                      <input
+                        type="checkbox"
+                        checked={f.required}
+                        onChange={(e) => onFieldChange(idx, { required: e.target.checked })}
+                      />
+                      Required
+                    </label>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      ) : (
+        <TemplateLayoutEditor
+          value={value.layout}
+          onChange={(layout) => onChange({ ...value, layout })}
+        />
+      )}
 
       <label className="flex items-center gap-2 text-sm">
         <input
