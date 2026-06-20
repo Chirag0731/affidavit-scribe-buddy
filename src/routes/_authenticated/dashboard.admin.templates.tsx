@@ -136,6 +136,7 @@ function AdminTemplatesPage() {
       category: editing.category,
       body_template: editing.body_template,
       merge_fields: editing.merge_fields as unknown as object,
+      layout: editing.layout as unknown as object,
       is_active: editing.is_active,
     };
     let err;
