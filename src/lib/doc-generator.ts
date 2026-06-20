@@ -158,20 +158,22 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
 
   const sigCount = doc.deponents.length;
   const sigGap = 30;
-  const sigLineW = (CONTENT_W - sigGap * (sigCount - 1)) / sigCount;
+  const perLineW = L.signatureLine.width ?? 220;
+  const totalSigW = perLineW * sigCount + sigGap * (sigCount - 1);
+  const sigStartX = MARGIN + Math.max(0, (CONTENT_W - totalSigW) / 2);
   const signatureLineTop = Math.max(L.signatureLine.top, factTop + 12);
   const signatureLineY = PAGE_H - signatureLineTop;
   doc.deponents.forEach((_, i) => {
-    const x0 = MARGIN + i * (sigLineW + sigGap);
+    const x0 = sigStartX + i * (perLineW + sigGap);
     page.drawLine({
       start: { x: x0, y: signatureLineY },
-      end: { x: x0 + sigLineW, y: signatureLineY },
+      end: { x: x0 + perLineW, y: signatureLineY },
       thickness: 0.7,
       color: rgb(0, 0, 0),
     });
   });
   doc.deponents.forEach((d, i) => {
-    const x0 = MARGIN + i * (sigLineW + sigGap);
+    const x0 = sigStartX + i * (perLineW + sigGap);
     drawTextTop(d.name, x0, signatureLineTop + 15.5, BODY);
   });
 
