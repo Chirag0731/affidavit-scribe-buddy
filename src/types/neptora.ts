@@ -32,6 +32,8 @@ export interface Affidavit {
   matter_reference: string | null;
   form_data: Record<string, string>;
   generated_content: string;
+  docx_path: string | null;
+  pdf_path: string | null;
   status: AffidavitStatus;
   created_at: string;
   updated_at: string;
@@ -51,15 +53,21 @@ export function renderTemplate(body: string, data: Record<string, string>): stri
   return body.replace(/\{\{\s*(\w+)\s*\}\}/g, (_, k) => (data[k] ?? "").toString());
 }
 
-/** Trigger a .txt download in the browser. */
-export function downloadText(filename: string, content: string) {
-  const blob = new Blob([content], { type: "text/plain;charset=utf-8" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = filename.endsWith(".txt") ? filename : `${filename}.txt`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+/** Extract unique {{variable}} keys from a template body. */
+export function extractMergeKeys(body: string): string[] {
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const m of body.matchAll(/\{\{\s*(\w+)\s*\}\}/g)) {
+    const key = m[1];
+    if (!seen.has(key)) {
+      seen.add(key);
+      out.push(key);
+    }
+  }
+  return out;
+}
+
+/** Sanitize a string for use in a filename. */
+export function safeFilename(name: string): string {
+  return name.replace(/[^\w\-]+/g, "_").replace(/^_+|_+$/g, "") || "affidavit";
 }
