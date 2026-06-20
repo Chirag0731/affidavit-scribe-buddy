@@ -1,10 +1,20 @@
 import { useState } from "react";
 import { Link, useRouterState, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
-import { FileText, Save, Settings, LogOut, Menu, X, ChevronRight } from "lucide-react";
+import {
+  FileText,
+  Save,
+  Settings,
+  LogOut,
+  Menu,
+  X,
+  ChevronRight,
+  ShieldCheck,
+} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useIsAdmin } from "@/hooks/use-is-admin";
 
-const navItems = [
+const baseNav = [
   { icon: FileText, label: "New Affidavit", to: "/dashboard" as const, exact: true },
   { icon: Save, label: "Saved Affidavits", to: "/dashboard/saved" as const },
   { icon: Settings, label: "Settings", to: "/dashboard/settings" as const },
@@ -16,6 +26,14 @@ export function DashboardSidebar() {
   const queryClient = useQueryClient();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { data: isAdmin } = useIsAdmin();
+
+  const navItems = isAdmin
+    ? [
+        ...baseNav,
+        { icon: ShieldCheck, label: "Templates (Admin)", to: "/dashboard/admin/templates" as const },
+      ]
+    : baseNav;
 
   const handleLogout = async () => {
     setLoading(true);
@@ -40,7 +58,10 @@ export function DashboardSidebar() {
       </div>
 
       {mobileOpen && (
-        <div className="fixed inset-0 bg-black/50 z-30 lg:hidden" onClick={() => setMobileOpen(false)} />
+        <div
+          className="fixed inset-0 bg-black/50 z-30 lg:hidden"
+          onClick={() => setMobileOpen(false)}
+        />
       )}
 
       <aside
@@ -61,7 +82,7 @@ export function DashboardSidebar() {
           <nav className="flex-1 px-4 py-6 space-y-1">
             {navItems.map((item) => {
               const Icon = item.icon;
-              const active = isActive(item.to, item.exact);
+              const active = isActive(item.to, (item as { exact?: boolean }).exact);
               return (
                 <Link
                   key={item.to}

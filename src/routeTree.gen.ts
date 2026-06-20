@@ -16,6 +16,7 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedDashboardSettingsRouteImport } from './routes/_authenticated/dashboard.settings'
 import { Route as AuthenticatedDashboardSavedRouteImport } from './routes/_authenticated/dashboard.saved'
+import { Route as AuthenticatedDashboardAdminTemplatesRouteImport } from './routes/_authenticated/dashboard.admin.templates'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
@@ -54,6 +55,12 @@ const AuthenticatedDashboardSavedRoute =
     path: '/saved',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
+const AuthenticatedDashboardAdminTemplatesRoute =
+  AuthenticatedDashboardAdminTemplatesRouteImport.update({
+    id: '/admin/templates',
+    path: '/admin/templates',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -62,6 +69,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/saved': typeof AuthenticatedDashboardSavedRoute
   '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/dashboard/admin/templates': typeof AuthenticatedDashboardAdminTemplatesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -69,6 +77,7 @@ export interface FileRoutesByTo {
   '/dashboard/saved': typeof AuthenticatedDashboardSavedRoute
   '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
+  '/dashboard/admin/templates': typeof AuthenticatedDashboardAdminTemplatesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -79,6 +88,7 @@ export interface FileRoutesById {
   '/_authenticated/dashboard/saved': typeof AuthenticatedDashboardSavedRoute
   '/_authenticated/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
+  '/_authenticated/dashboard/admin/templates': typeof AuthenticatedDashboardAdminTemplatesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -89,8 +99,15 @@ export interface FileRouteTypes {
     | '/dashboard/saved'
     | '/dashboard/settings'
     | '/dashboard/'
+    | '/dashboard/admin/templates'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard/saved' | '/dashboard/settings' | '/dashboard'
+  to:
+    | '/'
+    | '/auth'
+    | '/dashboard/saved'
+    | '/dashboard/settings'
+    | '/dashboard'
+    | '/dashboard/admin/templates'
   id:
     | '__root__'
     | '/'
@@ -100,6 +117,7 @@ export interface FileRouteTypes {
     | '/_authenticated/dashboard/saved'
     | '/_authenticated/dashboard/settings'
     | '/_authenticated/dashboard/'
+    | '/_authenticated/dashboard/admin/templates'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -159,6 +177,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardSavedRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
+    '/_authenticated/dashboard/admin/templates': {
+      id: '/_authenticated/dashboard/admin/templates'
+      path: '/admin/templates'
+      fullPath: '/dashboard/admin/templates'
+      preLoaderRoute: typeof AuthenticatedDashboardAdminTemplatesRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
   }
 }
 
@@ -166,6 +191,7 @@ interface AuthenticatedDashboardRouteChildren {
   AuthenticatedDashboardSavedRoute: typeof AuthenticatedDashboardSavedRoute
   AuthenticatedDashboardSettingsRoute: typeof AuthenticatedDashboardSettingsRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
+  AuthenticatedDashboardAdminTemplatesRoute: typeof AuthenticatedDashboardAdminTemplatesRoute
 }
 
 const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
@@ -173,6 +199,8 @@ const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
     AuthenticatedDashboardSavedRoute: AuthenticatedDashboardSavedRoute,
     AuthenticatedDashboardSettingsRoute: AuthenticatedDashboardSettingsRoute,
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
+    AuthenticatedDashboardAdminTemplatesRoute:
+      AuthenticatedDashboardAdminTemplatesRoute,
   }
 
 const AuthenticatedDashboardRouteWithChildren =
@@ -199,13 +227,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
