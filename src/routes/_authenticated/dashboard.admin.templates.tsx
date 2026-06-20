@@ -11,6 +11,7 @@ import {
   Loader2,
   FileText,
   ShieldOff,
+  LayoutTemplate,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
