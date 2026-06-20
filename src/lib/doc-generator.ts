@@ -343,8 +343,8 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
     ],
   });
 
-  const sigH = Math.round((110 * 116) / 255);
-  const sealHpx = Math.round((150 * 264) / 434);
+  const blockW = 240;
+  const blockH = Math.round((blockW * 202) / 361);
 
   const rightCell = new TableCell({
     width: { size: 4560, type: WidthType.DXA },
@@ -356,67 +356,11 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
         children: [
           new ImageRun({
             type: "png",
-            data: sigBytes,
-            transformation: { width: 110, height: sigH },
-            altText: { title: "Notary signature", description: "Notary signature", name: "notary_sig" },
+            data: notaryBlockBytes,
+            transformation: { width: blockW, height: blockH },
+            altText: { title: "Notary block", description: "Notary signature and seal", name: "notary_block" },
           }),
         ],
-      }),
-      new Paragraph({
-        alignment: AlignmentType.CENTER,
-        children: [
-          new ImageRun({
-            type: "png",
-            data: sealBytes,
-            transformation: { width: 150, height: sealHpx },
-            altText: { title: "Notary seal", description: "Notary seal", name: "notary_seal" },
-          }),
-        ],
-      }),
-      new Paragraph({
-        spacing: { before: 120 },
-        children: [
-          new TextRun({
-            text: "NOTARY PUBLIC — MARYANA IVANIVN DUBANOVYCH",
-            bold: true,
-            font: "Calibri",
-            size: 18,
-          }),
-        ],
-      }),
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: "A Notary Public/Commissioner for Oaths in and for the Province of Ontario",
-            font: "Calibri",
-            size: 17,
-          }),
-        ],
-      }),
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: "Expiry Date: September 8, 2026 — LSO Licence No. P14522",
-            font: "Calibri",
-            size: 17,
-          }),
-        ],
-      }),
-      new Paragraph({
-        spacing: { before: 120 },
-        children: [new TextRun({ text: "Reliance Notary Public", bold: true, font: "Calibri", size: 17 })],
-      }),
-      new Paragraph({
-        children: [
-          new TextRun({
-            text: "2711-25 Mabelle Avenue, Etobicoke, Ontario M9A 4Y1 Canada",
-            font: "Calibri",
-            size: 17,
-          }),
-        ],
-      }),
-      new Paragraph({
-        children: [new TextRun({ text: "437-263-4264", font: "Calibri", size: 17 })],
       }),
     ],
   });
