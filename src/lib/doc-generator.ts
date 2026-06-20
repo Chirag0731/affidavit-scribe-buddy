@@ -305,7 +305,7 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
   );
   children.push(
     new Table({
-      width: { size: 9000, type: WidthType.DXA },
+      width: { size: colW * doc.deponents.length, type: WidthType.DXA },
       columnWidths: doc.deponents.map(() => colW),
       rows: [new TableRow({ children: sigCells }), new TableRow({ children: nameCells })],
     }),
