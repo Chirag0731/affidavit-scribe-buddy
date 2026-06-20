@@ -2,6 +2,7 @@ import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { DashboardSidebar } from "@/components/dashboard-sidebar";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
+  ssr: false,
   component: DashboardLayout,
 });
 
