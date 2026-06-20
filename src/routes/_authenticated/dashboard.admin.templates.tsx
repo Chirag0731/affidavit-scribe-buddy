@@ -474,7 +474,10 @@ function TemplateEditor({
         <TemplateLayoutEditor
           value={value.layout}
           onChange={(layout) => onChange({ ...value, layout })}
+          templates={templates}
+          currentTemplateId={value.id}
         />
+
       )}
 
       <label className="flex items-center gap-2 text-sm">
