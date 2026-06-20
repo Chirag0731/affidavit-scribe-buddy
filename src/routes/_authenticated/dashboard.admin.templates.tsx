@@ -317,6 +317,7 @@ function TemplateEditor({
   saving,
   extracting,
   initialTab,
+  templates,
 }: {
   value: EditableTemplate;
   onChange: (v: EditableTemplate) => void;
@@ -328,8 +329,10 @@ function TemplateEditor({
   saving: boolean;
   extracting: boolean;
   initialTab?: "content" | "layout";
+  templates: Template[];
 }) {
   const [tab, setTab] = useState<"content" | "layout">(initialTab ?? "content");
+
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-8 space-y-6">
       <div className="flex items-center justify-between">
