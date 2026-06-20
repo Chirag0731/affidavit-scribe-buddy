@@ -15,8 +15,7 @@ import {
   LevelFormat,
 } from "docx";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
-import sealUrl from "@/assets/notary-seal.png";
-import notarySigUrl from "@/assets/notary-signature.png";
+import notaryBlockAsset from "@/assets/notary-block.png.asset.json";
 import type { AffidavitDoc } from "@/types/neptora";
 import { buildIntroSentence, buildNotarySentence } from "@/types/neptora";
 
