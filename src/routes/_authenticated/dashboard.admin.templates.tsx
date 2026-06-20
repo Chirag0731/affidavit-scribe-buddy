@@ -314,6 +314,7 @@ function TemplateEditor({
   onCancel,
   saving,
   extracting,
+  initialTab,
 }: {
   value: EditableTemplate;
   onChange: (v: EditableTemplate) => void;
