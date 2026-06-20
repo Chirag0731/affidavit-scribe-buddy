@@ -271,7 +271,8 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
     );
   });
 
-  const colW = Math.floor(9000 / doc.deponents.length);
+  const sigLineWPt = doc.layout.signatureLine.width ?? 220;
+  const colW = Math.round(sigLineWPt * 20);
   const noBorder = {
     top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
     bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
