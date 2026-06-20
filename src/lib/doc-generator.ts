@@ -370,7 +370,7 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
 
   // Signature lines (table)
   const sigCells = doc.deponents.map(
-    (d) =>
+    () =>
       new TableCell({
         width: { size: Math.floor(9000 / doc.deponents.length), type: WidthType.DXA },
         borders: {
