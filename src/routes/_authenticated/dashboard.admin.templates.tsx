@@ -225,7 +225,9 @@ function AdminTemplatesPage() {
           saving={saving}
           extracting={extracting}
           initialTab={editTab}
+          templates={templates}
         />
+
       ) : loading ? (
         <div className="flex items-center justify-center py-12">
           <Loader2 className="w-8 h-8 text-gray-400 animate-spin" />
@@ -315,6 +317,7 @@ function TemplateEditor({
   saving,
   extracting,
   initialTab,
+  templates,
 }: {
   value: EditableTemplate;
   onChange: (v: EditableTemplate) => void;
@@ -326,8 +329,10 @@ function TemplateEditor({
   saving: boolean;
   extracting: boolean;
   initialTab?: "content" | "layout";
+  templates: Template[];
 }) {
   const [tab, setTab] = useState<"content" | "layout">(initialTab ?? "content");
+
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-8 space-y-6">
       <div className="flex items-center justify-between">
@@ -469,7 +474,10 @@ function TemplateEditor({
         <TemplateLayoutEditor
           value={value.layout}
           onChange={(layout) => onChange({ ...value, layout })}
+          templates={templates}
+          currentTemplateId={value.id}
         />
+
       )}
 
       <label className="flex items-center gap-2 text-sm">
