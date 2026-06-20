@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { RotateCcw, Copy, ClipboardPaste, Wand2 } from "lucide-react";
+import { RotateCcw, Copy, ClipboardPaste, Wand2, Layers } from "lucide-react";
 import { toast } from "sonner";
 import {
   DEFAULT_LAYOUT,
