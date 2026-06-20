@@ -42,8 +42,6 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
   const BODY = 10.5;
   const LH = 14;
 
-  const FOOTER_RESERVED = 240;
-
   const [sealBytes, sigBytes] = await Promise.all([
     fetchBytes(sealUrl),
     fetchBytes(notarySigUrl),
@@ -51,19 +49,7 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
   const sealImg = await pdf.embedPng(sealBytes);
   const sigImg = await pdf.embedPng(sigBytes);
 
-  let page = pdf.addPage([PAGE_W, PAGE_H]);
-  let y = PAGE_H - MARGIN;
-  let isFirstPage = true;
-
-  const newPage = () => {
-    page = pdf.addPage([PAGE_W, PAGE_H]);
-    y = PAGE_H - MARGIN;
-    isFirstPage = false;
-  };
-  const bottomLimit = () => (isFirstPage ? MARGIN + FOOTER_RESERVED : MARGIN);
-  const ensure = (needed: number) => {
-    if (y - needed < bottomLimit()) newPage();
-  };
+  const page = pdf.addPage([PAGE_W, PAGE_H]);
 
   interface Seg { text: string; bold?: boolean; }
   const wrapSegments = (segs: Seg[], maxW: number, size: number): Seg[][] => {
@@ -90,46 +76,61 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
     return lines;
   };
 
-  const drawSegments = (
-    segs: Seg[],
-    opts: { x?: number; maxW?: number; size?: number; lh?: number } = {},
+  const baselineFromTop = (top: number, size: number) => PAGE_H - top - size;
+  const drawTextTop = (
+    text: string,
+    x: number,
+    top: number,
+    size: number,
+    f = font,
   ) => {
+    page.drawText(text, {
+      x,
+      y: baselineFromTop(top, size),
+      size,
+      font: f,
+      color: rgb(0, 0, 0),
+    });
+  };
+
+  const drawSegmentsTop = (
+    segs: Seg[],
+    top: number,
+    opts: { x?: number; maxW?: number; size?: number; lh?: number; center?: boolean } = {},
+  ): number => {
     const size = opts.size ?? BODY;
     const maxW = opts.maxW ?? CONTENT_W;
     const lh = opts.lh ?? LH;
     const lines = wrapSegments(segs, maxW, size);
+    let lineTop = top;
     for (const line of lines) {
-      ensure(lh);
       while (line.length && /^\s+$/.test(line[0].text)) line.shift();
-      let x = opts.x ?? MARGIN;
+      const lineW = line.reduce((acc, s) => {
+        const f = s.bold ? bold : font;
+        return acc + f.widthOfTextAtSize(s.text, size);
+      }, 0);
+      let x = opts.center ? (PAGE_W - lineW) / 2 : opts.x ?? MARGIN;
       for (const s of line) {
         const f = s.bold ? bold : font;
-        page.drawText(s.text, { x, y: y - size, size, font: f, color: rgb(0, 0, 0) });
+        drawTextTop(s.text, x, lineTop, size, f);
         x += f.widthOfTextAtSize(s.text, size);
       }
-      y -= lh;
+      lineTop += lh;
     }
+    return lineTop;
   };
 
-  // ===== TITLE (centered) =====
+  // This renderer intentionally mirrors the approved reference PDF coordinates
+  // on a US Letter page. Legal wording still comes only from templates/variables.
+
   {
     const size = 14;
     const tw = bold.widthOfTextAtSize(doc.title, size);
-    page.drawText(doc.title, {
-      x: (PAGE_W - tw) / 2,
-      y: y - size,
-      size,
-      font: bold,
-      color: rgb(0, 0, 0),
-    });
-    y -= size + 14;
+    drawTextTop(doc.title, (PAGE_W - tw) / 2, 57.9, size, bold);
   }
 
-  // ===== Date =====
-  drawSegments([{ text: doc.prettyDate }], { size: BODY, lh: LH });
-  y -= 6;
+  drawTextTop(doc.prettyDate, MARGIN, 85, BODY);
 
-  // ===== Intro =====
   const intro = buildIntroSentence(doc);
   const idx = intro.indexOf("MAKE OATH AND SAY AS FOLLOWS:");
   const introSegs: Seg[] =
@@ -139,153 +140,115 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
           { text: "MAKE OATH AND SAY AS FOLLOWS:", bold: true },
         ]
       : [{ text: intro }];
-  drawSegments(introSegs, { size: BODY, lh: LH });
-  y -= 8;
+  const afterIntroTop = drawSegmentsTop(introSegs, 105, { size: BODY, lh: LH });
 
-  // ===== Numbered facts =====
   const NUM_W = 22;
   const FACT_INDENT = MARGIN + NUM_W;
   const FACT_W = CONTENT_W - NUM_W;
+  let factTop = Math.max(141, afterIntroTop + 8);
   doc.facts.forEach((fact, i) => {
-    ensure(LH);
-    const numY = y;
-    page.drawText(`${i + 1}.`, { x: MARGIN, y: numY - BODY, size: BODY, font, color: rgb(0, 0, 0) });
-    drawSegments([{ text: fact }], { x: FACT_INDENT, maxW: FACT_W, size: BODY, lh: LH });
-    y -= 4;
+    drawTextTop(`${i + 1}.`, MARGIN, factTop, BODY);
+    factTop = drawSegmentsTop([{ text: fact }], factTop, {
+      x: FACT_INDENT,
+      maxW: FACT_W,
+      size: BODY,
+      lh: LH,
+    }) + 4;
   });
 
-  y -= 10;
-
-  // ===== Deponent signature lines =====
   const sigCount = doc.deponents.length;
   const sigGap = 30;
   const sigLineW = (CONTENT_W - sigGap * (sigCount - 1)) / sigCount;
-  ensure(50);
+  const signatureLineTop = Math.max(277.5, factTop + 12);
+  const signatureLineY = PAGE_H - signatureLineTop;
   doc.deponents.forEach((_, i) => {
     const x0 = MARGIN + i * (sigLineW + sigGap);
     page.drawLine({
-      start: { x: x0, y: y - 8 },
-      end: { x: x0 + sigLineW, y: y - 8 },
+      start: { x: x0, y: signatureLineY },
+      end: { x: x0 + sigLineW, y: signatureLineY },
       thickness: 0.7,
       color: rgb(0, 0, 0),
     });
   });
-  y -= 20;
   doc.deponents.forEach((d, i) => {
     const x0 = MARGIN + i * (sigLineW + sigGap);
-    page.drawText(d.name, { x: x0, y: y - BODY, size: BODY, font, color: rgb(0, 0, 0) });
+    drawTextTop(d.name, x0, signatureLineTop + 15.5, BODY);
   });
 
-  // ===== ABSOLUTE FOOTER =====
-  const FOOTER_BOTTOM = MARGIN;
   const RIGHT_COL_W = 250;
   const LEFT_COL_W = CONTENT_W - RIGHT_COL_W - 20;
   const LEFT_X = MARGIN;
-  const RIGHT_X = PAGE_W - MARGIN - RIGHT_COL_W;
+  const RIGHT_X = 308;
 
-  // Right column lines (bottom-up)
-  const rightLines: { text: string; bold?: boolean; size?: number; gap?: number }[] = [
-    { text: "NOTARY PUBLIC — MARYANA IVANIVN DUBANOVYCH", bold: true, size: 9 },
-    { text: "A Notary Public/Commissioner for Oaths in and for the Province of Ontario", size: 8.5 },
-    { text: "Expiry Date: September 8, 2026 — LSO Licence No. P14522", size: 8.5 },
-    { text: "", size: 6 },
-    { text: "Reliance Notary Public", bold: true, size: 8.5 },
-    { text: "2711-25 Mabelle Avenue, Etobicoke, Ontario M9A 4Y1 Canada", size: 8.5 },
-    { text: "437-263-4264", size: 8.5 },
-  ];
-  const wrappedRight: { segs: Seg[]; size: number; lh: number }[] = [];
-  for (const ln of rightLines) {
-    const sz = ln.size ?? 8.5;
-    const lh = sz + 2.5;
-    if (ln.text === "") {
-      wrappedRight.push({ segs: [{ text: " " }], size: sz, lh });
-      continue;
-    }
-    const lines = wrapSegments([{ text: ln.text, bold: ln.bold }], RIGHT_COL_W, sz);
-    for (const l of lines) wrappedRight.push({ segs: l, size: sz, lh });
-  }
-  const rightTextH = wrappedRight.reduce((a, l) => a + l.lh, 0);
-
-  // Draw right column text from bottom up
-  let ry = FOOTER_BOTTOM;
-  for (let i = wrappedRight.length - 1; i >= 0; i--) {
-    const ln = wrappedRight[i];
-    let x = RIGHT_X;
-    for (const s of ln.segs) {
-      const f = s.bold ? bold : font;
-      page.drawText(s.text, { x, y: ry, size: ln.size, font: f, color: rgb(0, 0, 0) });
-      x += f.widthOfTextAtSize(s.text, ln.size);
-    }
-    ry += ln.lh;
-  }
-
-  // Stamp above the right-column text
-  const sealW = 130;
+  const sealW = 129.5;
   const sealH = (sealW * sealImg.height) / sealImg.width;
-  const sealX = RIGHT_X + (RIGHT_COL_W - sealW) / 2;
-  const sealY = FOOTER_BOTTOM + rightTextH + 4;
-  page.drawImage(sealImg, { x: sealX, y: sealY, width: sealW, height: sealH });
+  page.drawImage(sealImg, {
+    x: 368.3,
+    y: PAGE_H - 568.8 - sealH,
+    width: sealW,
+    height: sealH,
+  });
 
-  // Lawyer signature above the stamp
-  const sigW = 110;
+  const sigW = 107.5;
   const sigH = (sigW * sigImg.height) / sigImg.width;
-  const sigX = RIGHT_X + (RIGHT_COL_W - sigW) / 2;
-  const sigY = sealY + sealH + 2;
-  page.drawImage(sigImg, { x: sigX, y: sigY, width: sigW, height: sigH });
-  const rightTopY = sigY + sigH;
+  page.drawImage(sigImg, {
+    x: 379.1,
+    y: PAGE_H - 516.5 - sigH,
+    width: sigW,
+    height: sigH,
+  });
 
-  // Left column: sworn block (bottom-up, aligned to bottom margin)
+  const ackTitle = "NOTARY ACKNOWLEDGEMENT";
+  const ackTitleSize = 11;
+  const ackTitleW = bold.widthOfTextAtSize(ackTitle, ackTitleSize);
+  drawTextTop(ackTitle, (PAGE_W - ackTitleW) / 2, 491, ackTitleSize, bold);
+
+  drawSegmentsTop([{ text: buildNotarySentence(doc) }], 508.7, {
+    maxW: CONTENT_W - 40,
+    size: 10,
+    lh: 13,
+    center: true,
+  });
+
   const swornText =
     `Sworn/Declared Remotely from the City of ${doc.city} in the Province of Ontario ` +
     `before me in the city of Toronto in the Province of Ontario & Country of Canada ` +
     `This ${doc.dayOfMonth} in accordance with O. Reg 431/20 Administering Oath or ` +
     `Declaration Remotely Ontario.`;
-  const swornSize = 9;
-  const swornLh = 12;
-  const swornLines = wrapSegments([{ text: swornText }], LEFT_COL_W, swornSize);
-  let ly = FOOTER_BOTTOM;
-  for (let i = swornLines.length - 1; i >= 0; i--) {
-    const line = swornLines[i];
-    while (line.length && /^\s+$/.test(line[0].text)) line.shift();
-    let x = LEFT_X;
-    for (const s of line) {
-      page.drawText(s.text, { x, y: ly, size: swornSize, font, color: rgb(0, 0, 0) });
-      x += font.widthOfTextAtSize(s.text, swornSize);
-    }
-    ly += swornLh;
-  }
-
-  // Notary Acknowledgement (centered) above the two columns
-  const ackTopY = Math.max(rightTopY, ly) + 18;
-  const ackTitle = "NOTARY ACKNOWLEDGEMENT";
-  const ackTitleSize = 11;
-  const ackTitleW = bold.widthOfTextAtSize(ackTitle, ackTitleSize);
-  page.drawText(ackTitle, {
-    x: (PAGE_W - ackTitleW) / 2,
-    y: ackTopY,
-    size: ackTitleSize,
-    font: bold,
-    color: rgb(0, 0, 0),
+  drawSegmentsTop([{ text: swornText }], 683.5, {
+    x: LEFT_X,
+    maxW: LEFT_COL_W,
+    size: 8.5,
+    lh: 12,
   });
-  const ackText = buildNotarySentence(doc);
-  const ackSize = 10;
-  const ackLh = 13;
-  const ackMaxW = CONTENT_W - 40;
-  const ackLines = wrapSegments([{ text: ackText }], ackMaxW, ackSize);
-  let ay = ackTopY - ackTitleSize - 6;
-  for (const line of ackLines) {
-    while (line.length && /^\s+$/.test(line[0].text)) line.shift();
-    const lw = line.reduce(
-      (acc, s) => acc + font.widthOfTextAtSize(s.text, ackSize),
-      0,
-    );
-    let x = (PAGE_W - lw) / 2;
-    for (const s of line) {
-      page.drawText(s.text, { x, y: ay, size: ackSize, font, color: rgb(0, 0, 0) });
-      x += font.widthOfTextAtSize(s.text, ackSize);
-    }
-    ay -= ackLh;
-  }
+
+  drawSegmentsTop(
+    [{ text: "NOTARY PUBLIC — MARYANA IVANIVN DUBANOVYCH", bold: true }],
+    657,
+    { x: RIGHT_X, maxW: RIGHT_COL_W, size: 9, lh: 11 },
+  );
+  drawSegmentsTop(
+    [{ text: "A Notary Public/Commissioner for Oaths in and for the Province of Ontario" }],
+    668.4,
+    { x: RIGHT_X, maxW: RIGHT_COL_W, size: 8.5, lh: 11 },
+  );
+  drawSegmentsTop(
+    [{ text: "Expiry Date: September 8, 2026 — LSO Licence No. P14522" }],
+    690.4,
+    { x: RIGHT_X, maxW: RIGHT_COL_W, size: 8.5, lh: 11 },
+  );
+  drawSegmentsTop([{ text: "Reliance Notary Public", bold: true }], 709.9, {
+    x: RIGHT_X,
+    maxW: RIGHT_COL_W,
+    size: 8.5,
+    lh: 11,
+  });
+  drawSegmentsTop(
+    [{ text: "2711-25 Mabelle Avenue, Etobicoke, Ontario M9A 4Y1 Canada" }],
+    720.9,
+    { x: RIGHT_X, maxW: RIGHT_COL_W, size: 8.5, lh: 11 },
+  );
+  drawTextTop("437-263-4264", RIGHT_X, 731.9, 8.5);
 
   const bytes = await pdf.save();
   return new Blob([bytes as BlobPart], { type: "application/pdf" });
