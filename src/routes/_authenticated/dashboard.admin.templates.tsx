@@ -224,6 +224,7 @@ function AdminTemplatesPage() {
           onCancel={() => setEditing(null)}
           saving={saving}
           extracting={extracting}
+          initialTab={editTab}
         />
       ) : loading ? (
         <div className="flex items-center justify-center py-12">
