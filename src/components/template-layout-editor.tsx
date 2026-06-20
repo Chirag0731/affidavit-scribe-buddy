@@ -53,11 +53,13 @@ export function TemplateLayoutEditor({
   onChange,
   templates = [],
   currentTemplateId,
+  onApplyToAll,
 }: {
   value: Partial<TemplateLayout> | null | undefined;
   onChange: (v: TemplateLayout) => void;
   templates?: Template[];
   currentTemplateId?: string;
+  onApplyToAll?: (layout: TemplateLayout) => void | Promise<void>;
 }) {
   const layout = withLayoutDefaults(value);
   const [selected, setSelected] = useState<ElKey>("title");
