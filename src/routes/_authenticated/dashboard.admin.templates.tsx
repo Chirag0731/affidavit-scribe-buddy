@@ -251,7 +251,8 @@ function AdminTemplatesPage() {
               </div>
               <div className="flex items-start gap-2 flex-shrink-0">
                 <button
-                  onClick={() =>
+                  onClick={() => {
+                    setEditTab("layout");
                     setEditing({
                       id: t.id,
                       name: t.name,
@@ -261,10 +262,29 @@ function AdminTemplatesPage() {
                       merge_fields: t.merge_fields,
                       layout: { ...DEFAULT_LAYOUT, ...(t.layout ?? {}) } as TemplateLayout,
                       is_active: t.is_active,
-                    })
-                  }
+                    });
+                  }}
                   className="p-2 text-gray-600 hover:bg-gray-100 rounded"
-                  title="Edit"
+                  title="Edit PDF Layout"
+                >
+                  <LayoutTemplate className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => {
+                    setEditTab("content");
+                    setEditing({
+                      id: t.id,
+                      name: t.name,
+                      description: t.description || "",
+                      category: t.category,
+                      body_template: t.body_template,
+                      merge_fields: t.merge_fields,
+                      layout: { ...DEFAULT_LAYOUT, ...(t.layout ?? {}) } as TemplateLayout,
+                      is_active: t.is_active,
+                    });
+                  }}
+                  className="p-2 text-gray-600 hover:bg-gray-100 rounded"
+                  title="Edit Content"
                 >
                   <Pencil className="w-4 h-4" />
                 </button>
