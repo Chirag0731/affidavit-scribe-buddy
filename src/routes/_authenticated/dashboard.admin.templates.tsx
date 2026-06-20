@@ -11,6 +11,7 @@ import {
   Loader2,
   FileText,
   ShieldOff,
+  LayoutTemplate,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -57,6 +58,7 @@ function AdminTemplatesPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [editing, setEditing] = useState<EditableTemplate | null>(null);
+  const [editTab, setEditTab] = useState<"content" | "layout">("content");
   const [saving, setSaving] = useState(false);
   const [extracting, setExtracting] = useState(false);
 
@@ -222,6 +224,7 @@ function AdminTemplatesPage() {
           onCancel={() => setEditing(null)}
           saving={saving}
           extracting={extracting}
+          initialTab={editTab}
         />
       ) : loading ? (
         <div className="flex items-center justify-center py-12">
@@ -248,7 +251,8 @@ function AdminTemplatesPage() {
               </div>
               <div className="flex items-start gap-2 flex-shrink-0">
                 <button
-                  onClick={() =>
+                  onClick={() => {
+                    setEditTab("layout");
                     setEditing({
                       id: t.id,
                       name: t.name,
@@ -258,10 +262,29 @@ function AdminTemplatesPage() {
                       merge_fields: t.merge_fields,
                       layout: { ...DEFAULT_LAYOUT, ...(t.layout ?? {}) } as TemplateLayout,
                       is_active: t.is_active,
-                    })
-                  }
+                    });
+                  }}
                   className="p-2 text-gray-600 hover:bg-gray-100 rounded"
-                  title="Edit"
+                  title="Edit PDF Layout"
+                >
+                  <LayoutTemplate className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => {
+                    setEditTab("content");
+                    setEditing({
+                      id: t.id,
+                      name: t.name,
+                      description: t.description || "",
+                      category: t.category,
+                      body_template: t.body_template,
+                      merge_fields: t.merge_fields,
+                      layout: { ...DEFAULT_LAYOUT, ...(t.layout ?? {}) } as TemplateLayout,
+                      is_active: t.is_active,
+                    });
+                  }}
+                  className="p-2 text-gray-600 hover:bg-gray-100 rounded"
+                  title="Edit Content"
                 >
                   <Pencil className="w-4 h-4" />
                 </button>
@@ -291,6 +314,7 @@ function TemplateEditor({
   onCancel,
   saving,
   extracting,
+  initialTab,
 }: {
   value: EditableTemplate;
   onChange: (v: EditableTemplate) => void;
@@ -301,8 +325,9 @@ function TemplateEditor({
   onCancel: () => void;
   saving: boolean;
   extracting: boolean;
+  initialTab?: "content" | "layout";
 }) {
-  const [tab, setTab] = useState<"content" | "layout">("content");
+  const [tab, setTab] = useState<"content" | "layout">(initialTab ?? "content");
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-8 space-y-6">
       <div className="flex items-center justify-between">
