@@ -225,7 +225,9 @@ function AdminTemplatesPage() {
           saving={saving}
           extracting={extracting}
           initialTab={editTab}
+          templates={templates}
         />
+
       ) : loading ? (
         <div className="flex items-center justify-center py-12">
           <Loader2 className="w-8 h-8 text-gray-400 animate-spin" />
