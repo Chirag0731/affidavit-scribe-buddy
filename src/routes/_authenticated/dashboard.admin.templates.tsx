@@ -499,6 +499,7 @@ function TemplateEditor({
           onChange={(layout) => onChange({ ...value, layout })}
           templates={templates}
           currentTemplateId={value.id}
+          onApplyToAll={onApplyLayoutToAll}
         />
 
       )}
