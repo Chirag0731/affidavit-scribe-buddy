@@ -218,10 +218,8 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
 // =====================================================================
 
 export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
-  const [sealBytes, sigBytes] = await Promise.all([
-    fetchBytes(sealUrl),
-    fetchBytes(notarySigUrl),
-  ]);
+  const notaryBlockBytes = await fetchBytes(notaryBlockAsset.url);
+
 
   const intro = buildIntroSentence(doc);
   const idx = intro.indexOf("MAKE OATH AND SAY AS FOLLOWS:");
