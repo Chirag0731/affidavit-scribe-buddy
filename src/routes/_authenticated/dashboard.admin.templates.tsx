@@ -226,7 +226,28 @@ function AdminTemplatesPage() {
           extracting={extracting}
           initialTab={editTab}
           templates={templates}
+          onApplyLayoutToAll={async (layout) => {
+            const targets = templates.filter((t) => t.id !== editing.id);
+            if (targets.length === 0) return;
+            const results = await Promise.all(
+              targets.map((t) =>
+                supabase
+                  .from("templates" as never)
+                  .update({ layout: layout as unknown as object } as never)
+                  .eq("id", t.id),
+              ),
+            );
+            const failed = results.filter((r) => r.error);
+            if (failed.length) {
+              toast.error(`Failed to update ${failed.length} template(s)`);
+            } else {
+              toast.success(`Applied layout to ${targets.length} template(s)`);
+              loadTemplates();
+            }
+          }}
         />
+
+
 
       ) : loading ? (
         <div className="flex items-center justify-center py-12">
