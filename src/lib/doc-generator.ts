@@ -41,12 +41,8 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
   const BODY = 10.5;
   const LH = 14;
 
-  const [sealBytes, sigBytes] = await Promise.all([
-    fetchBytes(sealUrl),
-    fetchBytes(notarySigUrl),
-  ]);
-  const sealImg = await pdf.embedPng(sealBytes);
-  const sigImg = await pdf.embedPng(sigBytes);
+  const notaryBlockBytes = await fetchBytes(notaryBlockAsset.url);
+  const notaryBlockImg = await pdf.embedPng(notaryBlockBytes);
 
   const page = pdf.addPage([PAGE_W, PAGE_H]);
 
