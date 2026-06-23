@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { FileText, Lock, Zap, Download } from "lucide-react";
+import { BrandLogo } from "@/components/brand-logo";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -16,12 +17,9 @@ function LandingPage() {
     <div className="min-h-screen bg-white">
       <header className="border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-10 h-10 bg-black rounded-lg flex items-center justify-center">
-              <span className="text-gold font-serif font-bold text-lg">N</span>
-            </div>
-            <span className="font-serif font-bold text-xl text-gray-900">Neptora</span>
-          </div>
+          <Link to="/" className="flex items-center hover:opacity-80 transition-smooth">
+            <BrandLogo height={28} />
+          </Link>
           <div className="flex items-center gap-4">
             <Link to="/auth" className="text-gray-600 hover:text-gray-900 transition-smooth">Sign In</Link>
             <Link to="/auth" className="btn-primary">Get Started</Link>
@@ -107,11 +105,8 @@ function LandingPage() {
 
       <footer className="border-t border-gray-200 mt-20">
         <div className="max-w-6xl mx-auto px-6 py-12">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 bg-black rounded flex items-center justify-center">
-              <span className="text-gold font-serif font-bold">N</span>
-            </div>
-            <span className="font-serif font-bold text-gray-900">Neptora</span>
+          <div className="mb-4">
+            <BrandLogo height={24} />
           </div>
           <p className="text-sm text-gray-600">
             © {new Date().getFullYear()} Neptora. Professional document automation for law firms.

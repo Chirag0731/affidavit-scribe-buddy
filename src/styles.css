@@ -62,11 +62,12 @@
   --input: oklch(0.91 0 0);
   --ring: oklch(0 0 0);
 
-  /* Gold palette (HEX) */
-  --gold: #c9a227;
-  --gold-light: #e8c547;
-  --gold-dark: #a07d1a;
-  --gold-muted: #c9a22720;
+  /* Brand palette — Neptora blue (HEX) */
+  --gold: #3b82f6;
+  --gold-light: #93c5fd;
+  --gold-dark: #1e40af;
+  --gold-muted: #3b82f620;
+  --brand-navy: #0a1633;
 }
 
 @layer base {
@@ -172,7 +173,7 @@
   }
 
   .rule {
-    background: linear-gradient(to right, transparent, rgba(201, 162, 39, 0.3), transparent);
+    background: linear-gradient(to right, transparent, rgba(59, 130, 246, 0.3), transparent);
     height: 1px;
   }
 
@@ -182,9 +183,9 @@
   .border-gold { border-color: var(--gold); }
   .hover\:border-gold:hover { border-color: var(--gold); }
   .hover\:text-gold-dark:hover { color: var(--gold-dark); }
-  .bg-gold\/10 { background-color: rgba(201, 162, 39, 0.1); }
-  .bg-gold\/20 { background-color: rgba(201, 162, 39, 0.2); }
-  .from-gold\/10 { --tw-gradient-from: rgba(201, 162, 39, 0.1); }
+  .bg-gold\/10 { background-color: rgba(59, 130, 246, 0.1); }
+  .bg-gold\/20 { background-color: rgba(59, 130, 246, 0.2); }
+  .from-gold\/10 { --tw-gradient-from: rgba(59, 130, 246, 0.1); }
 }
 
 @keyframes fade-in-up {

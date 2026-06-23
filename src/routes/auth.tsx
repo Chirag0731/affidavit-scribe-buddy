@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Mail, Lock, AlertCircle, Loader2, User } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { BrandLogo } from "@/components/brand-logo";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -66,11 +67,8 @@ function AuthPage() {
     <div className="min-h-screen bg-white flex flex-col">
       <header className="border-b border-gray-200">
         <div className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-smooth">
-            <div className="w-10 h-10 bg-black rounded-lg flex items-center justify-center">
-              <span className="text-gold font-serif font-bold text-lg">N</span>
-            </div>
-            <span className="font-serif font-bold text-xl text-gray-900">Neptora</span>
+          <Link to="/" className="flex items-center hover:opacity-80 transition-smooth">
+            <BrandLogo height={28} />
           </Link>
           <Link to="/" className="text-gray-600 hover:text-gray-900 transition-smooth">Back to Home</Link>
         </div>
