@@ -107,11 +107,8 @@ function LandingPage() {
 
       <footer className="border-t border-gray-200 mt-20">
         <div className="max-w-6xl mx-auto px-6 py-12">
-          <div className="flex items-center gap-2 mb-4">
-            <div className="w-8 h-8 bg-black rounded flex items-center justify-center">
-              <span className="text-gold font-serif font-bold">N</span>
-            </div>
-            <span className="font-serif font-bold text-gray-900">Neptora</span>
+          <div className="mb-4">
+            <BrandLogo height={24} />
           </div>
           <p className="text-sm text-gray-600">
             © {new Date().getFullYear()} Neptora. Professional document automation for law firms.

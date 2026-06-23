@@ -71,11 +71,8 @@ export function DashboardSidebar() {
       >
         <div className="h-full flex flex-col">
           <div className="p-6 border-b border-gray-200">
-            <Link to="/" className="flex items-center gap-2 hover:opacity-80 transition-smooth">
-              <div className="w-8 h-8 bg-black rounded flex items-center justify-center">
-                <span className="text-gold font-serif font-bold text-sm">N</span>
-              </div>
-              <span className="font-serif font-bold text-gray-900">Neptora</span>
+            <Link to="/" className="flex items-center hover:opacity-80 transition-smooth">
+              <BrandLogo height={22} />
             </Link>
           </div>
 
