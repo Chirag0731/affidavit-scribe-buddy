@@ -73,7 +73,7 @@ function SavedAffidavitsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="w-8 h-8 text-gray-400 animate-spin" />
+        <Loader2 className="w-8 h-8 text-muted-foreground animate-spin" />
       </div>
     );
   }
@@ -82,21 +82,21 @@ function SavedAffidavitsPage() {
     <div className="space-y-8 animate-fade-in">
       <div>
         <h1 className="section-heading mb-2">Saved Affidavits</h1>
-        <p className="text-gray-600">All your generated affidavits.</p>
+        <p className="text-muted-foreground">All your generated affidavits.</p>
       </div>
 
       {error && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-red-800">{error}</p>
+        <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg flex items-start gap-3">
+          <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+          <p className="text-sm text-destructive">{error}</p>
         </div>
       )}
 
       {affidavits.length === 0 ? (
-        <div className="border border-gray-200 rounded-lg p-12 text-center bg-white">
-          <FileText className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-          <h3 className="font-semibold text-gray-900 mb-2">No Affidavits Yet</h3>
-          <p className="text-gray-600 mb-6">Create your first affidavit now.</p>
+        <div className="border border-border rounded-lg p-12 text-center bg-white">
+          <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+          <h3 className="font-semibold text-foreground mb-2">No Affidavits Yet</h3>
+          <p className="text-muted-foreground mb-6">Create your first affidavit now.</p>
           <Link to="/dashboard" className="btn-primary inline-flex gap-2">
             <FileText className="w-4 h-4" /> Create Affidavit
           </Link>
@@ -108,59 +108,59 @@ function SavedAffidavitsPage() {
             return (
               <div
                 key={a.id}
-                className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-smooth bg-white"
+                className="border border-border rounded-lg overflow-hidden hover:shadow-md transition-smooth bg-white"
               >
                 <button
                   onClick={() => toggleExpanded(a.id)}
-                  className="w-full p-4 lg:p-6 flex items-center justify-between text-left hover:bg-gray-50"
+                  className="w-full p-4 lg:p-6 flex items-center justify-between text-left hover:bg-card"
                 >
                   <div className="flex items-center gap-4 flex-1">
                     <div className="w-12 h-12 bg-gold/10 rounded-lg flex items-center justify-center flex-shrink-0">
                       <FileText className="w-6 h-6 text-gold" />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-gray-900">{a.client_name}</h3>
-                      <p className="text-sm text-gray-600">{a.template_name || "Custom"}</p>
+                      <h3 className="font-semibold text-foreground">{a.client_name}</h3>
+                      <p className="text-sm text-muted-foreground">{a.template_name || "Custom"}</p>
                       <div className="flex items-center gap-2 mt-2">
-                        <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
+                        <span className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded">
                           {new Date(a.created_at).toLocaleDateString()}
                         </span>
-                        <span className="text-xs px-2 py-1 rounded bg-green-100 text-green-700 capitalize">
+                        <span className="text-xs px-2 py-1 rounded bg-green-100 text-green-400 capitalize">
                           {a.status}
                         </span>
                       </div>
                     </div>
                   </div>
                   <ChevronDown
-                    className={`w-5 h-5 text-gray-400 transition-transform ${
+                    className={`w-5 h-5 text-muted-foreground transition-transform ${
                       expandedIds.has(a.id) ? "rotate-180" : ""
                     }`}
                   />
                 </button>
 
                 {expandedIds.has(a.id) && (
-                  <div className="border-t border-gray-200 p-4 lg:p-6 bg-gray-50 space-y-4">
+                  <div className="border-t border-border p-4 lg:p-6 bg-card space-y-4">
                     <div className="grid md:grid-cols-2 gap-4">
-                      <div className="bg-white border border-gray-200 rounded p-3">
-                        <div className="text-xs text-gray-600 mb-1">Client Name</div>
-                        <div className="font-medium text-gray-900">{a.client_name}</div>
+                      <div className="bg-white border border-border rounded p-3">
+                        <div className="text-xs text-muted-foreground mb-1">Client Name</div>
+                        <div className="font-medium text-foreground">{a.client_name}</div>
                       </div>
                       {a.matter_reference && (
-                        <div className="bg-white border border-gray-200 rounded p-3">
-                          <div className="text-xs text-gray-600 mb-1">Matter Reference</div>
-                          <div className="font-medium text-gray-900">{a.matter_reference}</div>
+                        <div className="bg-white border border-border rounded p-3">
+                          <div className="text-xs text-muted-foreground mb-1">Matter Reference</div>
+                          <div className="font-medium text-foreground">{a.matter_reference}</div>
                         </div>
                       )}
                     </div>
 
                     <div>
-                      <h4 className="font-semibold text-gray-900 mb-2">Document Preview</h4>
-                      <pre className="bg-white border border-gray-200 rounded p-4 font-serif text-sm text-gray-900 whitespace-pre-wrap max-h-96 overflow-auto">
+                      <h4 className="font-semibold text-foreground mb-2">Document Preview</h4>
+                      <pre className="bg-white border border-border rounded p-4 font-serif text-sm text-foreground whitespace-pre-wrap max-h-96 overflow-auto">
                         {a.generated_content}
                       </pre>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
+                    <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-border">
                       <button
                         onClick={() =>
                           a.pdf_path
@@ -179,13 +179,13 @@ function SavedAffidavitsPage() {
                             : toast.error("No DOCX available")
                         }
                         disabled={!a.docx_path}
-                        className="flex items-center justify-center gap-2 px-4 py-2 border border-gray-300 text-gray-900 rounded hover:bg-gray-100 transition-smooth disabled:opacity-50"
+                        className="flex items-center justify-center gap-2 px-4 py-2 border border-border text-foreground rounded hover:bg-muted transition-smooth disabled:opacity-50"
                       >
                         <Download className="w-4 h-4" /> Download DOCX
                       </button>
                       <button
                         onClick={() => handleDelete(a)}
-                        className="flex items-center justify-center gap-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded transition-smooth ml-auto"
+                        className="flex items-center justify-center gap-2 px-4 py-2 text-destructive hover:bg-destructive/10 rounded transition-smooth ml-auto"
                       >
                         <Trash2 className="w-4 h-4" /> Delete
                       </button>

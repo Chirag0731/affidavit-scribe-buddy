@@ -156,24 +156,24 @@ function NewAffidavitPage() {
       <div className="space-y-8 animate-fade-in">
         <div>
           <h1 className="section-heading mb-2">New Affidavit</h1>
-          <p className="text-gray-600">Select a template to get started.</p>
+          <p className="text-muted-foreground">Select a template to get started.</p>
         </div>
 
         {error && (
-          <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-red-800">{error}</p>
+          <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-destructive">{error}</p>
           </div>
         )}
 
         {loading ? (
           <div className="flex items-center justify-center py-12">
-            <Loader2 className="w-8 h-8 text-gray-400 animate-spin" />
+            <Loader2 className="w-8 h-8 text-muted-foreground animate-spin" />
           </div>
         ) : templates.length === 0 ? (
-          <div className="border border-gray-200 rounded-lg p-12 text-center">
-            <FileText className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-            <h3 className="font-semibold text-gray-900 mb-2">No Templates Available</h3>
+          <div className="border border-border rounded-lg p-12 text-center">
+            <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+            <h3 className="font-semibold text-foreground mb-2">No Templates Available</h3>
           </div>
         ) : (
           <div className="grid md:grid-cols-2 gap-4">
@@ -181,19 +181,19 @@ function NewAffidavitPage() {
               <button
                 key={template.id}
                 onClick={() => handleTemplateSelect(template)}
-                className="text-left border border-gray-200 rounded-lg p-6 hover:shadow-md hover:border-gold transition-smooth group bg-white"
+                className="text-left border border-border rounded-lg p-6 hover:shadow-md hover:border-gold transition-smooth group bg-white"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="w-12 h-12 bg-gold/10 rounded-lg flex items-center justify-center">
                     <FileText className="w-6 h-6 text-gold" />
                   </div>
-                  <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-gold transition-smooth" />
+                  <ChevronRight className="w-5 h-5 text-muted-foreground group-hover:text-gold transition-smooth" />
                 </div>
-                <h3 className="font-semibold text-gray-900 mb-2">{template.name}</h3>
+                <h3 className="font-semibold text-foreground mb-2">{template.name}</h3>
                 {template.description && (
-                  <p className="text-sm text-gray-600 mb-4">{template.description}</p>
+                  <p className="text-sm text-muted-foreground mb-4">{template.description}</p>
                 )}
-                <span className="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded">
+                <span className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded">
                   {template.merge_fields.length} fields
                 </span>
               </button>
@@ -215,16 +215,16 @@ function NewAffidavitPage() {
             <ArrowLeft className="w-4 h-4" /> Back to Templates
           </button>
           <h1 className="section-heading mb-2">{selectedTemplate.name}</h1>
-          <p className="text-gray-600">
+          <p className="text-muted-foreground">
             Fill in the information below. The legal wording is fixed — only these variables are
             replaced.
           </p>
         </div>
 
         {error && (
-          <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-red-800">{error}</p>
+          <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+            <p className="text-sm text-destructive">{error}</p>
           </div>
         )}
 
@@ -233,15 +233,15 @@ function NewAffidavitPage() {
             e.preventDefault();
             handleGenerate();
           }}
-          className="bg-white border border-gray-200 rounded-lg p-8 space-y-8"
+          className="bg-white border border-border rounded-lg p-8 space-y-8"
         >
           <div>
-            <h3 className="font-semibold text-gray-900 mb-4 pb-3 border-b border-gray-200">
+            <h3 className="font-semibold text-foreground mb-4 pb-3 border-b border-border">
               Basic Information
             </h3>
             <div className="grid md:grid-cols-2 gap-6">
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   Client Name *
                 </label>
                 <input
@@ -255,7 +255,7 @@ function NewAffidavitPage() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">
+                <label className="block text-sm font-medium text-foreground mb-2">
                   Matter Reference
                 </label>
                 <input
@@ -271,7 +271,7 @@ function NewAffidavitPage() {
           </div>
 
           <div>
-            <h3 className="font-semibold text-gray-900 mb-4 pb-3 border-b border-gray-200">
+            <h3 className="font-semibold text-foreground mb-4 pb-3 border-b border-border">
               Merge Variables
             </h3>
             <div className="grid md:grid-cols-2 gap-6">
@@ -280,7 +280,7 @@ function NewAffidavitPage() {
                   key={field.key}
                   className={field.type === "textarea" ? "md:col-span-2" : ""}
                 >
-                  <label className="block text-sm font-medium text-gray-900 mb-2">
+                  <label className="block text-sm font-medium text-foreground mb-2">
                     {field.label}
                     {field.required && " *"}
                   </label>
@@ -325,7 +325,7 @@ function NewAffidavitPage() {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-gray-200">
+          <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-border">
             <button
               type="submit"
               disabled={generating}
@@ -352,11 +352,11 @@ function NewAffidavitPage() {
   const baseName = safeFilename(clientName) || "affidavit";
   return (
     <div className="space-y-8 animate-fade-in">
-      <div className="flex items-start gap-3 p-4 bg-green-50 border border-green-200 rounded-lg">
-        <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
+      <div className="flex items-start gap-3 p-4 bg-green-900/20 border border-green-800 rounded-lg">
+        <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
         <div>
-          <h3 className="font-medium text-green-900">Affidavit saved</h3>
-          <p className="text-sm text-green-800">
+          <h3 className="font-medium text-green-400">Affidavit saved</h3>
+          <p className="text-sm text-green-400">
             Your DOCX and PDF have been generated and stored securely.
           </p>
         </div>
@@ -364,11 +364,11 @@ function NewAffidavitPage() {
 
       <div>
         <h1 className="section-heading mb-2">Preview</h1>
-        <p className="text-gray-600">Review the generated affidavit below.</p>
+        <p className="text-muted-foreground">Review the generated affidavit below.</p>
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-lg p-8">
-        <pre className="font-serif text-gray-900 whitespace-pre-wrap text-base leading-relaxed">
+      <div className="bg-white border border-border rounded-lg p-8">
+        <pre className="font-serif text-foreground whitespace-pre-wrap text-base leading-relaxed">
           {generatedContent}
         </pre>
       </div>

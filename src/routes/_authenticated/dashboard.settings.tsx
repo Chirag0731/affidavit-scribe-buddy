@@ -68,7 +68,7 @@ function SettingsPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="w-8 h-8 text-gray-400 animate-spin" />
+        <Loader2 className="w-8 h-8 text-muted-foreground animate-spin" />
       </div>
     );
   }
@@ -77,36 +77,36 @@ function SettingsPage() {
     <div className="space-y-8 animate-fade-in max-w-2xl">
       <div>
         <h1 className="section-heading mb-2">Settings</h1>
-        <p className="text-gray-600">Manage your account profile.</p>
+        <p className="text-muted-foreground">Manage your account profile.</p>
       </div>
 
       {error && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-red-800">{error}</p>
+        <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg flex items-start gap-3">
+          <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+          <p className="text-sm text-destructive">{error}</p>
         </div>
       )}
       {success && (
-        <div className="p-4 bg-green-50 border border-green-200 rounded-lg flex items-start gap-3">
-          <CheckCircle className="w-5 h-5 text-green-600 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-green-800">Your settings have been saved.</p>
+        <div className="p-4 bg-green-900/20 border border-green-800 rounded-lg flex items-start gap-3">
+          <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
+          <p className="text-sm text-green-400">Your settings have been saved.</p>
         </div>
       )}
 
-      <form onSubmit={handleSave} className="bg-white border border-gray-200 rounded-lg p-8 space-y-6">
+      <form onSubmit={handleSave} className="bg-white border border-border rounded-lg p-8 space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-900 mb-2">Email</label>
+          <label className="block text-sm font-medium text-foreground mb-2">Email</label>
           <input type="email" value={profile?.email || ""} disabled className="input-base" />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-900 mb-2">Full Name</label>
+          <label className="block text-sm font-medium text-foreground mb-2">Full Name</label>
           <input
             type="text" value={fullName} onChange={(e) => setFullName(e.target.value)}
             placeholder="Your full name" className="input-base" disabled={saving}
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-900 mb-2">Firm Name</label>
+          <label className="block text-sm font-medium text-foreground mb-2">Firm Name</label>
           <input
             type="text" value={firmName} onChange={(e) => setFirmName(e.target.value)}
             placeholder="Your firm name" className="input-base" disabled={saving}
