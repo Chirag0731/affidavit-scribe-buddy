@@ -93,7 +93,7 @@ function SettingsPage() {
         </div>
       )}
 
-      <form onSubmit={handleSave} className="bg-white border border-border rounded-lg p-8 space-y-6">
+      <form onSubmit={handleSave} className="bg-card border border-border rounded-lg p-8 space-y-6">
         <div>
           <label className="block text-sm font-medium text-foreground mb-2">Email</label>
           <input type="email" value={profile?.email || ""} disabled className="input-base" />

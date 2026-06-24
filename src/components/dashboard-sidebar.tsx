@@ -52,7 +52,7 @@ export function DashboardSidebar() {
       <div className="lg:hidden fixed top-0 right-0 z-50 p-4">
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="p-2 rounded-lg border border-border bg-white hover:bg-card"
+          className="p-2 rounded-lg border border-border bg-card hover:bg-muted"
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -66,7 +66,7 @@ export function DashboardSidebar() {
       )}
 
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-white border-r border-border transform transition-transform lg:transform-none ${
+        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-card border-r border-border transform transition-transform lg:transform-none ${
           mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
@@ -87,7 +87,7 @@ export function DashboardSidebar() {
                   to={item.to}
                   onClick={() => setMobileOpen(false)}
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-smooth ${
-                    active ? "bg-black text-white" : "text-muted-foreground hover:bg-muted"
+                    active ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted"
                   }`}
                 >
                   <Icon className="w-5 h-5" />
