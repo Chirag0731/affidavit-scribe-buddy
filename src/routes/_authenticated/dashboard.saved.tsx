@@ -93,7 +93,7 @@ function SavedAffidavitsPage() {
       )}
 
       {affidavits.length === 0 ? (
-        <div className="border border-border rounded-lg p-12 text-center bg-white">
+        <div className="border border-border rounded-lg p-12 text-center bg-card">
           <FileText className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
           <h3 className="font-semibold text-foreground mb-2">No Affidavits Yet</h3>
           <p className="text-muted-foreground mb-6">Create your first affidavit now.</p>
@@ -108,7 +108,7 @@ function SavedAffidavitsPage() {
             return (
               <div
                 key={a.id}
-                className="border border-border rounded-lg overflow-hidden hover:shadow-md transition-smooth bg-white"
+                className="border border-border rounded-lg overflow-hidden hover:shadow-md transition-smooth bg-card"
               >
                 <button
                   onClick={() => toggleExpanded(a.id)}
@@ -141,12 +141,12 @@ function SavedAffidavitsPage() {
                 {expandedIds.has(a.id) && (
                   <div className="border-t border-border p-4 lg:p-6 bg-card space-y-4">
                     <div className="grid md:grid-cols-2 gap-4">
-                      <div className="bg-white border border-border rounded p-3">
+                      <div className="bg-card border border-border rounded p-3">
                         <div className="text-xs text-muted-foreground mb-1">Client Name</div>
                         <div className="font-medium text-foreground">{a.client_name}</div>
                       </div>
                       {a.matter_reference && (
-                        <div className="bg-white border border-border rounded p-3">
+                        <div className="bg-card border border-border rounded p-3">
                           <div className="text-xs text-muted-foreground mb-1">Matter Reference</div>
                           <div className="font-medium text-foreground">{a.matter_reference}</div>
                         </div>
@@ -155,7 +155,7 @@ function SavedAffidavitsPage() {
 
                     <div>
                       <h4 className="font-semibold text-foreground mb-2">Document Preview</h4>
-                      <pre className="bg-white border border-border rounded p-4 font-serif text-sm text-foreground whitespace-pre-wrap max-h-96 overflow-auto">
+                      <pre className="bg-card border border-border rounded p-4 font-serif text-sm text-foreground whitespace-pre-wrap max-h-96 overflow-auto">
                         {a.generated_content}
                       </pre>
                     </div>
@@ -168,7 +168,7 @@ function SavedAffidavitsPage() {
                             : toast.error("No PDF available")
                         }
                         disabled={!a.pdf_path}
-                        className="flex items-center justify-center gap-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-900 transition-smooth disabled:opacity-50"
+                        className="flex items-center justify-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-smooth disabled:opacity-50"
                       >
                         <Download className="w-4 h-4" /> Download PDF
                       </button>

@@ -64,7 +64,7 @@ function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       <header className="border-b border-border">
         <div className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
           <Link to="/" className="flex items-center hover:opacity-80 transition-smooth">
@@ -76,7 +76,7 @@ function AuthPage() {
 
       <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-md animate-fade-in-up">
-          <div className="bg-white border border-border rounded-xl shadow-sm p-8">
+          <div className="bg-card border border-border rounded-xl shadow-sm p-8">
             <h1 className="font-serif text-3xl font-bold text-foreground mb-2">
               {mode === "signin" ? "Welcome Back" : "Create Your Account"}
             </h1>

@@ -14,7 +14,7 @@ export const Route = createFileRoute("/")({
 
 function LandingPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       <header className="border-b border-border">
         <div className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
           <Link to="/" className="flex items-center hover:opacity-80 transition-smooth">
@@ -44,7 +44,7 @@ function LandingPage() {
 
           <div className="relative animate-fade-in" style={{ animationDelay: "0.2s" }}>
             <div className="absolute inset-0 bg-gradient-to-br from-gold/10 to-transparent rounded-2xl blur-3xl" />
-            <div className="relative bg-white border border-border rounded-xl shadow-lg p-8 space-y-4">
+            <div className="relative bg-card border border-border rounded-xl shadow-lg p-8 space-y-4">
               <div className="flex items-center gap-3 pb-4 border-b border-border">
                 <FileText className="w-5 h-5 text-gold" />
                 <span className="font-medium text-foreground">Affidavit of Service</span>
@@ -55,8 +55,8 @@ function LandingPage() {
                 <div className="h-3 bg-muted rounded w-5/6" />
               </div>
               <div className="pt-4 flex gap-2">
-                <div className="flex-1 h-10 bg-black text-white rounded font-medium flex items-center justify-center text-sm">Generate</div>
-                <div className="flex-1 h-10 bg-white border border-border rounded font-medium flex items-center justify-center text-sm">Download</div>
+                <div className="flex-1 h-10 bg-primary text-primary-foreground rounded font-medium flex items-center justify-center text-sm">Generate</div>
+                <div className="flex-1 h-10 bg-card border border-border rounded font-medium flex items-center justify-center text-sm">Download</div>
               </div>
             </div>
           </div>

@@ -181,7 +181,7 @@ function NewAffidavitPage() {
               <button
                 key={template.id}
                 onClick={() => handleTemplateSelect(template)}
-                className="text-left border border-border rounded-lg p-6 hover:shadow-md hover:border-gold transition-smooth group bg-white"
+                className="text-left border border-border rounded-lg p-6 hover:shadow-md hover:border-gold transition-smooth group bg-card"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="w-12 h-12 bg-gold/10 rounded-lg flex items-center justify-center">
@@ -233,7 +233,7 @@ function NewAffidavitPage() {
             e.preventDefault();
             handleGenerate();
           }}
-          className="bg-white border border-border rounded-lg p-8 space-y-8"
+          className="bg-card border border-border rounded-lg p-8 space-y-8"
         >
           <div>
             <h3 className="font-semibold text-foreground mb-4 pb-3 border-b border-border">
@@ -367,7 +367,7 @@ function NewAffidavitPage() {
         <p className="text-muted-foreground">Review the generated affidavit below.</p>
       </div>
 
-      <div className="bg-white border border-border rounded-lg p-8">
+      <div className="bg-card border border-border rounded-lg p-8">
         <pre className="font-serif text-foreground whitespace-pre-wrap text-base leading-relaxed">
           {generatedContent}
         </pre>
