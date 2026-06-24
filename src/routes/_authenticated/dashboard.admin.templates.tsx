@@ -175,17 +175,17 @@ function AdminTemplatesPage() {
   if (checkingRole) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
-        <Loader2 className="w-8 h-8 text-gray-400 animate-spin" />
+        <Loader2 className="w-8 h-8 text-muted-foreground animate-spin" />
       </div>
     );
   }
 
   if (!isAdmin) {
     return (
-      <div className="max-w-lg mx-auto bg-white border border-gray-200 rounded-lg p-12 text-center">
-        <ShieldOff className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-        <h2 className="text-xl font-semibold text-gray-900 mb-2">Not Authorized</h2>
-        <p className="text-gray-600">You need administrator access to manage templates.</p>
+      <div className="max-w-lg mx-auto bg-card border border-border rounded-lg p-12 text-center">
+        <ShieldOff className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
+        <h2 className="text-xl font-semibold text-foreground mb-2">Not Authorized</h2>
+        <p className="text-muted-foreground">You need administrator access to manage templates.</p>
       </div>
     );
   }
@@ -195,8 +195,8 @@ function AdminTemplatesPage() {
       <div className="flex items-center justify-between gap-4 flex-wrap">
         <div>
           <h1 className="section-heading mb-2">Template Library (Admin)</h1>
-          <p className="text-gray-600">
-            Manage the official affidavit templates. Use <code className="px-1 bg-gray-100 rounded">{`{{variable_name}}`}</code> in the body to mark merge fields.
+          <p className="text-muted-foreground">
+            Manage the official affidavit templates. Use <code className="px-1 bg-muted rounded">{`{{variable_name}}`}</code> in the body to mark merge fields.
           </p>
         </div>
         {!editing && (
@@ -207,9 +207,9 @@ function AdminTemplatesPage() {
       </div>
 
       {error && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
-          <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
-          <p className="text-sm text-red-800">{error}</p>
+        <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg flex items-start gap-3">
+          <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
+          <p className="text-sm text-destructive">{error}</p>
         </div>
       )}
 
@@ -251,26 +251,26 @@ function AdminTemplatesPage() {
 
       ) : loading ? (
         <div className="flex items-center justify-center py-12">
-          <Loader2 className="w-8 h-8 text-gray-400 animate-spin" />
+          <Loader2 className="w-8 h-8 text-muted-foreground animate-spin" />
         </div>
       ) : (
         <div className="grid gap-4">
           {templates.map((t) => (
-            <div key={t.id} className="bg-white border border-gray-200 rounded-lg p-6 flex gap-4">
+            <div key={t.id} className="bg-card border border-border rounded-lg p-6 flex gap-4">
               <div className="w-12 h-12 bg-gold/10 rounded-lg flex items-center justify-center flex-shrink-0">
                 <FileText className="w-6 h-6 text-gold" />
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-3 flex-wrap">
-                  <h3 className="font-semibold text-gray-900">{t.name}</h3>
+                  <h3 className="font-semibold text-foreground">{t.name}</h3>
                   {!t.is_active && (
-                    <span className="text-xs px-2 py-1 rounded bg-gray-100 text-gray-700">Inactive</span>
+                    <span className="text-xs px-2 py-1 rounded bg-muted text-muted-foreground">Inactive</span>
                   )}
-                  <span className="text-xs px-2 py-1 rounded bg-gray-100 text-gray-700">
+                  <span className="text-xs px-2 py-1 rounded bg-muted text-muted-foreground">
                     {t.merge_fields.length} fields
                   </span>
                 </div>
-                {t.description && <p className="text-sm text-gray-600 mt-1">{t.description}</p>}
+                {t.description && <p className="text-sm text-muted-foreground mt-1">{t.description}</p>}
               </div>
               <div className="flex items-start gap-2 flex-shrink-0">
                 <button
@@ -287,7 +287,7 @@ function AdminTemplatesPage() {
                       is_active: t.is_active,
                     });
                   }}
-                  className="p-2 text-gray-600 hover:bg-gray-100 rounded"
+                  className="p-2 text-muted-foreground hover:bg-muted rounded"
                   title="Edit PDF Layout"
                 >
                   <LayoutTemplate className="w-4 h-4" />
@@ -306,14 +306,14 @@ function AdminTemplatesPage() {
                       is_active: t.is_active,
                     });
                   }}
-                  className="p-2 text-gray-600 hover:bg-gray-100 rounded"
+                  className="p-2 text-muted-foreground hover:bg-muted rounded"
                   title="Edit Content"
                 >
                   <Pencil className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => handleDelete(t.id)}
-                  className="p-2 text-red-600 hover:bg-red-50 rounded"
+                  className="p-2 text-destructive hover:bg-destructive/10 rounded"
                   title="Delete"
                 >
                   <Trash2 className="w-4 h-4" />
@@ -357,17 +357,17 @@ function TemplateEditor({
   const [tab, setTab] = useState<"content" | "layout">(initialTab ?? "content");
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-8 space-y-6">
+    <div className="bg-card border border-border rounded-lg p-8 space-y-6">
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">{value.id ? "Edit Template" : "New Template"}</h2>
-        <button onClick={onCancel} className="p-2 text-gray-600 hover:bg-gray-100 rounded">
+        <button onClick={onCancel} className="p-2 text-muted-foreground hover:bg-muted rounded">
           <X className="w-5 h-5" />
         </button>
       </div>
 
       <div className="grid md:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-gray-900 mb-2">Name *</label>
+          <label className="block text-sm font-medium text-foreground mb-2">Name *</label>
           <input
             className="input-base"
             value={value.name}
@@ -376,7 +376,7 @@ function TemplateEditor({
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-900 mb-2">Category</label>
+          <label className="block text-sm font-medium text-foreground mb-2">Category</label>
           <input
             className="input-base"
             value={value.category}
@@ -385,7 +385,7 @@ function TemplateEditor({
           />
         </div>
         <div className="md:col-span-2">
-          <label className="block text-sm font-medium text-gray-900 mb-2">Description</label>
+          <label className="block text-sm font-medium text-foreground mb-2">Description</label>
           <input
             className="input-base"
             value={value.description}
@@ -394,18 +394,18 @@ function TemplateEditor({
         </div>
       </div>
 
-      <div className="flex border-b border-gray-200">
+      <div className="flex border-b border-border">
         <button
           type="button"
           onClick={() => setTab("content")}
-          className={`px-4 py-2 -mb-px border-b-2 text-sm font-medium ${tab === "content" ? "border-gold text-gray-900" : "border-transparent text-gray-500 hover:text-gray-700"}`}
+          className={`px-4 py-2 -mb-px border-b-2 text-sm font-medium ${tab === "content" ? "border-gold text-foreground" : "border-transparent text-muted-foreground hover:text-muted-foreground"}`}
         >
           Content & Variables
         </button>
         <button
           type="button"
           onClick={() => setTab("layout")}
-          className={`px-4 py-2 -mb-px border-b-2 text-sm font-medium ${tab === "layout" ? "border-gold text-gray-900" : "border-transparent text-gray-500 hover:text-gray-700"}`}
+          className={`px-4 py-2 -mb-px border-b-2 text-sm font-medium ${tab === "layout" ? "border-gold text-foreground" : "border-transparent text-muted-foreground hover:text-muted-foreground"}`}
         >
           PDF Layout
         </button>
@@ -413,10 +413,10 @@ function TemplateEditor({
 
       {tab === "content" ? (
         <div className="space-y-6">
-          <div className="border border-dashed border-gray-300 rounded-lg p-4 flex items-center justify-between gap-4">
-            <div className="text-sm text-gray-700">
-              <p className="font-medium text-gray-900">Import from PDF (optional)</p>
-              <p>Extract text from a PDF, then add <code className="px-1 bg-gray-100 rounded">{`{{variables}}`}</code> manually.</p>
+          <div className="border border-dashed border-border rounded-lg p-4 flex items-center justify-between gap-4">
+            <div className="text-sm text-muted-foreground">
+              <p className="font-medium text-foreground">Import from PDF (optional)</p>
+              <p>Extract text from a PDF, then add <code className="px-1 bg-muted rounded">{`{{variables}}`}</code> manually.</p>
             </div>
             <label className="btn-secondary flex items-center gap-2 cursor-pointer">
               {extracting ? <Loader2 className="w-4 h-4 animate-spin" /> : <Upload className="w-4 h-4" />}
@@ -436,8 +436,8 @@ function TemplateEditor({
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-900 mb-2">
-              Template Body * <span className="text-gray-500">— use {`{{variable_name}}`} for merge fields</span>
+            <label className="block text-sm font-medium text-foreground mb-2">
+              Template Body * <span className="text-muted-foreground">— use {`{{variable_name}}`} for merge fields</span>
             </label>
             <textarea
               className="input-base font-mono text-sm"
@@ -448,18 +448,18 @@ function TemplateEditor({
           </div>
 
           <div>
-            <h3 className="font-semibold text-gray-900 mb-3">
+            <h3 className="font-semibold text-foreground mb-3">
               Detected Merge Fields ({value.merge_fields.length})
             </h3>
             {value.merge_fields.length === 0 ? (
-              <p className="text-sm text-gray-500 italic">
+              <p className="text-sm text-muted-foreground italic">
                 No {`{{variables}}`} detected yet. Add them in the body above.
               </p>
             ) : (
               <div className="space-y-2">
                 {value.merge_fields.map((f, idx) => (
-                  <div key={f.key} className="grid md:grid-cols-12 gap-2 items-center bg-gray-50 p-3 rounded">
-                    <code className="md:col-span-3 text-xs bg-white border border-gray-200 rounded px-2 py-1 truncate">
+                  <div key={f.key} className="grid md:grid-cols-12 gap-2 items-center bg-card p-3 rounded">
+                    <code className="md:col-span-3 text-xs bg-card border border-border rounded px-2 py-1 truncate">
                       {f.key}
                     </code>
                     <input
@@ -513,7 +513,7 @@ function TemplateEditor({
         Active (available to users)
       </label>
 
-      <div className="flex gap-3 pt-4 border-t border-gray-200">
+      <div className="flex gap-3 pt-4 border-t border-border">
         <button onClick={onSave} disabled={saving} className="btn-primary flex items-center gap-2">
           {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
           {saving ? "Saving..." : "Save Template"}
