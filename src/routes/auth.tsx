@@ -64,32 +64,32 @@ function AuthPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      <header className="border-b border-gray-200">
+    <div className="min-h-screen bg-background flex flex-col">
+      <header className="border-b border-border">
         <div className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
           <Link to="/" className="flex items-center hover:opacity-80 transition-smooth">
             <BrandLogo height={28} />
           </Link>
-          <Link to="/" className="text-gray-600 hover:text-gray-900 transition-smooth">Back to Home</Link>
+          <Link to="/" className="text-muted-foreground hover:text-foreground transition-smooth">Back to Home</Link>
         </div>
       </header>
 
       <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="w-full max-w-md animate-fade-in-up">
-          <div className="bg-white border border-gray-200 rounded-xl shadow-sm p-8">
-            <h1 className="font-serif text-3xl font-bold text-gray-900 mb-2">
+          <div className="bg-card border border-border rounded-xl shadow-sm p-8">
+            <h1 className="font-serif text-3xl font-bold text-foreground mb-2">
               {mode === "signin" ? "Welcome Back" : "Create Your Account"}
             </h1>
-            <p className="text-gray-600 mb-8">
+            <p className="text-muted-foreground mb-8">
               {mode === "signin" ? "Sign in to your Neptora account to continue." : "Get started with professional affidavit generation."}
             </p>
 
             {error && (
-              <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
-                <AlertCircle className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" />
+              <div className="mb-6 p-4 bg-destructive/10 border border-destructive/20 rounded-lg flex items-start gap-3">
+                <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
                 <div>
-                  <h3 className="font-medium text-red-900 mb-1">Error</h3>
-                  <p className="text-sm text-red-800">{error}</p>
+                  <h3 className="font-medium text-destructive mb-1">Error</h3>
+                  <p className="text-sm text-destructive">{error}</p>
                 </div>
               </div>
             )}
@@ -98,9 +98,9 @@ function AuthPage() {
               {mode === "signup" && (
                 <>
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-2">Full Name</label>
+                    <label className="block text-sm font-medium text-foreground mb-2">Full Name</label>
                     <div className="relative">
-                      <User className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                      <User className="absolute left-3 top-3 w-5 h-5 text-muted-foreground" />
                       <input
                         type="text"
                         value={fullName}
@@ -113,7 +113,7 @@ function AuthPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-900 mb-2">Firm Name (optional)</label>
+                    <label className="block text-sm font-medium text-foreground mb-2">Firm Name (optional)</label>
                     <input
                       type="text"
                       value={firmName}
@@ -127,9 +127,9 @@ function AuthPage() {
               )}
 
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Email Address</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Email Address</label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                  <Mail className="absolute left-3 top-3 w-5 h-5 text-muted-foreground" />
                   <input
                     type="email"
                     value={email}
@@ -143,9 +143,9 @@ function AuthPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-900 mb-2">Password</label>
+                <label className="block text-sm font-medium text-foreground mb-2">Password</label>
                 <div className="relative">
-                  <Lock className="absolute left-3 top-3 w-5 h-5 text-gray-400" />
+                  <Lock className="absolute left-3 top-3 w-5 h-5 text-muted-foreground" />
                   <input
                     type="password"
                     value={password}
@@ -169,8 +169,8 @@ function AuthPage() {
               </button>
             </form>
 
-            <div className="mt-8 pt-8 border-t border-gray-200">
-              <p className="text-center text-sm text-gray-600">
+            <div className="mt-8 pt-8 border-t border-border">
+              <p className="text-center text-sm text-muted-foreground">
                 {mode === "signin" ? "Don't have an account? " : "Already have an account? "}
                 <button
                   type="button"
@@ -183,9 +183,9 @@ function AuthPage() {
             </div>
           </div>
 
-          <div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <h4 className="font-medium text-blue-900 text-sm mb-1">🔒 Secure Login</h4>
-            <p className="text-sm text-blue-800">
+          <div className="mt-8 p-4 bg-blue-900/20 border border-blue-800 rounded-lg">
+            <h4 className="font-medium text-blue-400 text-sm mb-1">🔒 Secure Login</h4>
+            <p className="text-sm text-blue-400">
               Your login is protected by enterprise-grade encryption.
             </p>
           </div>

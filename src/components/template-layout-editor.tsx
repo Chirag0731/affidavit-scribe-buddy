@@ -173,17 +173,17 @@ export function TemplateLayoutEditor({
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between flex-wrap gap-2">
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-muted-foreground">
           Drag to move. Drag the right or bottom-right handle to resize width/height.
         </p>
         <div className="flex items-center gap-2">
-          <button type="button" onClick={copyJson} className="text-sm text-gray-700 hover:text-gray-900 flex items-center gap-1.5 border border-gray-300 rounded px-3 py-1.5">
+          <button type="button" onClick={copyJson} className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1.5 border border-border rounded px-3 py-1.5">
             <Copy className="w-3.5 h-3.5" /> Copy layout
           </button>
-          <button type="button" onClick={pasteJson} className="text-sm text-gray-700 hover:text-gray-900 flex items-center gap-1.5 border border-gray-300 rounded px-3 py-1.5">
+          <button type="button" onClick={pasteJson} className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1.5 border border-border rounded px-3 py-1.5">
             <ClipboardPaste className="w-3.5 h-3.5" /> Paste layout
           </button>
-          <button type="button" onClick={reset} className="text-sm text-gray-700 hover:text-gray-900 flex items-center gap-1.5 border border-gray-300 rounded px-3 py-1.5">
+          <button type="button" onClick={reset} className="text-sm text-muted-foreground hover:text-foreground flex items-center gap-1.5 border border-border rounded px-3 py-1.5">
             <RotateCcw className="w-3.5 h-3.5" /> Reset
           </button>
           {onApplyToAll && (
@@ -207,9 +207,9 @@ export function TemplateLayoutEditor({
       </div>
 
       {templates.length > 0 && (
-        <div className="flex items-center gap-2 bg-blue-50/60 border border-blue-200 rounded p-3 text-sm">
-          <Wand2 className="w-4 h-4 text-blue-700" />
-          <span className="text-blue-900 font-medium">Apply layout from another template:</span>
+        <div className="flex items-center gap-2 bg-blue-900/20 border border-blue-800 rounded p-3 text-sm">
+          <Wand2 className="w-4 h-4 text-blue-400" />
+          <span className="text-blue-400 font-medium">Apply layout from another template:</span>
           <select
             className="input-base !py-1.5 !w-auto flex-1 max-w-xs"
             defaultValue=""
@@ -257,7 +257,7 @@ export function TemplateLayoutEditor({
 
         <div className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-900 mb-2">Element</label>
+            <label className="block text-sm font-medium text-foreground mb-2">Element</label>
             <select className="input-base" value={selected} onChange={(e) => setSelected(e.target.value as ElKey)}>
               {ELEMENTS.map((s) => (
                 <option key={s.key} value={s.key}>{s.label}</option>
@@ -284,7 +284,7 @@ export function TemplateLayoutEditor({
             )}
           </div>
 
-          <div className="text-xs text-gray-500 leading-relaxed bg-gray-50 border border-gray-200 rounded p-3">
+          <div className="text-xs text-muted-foreground leading-relaxed bg-card border border-border rounded p-3">
             US Letter: 612 × 792 pt (8.5 × 11 in). 72 pt = 1 in. Layout saves per template and applies to every generated PDF.
           </div>
         </div>
@@ -395,7 +395,7 @@ function NumberField({
 }: { label: string; value: number; onChange: (v: number) => void; min?: number; max?: number; step?: number }) {
   return (
     <div>
-      <label className="block text-xs font-medium text-gray-700 mb-1">{label}</label>
+      <label className="block text-xs font-medium text-muted-foreground mb-1">{label}</label>
       <input
         type="number"
         className="input-base !py-2"

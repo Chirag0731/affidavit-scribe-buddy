@@ -42,25 +42,25 @@
 
 :root {
   --radius: 0.5rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0 0 0);
-  --primary: oklch(0 0 0);
-  --primary-foreground: oklch(1 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.55 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0 0 0);
+  --background: oklch(0.15 0 0);
+  --foreground: oklch(0.95 0 0);
+  --card: oklch(0.2 0 0);
+  --card-foreground: oklch(0.95 0 0);
+  --popover: oklch(0.2 0 0);
+  --popover-foreground: oklch(0.95 0 0);
+  --primary: oklch(0.95 0 0);
+  --primary-foreground: oklch(0.1 0 0);
+  --secondary: oklch(0.25 0 0);
+  --secondary-foreground: oklch(0.95 0 0);
+  --muted: oklch(0.25 0 0);
+  --muted-foreground: oklch(0.65 0 0);
+  --accent: oklch(0.25 0 0);
+  --accent-foreground: oklch(0.95 0 0);
   --destructive: oklch(0.6 0.22 27);
   --destructive-foreground: oklch(1 0 0);
-  --border: oklch(0.91 0 0);
-  --input: oklch(0.91 0 0);
-  --ring: oklch(0 0 0);
+  --border: oklch(0.3 0 0);
+  --input: oklch(0.3 0 0);
+  --ring: oklch(0.8 0 0);
 
   /* Brand palette — Neptora blue (HEX) */
   --gold: #3b82f6;
@@ -106,12 +106,12 @@
     justify-content: center;
     padding: 0.625rem 1.25rem;
     border-radius: 0.375rem;
-    background: #000;
-    color: #fff;
+    background: #fff;
+    color: #000;
     font-weight: 500;
     transition: all 0.3s ease-out;
   }
-  .btn-primary:hover { background: #111; }
+  .btn-primary:hover { background: #e5e5e5; }
   .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
 
   .btn-secondary {
@@ -120,13 +120,13 @@
     justify-content: center;
     padding: 0.625rem 1.25rem;
     border-radius: 0.375rem;
-    border: 1px solid #d1d5db;
-    background: #fff;
-    color: #111827;
+    border: 1px solid var(--color-border);
+    background: transparent;
+    color: var(--color-foreground);
     font-weight: 500;
     transition: all 0.3s ease-out;
   }
-  .btn-secondary:hover { background: #f9fafb; }
+  .btn-secondary:hover { background: var(--color-muted); }
   .btn-secondary:disabled { opacity: 0.5; }
 
   .btn-gold {
@@ -145,25 +145,25 @@
   .input-base {
     width: 100%;
     padding: 0.625rem 1rem;
-    border: 1px solid #d1d5db;
+    border: 1px solid var(--color-border);
     border-radius: 0.375rem;
-    background: #fff;
-    color: #111827;
+    background: var(--color-card);
+    color: var(--color-foreground);
     transition: all 0.3s ease-out;
   }
-  .input-base::placeholder { color: #6b7280; }
+  .input-base::placeholder { color: var(--color-muted-foreground); }
   .input-base:focus {
     outline: none;
     border-color: transparent;
     box-shadow: 0 0 0 2px var(--gold);
   }
-  .input-base:disabled { background: #f9fafb; opacity: 0.7; }
+  .input-base:disabled { background: var(--color-muted); opacity: 0.7; }
 
   .section-heading {
     font-family: var(--font-serif);
     font-size: 1.875rem;
     font-weight: 700;
-    color: #111827;
+    color: var(--color-foreground);
     letter-spacing: -0.02em;
   }
 

@@ -52,7 +52,7 @@ export function DashboardSidebar() {
       <div className="lg:hidden fixed top-0 right-0 z-50 p-4">
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="p-2 rounded-lg border border-gray-200 bg-white hover:bg-gray-50"
+          className="p-2 rounded-lg border border-border bg-card hover:bg-muted"
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -66,12 +66,12 @@ export function DashboardSidebar() {
       )}
 
       <aside
-        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-white border-r border-gray-200 transform transition-transform lg:transform-none ${
+        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-card border-r border-border transform transition-transform lg:transform-none ${
           mobileOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         }`}
       >
         <div className="h-full flex flex-col">
-          <div className="p-6 border-b border-gray-200">
+          <div className="p-6 border-b border-border">
             <Link to="/" className="flex items-center hover:opacity-80 transition-smooth">
               <BrandLogo height={22} />
             </Link>
@@ -87,7 +87,7 @@ export function DashboardSidebar() {
                   to={item.to}
                   onClick={() => setMobileOpen(false)}
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-smooth ${
-                    active ? "bg-black text-white" : "text-gray-700 hover:bg-gray-100"
+                    active ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:bg-muted"
                   }`}
                 >
                   <Icon className="w-5 h-5" />
@@ -98,11 +98,11 @@ export function DashboardSidebar() {
             })}
           </nav>
 
-          <div className="p-4 border-t border-gray-200">
+          <div className="p-4 border-t border-border">
             <button
               onClick={handleLogout}
               disabled={loading}
-              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 hover:bg-gray-100 transition-smooth font-medium disabled:opacity-50"
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-muted-foreground hover:bg-muted transition-smooth font-medium disabled:opacity-50"
             >
               <LogOut className="w-5 h-5" />
               {loading ? "Signing out..." : "Sign Out"}
