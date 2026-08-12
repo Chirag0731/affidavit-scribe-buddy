@@ -150,8 +150,13 @@ function NewAffidavitPage() {
       ]);
       setDocxPath(uploadedDocx);
       setPdfPath(uploadedPdf);
+      setPdfUrl((old) => {
+        if (old) URL.revokeObjectURL(old);
+        return URL.createObjectURL(pdfBlob);
+      });
+      setLayoutDraft(withLayoutDefaults(selectedTemplate.layout));
 
-      const { error: insertErr } = await supabase
+      const { data: inserted, error: insertErr } = await supabase
         .from("affidavits" as never)
         .insert({
           user_id: user.id,
@@ -164,8 +169,11 @@ function NewAffidavitPage() {
           docx_path: uploadedDocx,
           pdf_path: uploadedPdf,
           status: "generated",
-        } as never);
+        } as never)
+        .select("id")
+        .single();
       if (insertErr) throw insertErr;
+      setAffidavitId((inserted as unknown as { id: string })?.id ?? null);
 
       toast.success("Affidavit generated and saved");
       setStep("preview");
@@ -173,6 +181,55 @@ function NewAffidavitPage() {
       setError(err instanceof Error ? err.message : "Failed to generate affidavit");
     } finally {
       setGenerating(false);
+    }
+  };
+
+  /** Persist the adjusted layout to the template and re-render the stored files. */
+  const handleSaveLayout = async () => {
+    if (!selectedTemplate || !layoutDraft) return;
+    setSavingLayout(true);
+    try {
+      const { error: upErr } = await supabase
+        .from("templates" as never)
+        .update({ layout: layoutDraft } as never)
+        .eq("id", selectedTemplate.id);
+      if (upErr) throw upErr;
+
+      const updatedTemplate = { ...selectedTemplate, layout: layoutDraft };
+      setSelectedTemplate(updatedTemplate);
+      setTemplates((prev) =>
+        prev.map((t) => (t.id === updatedTemplate.id ? updatedTemplate : t)),
+      );
+
+      const affDoc = buildAffidavitDoc(updatedTemplate, formData);
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error("Not authenticated");
+
+      const [docxBlob, pdfBlob] = await Promise.all([
+        generateDocx(affDoc),
+        generatePdf(affDoc),
+      ]);
+      const base = `${safeFilename(clientName)}-${Date.now()}`;
+      const [uploadedDocx, uploadedPdf] = await Promise.all([
+        uploadAffidavitFile(user.id, `${base}.docx`, docxBlob),
+        uploadAffidavitFile(user.id, `${base}.pdf`, pdfBlob),
+      ]);
+      setDocxPath(uploadedDocx);
+      setPdfPath(uploadedPdf);
+
+      if (affidavitId) {
+        await supabase
+          .from("affidavits" as never)
+          .update({ docx_path: uploadedDocx, pdf_path: uploadedPdf } as never)
+          .eq("id", affidavitId);
+      }
+      toast.success("Layout saved to template and documents updated");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to save layout");
+    } finally {
+      setSavingLayout(false);
     }
   };
 
@@ -186,7 +243,15 @@ function NewAffidavitPage() {
     setGeneratedContent("");
     setDocxPath(null);
     setPdfPath(null);
+    setAffidavitId(null);
+    setLayoutDraft(null);
+    setShowEditor(false);
+    setPdfUrl((old) => {
+      if (old) URL.revokeObjectURL(old);
+      return null;
+    });
   };
+
 
   if (step === "template-selection") {
     return (
