@@ -164,23 +164,22 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
   const sigStartX = L.signatureLine.x ?? MARGIN;
   const sigCount = Math.max(1, doc.deponents.length);
   const sigAvailable = PAGE_W - MARGIN - sigStartX;
-  const sigGap = sigCount > 1 ? 30 : 0;
-  const perLineW = Math.min(
-    L.signatureLine.width ?? 220,
-    (sigAvailable - sigGap * (sigCount - 1)) / sigCount,
-  );
+  const perLineW = Math.min(L.signatureLine.width ?? 160, sigAvailable / sigCount - 10);
+  // Spread signature lines evenly across the available width (max separation)
+  const sigStep = sigCount > 1 ? (sigAvailable - perLineW) / (sigCount - 1) : 0;
   const signatureLineTop = Math.max(L.signatureLine.top, factTop + 12);
   const signatureLineY = PAGE_H - signatureLineTop;
   doc.deponents.forEach((d, i) => {
-    const x0 = sigStartX + i * (perLineW + sigGap);
+    const x0 = sigStartX + i * sigStep;
     page.drawLine({
       start: { x: x0, y: signatureLineY },
       end: { x: x0 + perLineW, y: signatureLineY },
       thickness: 0.7,
       color: rgb(0, 0, 0),
     });
-    drawTextTop(d.name, x0, signatureLineTop + 15.5, BODY);
+    drawTextTop(d.name, x0, signatureLineTop + 3.5, BODY);
   });
+
 
   const blockW = L.notaryImage.width ?? 248;
   const blockH = L.notaryImage.height ?? (blockW * notaryBlockImg.height) / notaryBlockImg.width;
@@ -293,22 +292,38 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
     );
   });
 
-  const sigLineWPt = doc.layout.signatureLine.width ?? 220;
-  const colW = Math.round(sigLineWPt * 20);
+  const TOTAL_W = 9360;
+  const n = Math.max(1, doc.deponents.length);
+  const sigLineWPt = doc.layout.signatureLine.width ?? 160;
+  const colW = Math.min(Math.round(sigLineWPt * 20), Math.floor(TOTAL_W / n) - 200);
+  const spacerW = n > 1 ? Math.floor((TOTAL_W - colW * n) / (n - 1)) : 0;
   const noBorder = {
     top: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
     bottom: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
     left: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
     right: { style: BorderStyle.NONE, size: 0, color: "FFFFFF" },
   };
-  const sigCells = doc.deponents.map(
-    () =>
+  const blank = (w: number) =>
+    new TableCell({
+      width: { size: w, type: WidthType.DXA },
+      borders: noBorder,
+      children: [new Paragraph({ children: [new TextRun({ text: " ", font: "Calibri", size: 22 })] })],
+    });
+
+  const columnWidths: number[] = [];
+  const sigCells: TableCell[] = [];
+  const nameCells: TableCell[] = [];
+  doc.deponents.forEach((d, i) => {
+    if (i > 0 && spacerW > 0) {
+      columnWidths.push(spacerW);
+      sigCells.push(blank(spacerW));
+      nameCells.push(blank(spacerW));
+    }
+    columnWidths.push(colW);
+    sigCells.push(
       new TableCell({
         width: { size: colW, type: WidthType.DXA },
-        borders: {
-          ...noBorder,
-          bottom: { style: BorderStyle.SINGLE, size: 6, color: "000000" },
-        },
+        borders: { ...noBorder, bottom: { style: BorderStyle.SINGLE, size: 6, color: "000000" } },
         children: [
           new Paragraph({
             spacing: { before: 600 },
@@ -316,22 +331,23 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
           }),
         ],
       }),
-  );
-  const nameCells = doc.deponents.map(
-    (d) =>
+    );
+    nameCells.push(
       new TableCell({
         width: { size: colW, type: WidthType.DXA },
         borders: noBorder,
         children: [new Paragraph({ children: [new TextRun({ text: d.name, font: "Calibri", size: 22 })] })],
       }),
-  );
+    );
+  });
   children.push(
     new Table({
-      width: { size: colW * doc.deponents.length, type: WidthType.DXA },
-      columnWidths: doc.deponents.map(() => colW),
+      width: { size: columnWidths.reduce((a, b) => a + b, 0), type: WidthType.DXA },
+      columnWidths,
       rows: [new TableRow({ children: sigCells }), new TableRow({ children: nameCells })],
     }),
   );
+
 
   children.push(
     new Paragraph({

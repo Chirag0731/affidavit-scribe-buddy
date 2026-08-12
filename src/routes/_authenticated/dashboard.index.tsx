@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ChevronRight,
   FileText,
@@ -8,18 +8,23 @@ import {
   CheckCircle,
   Download,
   ArrowLeft,
+  Save,
+  SlidersHorizontal,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import {
   type Template,
   type MergeField,
+  type TemplateLayout,
+  withLayoutDefaults,
   buildAffidavitDoc,
   renderAffidavitText,
   safeFilename,
 } from "@/types/neptora";
 import { generateDocx, generatePdf } from "@/lib/doc-generator";
 import { uploadAffidavitFile, downloadStorageFile } from "@/lib/storage";
+import { TemplateLayoutEditor } from "@/components/template-layout-editor";
 
 export const Route = createFileRoute("/_authenticated/dashboard/")({
   component: NewAffidavitPage,
@@ -41,10 +46,42 @@ function NewAffidavitPage() {
   const [generatedContent, setGeneratedContent] = useState("");
   const [docxPath, setDocxPath] = useState<string | null>(null);
   const [pdfPath, setPdfPath] = useState<string | null>(null);
+  const [affidavitId, setAffidavitId] = useState<string | null>(null);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [layoutDraft, setLayoutDraft] = useState<TemplateLayout | null>(null);
+  const [showEditor, setShowEditor] = useState(false);
+  const [savingLayout, setSavingLayout] = useState(false);
+  const previewTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     fetchTemplates();
   }, []);
+
+  // Live re-render of the PDF preview while adjusting the layout
+  useEffect(() => {
+    if (step !== "preview" || !selectedTemplate || !layoutDraft) return;
+    if (previewTimer.current) clearTimeout(previewTimer.current);
+    previewTimer.current = setTimeout(async () => {
+      try {
+        const affDoc = buildAffidavitDoc(
+          { ...selectedTemplate, layout: layoutDraft },
+          formData,
+        );
+        const blob = await generatePdf(affDoc);
+        setPdfUrl((old) => {
+          if (old) URL.revokeObjectURL(old);
+          return URL.createObjectURL(blob);
+        });
+      } catch {
+        /* ignore preview errors */
+      }
+    }, 350);
+    return () => {
+      if (previewTimer.current) clearTimeout(previewTimer.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [layoutDraft, step]);
+
 
   const fetchTemplates = async () => {
     try {
@@ -113,8 +150,13 @@ function NewAffidavitPage() {
       ]);
       setDocxPath(uploadedDocx);
       setPdfPath(uploadedPdf);
+      setPdfUrl((old) => {
+        if (old) URL.revokeObjectURL(old);
+        return URL.createObjectURL(pdfBlob);
+      });
+      setLayoutDraft(withLayoutDefaults(selectedTemplate.layout));
 
-      const { error: insertErr } = await supabase
+      const { data: inserted, error: insertErr } = await supabase
         .from("affidavits" as never)
         .insert({
           user_id: user.id,
@@ -127,8 +169,11 @@ function NewAffidavitPage() {
           docx_path: uploadedDocx,
           pdf_path: uploadedPdf,
           status: "generated",
-        } as never);
+        } as never)
+        .select("id")
+        .single();
       if (insertErr) throw insertErr;
+      setAffidavitId((inserted as unknown as { id: string })?.id ?? null);
 
       toast.success("Affidavit generated and saved");
       setStep("preview");
@@ -136,6 +181,55 @@ function NewAffidavitPage() {
       setError(err instanceof Error ? err.message : "Failed to generate affidavit");
     } finally {
       setGenerating(false);
+    }
+  };
+
+  /** Persist the adjusted layout to the template and re-render the stored files. */
+  const handleSaveLayout = async () => {
+    if (!selectedTemplate || !layoutDraft) return;
+    setSavingLayout(true);
+    try {
+      const { error: upErr } = await supabase
+        .from("templates" as never)
+        .update({ layout: layoutDraft } as never)
+        .eq("id", selectedTemplate.id);
+      if (upErr) throw upErr;
+
+      const updatedTemplate = { ...selectedTemplate, layout: layoutDraft };
+      setSelectedTemplate(updatedTemplate);
+      setTemplates((prev) =>
+        prev.map((t) => (t.id === updatedTemplate.id ? updatedTemplate : t)),
+      );
+
+      const affDoc = buildAffidavitDoc(updatedTemplate, formData);
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error("Not authenticated");
+
+      const [docxBlob, pdfBlob] = await Promise.all([
+        generateDocx(affDoc),
+        generatePdf(affDoc),
+      ]);
+      const base = `${safeFilename(clientName)}-${Date.now()}`;
+      const [uploadedDocx, uploadedPdf] = await Promise.all([
+        uploadAffidavitFile(user.id, `${base}.docx`, docxBlob),
+        uploadAffidavitFile(user.id, `${base}.pdf`, pdfBlob),
+      ]);
+      setDocxPath(uploadedDocx);
+      setPdfPath(uploadedPdf);
+
+      if (affidavitId) {
+        await supabase
+          .from("affidavits" as never)
+          .update({ docx_path: uploadedDocx, pdf_path: uploadedPdf } as never)
+          .eq("id", affidavitId);
+      }
+      toast.success("Layout saved to template and documents updated");
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Failed to save layout");
+    } finally {
+      setSavingLayout(false);
     }
   };
 
@@ -149,7 +243,15 @@ function NewAffidavitPage() {
     setGeneratedContent("");
     setDocxPath(null);
     setPdfPath(null);
+    setAffidavitId(null);
+    setLayoutDraft(null);
+    setShowEditor(false);
+    setPdfUrl((old) => {
+      if (old) URL.revokeObjectURL(old);
+      return null;
+    });
   };
+
 
   if (step === "template-selection") {
     return (
@@ -362,16 +464,65 @@ function NewAffidavitPage() {
         </div>
       </div>
 
-      <div>
-        <h1 className="section-heading mb-2">Preview</h1>
-        <p className="text-muted-foreground">Review the generated affidavit below.</p>
+      <div className="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="section-heading mb-2">Preview</h1>
+          <p className="text-muted-foreground">
+            Review the PDF exactly as it will download, and adjust positioning before saving.
+          </p>
+        </div>
+        <button
+          onClick={() => setShowEditor((v) => !v)}
+          className="btn-secondary flex items-center gap-2"
+        >
+          <SlidersHorizontal className="w-4 h-4" />
+          {showEditor ? "Hide layout editor" : "Adjust layout"}
+        </button>
       </div>
 
-      <div className="bg-card border border-border rounded-lg p-8">
-        <pre className="font-serif text-foreground whitespace-pre-wrap text-base leading-relaxed">
+      <div className={showEditor ? "grid lg:grid-cols-2 gap-6 items-start" : ""}>
+        <div className="bg-card border border-border rounded-lg overflow-hidden">
+          {pdfUrl ? (
+            <iframe
+              src={pdfUrl}
+              title="Affidavit PDF preview"
+              className="w-full h-[900px] bg-white"
+            />
+          ) : (
+            <div className="p-8 text-muted-foreground">Preparing preview…</div>
+          )}
+        </div>
+
+        {showEditor && layoutDraft && (
+          <div className="space-y-4">
+            <TemplateLayoutEditor
+              value={layoutDraft}
+              onChange={setLayoutDraft}
+              templates={templates}
+              currentTemplateId={selectedTemplate?.id}
+            />
+            <button
+              onClick={handleSaveLayout}
+              disabled={savingLayout}
+              className="btn-primary flex items-center gap-2"
+            >
+              {savingLayout ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Save className="w-4 h-4" />
+              )}
+              Save layout to "{selectedTemplate?.name}" & update files
+            </button>
+          </div>
+        )}
+      </div>
+
+      <details className="bg-card border border-border rounded-lg p-6">
+        <summary className="cursor-pointer text-foreground">Plain text version</summary>
+        <pre className="font-serif text-foreground whitespace-pre-wrap text-base leading-relaxed mt-4">
           {generatedContent}
         </pre>
-      </div>
+      </details>
 
       <div className="flex flex-col sm:flex-row gap-3">
         <button
@@ -395,6 +546,7 @@ function NewAffidavitPage() {
           Create Another
         </button>
       </div>
+
     </div>
   );
 }
