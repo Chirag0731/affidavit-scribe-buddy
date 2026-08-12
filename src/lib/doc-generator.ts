@@ -278,11 +278,13 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
 
   children.push(new Paragraph({ spacing: { after: 200 }, children: introRuns }));
 
+  const factIndentTwips = Math.max(0, Math.round(((doc.layout.facts.x ?? 54) - 54) * 20)) + 720;
   doc.facts.forEach((fact, i) => {
     children.push(
       new Paragraph({
         spacing: { after: 160, line: 300 },
-        indent: { left: 720, hanging: 360 },
+        indent: { left: factIndentTwips, hanging: 360 },
+
         children: [
           new TextRun({ text: `${i + 1}. `, font: "Calibri", size: 22 }),
           new TextRun({ text: fact, font: "Calibri", size: 22 }),
