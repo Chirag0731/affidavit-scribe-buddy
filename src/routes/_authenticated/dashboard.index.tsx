@@ -1,5 +1,5 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   ChevronRight,
   FileText,
@@ -8,18 +8,23 @@ import {
   CheckCircle,
   Download,
   ArrowLeft,
+  Save,
+  SlidersHorizontal,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import {
   type Template,
   type MergeField,
+  type TemplateLayout,
+  withLayoutDefaults,
   buildAffidavitDoc,
   renderAffidavitText,
   safeFilename,
 } from "@/types/neptora";
 import { generateDocx, generatePdf } from "@/lib/doc-generator";
 import { uploadAffidavitFile, downloadStorageFile } from "@/lib/storage";
+import { TemplateLayoutEditor } from "@/components/template-layout-editor";
 
 export const Route = createFileRoute("/_authenticated/dashboard/")({
   component: NewAffidavitPage,
@@ -41,10 +46,42 @@ function NewAffidavitPage() {
   const [generatedContent, setGeneratedContent] = useState("");
   const [docxPath, setDocxPath] = useState<string | null>(null);
   const [pdfPath, setPdfPath] = useState<string | null>(null);
+  const [affidavitId, setAffidavitId] = useState<string | null>(null);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [layoutDraft, setLayoutDraft] = useState<TemplateLayout | null>(null);
+  const [showEditor, setShowEditor] = useState(false);
+  const [savingLayout, setSavingLayout] = useState(false);
+  const previewTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     fetchTemplates();
   }, []);
+
+  // Live re-render of the PDF preview while adjusting the layout
+  useEffect(() => {
+    if (step !== "preview" || !selectedTemplate || !layoutDraft) return;
+    if (previewTimer.current) clearTimeout(previewTimer.current);
+    previewTimer.current = setTimeout(async () => {
+      try {
+        const affDoc = buildAffidavitDoc(
+          { ...selectedTemplate, layout: layoutDraft },
+          formData,
+        );
+        const blob = await generatePdf(affDoc);
+        setPdfUrl((old) => {
+          if (old) URL.revokeObjectURL(old);
+          return URL.createObjectURL(blob);
+        });
+      } catch {
+        /* ignore preview errors */
+      }
+    }, 350);
+    return () => {
+      if (previewTimer.current) clearTimeout(previewTimer.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [layoutDraft, step]);
+
 
   const fetchTemplates = async () => {
     try {
