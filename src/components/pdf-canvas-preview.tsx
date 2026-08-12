@@ -24,14 +24,19 @@ export function PdfCanvasPreview({ url, className = "" }: PdfCanvasPreviewProps)
     let cancelled = false;
     setLoading(true);
     setError("");
+    console.log("[PdfCanvasPreview] start render", url);
 
     (async () => {
       try {
-        await ensureWorkerSrc();
+        ensureWorkerSrc();
+        console.log("[PdfCanvasPreview] worker src", pdfjs.GlobalWorkerOptions.workerSrc);
         const res = await fetch(url);
+        console.log("[PdfCanvasPreview] fetch status", res.status);
         if (!res.ok) throw new Error(`Failed to fetch PDF: ${res.status}`);
         const buf = await res.arrayBuffer();
+        console.log("[PdfCanvasPreview] got buffer", buf.byteLength);
         const pdf = await pdfjs.getDocument({ data: buf }).promise;
+        console.log("[PdfCanvasPreview] pdf loaded", pdf.numPages);
 
         if (cancelled) return;
 
@@ -42,6 +47,7 @@ export function PdfCanvasPreview({ url, className = "" }: PdfCanvasPreviewProps)
         const scale = 1.5;
         for (let i = 1; i <= pdf.numPages; i++) {
           const page = await pdf.getPage(i);
+          console.log("[PdfCanvasPreview] got page", i);
           const viewport = page.getViewport({ scale });
           const canvas = document.createElement("canvas");
           canvas.width = viewport.width;
@@ -53,8 +59,10 @@ export function PdfCanvasPreview({ url, className = "" }: PdfCanvasPreviewProps)
           const ctx = canvas.getContext("2d");
           if (!ctx) continue;
           await page.render({ canvasContext: ctx, viewport, canvas }).promise;
+          console.log("[PdfCanvasPreview] rendered page", i);
         }
         setLoading(false);
+        console.log("[PdfCanvasPreview] done");
       } catch (err) {
         if (!cancelled) {
           console.error("PdfCanvasPreview error:", err);
