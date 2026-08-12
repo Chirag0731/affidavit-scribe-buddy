@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 import { Loader2, AlertCircle } from "lucide-react";
 import * as pdfjs from "pdfjs-dist";
-import workerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
 
+const WORKER_URL = "/pdf.worker.min.mjs";
 let workerSrcUrl: string | null = null;
 
 async function ensureWorkerSrc() {
   if (workerSrcUrl) return workerSrcUrl;
-  const res = await fetch(workerUrl);
+  const res = await fetch(WORKER_URL);
+  if (!res.ok) throw new Error(`Failed to load PDF worker: ${res.status}`);
   const code = await res.text();
   const blob = new Blob([code], { type: "application/javascript" });
   workerSrcUrl = URL.createObjectURL(blob);
