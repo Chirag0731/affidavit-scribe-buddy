@@ -51,6 +51,7 @@ function NewAffidavitPage() {
   const [pdfPath, setPdfPath] = useState<string | null>(null);
   const [affidavitId, setAffidavitId] = useState<string | null>(null);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [affidavitDoc, setAffidavitDoc] = useState<AffidavitDoc | null>(null);
   const [layoutDraft, setLayoutDraft] = useState<TemplateLayout | null>(null);
   const [showEditor, setShowEditor] = useState(false);
   const [savingLayout, setSavingLayout] = useState(false);
