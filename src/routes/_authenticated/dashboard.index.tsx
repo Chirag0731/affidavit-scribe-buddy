@@ -17,6 +17,7 @@ import {
   type Template,
   type MergeField,
   type TemplateLayout,
+  type AffidavitDoc,
   withLayoutDefaults,
   buildAffidavitDoc,
   renderAffidavitText,
@@ -25,9 +26,11 @@ import {
 import { generateDocx, generatePdf } from "@/lib/doc-generator";
 import { uploadAffidavitFile, downloadStorageFile } from "@/lib/storage";
 import { TemplateLayoutEditor } from "@/components/template-layout-editor";
+import { PdfHtmlPreview } from "@/components/pdf-html-preview";
 
 export const Route = createFileRoute("/_authenticated/dashboard/")({
   component: NewAffidavitPage,
+  ssr: false,
 });
 
 type Step = "template-selection" | "form-fill" | "preview";
@@ -48,6 +51,7 @@ function NewAffidavitPage() {
   const [pdfPath, setPdfPath] = useState<string | null>(null);
   const [affidavitId, setAffidavitId] = useState<string | null>(null);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [affidavitDoc, setAffidavitDoc] = useState<AffidavitDoc | null>(null);
   const [layoutDraft, setLayoutDraft] = useState<TemplateLayout | null>(null);
   const [showEditor, setShowEditor] = useState(false);
   const [savingLayout, setSavingLayout] = useState(false);
@@ -67,6 +71,7 @@ function NewAffidavitPage() {
           { ...selectedTemplate, layout: layoutDraft },
           formData,
         );
+        setAffidavitDoc(affDoc);
         const blob = await generatePdf(affDoc);
         setPdfUrl((old) => {
           if (old) URL.revokeObjectURL(old);
@@ -130,6 +135,7 @@ function NewAffidavitPage() {
     setGenerating(true);
     try {
       const affDoc = buildAffidavitDoc(selectedTemplate, formData);
+      setAffidavitDoc(affDoc);
       const content = renderAffidavitText(affDoc);
       setGeneratedContent(content);
 
@@ -244,6 +250,7 @@ function NewAffidavitPage() {
     setDocxPath(null);
     setPdfPath(null);
     setAffidavitId(null);
+    setAffidavitDoc(null);
     setLayoutDraft(null);
     setShowEditor(false);
     setPdfUrl((old) => {
@@ -482,12 +489,8 @@ function NewAffidavitPage() {
 
       <div className={showEditor ? "grid lg:grid-cols-2 gap-6 items-start" : ""}>
         <div className="bg-card border border-border rounded-lg overflow-hidden">
-          {pdfUrl ? (
-            <iframe
-              src={pdfUrl}
-              title="Affidavit PDF preview"
-              className="w-full h-[900px] bg-white"
-            />
+          {affidavitDoc ? (
+            <PdfHtmlPreview doc={affidavitDoc} className="w-full h-[900px]" />
           ) : (
             <div className="p-8 text-muted-foreground">Preparing preview…</div>
           )}
