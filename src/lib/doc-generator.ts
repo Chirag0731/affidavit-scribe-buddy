@@ -164,23 +164,22 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
   const sigStartX = L.signatureLine.x ?? MARGIN;
   const sigCount = Math.max(1, doc.deponents.length);
   const sigAvailable = PAGE_W - MARGIN - sigStartX;
-  const sigGap = sigCount > 1 ? 30 : 0;
-  const perLineW = Math.min(
-    L.signatureLine.width ?? 220,
-    (sigAvailable - sigGap * (sigCount - 1)) / sigCount,
-  );
+  const perLineW = Math.min(L.signatureLine.width ?? 160, sigAvailable / sigCount - 10);
+  // Spread signature lines evenly across the available width (max separation)
+  const sigStep = sigCount > 1 ? (sigAvailable - perLineW) / (sigCount - 1) : 0;
   const signatureLineTop = Math.max(L.signatureLine.top, factTop + 12);
   const signatureLineY = PAGE_H - signatureLineTop;
   doc.deponents.forEach((d, i) => {
-    const x0 = sigStartX + i * (perLineW + sigGap);
+    const x0 = sigStartX + i * sigStep;
     page.drawLine({
       start: { x: x0, y: signatureLineY },
       end: { x: x0 + perLineW, y: signatureLineY },
       thickness: 0.7,
       color: rgb(0, 0, 0),
     });
-    drawTextTop(d.name, x0, signatureLineTop + 15.5, BODY);
+    drawTextTop(d.name, x0, signatureLineTop + 3.5, BODY);
   });
+
 
   const blockW = L.notaryImage.width ?? 248;
   const blockH = L.notaryImage.height ?? (blockW * notaryBlockImg.height) / notaryBlockImg.width;
