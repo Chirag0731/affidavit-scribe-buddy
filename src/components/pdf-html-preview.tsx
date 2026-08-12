@@ -18,8 +18,6 @@ const PT_TO_PX = 96 / 72; // 1pt = 1.333px
 
 export function PdfHtmlPreview({ doc, className = "" }: PdfHtmlPreviewProps) {
   const layout = doc.layout;
-  const pageWidth = PAGE_WIDTH_PX;
-  const pageHeight = PAGE_HEIGHT_PX;
 
   const toPx = (pt?: number) => (pt ?? 0) * PT_TO_PX;
   const pos = (p: ElementPos) => ({
@@ -37,8 +35,8 @@ export function PdfHtmlPreview({ doc, className = "" }: PdfHtmlPreviewProps) {
       <div
         className="relative bg-white shadow-sm mx-auto"
         style={{
-          width: pageWidth,
-          height: pageHeight,
+          width: PAGE_WIDTH_PX,
+          height: PAGE_HEIGHT_PX,
           fontFamily: "'Times New Roman', Times, serif",
           fontSize: toPx(12),
           lineHeight: 1.35,
@@ -86,31 +84,32 @@ export function PdfHtmlPreview({ doc, className = "" }: PdfHtmlPreviewProps) {
           </div>
         )}
 
-        {/* Facts */}
-        {layout.facts &&
-          doc.facts.map((fact, i) => {
-            const baseTop = layout.facts.top;
-            const lineHeight = layout.facts.lh ?? 14;
-            const numberIndent = 18;
-            const factX = (layout.facts.x ?? 54) + numberIndent;
-            const factWidth = (layout.facts.width ?? 504) - numberIndent;
-            return (
+        {/* Facts - flowing container so multi-line facts wrap naturally */}
+        {layout.facts && (
+          <div
+            className="absolute text-justify"
+            style={{
+              left: toPx(layout.facts.x ?? 54),
+              top: toPx(layout.facts.top),
+              width: toPx(layout.facts.width ?? 504),
+              fontSize: toPx(layout.facts.size ?? 10.5),
+              lineHeight: (layout.facts.lh ?? 14) / (layout.facts.size ?? 10.5),
+            }}
+          >
+            {doc.facts.map((fact, i) => (
               <div
                 key={i}
-                className="absolute text-justify"
+                className="pl-[1.2em] -indent-[1.2em]"
                 style={{
-                  left: toPx(factX),
-                  top: toPx(baseTop + i * lineHeight),
-                  width: toPx(factWidth),
-                  fontSize: toPx(layout.facts.size ?? 10.5),
-                  lineHeight: lineHeight / (layout.facts.size ?? 10.5),
+                  marginBottom: i < doc.facts.length - 1 ? toPx(6) : 0,
                 }}
               >
                 <span className="font-bold">{i + 1}. </span>
                 {fact}
               </div>
-            );
-          })}
+            ))}
+          </div>
+        )}
 
         {/* Signature lines */}
         {layout.signatureLine &&
@@ -118,8 +117,7 @@ export function PdfHtmlPreview({ doc, className = "" }: PdfHtmlPreviewProps) {
             const sig = layout.signatureLine;
             const lineW = sig.width ?? 160;
             const count = doc.deponents.length;
-            const usable = (sig.width ?? 160) * count + (count - 1) * 40;
-            const gap = count > 1 ? (usable - lineW * count) / Math.max(1, count - 1) : 0;
+            const gap = count > 1 ? 40 : 0;
             const x = (sig.x ?? 54) + i * (lineW + gap);
             return (
               <div key={i}>
