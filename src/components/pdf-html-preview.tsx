@@ -1,4 +1,10 @@
-import { type AffidavitDoc } from "@/types/neptora";
+import {
+  type AffidavitDoc,
+  type TemplateLayout,
+  type ElementPos,
+  buildIntroSentence,
+  buildNotarySentence,
+} from "@/types/neptora";
 
 interface PdfHtmlPreviewProps {
   doc: AffidavitDoc;
@@ -15,7 +21,16 @@ export function PdfHtmlPreview({ doc, className = "" }: PdfHtmlPreviewProps) {
   const pageWidth = PAGE_WIDTH_PX;
   const pageHeight = PAGE_HEIGHT_PX;
 
-  const toPx = (pt: number) => pt * PT_TO_PX;
+  const toPx = (pt?: number) => (pt ?? 0) * PT_TO_PX;
+  const pos = (p: ElementPos) => ({
+    left: toPx(p.x ?? 54),
+    top: toPx(p.top),
+    width: toPx(p.width ?? (PAGE_WIDTH_PX / PT_TO_PX - (p.x ?? 54) * 2)),
+  });
+
+  const intro = buildIntroSentence(doc);
+  const notarySentence = buildNotarySentence(doc);
+  const swornText = `Sworn/Declared Remotely from the City of ${doc.city} in the Province of Ontario before me in the city of Toronto in the Province of Ontario & Country of Canada This ${doc.dayOfMonth} in accordance with O. Reg 431/20 Administering Oath or Declaration Remotely Ontario.`;
 
   return (
     <div className={`bg-white overflow-auto p-4 ${className}`}>
@@ -26,7 +41,7 @@ export function PdfHtmlPreview({ doc, className = "" }: PdfHtmlPreviewProps) {
           height: pageHeight,
           fontFamily: "'Times New Roman', Times, serif",
           fontSize: toPx(12),
-          lineHeight: 1.4,
+          lineHeight: 1.35,
           color: "#000",
           boxShadow: "0 0 0 1px #e5e5e5",
         }}
@@ -34,12 +49,10 @@ export function PdfHtmlPreview({ doc, className = "" }: PdfHtmlPreviewProps) {
         {/* Title */}
         {layout.title && (
           <div
-            className="absolute text-center font-bold uppercase"
+            className="absolute text-center font-bold uppercase whitespace-pre-wrap"
             style={{
-              left: toPx(layout.title.x),
-              top: toPx(layout.title.y),
-              width: toPx(layout.title.width),
-              fontSize: toPx(layout.title.fontSize || 14),
+              ...pos(layout.title),
+              fontSize: toPx(layout.title.size ?? 14),
             }}
           >
             {doc.title}
@@ -51,13 +64,11 @@ export function PdfHtmlPreview({ doc, className = "" }: PdfHtmlPreviewProps) {
           <div
             className="absolute"
             style={{
-              left: toPx(layout.date.x),
-              top: toPx(layout.date.y),
-              width: toPx(layout.date.width),
-              fontSize: toPx(layout.date.fontSize || 12),
+              ...pos(layout.date),
+              fontSize: toPx(layout.date.size ?? 10.5),
             }}
           >
-            {doc.date}
+            {doc.prettyDate}
           </div>
         )}
 
@@ -66,88 +77,124 @@ export function PdfHtmlPreview({ doc, className = "" }: PdfHtmlPreviewProps) {
           <div
             className="absolute text-justify"
             style={{
-              left: toPx(layout.intro.x),
-              top: toPx(layout.intro.y),
-              width: toPx(layout.intro.width),
-              fontSize: toPx(layout.intro.fontSize || 12),
+              ...pos(layout.intro),
+              fontSize: toPx(layout.intro.size ?? 10.5),
+              lineHeight: (layout.intro.lh ?? 14) / (layout.intro.size ?? 10.5),
             }}
           >
-            {doc.intro}
+            {intro}
           </div>
         )}
 
         {/* Facts */}
-        {layout.facts && doc.facts.map((fact, i) => (
-          <div
-            key={i}
-            className="absolute text-justify"
-            style={{
-              left: toPx((layout.facts?.x ?? 54) + (layout.facts?.numberIndent ?? 0)),
-              top: toPx((layout.facts?.y ?? 200) + i * toPx(layout.facts?.lineHeight ?? 14)),
-              width: toPx((layout.facts?.width ?? 500) - (layout.facts?.numberIndent ?? 0)),
-              fontSize: toPx(layout.facts?.fontSize || 12),
-            }}
-          >
-            <span className="font-bold">{i + 1}. </span>
-            {fact}
-          </div>
-        ))}
-
-        {/* Signature lines */}
-        {layout.signatureLine && doc.deponents.map((deponent, i) => {
-          const sig = layout.signatureLine;
-          const gap = doc.deponents.length > 1
-            ? (sig.width - 160 * doc.deponents.length) / Math.max(1, doc.deponents.length - 1)
-            : 0;
-          const x = sig.x + i * (160 + gap);
-          return (
-            <div key={i}>
+        {layout.facts &&
+          doc.facts.map((fact, i) => {
+            const baseTop = layout.facts.top;
+            const lineHeight = layout.facts.lh ?? 14;
+            const numberIndent = 18;
+            const factX = (layout.facts.x ?? 54) + numberIndent;
+            const factWidth = (layout.facts.width ?? 504) - numberIndent;
+            return (
               <div
-                className="absolute border-b border-black"
+                key={i}
+                className="absolute text-justify"
                 style={{
-                  left: toPx(x),
-                  top: toPx(sig.y),
-                  width: toPx(sig.width / (doc.deponents.length > 1 ? doc.deponents.length : 1)),
-                }}
-              />
-              <div
-                className="absolute text-center"
-                style={{
-                  left: toPx(x),
-                  top: toPx(sig.y + 4),
-                  width: toPx(sig.width / (doc.deponents.length > 1 ? doc.deponents.length : 1)),
-                  fontSize: toPx(10),
+                  left: toPx(factX),
+                  top: toPx(baseTop + i * lineHeight),
+                  width: toPx(factWidth),
+                  fontSize: toPx(layout.facts.size ?? 10.5),
+                  lineHeight: lineHeight / (layout.facts.size ?? 10.5),
                 }}
               >
-                {deponent}
+                <span className="font-bold">{i + 1}. </span>
+                {fact}
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
 
-        {/* Acknowledgement */}
-        {layout.acknowledgement && (
+        {/* Signature lines */}
+        {layout.signatureLine &&
+          doc.deponents.map((deponent, i) => {
+            const sig = layout.signatureLine;
+            const lineW = sig.width ?? 160;
+            const count = doc.deponents.length;
+            const usable = (sig.width ?? 160) * count + (count - 1) * 40;
+            const gap = count > 1 ? (usable - lineW * count) / Math.max(1, count - 1) : 0;
+            const x = (sig.x ?? 54) + i * (lineW + gap);
+            return (
+              <div key={i}>
+                <div
+                  className="absolute border-b border-black"
+                  style={{
+                    left: toPx(x),
+                    top: toPx(sig.top),
+                    width: toPx(lineW),
+                  }}
+                />
+                <div
+                  className="absolute text-center"
+                  style={{
+                    left: toPx(x),
+                    top: toPx(sig.top + 4),
+                    width: toPx(lineW),
+                    fontSize: toPx(10),
+                  }}
+                >
+                  {deponent.name}
+                </div>
+              </div>
+            );
+          })}
+
+        {/* Acknowledgement title */}
+        {layout.ackTitle && (
           <div
-            className="absolute text-center italic"
+            className="absolute text-center font-bold uppercase"
             style={{
-              left: toPx(layout.acknowledgement.x),
-              top: toPx(layout.acknowledgement.y),
-              width: toPx(layout.acknowledgement.width),
-              fontSize: toPx(layout.acknowledgement.fontSize || 12),
+              ...pos(layout.ackTitle),
+              fontSize: toPx(layout.ackTitle.size ?? 11),
             }}
           >
-            {doc.acknowledgement}
+            NOTARY ACKNOWLEDGEMENT
+          </div>
+        )}
+
+        {/* Acknowledgement text */}
+        {layout.ackText && (
+          <div
+            className="absolute text-justify"
+            style={{
+              ...pos(layout.ackText),
+              fontSize: toPx(layout.ackText.size ?? 10),
+              lineHeight: (layout.ackText.lh ?? 13) / (layout.ackText.size ?? 10),
+            }}
+          >
+            {notarySentence}
+          </div>
+        )}
+
+        {/* Sworn text */}
+        {layout.sworn && (
+          <div
+            className="absolute text-justify"
+            style={{
+              ...pos(layout.sworn),
+              fontSize: toPx(layout.sworn.size ?? 8.5),
+              lineHeight: (layout.sworn.lh ?? 12) / (layout.sworn.size ?? 8.5),
+            }}
+          >
+            {swornText}
           </div>
         )}
 
         {/* Notary block image */}
-        {layout.notaryBlock && (
+        {layout.notaryImage && (
           <div
             className="absolute"
             style={{
-              left: toPx(layout.notaryBlock.x),
-              top: toPx(layout.notaryBlock.y),
-              width: toPx(layout.notaryBlock.width),
+              left: toPx(layout.notaryImage.x ?? 308),
+              top: toPx(layout.notaryImage.top),
+              width: toPx(layout.notaryImage.width ?? 248),
             }}
           >
             <img
