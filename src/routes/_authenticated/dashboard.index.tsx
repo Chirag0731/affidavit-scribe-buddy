@@ -25,9 +25,11 @@ import {
 import { generateDocx, generatePdf } from "@/lib/doc-generator";
 import { uploadAffidavitFile, downloadStorageFile } from "@/lib/storage";
 import { TemplateLayoutEditor } from "@/components/template-layout-editor";
+import { PdfCanvasPreview } from "@/components/pdf-canvas-preview";
 
 export const Route = createFileRoute("/_authenticated/dashboard/")({
   component: NewAffidavitPage,
+  ssr: false,
 });
 
 type Step = "template-selection" | "form-fill" | "preview";
@@ -483,11 +485,7 @@ function NewAffidavitPage() {
       <div className={showEditor ? "grid lg:grid-cols-2 gap-6 items-start" : ""}>
         <div className="bg-card border border-border rounded-lg overflow-hidden">
           {pdfUrl ? (
-            <iframe
-              src={pdfUrl}
-              title="Affidavit PDF preview"
-              className="w-full h-[900px] bg-white"
-            />
+            <PdfCanvasPreview url={pdfUrl} className="w-full h-[900px]" />
           ) : (
             <div className="p-8 text-muted-foreground">Preparing preview…</div>
           )}
