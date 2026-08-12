@@ -17,6 +17,7 @@ import {
   type Template,
   type MergeField,
   type TemplateLayout,
+  type AffidavitDoc,
   withLayoutDefaults,
   buildAffidavitDoc,
   renderAffidavitText,
@@ -25,7 +26,7 @@ import {
 import { generateDocx, generatePdf } from "@/lib/doc-generator";
 import { uploadAffidavitFile, downloadStorageFile } from "@/lib/storage";
 import { TemplateLayoutEditor } from "@/components/template-layout-editor";
-import { PdfCanvasPreview } from "@/components/pdf-canvas-preview";
+import { PdfHtmlPreview } from "@/components/pdf-html-preview";
 
 export const Route = createFileRoute("/_authenticated/dashboard/")({
   component: NewAffidavitPage,
