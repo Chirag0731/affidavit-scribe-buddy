@@ -71,6 +71,7 @@ function NewAffidavitPage() {
           { ...selectedTemplate, layout: layoutDraft },
           formData,
         );
+        setAffidavitDoc(affDoc);
         const blob = await generatePdf(affDoc);
         setPdfUrl((old) => {
           if (old) URL.revokeObjectURL(old);
