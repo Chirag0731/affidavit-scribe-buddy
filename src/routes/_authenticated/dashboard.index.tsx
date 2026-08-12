@@ -488,8 +488,8 @@ function NewAffidavitPage() {
 
       <div className={showEditor ? "grid lg:grid-cols-2 gap-6 items-start" : ""}>
         <div className="bg-card border border-border rounded-lg overflow-hidden">
-          {pdfUrl ? (
-            <PdfCanvasPreview url={pdfUrl} className="w-full h-[900px]" />
+          {affidavitDoc ? (
+            <PdfHtmlPreview doc={affidavitDoc} className="w-full h-[900px]" />
           ) : (
             <div className="p-8 text-muted-foreground">Preparing preview…</div>
           )}
