@@ -3,17 +3,11 @@ import { Loader2, AlertCircle } from "lucide-react";
 import * as pdfjs from "pdfjs-dist";
 
 const WORKER_URL = "/pdf.worker.min.mjs";
-let workerSrcUrl: string | null = null;
 
-async function ensureWorkerSrc() {
-  if (workerSrcUrl) return workerSrcUrl;
-  const res = await fetch(WORKER_URL);
-  if (!res.ok) throw new Error(`Failed to load PDF worker: ${res.status}`);
-  const code = await res.text();
-  const blob = new Blob([code], { type: "application/javascript" });
-  workerSrcUrl = URL.createObjectURL(blob);
-  pdfjs.GlobalWorkerOptions.workerSrc = workerSrcUrl;
-  return workerSrcUrl;
+function ensureWorkerSrc() {
+  if (!pdfjs.GlobalWorkerOptions.workerSrc) {
+    pdfjs.GlobalWorkerOptions.workerSrc = WORKER_URL;
+  }
 }
 
 interface PdfCanvasPreviewProps {
