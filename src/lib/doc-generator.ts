@@ -120,7 +120,9 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
   {
     const size = L.title.size ?? 14;
     const tw = bold.widthOfTextAtSize(doc.title, size);
-    drawTextTop(doc.title, (PAGE_W - tw) / 2, L.title.top, size, bold);
+    const boxX = L.title.x ?? MARGIN;
+    const boxW = L.title.width ?? CONTENT_W;
+    drawTextTop(doc.title, boxX + (boxW - tw) / 2, L.title.top, size, bold);
   }
 
   drawTextTop(doc.prettyDate, L.date.x ?? MARGIN, L.date.top, L.date.size ?? BODY);
@@ -134,20 +136,23 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
           { text: "MAKE OATH AND SAY AS FOLLOWS:", bold: true },
         ]
       : [{ text: intro }];
+  const introX = L.intro.x ?? MARGIN;
   const afterIntroTop = drawSegmentsTop(introSegs, L.intro.top, {
-    x: L.intro.x ?? MARGIN,
+    x: introX,
+    maxW: L.intro.width ?? PAGE_W - introX - MARGIN,
     size: L.intro.size ?? BODY,
     lh: L.intro.lh ?? LH,
   });
 
   const NUM_W = 22;
-  const FACT_INDENT = MARGIN + NUM_W;
-  const FACT_W = CONTENT_W - NUM_W;
+  const factNumX = L.facts.x ?? MARGIN;
+  const FACT_INDENT = factNumX + NUM_W;
+  const FACT_W = (L.facts.width ?? PAGE_W - factNumX - MARGIN) - NUM_W;
   const factSize = L.facts.size ?? BODY;
   const factLh = L.facts.lh ?? LH;
   let factTop = Math.max(L.facts.top, afterIntroTop + 8);
   doc.facts.forEach((fact, i) => {
-    drawTextTop(`${i + 1}.`, MARGIN, factTop, factSize);
+    drawTextTop(`${i + 1}.`, factNumX, factTop, factSize);
     factTop = drawSegmentsTop([{ text: fact }], factTop, {
       x: FACT_INDENT,
       maxW: FACT_W,
@@ -156,12 +161,17 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
     }) + 4;
   });
 
-  const sigGap = 30;
-  const perLineW = L.signatureLine.width ?? 220;
   const sigStartX = L.signatureLine.x ?? MARGIN;
+  const sigCount = Math.max(1, doc.deponents.length);
+  const sigAvailable = PAGE_W - MARGIN - sigStartX;
+  const sigGap = sigCount > 1 ? 30 : 0;
+  const perLineW = Math.min(
+    L.signatureLine.width ?? 220,
+    (sigAvailable - sigGap * (sigCount - 1)) / sigCount,
+  );
   const signatureLineTop = Math.max(L.signatureLine.top, factTop + 12);
   const signatureLineY = PAGE_H - signatureLineTop;
-  doc.deponents.forEach((_, i) => {
+  doc.deponents.forEach((d, i) => {
     const x0 = sigStartX + i * (perLineW + sigGap);
     page.drawLine({
       start: { x: x0, y: signatureLineY },
@@ -169,14 +179,11 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
       thickness: 0.7,
       color: rgb(0, 0, 0),
     });
-  });
-  doc.deponents.forEach((d, i) => {
-    const x0 = sigStartX + i * (perLineW + sigGap);
     drawTextTop(d.name, x0, signatureLineTop + 15.5, BODY);
   });
 
   const blockW = L.notaryImage.width ?? 248;
-  const blockH = (blockW * notaryBlockImg.height) / notaryBlockImg.width;
+  const blockH = L.notaryImage.height ?? (blockW * notaryBlockImg.height) / notaryBlockImg.width;
   page.drawImage(notaryBlockImg, {
     x: L.notaryImage.x ?? 308,
     y: PAGE_H - L.notaryImage.top - blockH,
@@ -187,14 +194,28 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
   const ackTitle = "NOTARY ACKNOWLEDGEMENT";
   const ackTitleSize = L.ackTitle.size ?? 11;
   const ackTitleW = bold.widthOfTextAtSize(ackTitle, ackTitleSize);
-  drawTextTop(ackTitle, (PAGE_W - ackTitleW) / 2, L.ackTitle.top, ackTitleSize, bold);
+  const ackBoxX = L.ackTitle.x ?? MARGIN;
+  const ackBoxW = L.ackTitle.width ?? CONTENT_W;
+  drawTextTop(ackTitle, ackBoxX + (ackBoxW - ackTitleW) / 2, L.ackTitle.top, ackTitleSize, bold);
 
-  drawSegmentsTop([{ text: buildNotarySentence(doc) }], L.ackText.top, {
-    maxW: CONTENT_W - 40,
-    size: L.ackText.size ?? 10,
-    lh: L.ackText.lh ?? 13,
-    center: true,
-  });
+  {
+    const x = L.ackText.x ?? MARGIN + 20;
+    const w = L.ackText.width ?? CONTENT_W - 40;
+    const lines = wrapSegments([{ text: buildNotarySentence(doc) }], w, L.ackText.size ?? 10);
+    let top = L.ackText.top;
+    for (const line of lines) {
+      while (line.length && /^\s+$/.test(line[0].text)) line.shift();
+      const size = L.ackText.size ?? 10;
+      const lineW = line.reduce((acc, s) => acc + (s.bold ? bold : font).widthOfTextAtSize(s.text, size), 0);
+      let cx = x + (w - lineW) / 2;
+      for (const s of line) {
+        const f = s.bold ? bold : font;
+        drawTextTop(s.text, cx, top, size, f);
+        cx += f.widthOfTextAtSize(s.text, size);
+      }
+      top += L.ackText.lh ?? 13;
+    }
+  }
 
   const swornText =
     `Sworn/Declared Remotely from the City of ${doc.city} in the Province of Ontario ` +
@@ -207,6 +228,7 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
     size: L.sworn.size ?? 8.5,
     lh: L.sworn.lh ?? 12,
   });
+
 
   const bytes = await pdf.save();
   return new Blob([bytes as BlobPart], { type: "application/pdf" });
