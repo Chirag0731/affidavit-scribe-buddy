@@ -135,6 +135,7 @@ function NewAffidavitPage() {
     setGenerating(true);
     try {
       const affDoc = buildAffidavitDoc(selectedTemplate, formData);
+      setAffidavitDoc(affDoc);
       const content = renderAffidavitText(affDoc);
       setGeneratedContent(content);
 
