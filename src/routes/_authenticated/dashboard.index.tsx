@@ -464,16 +464,65 @@ function NewAffidavitPage() {
         </div>
       </div>
 
-      <div>
-        <h1 className="section-heading mb-2">Preview</h1>
-        <p className="text-muted-foreground">Review the generated affidavit below.</p>
+      <div className="flex items-start justify-between gap-4 flex-wrap">
+        <div>
+          <h1 className="section-heading mb-2">Preview</h1>
+          <p className="text-muted-foreground">
+            Review the PDF exactly as it will download, and adjust positioning before saving.
+          </p>
+        </div>
+        <button
+          onClick={() => setShowEditor((v) => !v)}
+          className="btn-secondary flex items-center gap-2"
+        >
+          <SlidersHorizontal className="w-4 h-4" />
+          {showEditor ? "Hide layout editor" : "Adjust layout"}
+        </button>
       </div>
 
-      <div className="bg-card border border-border rounded-lg p-8">
-        <pre className="font-serif text-foreground whitespace-pre-wrap text-base leading-relaxed">
+      <div className={showEditor ? "grid lg:grid-cols-2 gap-6 items-start" : ""}>
+        <div className="bg-card border border-border rounded-lg overflow-hidden">
+          {pdfUrl ? (
+            <iframe
+              src={pdfUrl}
+              title="Affidavit PDF preview"
+              className="w-full h-[900px] bg-white"
+            />
+          ) : (
+            <div className="p-8 text-muted-foreground">Preparing preview…</div>
+          )}
+        </div>
+
+        {showEditor && layoutDraft && (
+          <div className="space-y-4">
+            <TemplateLayoutEditor
+              value={layoutDraft}
+              onChange={setLayoutDraft}
+              templates={templates}
+              currentTemplateId={selectedTemplate?.id}
+            />
+            <button
+              onClick={handleSaveLayout}
+              disabled={savingLayout}
+              className="btn-primary flex items-center gap-2"
+            >
+              {savingLayout ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Save className="w-4 h-4" />
+              )}
+              Save layout to "{selectedTemplate?.name}" & update files
+            </button>
+          </div>
+        )}
+      </div>
+
+      <details className="bg-card border border-border rounded-lg p-6">
+        <summary className="cursor-pointer text-foreground">Plain text version</summary>
+        <pre className="font-serif text-foreground whitespace-pre-wrap text-base leading-relaxed mt-4">
           {generatedContent}
         </pre>
-      </div>
+      </details>
 
       <div className="flex flex-col sm:flex-row gap-3">
         <button
@@ -497,6 +546,7 @@ function NewAffidavitPage() {
           Create Another
         </button>
       </div>
+
     </div>
   );
 }
