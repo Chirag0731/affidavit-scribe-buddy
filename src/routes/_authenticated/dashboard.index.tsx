@@ -250,6 +250,7 @@ function NewAffidavitPage() {
     setDocxPath(null);
     setPdfPath(null);
     setAffidavitId(null);
+    setAffidavitDoc(null);
     setLayoutDraft(null);
     setShowEditor(false);
     setPdfUrl((old) => {
