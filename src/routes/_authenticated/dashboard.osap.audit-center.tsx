@@ -31,7 +31,7 @@ function OsapAuditCenterPage() {
   const [loading, setLoading] = useState(true);
   const [selectedBatch, setSelectedBatch] = useState<string>("all");
   const [batchScope, setBatchScope] = useState<BatchScope>("all");
-  const [batchScenario, setBatchScenario] = useState<AuditScenario>("approved");
+  const [batchScenario, setBatchScenario] = useState<AuditScenario>("live_file_audit");
 
   // Batch runner state
   const [isRunning, setIsRunning] = useState(false);
@@ -199,20 +199,23 @@ function OsapAuditCenterPage() {
                 value={batchScenario}
                 onChange={(e) => setBatchScenario(e.target.value as AuditScenario)}
                 disabled={isRunning}
-                className="input-base text-sm"
+                className="input-base text-sm font-medium border-gold/40"
               >
-                <option value="approved">Approved Applications Simulation</option>
-                <option value="processing">Processing / Under Assessment</option>
-                <option value="rejected_documents">Detect Rejected Documents</option>
-                <option value="documents_under_review">Documents Under Review</option>
-                <option value="msfaa_incomplete">Detect Incomplete MSFAA</option>
-                <option value="denied">Denied Applications</option>
-                <option value="mfa_required">Simulate MFA Verification Pause</option>
-                <option value="portal_unavailable">Simulate Portal Timeout Failure</option>
-                <option value="manual_review">Manual Staff Review Flag</option>
+                <option value="live_file_audit">⚡ Smart Live Audit (Inspects Real MSFAA, Docs & Discrepancies)</option>
+                <option value="msfaa_incomplete">⚠️ Flag Incomplete MSFAA on Batch</option>
+                <option value="rejected_documents">📄 Detect Rejected Documents</option>
+                <option value="documents_under_review">⏳ Documents Under Review Queue</option>
+                <option value="approved">✅ Simulated Approved State</option>
+                <option value="processing">📊 Simulated In-Assessment State</option>
+                <option value="denied">❌ Simulated Denied State</option>
+                <option value="mfa_required">🔐 Simulate MFA 2FA Login Pause</option>
+                <option value="portal_unavailable">🔌 Simulate Portal Timeout Failure</option>
+                <option value="manual_review">📝 Flag for Manual Coordinator Review</option>
               </select>
               <p className="text-[11px] text-muted-foreground mt-1">
-                Applies audit rules, runs change detection against prior states, and generates action items.
+                {batchScenario === "live_file_audit"
+                  ? "Evaluates each student's real file attributes (MSFAA completion, SIN discrepancies, hold notes, document statuses)."
+                  : "Simulates test cases, detects changes against previous snapshots, and produces action items."}
               </p>
             </div>
 

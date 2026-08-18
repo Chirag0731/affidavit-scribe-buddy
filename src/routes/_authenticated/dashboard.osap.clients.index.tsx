@@ -61,6 +61,7 @@ function OsapClientsPage() {
   const [priorityFilter, setPriorityFilter] = useState<string>("all");
   const [credentialFilter, setCredentialFilter] = useState<string>("all");
   const [batchFilter, setBatchFilter] = useState<string>("all");
+  const [msfaaFilter, setMsfaaFilter] = useState<string>(searchParams.msfaa || "all");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
   // Add / Edit Client Modal State
@@ -257,9 +258,18 @@ function OsapClientsPage() {
       if (priorityFilter !== "all" && c.priority !== priorityFilter) return false;
       if (credentialFilter !== "all" && c.credential_status !== credentialFilter) return false;
 
+      // MSFAA filtering
+      if (msfaaFilter === "pending") {
+        if (c.msfaa_status === "submitted") return false;
+      } else if (msfaaFilter === "submitted") {
+        if (c.msfaa_status !== "submitted") return false;
+      } else if (msfaaFilter !== "all" && c.msfaa_status !== msfaaFilter) {
+        return false;
+      }
+
       return true;
     });
-  }, [clients, searchTerm, batchFilter, statusFilter, priorityFilter, credentialFilter]);
+  }, [clients, searchTerm, batchFilter, statusFilter, priorityFilter, credentialFilter, msfaaFilter]);
 
   const totalPages = Math.ceil(filteredClients.length / pageSize) || 1;
   const paginatedClients = useMemo(() => {
@@ -275,6 +285,9 @@ function OsapClientsPage() {
     toast.success(`Exported ${toExport.length} clients to Excel`);
   };
 
+  const pendingMsfaaClients = useMemo(() => clients.filter((c) => c.msfaa_status !== "submitted"), [clients]);
+  const holdDiscrepancyClients = useMemo(() => clients.filter((c) => c.batch_name === "Hold" || c.notes?.toLowerCase().includes("discrepancy")), [clients]);
+
   return (
     <div className="space-y-6 animate-fade-in">
       {/* Header */}
@@ -282,7 +295,7 @@ function OsapClientsPage() {
         <div>
           <h1 className="section-heading">OSAP Clients</h1>
           <p className="text-muted-foreground mt-1">
-            Search, manage student files, monitor credential connections, and trigger audits by spreadsheet batch.
+            Search, manage student files, monitor credential connections, and inspect pending MSFAA agreements by batch.
           </p>
         </div>
 
@@ -299,9 +312,80 @@ function OsapClientsPage() {
         </div>
       </div>
 
+      {/* Quick Filter Status Pills */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
+        <button
+          onClick={() => {
+            setMsfaaFilter("all");
+            setStatusFilter("all");
+            setBatchFilter("all");
+            setPage(1);
+          }}
+          className={`px-3 py-1.5 rounded-lg border font-medium transition-smooth whitespace-nowrap ${
+            msfaaFilter === "all" && statusFilter === "all" && batchFilter === "all"
+              ? "bg-gold text-black border-gold font-semibold shadow-xs"
+              : "bg-card border-border text-muted-foreground hover:text-foreground"
+          }`}
+        >
+          All Students ({clients.length})
+        </button>
+
+        <button
+          onClick={() => {
+            setMsfaaFilter("pending");
+            setPage(1);
+          }}
+          className={`px-3 py-1.5 rounded-lg border font-medium transition-smooth whitespace-nowrap flex items-center gap-1.5 ${
+            msfaaFilter === "pending"
+              ? "bg-amber-500/20 text-amber-300 border-amber-500 font-semibold"
+              : "bg-card border-border text-amber-400/80 hover:text-amber-300"
+          }`}
+        >
+          <span>⚠️ Pending MSFAA</span>
+          <span className="px-1.5 py-0.2 bg-amber-500/30 rounded-full font-mono text-[10px]">
+            {pendingMsfaaClients.length}
+          </span>
+        </button>
+
+        <button
+          onClick={() => {
+            setBatchFilter("Hold");
+            setMsfaaFilter("all");
+            setPage(1);
+          }}
+          className={`px-3 py-1.5 rounded-lg border font-medium transition-smooth whitespace-nowrap flex items-center gap-1.5 ${
+            batchFilter === "Hold"
+              ? "bg-rose-500/20 text-rose-300 border-rose-500 font-semibold"
+              : "bg-card border-border text-rose-400/80 hover:text-rose-300"
+          }`}
+        >
+          <span>🚨 Holds & Discrepancies</span>
+          <span className="px-1.5 py-0.2 bg-rose-500/30 rounded-full font-mono text-[10px]">
+            {holdDiscrepancyClients.length}
+          </span>
+        </button>
+
+        <button
+          onClick={() => {
+            setMsfaaFilter("submitted");
+            setPage(1);
+          }}
+          className={`px-3 py-1.5 rounded-lg border font-medium transition-smooth whitespace-nowrap flex items-center gap-1.5 ${
+            msfaaFilter === "submitted"
+              ? "bg-emerald-500/20 text-emerald-300 border-emerald-500 font-semibold"
+              : "bg-card border-border text-emerald-400/80 hover:text-emerald-300"
+          }`}
+        >
+          <span>✅ MSFAA Submitted</span>
+          <span className="px-1.5 py-0.2 bg-emerald-500/30 rounded-full font-mono text-[10px]">
+            {clients.length - pendingMsfaaClients.length}
+          </span>
+        </button>
+      </div>
+
       {/* Search & Filter Bar */}
       <div className="bg-card border border-border rounded-xl p-4 space-y-4">
-        <div className="grid md:grid-cols-5 gap-3">
+        <div className="grid md:grid-cols-6 gap-3">
           <div className="md:col-span-2 relative">
             <Search className="w-4 h-4 text-muted-foreground absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
@@ -333,6 +417,21 @@ function OsapClientsPage() {
 
           <div>
             <select
+              value={msfaaFilter}
+              onChange={(e) => {
+                setMsfaaFilter(e.target.value);
+                setPage(1);
+              }}
+              className="input-base text-xs font-medium"
+            >
+              <option value="all">All MSFAA Statuses</option>
+              <option value="pending">⚠️ Pending / Incomplete MSFAA ({pendingMsfaaClients.length})</option>
+              <option value="submitted">✅ Submitted MSFAA ({clients.length - pendingMsfaaClients.length})</option>
+            </select>
+          </div>
+
+          <div>
+            <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
               className="input-base text-xs"
@@ -359,20 +458,27 @@ function OsapClientsPage() {
           </div>
         </div>
 
-        {/* Batch Action Banner */}
-        {batchFilter !== "all" && (
+        {/* Active Filter Banner */}
+        {(batchFilter !== "all" || msfaaFilter === "pending") && (
           <div className="flex items-center justify-between bg-muted/40 border border-border px-4 py-2.5 rounded-lg text-xs">
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-foreground">Active Batch View:</span>
-              <span className="px-2 py-0.5 bg-gold/15 text-gold font-mono font-semibold rounded border border-gold/30">
-                {batchFilter} ({filteredClients.length} clients)
-              </span>
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="font-semibold text-foreground">Active Filter:</span>
+              {batchFilter !== "all" && (
+                <span className="px-2 py-0.5 bg-gold/15 text-gold font-mono font-semibold rounded border border-gold/30">
+                  Batch: {batchFilter}
+                </span>
+              )}
+              {msfaaFilter === "pending" && (
+                <span className="px-2 py-0.5 bg-amber-500/20 text-amber-300 font-semibold rounded border border-amber-500/40">
+                  ⚠️ Showing {filteredClients.length} Students with Pending MSFAA
+                </span>
+              )}
             </div>
             <Link
               to="/dashboard/osap/audit-center"
               className="btn-primary py-1 px-3 text-xs flex items-center gap-1.5"
             >
-              <Scan className="w-3.5 h-3.5" /> Audit This Entire Batch
+              <Scan className="w-3.5 h-3.5" /> Run Smart Audit on Filtered List
             </Link>
           </div>
         )}

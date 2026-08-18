@@ -41,8 +41,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T13:29:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:37:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-013-ajay-thakur",
@@ -68,8 +68,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T13:30:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:38:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-010-ayesha-khan",
@@ -95,8 +95,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T13:27:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:35:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-003-erika-acevedo",
@@ -122,8 +122,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by college",
-    "created_at": "2026-08-18T13:20:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:28:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-004-erishwar-venkasammy",
@@ -149,8 +149,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "Application closed / ineligible.",
     "notes": "Issued by college",
-    "created_at": "2026-08-18T13:21:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:29:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-006-gurpreet-kaur",
@@ -176,8 +176,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T13:23:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:31:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-005-mehak-mir",
@@ -203,8 +203,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by college",
-    "created_at": "2026-08-18T13:22:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:30:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-009-muhammad-humyun-khan",
@@ -230,8 +230,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T13:26:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:34:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-011-muneeb-ahmed-khan",
@@ -257,8 +257,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T13:28:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:36:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-014-pankaj-gandhi",
@@ -284,8 +284,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T13:31:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:39:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-002-ramandeep-singh--discrepancy-",
@@ -305,14 +305,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Issued by college",
     "notes": "Issued by college",
-    "created_at": "2026-08-18T13:19:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:27:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-001-ravandeep-singh--discrepancy-",
@@ -332,14 +332,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Issued by college",
     "notes": "Issued by college",
-    "created_at": "2026-08-18T13:18:06.801Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:26:14.166Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-015-sharanjeet-singh",
@@ -365,8 +365,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "Issued by College",
     "notes": "Issued by College",
-    "created_at": "2026-08-18T13:32:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:40:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-007-waleed-ali",
@@ -392,8 +392,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T13:24:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:32:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-008-yuri-glerup",
@@ -419,8 +419,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T13:25:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:33:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-029-aug-6-26---aug-10-26",
@@ -440,14 +440,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T13:46:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:54:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-020-azeem-rana",
@@ -473,8 +473,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T13:37:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:45:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-021-babupraveen-pirati",
@@ -500,8 +500,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:38:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:46:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-019-daniel-ahmed-khan",
@@ -527,8 +527,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T13:36:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:44:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-018-gunjan-kumar",
@@ -554,8 +554,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T13:35:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:43:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-017-gurpal-bhinder",
@@ -581,8 +581,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T13:34:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:42:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-027-mansi-hasija",
@@ -608,8 +608,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:44:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:52:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-023-nikhil-thomas",
@@ -635,8 +635,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:40:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:48:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-026-parminder-kaur",
@@ -662,8 +662,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:43:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:51:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-022-saleha-maqbool",
@@ -689,8 +689,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:39:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:47:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-016-sana-mir",
@@ -716,8 +716,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T13:33:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:41:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-028-sharnette-beckett",
@@ -743,8 +743,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:45:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:53:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-024-spencer-wong",
@@ -770,8 +770,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:41:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:49:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-025-tarun-hasija",
@@ -797,8 +797,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "LOA Pending",
-    "created_at": "2026-08-18T13:42:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:50:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-033-akwinder-basra",
@@ -824,8 +824,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:50:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:58:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-058-ayanleh-ismael",
@@ -851,8 +851,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:15:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:23:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-037-beyonce-whyte",
@@ -878,8 +878,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:54:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:02:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-036-dharminder-humpal",
@@ -905,8 +905,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:53:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:01:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-030-edith-mabel",
@@ -932,8 +932,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:47:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:55:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-038-faiza-sikander",
@@ -959,8 +959,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:55:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:03:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-061-fawad-hyder",
@@ -986,8 +986,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:18:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:26:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-048-fozia-ismael",
@@ -1007,14 +1007,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T14:05:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:13:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-051-funmilola-abdulsalam",
@@ -1040,8 +1040,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:08:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:16:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-040-husnain-riaz",
@@ -1067,8 +1067,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:57:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:05:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-043-isaac-ansah",
@@ -1094,8 +1094,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:00:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:08:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-049-isaac-christopher-whyte",
@@ -1121,8 +1121,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:06:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:14:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-050-khawaza-ahmed",
@@ -1148,8 +1148,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:07:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:15:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-035-manjit-singh",
@@ -1175,8 +1175,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T13:52:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:00:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-059-mary-lalzad",
@@ -1202,8 +1202,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:16:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:24:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-045-mohammad-hannan",
@@ -1229,8 +1229,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:02:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:10:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-046-muhammad-afzal",
@@ -1256,8 +1256,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:03:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:11:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-055-nabila-akbar",
@@ -1283,8 +1283,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:12:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:20:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-042-nahid-muhammad",
@@ -1310,8 +1310,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:59:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:07:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-057-nathan-conville",
@@ -1337,8 +1337,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:14:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:22:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-034-navjot-navjot",
@@ -1364,8 +1364,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:51:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:59:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-041-raheel-mushtaq",
@@ -1391,8 +1391,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:58:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:06:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-044-rupinder-singh",
@@ -1418,8 +1418,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T14:01:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:09:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-039-saif-ali-shaikh",
@@ -1445,8 +1445,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:56:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:04:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-053-sakina-hyder",
@@ -1472,8 +1472,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:10:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:18:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-047-shabana-sharif",
@@ -1499,8 +1499,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:04:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:12:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-054-shabeer-ali",
@@ -1526,8 +1526,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:11:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:19:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-056-shidaine-chevannes",
@@ -1553,8 +1553,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:13:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:21:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-032-sidra-qamar",
@@ -1580,8 +1580,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:49:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:57:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-060-taejuan-sparks",
@@ -1607,8 +1607,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:17:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:25:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-031-tyshaun-indriliunas",
@@ -1634,8 +1634,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:48:06.802Z",
-    "updated_at": "2026-08-18T20:20:06.802Z"
+    "created_at": "2026-08-18T13:56:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-052-zeeshan-mir",
@@ -1661,8 +1661,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:09:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:17:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-074-adrian-anderson",
@@ -1688,8 +1688,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:31:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:39:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-069-christopher-smith",
@@ -1715,8 +1715,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:26:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:34:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-073-emeka-mejulu",
@@ -1742,8 +1742,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:30:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:38:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-068-maurizio-bruno",
@@ -1769,8 +1769,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:25:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:33:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-065-monique-conville",
@@ -1796,8 +1796,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:22:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:30:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-071-prakashkumar-marvadi",
@@ -1823,8 +1823,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:28:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:36:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-063-raman-kashyap",
@@ -1850,8 +1850,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:20:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:28:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-072-ratinderpal-singh-kang",
@@ -1877,8 +1877,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T14:29:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:37:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-062-robert-bende",
@@ -1904,8 +1904,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:19:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:27:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-066-salah-abdillahi-ilyas",
@@ -1931,8 +1931,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:23:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:31:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-067-samriti-khanna",
@@ -1958,8 +1958,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:24:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:32:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-064-sewa-singh",
@@ -1985,8 +1985,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T14:21:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:29:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-070-tajai-brown-francis",
@@ -2012,8 +2012,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:27:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:35:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-090-alexander-perez",
@@ -2039,8 +2039,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:47:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:55:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-086-atul-kumar",
@@ -2066,8 +2066,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:43:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:51:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-083-britaney-frazer",
@@ -2093,8 +2093,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:40:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:48:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-088-farhan-nur",
@@ -2120,8 +2120,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:45:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:53:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-089-geeta-catherine",
@@ -2147,8 +2147,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:46:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:54:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-080-hemant-sharma",
@@ -2174,8 +2174,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "CBC2/ENROLLMENT LETTER",
-    "created_at": "2026-08-18T14:37:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:45:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-085-kwabena-boateng",
@@ -2195,14 +2195,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T14:42:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:50:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-081-leon-miller",
@@ -2228,8 +2228,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:38:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:46:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-077-leonard-hamilton",
@@ -2255,8 +2255,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:34:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:42:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-079-malik-hannain-mahmood",
@@ -2282,8 +2282,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:36:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:44:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-091-nicholas-tumusiime",
@@ -2309,8 +2309,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:48:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:56:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-087-oscar-sunil",
@@ -2336,8 +2336,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:44:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:52:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-092-papayaw-brakoh",
@@ -2363,8 +2363,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:49:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:57:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-082-romoy-mullings",
@@ -2390,8 +2390,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:39:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:47:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-078-saira-mahmood",
@@ -2417,8 +2417,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:35:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:43:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-084-suresh-ommi",
@@ -2444,8 +2444,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:41:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:49:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-076-treseana-stewart-miller",
@@ -2471,8 +2471,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:33:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:41:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-075-vannassa-freeman",
@@ -2498,8 +2498,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Awaiting PR Card",
-    "created_at": "2026-08-18T14:32:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:40:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-110-arshdeep-singh",
@@ -2525,8 +2525,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T15:07:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:15:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-097-benilouro-blanco",
@@ -2552,8 +2552,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:54:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:02:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-093-christine-quilao",
@@ -2579,8 +2579,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:50:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:58:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-102-danny-hoa",
@@ -2600,14 +2600,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T14:59:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:07:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-107-dharnidhar-bariwal",
@@ -2633,8 +2633,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:04:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:12:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-099-fariyad-singh",
@@ -2660,8 +2660,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T14:56:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:04:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-105-gem-daya-magsadia",
@@ -2687,8 +2687,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:02:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:10:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-094-gibrilla-koroma",
@@ -2714,8 +2714,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:51:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T14:59:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-098-jasdeep-singh",
@@ -2741,8 +2741,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "REJECTED",
     "notes": "REJECTED",
-    "created_at": "2026-08-18T14:55:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:03:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-103-jason-crooks",
@@ -2768,8 +2768,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:00:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:08:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-108-kamal-kamal",
@@ -2795,8 +2795,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "REJECTED",
-    "created_at": "2026-08-18T15:05:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:13:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-096-karthick-alagarsamy",
@@ -2822,8 +2822,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:53:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:01:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-106-milanie-cerezo",
@@ -2849,8 +2849,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:03:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:11:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-095-oyenyechi-ubah",
@@ -2876,8 +2876,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:52:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:00:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-104-renee-spence",
@@ -2897,14 +2897,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": "Loan Default",
-    "created_at": "2026-08-18T15:01:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:09:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-111-sandeep-kaur",
@@ -2930,8 +2930,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "DOB Issue",
     "notes": "DOB Issue",
-    "created_at": "2026-08-18T15:08:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:16:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-109-shalini-kundlass",
@@ -2957,8 +2957,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:06:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:14:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-100-tonny-ndasingwa",
@@ -2984,8 +2984,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T14:57:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:05:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-101-wilson-nsasira",
@@ -3011,8 +3011,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "REJECTED",
-    "created_at": "2026-08-18T14:58:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:06:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-141-approved-coe",
@@ -3032,14 +3032,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T15:38:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:46:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-112-cassey-monica--bueno",
@@ -3065,8 +3065,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:09:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:17:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-113-christopher-neal",
@@ -3086,14 +3086,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T15:10:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:18:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-114-dana-bernard",
@@ -3119,8 +3119,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:11:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:19:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-115-darren-davis",
@@ -3146,8 +3146,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:12:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:20:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-116-devon-brady",
@@ -3173,8 +3173,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:13:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:21:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-117-ernie-morrison",
@@ -3200,8 +3200,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:14:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:22:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-140-fao-issues",
@@ -3221,14 +3221,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T15:37:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:45:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-139-hold-might-get-removed",
@@ -3248,14 +3248,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T15:36:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:44:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-118-jason-bryan",
@@ -3281,8 +3281,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "academic progress",
-    "created_at": "2026-08-18T15:15:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:23:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-119-jinto-paul",
@@ -3308,8 +3308,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:16:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:24:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-120-jonathan-davis",
@@ -3329,14 +3329,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T15:17:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:25:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-121-karen-d-lucca",
@@ -3362,8 +3362,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:18:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:26:14.167Z",
+    "updated_at": "2026-08-18T20:28:14.167Z"
   },
   {
     "id": "osap-client-122-michael-oppong",
@@ -3389,8 +3389,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:19:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:27:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-123-michaela-wilford",
@@ -3416,8 +3416,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:20:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:28:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-124-mikhala-beckford",
@@ -3443,8 +3443,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:21:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:29:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-125-morshada-sharif",
@@ -3470,8 +3470,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:22:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:30:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-126-mubarak-nazeer",
@@ -3497,8 +3497,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:23:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:31:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-127-peninah-namugenyi",
@@ -3524,8 +3524,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:24:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:32:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-128-peterson-mungai--nyakundi",
@@ -3551,8 +3551,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:25:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:33:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-129-philip-wisdom",
@@ -3578,8 +3578,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:26:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:34:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-130-priya-hasija",
@@ -3605,8 +3605,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:27:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:35:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-131-rajesh-rampersad",
@@ -3632,8 +3632,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:28:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:36:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-138-removed",
@@ -3653,14 +3653,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T15:35:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:43:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-132-seun-jegede",
@@ -3686,8 +3686,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:29:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:37:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-133-suraj-singh",
@@ -3713,8 +3713,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T15:30:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:38:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-134-surinder-singh-kang",
@@ -3740,8 +3740,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T15:31:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:39:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-135-syavash-chalabi",
@@ -3767,8 +3767,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:32:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:40:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-136-vergel--de-jesus",
@@ -3794,8 +3794,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:33:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:41:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-137-wilson-onsare",
@@ -3821,8 +3821,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:34:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:42:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-142-alika-mullings-richards",
@@ -3848,8 +3848,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Loan Default/Restricted",
-    "created_at": "2026-08-18T15:39:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:47:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-143-amrit-singh",
@@ -3875,8 +3875,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T15:40:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:48:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-144-andrew-lee",
@@ -3902,8 +3902,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:41:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:49:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-145-annicko-jackson",
@@ -3929,8 +3929,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:42:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:50:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-179-approved-coe",
@@ -3950,14 +3950,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:16:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:24:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-146-arif-sufi",
@@ -3983,8 +3983,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:43:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:51:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-147-ashanti-faith-chambers-martin",
@@ -4010,8 +4010,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:44:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:52:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-148-ashish-mannan",
@@ -4037,8 +4037,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:45:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:53:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-149-bwakila--basila-antipas",
@@ -4064,8 +4064,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:46:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:54:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-150-carla-dionisio",
@@ -4091,8 +4091,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:47:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:55:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-151-carlos-munoz",
@@ -4118,8 +4118,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:48:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:56:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-152-chaltu-jirata",
@@ -4145,8 +4145,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:49:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:57:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-153-craig-nelson",
@@ -4166,14 +4166,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T15:50:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:58:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-154-dasran-burke",
@@ -4193,14 +4193,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T15:51:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T15:59:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-155-dinh-nguyen--quoc-nguyen",
@@ -4226,8 +4226,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:52:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T16:00:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-174-dwayne-ramroop",
@@ -4253,8 +4253,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:11:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:19:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-156-emmanuil-daphnis",
@@ -4280,8 +4280,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:53:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T16:01:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-178-fao-issues",
@@ -4301,14 +4301,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:15:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:23:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-177-hold-might-get-removed",
@@ -4328,14 +4328,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T16:14:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:22:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-157-jaiden-hackett-mignon",
@@ -4361,8 +4361,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:54:06.803Z",
-    "updated_at": "2026-08-18T20:20:06.803Z"
+    "created_at": "2026-08-18T16:02:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-158-jamal-usamot",
@@ -4382,14 +4382,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T15:55:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:03:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-159-jeffeth-robinson",
@@ -4415,8 +4415,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:56:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:04:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-160-kevon-whyte",
@@ -4442,8 +4442,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:57:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:05:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-161-khalil-joseph",
@@ -4469,8 +4469,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:58:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:06:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-162-kuljit-kaur",
@@ -4496,8 +4496,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:59:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:07:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-163-kulvir-kaur",
@@ -4523,8 +4523,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:00:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:08:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-164-kulvir-singh-pandher",
@@ -4550,8 +4550,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T16:01:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:09:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-165-maria-espinola",
@@ -4577,8 +4577,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:02:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:10:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-166-mohamed-abdalla-elkheder",
@@ -4598,14 +4598,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:03:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:11:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-167-nathaniel-brown",
@@ -4631,8 +4631,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "CITI DOC",
-    "created_at": "2026-08-18T16:04:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:12:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-168-ogary-walker",
@@ -4658,8 +4658,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:05:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:13:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-169-omerelfaroog-mohamed",
@@ -4685,8 +4685,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:06:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:14:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-170-ompreet-singh",
@@ -4712,8 +4712,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T16:07:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:15:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-176-removed",
@@ -4733,14 +4733,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "requires_verification",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:13:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:21:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-171-sara-begum",
@@ -4766,8 +4766,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:08:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:16:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-175-start--june-29th-2026-end--june-13th-2027",
@@ -4787,14 +4787,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:12:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:20:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-173-swapna-bura",
@@ -4814,14 +4814,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:10:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:18:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-172-zubair-baig",
@@ -4847,8 +4847,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:09:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:17:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-199-ajayan-prasannan",
@@ -4874,8 +4874,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:36:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:44:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-207-approved-coe",
@@ -4895,14 +4895,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:44:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:52:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-187-aram-jaff",
@@ -4928,8 +4928,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:24:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:32:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-181-arminder-singh",
@@ -4955,8 +4955,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T16:18:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:26:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-195-bahman-chalabi",
@@ -4982,8 +4982,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:32:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:40:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-186-dashne-raouf",
@@ -5009,8 +5009,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:23:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:31:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-183-dwayne-bogle",
@@ -5030,14 +5030,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:20:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:28:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-206-fao-issues",
@@ -5057,14 +5057,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:43:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:51:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-193-farzana-hossain",
@@ -5090,8 +5090,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:30:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:38:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-196-fathima-jiffry",
@@ -5117,8 +5117,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:33:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:41:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-203-form-1-link",
@@ -5138,14 +5138,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:40:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:48:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-205-hold-might-get-removed",
@@ -5165,14 +5165,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T16:42:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:50:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-192-joycin-vas",
@@ -5198,8 +5198,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:29:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:37:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-189-michael-itoua-mamic",
@@ -5219,14 +5219,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:26:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:34:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-190-navjinder-singh",
@@ -5252,8 +5252,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T16:27:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:35:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-191-navneet-kaur",
@@ -5279,8 +5279,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:28:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:36:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-200-patricia-richardson",
@@ -5300,14 +5300,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": "FAO - Sometime this week",
-    "created_at": "2026-08-18T16:37:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:45:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-198-peter-gallagher",
@@ -5327,14 +5327,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": "REJECTED",
-    "created_at": "2026-08-18T16:35:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:43:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-182-radoje-kovinic",
@@ -5354,14 +5354,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": "FAO",
-    "created_at": "2026-08-18T16:19:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:27:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-188-raneen-hasan",
@@ -5387,8 +5387,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:25:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:33:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-204-removed",
@@ -5408,14 +5408,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:41:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:49:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-184-richard-chaput",
@@ -5441,8 +5441,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:21:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:29:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-201-samir-bashir",
@@ -5462,14 +5462,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:38:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:46:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-197-shannell-nagasar",
@@ -5495,8 +5495,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:34:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:42:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-194-soubagleh-daher",
@@ -5522,8 +5522,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:31:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:39:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-202-start--july-13th-2026-end--june-27th-2027",
@@ -5543,14 +5543,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:39:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:47:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-185-zaniyar-mohamad",
@@ -5576,8 +5576,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:22:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:30:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-269-abdirahman-iltireh",
@@ -5597,14 +5597,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:46:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:54:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-221-abeya-sirika",
@@ -5624,14 +5624,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": "REJECTED",
-    "created_at": "2026-08-18T16:58:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:06:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-257-adedigba-adetutu",
@@ -5651,14 +5651,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:34:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:42:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-266-amandeep-kaur",
@@ -5678,14 +5678,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:43:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:51:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-281-amandeep-kaur",
@@ -5705,14 +5705,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:58:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:06:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-252-annemarie-caron",
@@ -5738,8 +5738,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:29:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:37:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-304-approved-coe",
@@ -5759,14 +5759,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:21:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:29:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-274-arlene-thompson",
@@ -5786,14 +5786,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:51:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:59:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-262-asad-janjua",
@@ -5813,14 +5813,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:39:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:47:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-210-ashish-mehta",
@@ -5846,8 +5846,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:47:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:55:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-244-aude-tanguy",
@@ -5867,14 +5867,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:21:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:29:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-258-ayooluwa-ajayi",
@@ -5900,8 +5900,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:35:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:43:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-265-barbara-lamoureux",
@@ -5921,14 +5921,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": "REJECTED",
-    "created_at": "2026-08-18T17:42:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:50:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-297-belinda-hanson",
@@ -5948,14 +5948,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:14:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:22:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-239-bhanu-priya-nodagala",
@@ -5981,8 +5981,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:16:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:24:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-270-bill-allison",
@@ -6002,14 +6002,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:47:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:55:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-226-brandi-bonguange",
@@ -6029,14 +6029,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": "REJECTED",
-    "created_at": "2026-08-18T17:03:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:11:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-248-camar-grant",
@@ -6056,14 +6056,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:25:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:33:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-292-cassandra-bissonnette",
@@ -6083,14 +6083,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:09:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:17:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-212-charles-shannon",
@@ -6110,14 +6110,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:49:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:57:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-287-christina-marsellos",
@@ -6137,14 +6137,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:04:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:12:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-242-christine-fajingbesi",
@@ -6164,14 +6164,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:19:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:27:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-214-darren-bennett",
@@ -6191,14 +6191,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:51:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:59:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-253-david-forrester",
@@ -6218,14 +6218,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:30:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:38:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-290-dilkaran-singh-bajwa",
@@ -6245,14 +6245,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T18:07:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:15:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-276-duane-dasilva",
@@ -6272,14 +6272,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:53:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:01:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-229-emmanuel-amoah",
@@ -6299,14 +6299,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:06:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:14:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-303-fao-issues",
@@ -6326,14 +6326,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:20:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:28:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-245-farheen-ali",
@@ -6353,14 +6353,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:22:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:30:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-250-garry-lavigne",
@@ -6380,14 +6380,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:27:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:35:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-260-gidget-torpio",
@@ -6407,14 +6407,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:37:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:45:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-272-hasan-masud",
@@ -6440,8 +6440,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:49:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:57:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-285-hassam-syed",
@@ -6461,14 +6461,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:02:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:10:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-234-hayden-shaw",
@@ -6488,14 +6488,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:11:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:19:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-243-herve-tella",
@@ -6515,14 +6515,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:20:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:28:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-302-hold-might-get-removed",
@@ -6542,14 +6542,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T18:19:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:27:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-273-ian-thompson",
@@ -6569,14 +6569,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:50:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:58:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-294-imafidon-iize-iyamu",
@@ -6596,14 +6596,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:11:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:19:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-261-ishmael-ali",
@@ -6623,14 +6623,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:38:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:46:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-249-james-pike",
@@ -6656,8 +6656,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:26:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:34:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-254-jasjeet-mushiana",
@@ -6677,14 +6677,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:31:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:39:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-223-jasmine-ogbuagu",
@@ -6710,8 +6710,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:00:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:08:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-209-jason-martin",
@@ -6731,14 +6731,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": "FAO",
-    "created_at": "2026-08-18T16:46:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:54:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-216-jason-michaud",
@@ -6758,14 +6758,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:53:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:01:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-213-jesse-bonnah",
@@ -6785,14 +6785,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:50:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:58:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-263-jocelyn-de-lon-reyes",
@@ -6818,8 +6818,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:40:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:48:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-240-joshua-fajingbesi",
@@ -6839,14 +6839,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:17:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:25:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-228-joshua-stanley",
@@ -6866,14 +6866,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:05:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:13:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-233-kenisha-young",
@@ -6893,14 +6893,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:10:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:18:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-264-kishore-khadoo",
@@ -6920,14 +6920,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:41:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:49:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-279-lucy-drumonde",
@@ -6947,14 +6947,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:56:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:04:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-219-maninder-singh",
@@ -6974,14 +6974,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T16:56:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:04:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-291-marian-dmuchowdki",
@@ -7001,14 +7001,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:08:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:16:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-268-mariotte-maduma-itoua",
@@ -7028,14 +7028,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:45:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:53:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-296-mark-magsadia",
@@ -7061,8 +7061,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:13:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:21:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-293-mark-rodo",
@@ -7088,8 +7088,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:10:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:18:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-247-marlene-pereira",
@@ -7109,14 +7109,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:24:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:32:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-232-marquel-anderson",
@@ -7136,14 +7136,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:09:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:17:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-235-mary-afolayan",
@@ -7163,14 +7163,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:12:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:20:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-289-michael-samis",
@@ -7190,14 +7190,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:06:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:14:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-267-michelle-berryman",
@@ -7217,14 +7217,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:44:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:52:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-224-miraj-patel",
@@ -7250,8 +7250,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:01:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:09:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-220-mohamed-badawi",
@@ -7271,14 +7271,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:57:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:05:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-275-mokonzi-yaka",
@@ -7298,14 +7298,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:52:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:00:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-218-nadine-taylor",
@@ -7325,14 +7325,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:55:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:03:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-246-nandakishore-salikumar",
@@ -7352,14 +7352,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:23:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:31:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-237-obinna-weaweh",
@@ -7379,14 +7379,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:14:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:22:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-299-orville-brown",
@@ -7406,14 +7406,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:16:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:24:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-283-parshotem-singh-malhi",
@@ -7433,14 +7433,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T18:00:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:08:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-225-patrick-armah",
@@ -7460,14 +7460,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:02:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:10:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-280-ramandeep-singh",
@@ -7487,14 +7487,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T17:57:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:05:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-301-removed",
@@ -7514,14 +7514,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:18:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:26:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-295-richard-adu",
@@ -7541,14 +7541,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:12:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:20:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-282-robert-wale",
@@ -7568,14 +7568,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:59:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:07:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-288-rohit-sood",
@@ -7595,14 +7595,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:05:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:13:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-215-safiya-cummings",
@@ -7628,8 +7628,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:52:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:00:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-231-samantha-jones",
@@ -7655,8 +7655,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:08:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:16:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-251-sandalpreet-kaur",
@@ -7676,14 +7676,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:28:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:36:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-230-sandrelle-scimo",
@@ -7703,14 +7703,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": "REJECTED",
-    "created_at": "2026-08-18T17:07:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:15:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-238-sarasvati-ramsumair-rambalie",
@@ -7730,14 +7730,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:15:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:23:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-277-seema-rani",
@@ -7763,8 +7763,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:54:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:02:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-271-selena-thackoordath",
@@ -7784,14 +7784,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:48:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:56:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-255-sharmina-ahsan",
@@ -7811,14 +7811,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:32:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:40:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-208-skarandeep-singh",
@@ -7838,14 +7838,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T16:45:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:53:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-256-soraya-hettiarachchi",
@@ -7865,14 +7865,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:33:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:41:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-211-sourieh-mikhael",
@@ -7892,14 +7892,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:48:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T16:56:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-298-starsha-fletcher",
@@ -7919,14 +7919,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:15:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:23:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-300-start-date--27-july-2026-end-date--11-july-2027",
@@ -7946,14 +7946,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:17:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:25:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-217-stephanie-bonnah",
@@ -7979,8 +7979,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:54:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:02:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-227-suher-saba",
@@ -8000,14 +8000,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:04:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:12:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-278-tajinder-bharot",
@@ -8033,8 +8033,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:55:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:03:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-259-terencio-da-graca",
@@ -8054,14 +8054,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T17:36:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:44:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-222-vanessa-ngang",
@@ -8081,14 +8081,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T16:59:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:07:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-236-victor-chibuzor",
@@ -8114,8 +8114,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:13:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:21:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-284-vinod-kumar",
@@ -8141,8 +8141,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:01:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:09:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-286-yvonette-rajpattie",
@@ -8162,14 +8162,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:03:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:11:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-241-zakaria-jama",
@@ -8195,8 +8195,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:18:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T17:26:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-309-aug-24-2026---aug-9-2027",
@@ -8216,14 +8216,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:26:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:34:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-308-corey-omar-bonilla",
@@ -8243,14 +8243,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:25:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:33:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-307-fitria",
@@ -8270,14 +8270,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "submitted",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:24:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:32:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-310-https---forms-gle-vwipxkcy4n2ggsfx6",
@@ -8297,14 +8297,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:27:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:35:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-305-osman-hamza-nooristani",
@@ -8324,14 +8324,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:22:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:30:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-306-pravin-sivarajah",
@@ -8351,14 +8351,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "not_started",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "submitted",
+    "msfaa_status": "required",
     "document_status": "under_review",
     "priority": "medium",
-    "action_required": false,
-    "action_required_summary": null,
+    "action_required": true,
+    "action_required_summary": "MSFAA incomplete (Pending) — requires student online signature",
     "notes": null,
-    "created_at": "2026-08-18T18:23:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:31:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-370-abdul-latif",
@@ -8378,14 +8378,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "LOAN OVERPAYMENT/PROGRESS DOC",
     "notes": "LOAN OVERPAYMENT/PROGRESS DOC",
-    "created_at": "2026-08-18T19:27:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:35:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-383-akachukwu-nwachukwu",
@@ -8411,8 +8411,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:40:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:48:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-324-albert-gordon",
@@ -8432,14 +8432,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Previous OSAP post 2024",
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T18:41:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:49:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-414-alison-gittens",
@@ -8459,14 +8459,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Progress DOC",
     "notes": "Progress DOC",
-    "created_at": "2026-08-18T20:11:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:19:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-322-aliya",
@@ -8486,14 +8486,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Issued by College",
     "notes": "Issued by College",
-    "created_at": "2026-08-18T18:39:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:47:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-361-alla-al-wasity",
@@ -8513,14 +8513,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:18:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:26:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-360-amarjit-kaur",
@@ -8540,14 +8540,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:17:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:25:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-320-amir-rashid",
@@ -8567,14 +8567,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Age",
     "notes": "Age",
-    "created_at": "2026-08-18T18:37:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:45:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-356-amodu-salawu",
@@ -8600,8 +8600,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:13:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:21:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-389-amodu-salawu",
@@ -8621,14 +8621,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:46:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:54:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-367-anca-marginean",
@@ -8648,14 +8648,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Already Has an Account",
     "notes": "Already Has an Account",
-    "created_at": "2026-08-18T19:24:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:32:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-332-angela-bernacchi",
@@ -8675,14 +8675,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "1972",
     "notes": "1972",
-    "created_at": "2026-08-18T18:49:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:57:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-321-anser",
@@ -8702,14 +8702,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Issued by College",
     "notes": "Issued by College",
-    "created_at": "2026-08-18T18:38:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:46:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-395-antonette-ellis",
@@ -8729,14 +8729,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:52:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:00:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-315-asad-janjua",
@@ -8756,14 +8756,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "College Not Received",
     "notes": "College Not Received",
-    "created_at": "2026-08-18T18:32:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:40:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-399-ashley-goncalves",
@@ -8783,14 +8783,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:56:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:04:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-318-babar-riaz",
@@ -8810,14 +8810,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Previous OSAP post 2024",
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T18:35:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:43:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-420-belinda-hanson",
@@ -8837,14 +8837,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T20:17:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:25:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-409-caitlin-sarris",
@@ -8864,14 +8864,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T20:06:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:14:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-348-cecilia-manang",
@@ -8891,14 +8891,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:05:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:13:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-314-dalwinder-kaur",
@@ -8918,14 +8918,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Age",
     "notes": "Age",
-    "created_at": "2026-08-18T18:31:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:39:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-418-daniel-gyamfi",
@@ -8945,14 +8945,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T20:15:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:23:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-363-deepa-elangovan",
@@ -8972,14 +8972,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Already has OSAP acct",
     "notes": "Already has OSAP acct",
-    "created_at": "2026-08-18T19:20:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:28:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-411-denzil-daley",
@@ -8999,14 +8999,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "EDU DRIVE",
     "notes": "EDU DRIVE",
-    "created_at": "2026-08-18T20:08:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:16:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-380-devah-thompson",
@@ -9026,14 +9026,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:37:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:45:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-394-dwight-johnson",
@@ -9053,14 +9053,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:51:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:59:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-351-elizabeth-amador",
@@ -9080,14 +9080,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:08:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:16:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-415-elizabeth-reis",
@@ -9107,14 +9107,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "FAO - Thursday",
     "notes": "FAO - Thursday",
-    "created_at": "2026-08-18T20:12:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:20:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-311-eyad-taha",
@@ -9134,14 +9134,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Age",
     "notes": "Age",
-    "created_at": "2026-08-18T18:28:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:36:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-339-fanessa",
@@ -9161,14 +9161,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T18:56:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T19:04:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-412-farkhanda-zerin",
@@ -9188,14 +9188,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "EDU DRIVE",
     "notes": "EDU DRIVE",
-    "created_at": "2026-08-18T20:09:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:17:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-382-franicko-jackson",
@@ -9215,14 +9215,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Loan default",
     "notes": "Loan default",
-    "created_at": "2026-08-18T19:39:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:47:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-345-giovanni-bruno",
@@ -9242,14 +9242,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:02:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:10:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-384-godwill-nkemdi",
@@ -9275,8 +9275,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:41:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:49:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-313-haider-abou-shamalah",
@@ -9296,14 +9296,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Age",
     "notes": "Age",
-    "created_at": "2026-08-18T18:30:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:38:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-327-hashim-merchant",
@@ -9323,14 +9323,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Age",
     "notes": "Age",
-    "created_at": "2026-08-18T18:44:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:52:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-359-hassan-muhammad",
@@ -9350,14 +9350,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Enrolled till 30/07 CCBST",
     "notes": "Enrolled till 30/07 CCBST",
-    "created_at": "2026-08-18T19:16:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:24:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-328-heena-merchant",
@@ -9377,14 +9377,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Age",
     "notes": "Age",
-    "created_at": "2026-08-18T18:45:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:53:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-349-immaculate-mirembe",
@@ -9404,14 +9404,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:06:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:14:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-377-jabir-mia",
@@ -9431,14 +9431,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:34:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:42:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-329-jada-harrison",
@@ -9458,14 +9458,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Issued by College",
     "notes": "Issued by College",
-    "created_at": "2026-08-18T18:46:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:54:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-379-james-drohan",
@@ -9485,14 +9485,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "FAO/schizophrenic",
     "notes": "FAO/schizophrenic",
-    "created_at": "2026-08-18T19:36:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:44:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-366-janarthanath-tharmaratnam",
@@ -9512,14 +9512,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "HOLD",
     "notes": "HOLD",
-    "created_at": "2026-08-18T19:23:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:31:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-378-janetta-obiasada",
@@ -9545,8 +9545,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:35:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:43:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-416-jennifer-couto",
@@ -9566,14 +9566,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Clearance",
     "notes": "Clearance",
-    "created_at": "2026-08-18T20:13:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:21:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-407-jonan-ampuriire",
@@ -9593,14 +9593,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN issue?",
     "notes": "SIN issue?",
-    "created_at": "2026-08-18T20:04:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:12:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-402-jonathan-sewel",
@@ -9620,14 +9620,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:59:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:07:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-369-juliet-nanvuma",
@@ -9647,14 +9647,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:26:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:34:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-344-kadian-ellis",
@@ -9680,8 +9680,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:01:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:09:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-347-kamaljit-kaur",
@@ -9701,14 +9701,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Submitted",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Received",
     "notes": "Received",
-    "created_at": "2026-08-18T19:04:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:12:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-390-kashia-didier",
@@ -9728,14 +9728,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:47:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:55:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-357-kendra-daniels",
@@ -9755,14 +9755,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Already Has an Account",
     "notes": "Already Has an Account",
-    "created_at": "2026-08-18T19:14:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:22:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-391-khadeem-mcfarlane-beckford",
@@ -9782,14 +9782,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:48:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:56:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-406-kimarla-douglas",
@@ -9809,14 +9809,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Bankruptcy/Loan Default",
     "notes": "Bankruptcy/Loan Default",
-    "created_at": "2026-08-18T20:03:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:11:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-372-krystel-echeverri-correa",
@@ -9836,14 +9836,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:29:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:37:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-373-kurian-betsy",
@@ -9863,14 +9863,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "PROGRESS DOC",
     "notes": "PROGRESS DOC",
-    "created_at": "2026-08-18T19:30:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:38:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-421-kwame-affary",
@@ -9890,14 +9890,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T20:18:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:26:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-386-leroy-jackson",
@@ -9917,14 +9917,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "PROGRESS DOC",
     "notes": "PROGRESS DOC",
-    "created_at": "2026-08-18T19:43:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:51:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-312-lutfi-raka",
@@ -9944,14 +9944,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "College Not Received",
     "notes": "College Not Received",
-    "created_at": "2026-08-18T18:29:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:37:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-398-madiha-mateen",
@@ -9971,14 +9971,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:55:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:03:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-376-mahbub-hasnat",
@@ -9998,14 +9998,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:33:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:41:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-317-mangal-ram",
@@ -10025,14 +10025,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "College Not Received",
     "notes": "College Not Received",
-    "created_at": "2026-08-18T18:34:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:42:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-353-manjot-singh",
@@ -10052,14 +10052,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:10:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:18:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-401-marilyn-koumaris",
@@ -10079,14 +10079,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "FAO",
     "notes": "FAO",
-    "created_at": "2026-08-18T19:58:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:06:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-354-masud-ur-rehman",
@@ -10106,14 +10106,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:11:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:19:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-342-maurizio-bruno",
@@ -10133,14 +10133,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T18:59:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T19:07:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-413-michael-adebiyi",
@@ -10160,14 +10160,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T20:10:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:18:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-405-michael-chambers",
@@ -10187,14 +10187,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T20:02:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:10:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-368-michael-mcdougall",
@@ -10214,14 +10214,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Already Has an Account",
     "notes": "Already Has an Account",
-    "created_at": "2026-08-18T19:25:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:33:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-403-michla-tucker",
@@ -10241,14 +10241,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T20:00:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:08:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-419-milosava-savic",
@@ -10268,14 +10268,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Not interested anymore",
     "notes": "Not interested anymore",
-    "created_at": "2026-08-18T20:16:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:24:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-334-ming-zhang",
@@ -10295,14 +10295,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T18:51:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:59:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-393-mir-zeeshan-ali",
@@ -10322,14 +10322,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:50:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:58:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-396-mohamed-makanyaga",
@@ -10349,14 +10349,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:53:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:01:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-323-mohammed-mahmood",
@@ -10376,14 +10376,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Previous OSAP post 2024",
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T18:40:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:48:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-326-mona-ali",
@@ -10403,14 +10403,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "College Not Received",
     "notes": "College Not Received",
-    "created_at": "2026-08-18T18:43:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:51:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-337-nataliya",
@@ -10430,14 +10430,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T18:54:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T19:02:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-388-natasha-fong",
@@ -10457,14 +10457,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:45:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:53:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-410-noah-tucci",
@@ -10484,14 +10484,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "EDU DRIVE",
     "notes": "EDU DRIVE",
-    "created_at": "2026-08-18T20:07:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:15:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-343-olu-wifunmilola",
@@ -10511,14 +10511,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:00:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T19:08:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-364-orville-pinnock",
@@ -10538,14 +10538,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:21:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:29:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-325-parijat-sarkar",
@@ -10565,14 +10565,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "RED",
     "notes": "RED",
-    "created_at": "2026-08-18T18:42:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:50:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-362-paulraj-joseph-samadanam",
@@ -10592,14 +10592,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:19:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:27:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-338-pradeep-persaud",
@@ -10619,14 +10619,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T18:55:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T19:03:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-335-rajbir-singh",
@@ -10646,14 +10646,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "requires_verification",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T18:52:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T19:00:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-385-rakulan-sakthivel",
@@ -10673,14 +10673,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Loan Default/PROGRESS DOC",
     "notes": "Loan Default/PROGRESS DOC",
-    "created_at": "2026-08-18T19:42:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:50:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-381-rayan-fakak",
@@ -10700,14 +10700,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "requires_verification",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:38:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:46:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-417-rekah-bonnah",
@@ -10727,14 +10727,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "FAO",
     "notes": "FAO",
-    "created_at": "2026-08-18T20:14:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:22:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-340-ron-m",
@@ -10754,14 +10754,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T18:57:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T19:05:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-352-rosalind-ilagan",
@@ -10781,14 +10781,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:09:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:17:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-355-roselyn-pablo",
@@ -10808,14 +10808,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:12:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:20:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-408-russell-lambert",
@@ -10841,8 +10841,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T20:05:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:13:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-319-saima-bibi",
@@ -10862,14 +10862,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Previous OSAP post 2024",
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T18:36:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:44:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-374-salosh-michael",
@@ -10889,14 +10889,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "LOAN CLEARANCE/PROGRESS DOC",
     "notes": "LOAN CLEARANCE/PROGRESS DOC",
-    "created_at": "2026-08-18T19:31:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:39:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-371-sameer-naz",
@@ -10916,14 +10916,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:28:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:36:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-358-samreen-ali",
@@ -10943,14 +10943,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Wants to do ECA only",
     "notes": "Wants to do ECA only",
-    "created_at": "2026-08-18T19:15:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:23:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-350-samuel-mukasa",
@@ -10970,14 +10970,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:07:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:15:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-316-sanjeev-sarkar",
@@ -10997,14 +10997,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Age",
     "notes": "Age",
-    "created_at": "2026-08-18T18:33:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:41:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-330-shabeer-nawaz--pass-change-",
@@ -11024,14 +11024,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "submitted",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Issued by college",
     "notes": "Issued by college",
-    "created_at": "2026-08-18T18:47:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:55:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-422-sharon-stanley",
@@ -11051,14 +11051,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "REJECTED",
     "notes": "REJECTED",
-    "created_at": "2026-08-18T20:19:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:27:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-346-shawneen-reid",
@@ -11078,14 +11078,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Submitted",
     "notes": "Submitted",
-    "created_at": "2026-08-18T19:03:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:11:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-333-shazia-amir",
@@ -11105,14 +11105,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T18:50:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:58:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-336-simranjeet-kaur",
@@ -11132,14 +11132,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "requires_verification",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T18:53:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T19:01:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-375-solange-delicieux",
@@ -11159,14 +11159,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "Already Has an Account",
     "notes": "Already Has an Account",
-    "created_at": "2026-08-18T19:32:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:40:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-331-stephan-bernacchi",
@@ -11186,14 +11186,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "1964",
     "notes": "1964",
-    "created_at": "2026-08-18T18:48:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T18:56:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-365-tanvi-nar",
@@ -11213,14 +11213,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:22:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:30:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-341-tanya-pickering",
@@ -11240,14 +11240,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "missing",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T18:58:06.804Z",
-    "updated_at": "2026-08-18T20:20:06.804Z"
+    "created_at": "2026-08-18T19:06:14.168Z",
+    "updated_at": "2026-08-18T20:28:14.168Z"
   },
   {
     "id": "osap-client-387-tejinder-uppal",
@@ -11267,14 +11267,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:44:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:52:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-397-terry-ann-mcneil",
@@ -11294,14 +11294,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:54:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:02:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-400-thananjeyan-bala",
@@ -11321,14 +11321,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "15K OSAP Pending",
     "notes": "15K OSAP Pending",
-    "created_at": "2026-08-18T19:57:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:05:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-392-vinod-kumar",
@@ -11348,14 +11348,14 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "connected",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T19:49:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T19:57:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   },
   {
     "id": "osap-client-404-xander-mycheal-cornelius-miller",
@@ -11375,13 +11375,13 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "credential_status": "requires_verification",
     "application_status": "action_required",
     "funding_status": "Pending Assessment",
-    "msfaa_status": "required",
+    "msfaa_status": "action_required",
     "document_status": "under_review",
     "priority": "high",
     "action_required": true,
     "action_required_summary": "SIN Registry / Verification Hold",
     "notes": null,
-    "created_at": "2026-08-18T20:01:06.805Z",
-    "updated_at": "2026-08-18T20:20:06.805Z"
+    "created_at": "2026-08-18T20:09:14.169Z",
+    "updated_at": "2026-08-18T20:28:14.169Z"
   }
 ];

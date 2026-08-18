@@ -10,6 +10,7 @@ import type {
 } from "@/types/osap";
 
 export type AuditScenario =
+  | "live_file_audit"
   | "approved"
   | "processing"
   | "denied"
@@ -36,7 +37,7 @@ export interface AuditExecutionResult {
  */
 export function runClientAudit(
   client: OsapClient,
-  scenario?: AuditScenario,
+  scenario: AuditScenario = "live_file_audit",
   manualOverrides?: {
     appStatus?: OsapApplicationStatus;
     fundingStatus?: string;
@@ -102,9 +103,9 @@ export function runClientAudit(
       user_id: client.user_id,
       audit_type: "single",
       status: "mfa_required",
-      summary: "Multi-Factor Authentication (MFA) challenge requested by OSAP. Human verification paused.",
+      summary: "OSAP Portal requires 2FA SMS code or authenticator approval.",
       changes_detected: [],
-      raw_snapshot: { status: "MFA_PROMPT_PENDING", timestamp: new Date().toISOString() },
+      raw_snapshot: { status: "MFA_PROMPT", timestamp: new Date().toISOString() },
       conducted_by: "Automated Auditor",
       created_at: new Date().toISOString(),
     };
@@ -114,7 +115,7 @@ export function runClientAudit(
         ...client,
         credential_status: "requires_verification",
         action_required: true,
-        action_required_summary: "MFA / SMS code required to access OSAP portal.",
+        action_required_summary: "OSAP Portal 2-Factor Authentication required.",
         last_audit_at: new Date().toISOString(),
         updated_at: new Date().toISOString(),
       },
@@ -126,8 +127,8 @@ export function runClientAudit(
           client_id: client.id,
           client_name: client.full_name,
           user_id: client.user_id,
-          title: "MFA Verification Required",
-          description: "Client needs to supply MFA SMS code or staff must verify login session directly on portal.",
+          title: "OSAP Portal MFA Code Required",
+          description: "Contact client to receive the 2FA SMS verification code sent to their phone to resume audit.",
           severity: "high",
           status: "waiting_on_client",
           created_at: new Date().toISOString(),
@@ -350,10 +351,37 @@ export function runClientAudit(
     },
   ];
 
-  const auditStatus = changes.length > 0 ? "changes_detected" : "success";
-  const summary = changes.length > 0
-    ? `${changes.length} change(s) detected: ${changes.map((c) => `${c.field_name} (${c.previous_value} → ${c.new_value})`).join(", ")}`
-    : "Audit completed successfully. No changes detected since previous audit.";
+  const auditStatus = (client.batch_name === "Hold" || client.action_required || newMsfaaStatus === "required" || newDocStatus === "rejected")
+    ? "changes_detected"
+    : changes.length > 0
+    ? "changes_detected"
+    : "success";
+
+  let summary = "";
+  let message = "";
+
+  if (scenario === "live_file_audit") {
+    if (client.batch_name === "Hold" || client.notes?.toLowerCase().includes("discrepancy")) {
+      summary = `Hold / Discrepancy: ${client.notes ? client.notes.split("\n")[0] : "SIN Registry personal information mismatch"}`;
+      message = `🚨 Hold / Discrepancy File: ${client.notes ? client.notes.split("\n")[0] : "SIN Registry personal information mismatch"}`;
+    } else if (newMsfaaStatus === "required" || newMsfaaStatus === "action_required") {
+      summary = `MSFAA Incomplete: Master Student Financial Assistance Agreement pending student online signature.`;
+      message = `⚠️ MSFAA Incomplete: Student must complete online MSFAA on NSLSC portal.`;
+    } else if (newDocStatus === "under_review") {
+      summary = `Documents Under Review: Supporting college registration / PR verification under assessment.`;
+      message = `📄 Documents Under Review: Awaiting portal document verification.`;
+    } else {
+      summary = `Application In Good Standing: All required documents and MSFAA agreement submitted.`;
+      message = `✅ Application In Good Standing: MSFAA submitted, documents received.`;
+    }
+  } else {
+    summary = changes.length > 0
+      ? `${changes.length} change(s) detected: ${changes.map((c) => `${c.field_name} (${c.previous_value} → ${c.new_value})`).join(", ")}`
+      : `Audit completed successfully. No changes detected since previous audit.`;
+    message = changes.length > 0
+      ? `Audit completed. ${changes.length} change(s) detected: ${changes.map((c) => c.field_name).join(", ")}`
+      : `Audit completed. All records verified.`;
+  }
 
   const audit: OsapAudit = {
     id: auditId,
@@ -369,6 +397,7 @@ export function runClientAudit(
       fundingStatus: newFundingStatus,
       docStatus: newDocStatus,
       msfaaStatus: newMsfaaStatus,
+      batch: client.batch_name,
       timestamp: new Date().toISOString(),
     },
     conducted_by: manualOverrides ? "Staff Manual Entry" : "Automated Auditor",
@@ -381,8 +410,8 @@ export function runClientAudit(
     funding_status: newFundingStatus,
     document_status: newDocStatus,
     msfaa_status: newMsfaaStatus,
-    action_required: actionRequired,
-    action_required_summary: actionRequired ? actionSummary : null,
+    action_required: actionRequired || client.action_required,
+    action_required_summary: actionSummary || client.action_required_summary,
     last_audit_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   };
@@ -394,6 +423,6 @@ export function runClientAudit(
     newActions,
     updatedDocuments: updatedDocs,
     status: auditStatus,
-    message: summary,
+    message,
   };
 }

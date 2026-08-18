@@ -185,6 +185,30 @@ function main() {
       priority = "medium";
     }
 
+    const isMsfaaSubmitted = /submitted|done|completed|received/i.test(raw.msfaa);
+    const msfaaStatus: OsapMsfaaStatus = isMsfaaSubmitted
+      ? "submitted"
+      : /in[ -]?progress/i.test(raw.msfaa)
+      ? "in_progress"
+      : isDiscrepancy
+      ? "action_required"
+      : "required";
+
+    const isDocSubmitted = /submitted|done|completed/i.test(raw.docStatus);
+    const docStatus: OsapDocumentStatus = isDocSubmitted
+      ? "submitted"
+      : /received/i.test(raw.docStatus)
+      ? "received"
+      : "under_review";
+
+    // Flag action required if discrepancy OR if MSFAA is required on an active file
+    if (!isMsfaaSubmitted && (raw.batchName !== "Hold" && !isDenied)) {
+      actionRequired = true;
+      if (!actionSummary) {
+        actionSummary = `MSFAA incomplete (${raw.msfaa || "Pending"}) — requires student online signature`;
+      }
+    }
+
     const assignedStaff = normalizeStaff(raw.inCharge, raw.inChargeOpps);
 
     clients.push({
@@ -205,8 +229,8 @@ function main() {
       credential_status: raw.pass ? "connected" : (oan ? "requires_verification" : "missing"),
       application_status: appStatus,
       funding_status: raw.funding && raw.funding !== "N/a" ? raw.funding : "Pending Assessment",
-      msfaa_status: /submitted|done/i.test(raw.msfaa) ? "submitted" : isDiscrepancy ? "required" : "submitted",
-      document_status: /submitted|received|done/i.test(raw.docStatus) ? "submitted" : "under_review",
+      msfaa_status: msfaaStatus,
+      document_status: docStatus,
       priority,
       action_required: actionRequired,
       action_required_summary: actionSummary,
