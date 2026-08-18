@@ -67,18 +67,20 @@ function LandingPage() {
 
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="text-center mb-16">
-          <h2 className="section-heading mb-4">Why Lawyers Choose Neptora</h2>
+          <h2 className="section-heading mb-4">Complete Legal & OSAP Workflow Platform</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Built for legal professionals who demand precision, security, and efficiency.
+            Built for legal professionals and caseworkers who demand precision, security, and automated client intelligence.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
-            { Icon: Lock, title: "Secure", desc: "Enterprise-grade security with encrypted storage and role-based access controls." },
-            { Icon: Zap, title: "Fast Generation", desc: "Generate professional documents in less than 60 seconds from start to finish." },
-            { Icon: FileText, title: "Multiple Templates", desc: "Use pre-built templates covering the most common Canadian affidavits." },
-            { Icon: Download, title: "Export Options", desc: "Download the finished affidavit as a plain-text file ready for further editing." },
+            { Icon: FileText, title: "Affidavit Automation", desc: "Generate professional court & tribunal affidavits in under 60 seconds with live preview and PDF/DOCX downloads." },
+            { Icon: Zap, title: "OSAP Client Management", desc: "Track student funding applications, document review matrices, and Master Student Loan Agreements (MSFAA)." },
+            { Icon: Lock, title: "Encrypted Credential Vault", desc: "Enterprise client-side WebCrypto AES-GCM encryption protects student access codes and credentials." },
+            { Icon: Download, title: "Excel Import & Dupe Detection", desc: "Upload multi-column spreadsheets with smart mapping, duplicate resolver, and password-safe export." },
+            { Icon: Lock, title: "Automated Audit Center", desc: "Execute single or batch portal audits with instant change detection diffs and actionable task generation." },
+            { Icon: FileText, title: "Integrated Case Profiles", desc: "7-tab student file system linking generated affidavits, case notes, action items, and audit trails." },
           ].map(({ Icon, title, desc }) => (
             <div key={title} className="card-gold p-6 rounded-lg hover:shadow-md transition-smooth">
               <div className="w-12 h-12 bg-gold/20 rounded-lg flex items-center justify-center mb-4">
@@ -94,10 +96,10 @@ function LandingPage() {
       <div className="max-w-6xl mx-auto px-6"><div className="rule" /></div>
 
       <section className="max-w-6xl mx-auto px-6 py-20">
-        <div className="bg-card rounded-xl p-12 text-center">
-          <h2 className="section-heading mb-4">Ready to Streamline Your Process?</h2>
+        <div className="bg-card rounded-xl p-12 text-center border border-border">
+          <h2 className="section-heading mb-4">Ready to Streamline Your Legal & OSAP Workflow?</h2>
           <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
-            Join law firms using Neptora to generate professional affidavits in seconds.
+            Generate professional affidavits and manage OSAP student portfolios from one unified, secure platform.
           </p>
           <Link to="/auth" className="btn-primary inline-flex">Get Started Free</Link>
         </div>
@@ -109,7 +111,7 @@ function LandingPage() {
             <BrandLogo height={28} />
           </div>
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Neptora. Professional document automation for law firms.
+            © {new Date().getFullYear()} Neptora. Professional legal automation and OSAP client management.
           </p>
         </div>
       </footer>

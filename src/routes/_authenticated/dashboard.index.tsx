@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import {
   ChevronRight,
@@ -11,6 +11,7 @@ import {
   Save,
   SlidersHorizontal,
   Pencil,
+  Shield,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -476,9 +477,17 @@ function NewAffidavitPage() {
   if (step === "template-selection") {
     return (
       <div className="space-y-8 animate-fade-in">
-        <div>
-          <h1 className="section-heading mb-2">New Affidavit</h1>
-          <p className="text-muted-foreground">Select a template to get started.</p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 className="section-heading mb-2">New Affidavit</h1>
+            <p className="text-muted-foreground">Select a legal template to generate an affidavit or manage student OSAP files.</p>
+          </div>
+          <Link
+            to="/dashboard/osap"
+            className="btn-primary flex items-center gap-2 text-sm self-start sm:self-auto shadow-sm"
+          >
+            <Shield className="w-4 h-4" /> Switch to OSAP Management
+          </Link>
         </div>
 
         {error && (
