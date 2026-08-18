@@ -25,6 +25,15 @@ async function fetchBytes(url: string): Promise<Uint8Array> {
   return new Uint8Array(buf);
 }
 
+function dataUrlToBytes(dataUrl: string): Uint8Array {
+  const body = dataUrl.split(",")[1] ?? "";
+  const bin = atob(body);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+
+
 // =====================================================================
 // PDF
 // =====================================================================
@@ -242,6 +251,24 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
     drawTextTop(d.name, x0, signatureLineTop + 3.5, BODY);
   });
 
+  // Signature images drawn on top of the lines
+  for (const sig of doc.signatures ?? []) {
+    if (!sig.dataUrl) continue;
+    try {
+      const img = await pdf.embedPng(dataUrlToBytes(sig.dataUrl));
+      page.drawImage(img, {
+        x: sig.x,
+        y: PAGE_H - sig.top - sig.height,
+        width: sig.width,
+        height: sig.height,
+      });
+    } catch {
+      /* skip unreadable signature */
+    }
+  }
+
+
+
 
   const blockW = L.notaryImage.width ?? 248;
   const blockH = L.notaryImage.height ?? (blockW * notaryBlockImg.height) / notaryBlockImg.width;
@@ -393,17 +420,38 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
       nameCells.push(blank(spacerW));
     }
     columnWidths.push(colW);
+    const sig = (doc.signatures ?? []).find((s) => s.deponentIndex === i && s.dataUrl);
     sigCells.push(
       new TableCell({
         width: { size: colW, type: WidthType.DXA },
         borders: { ...noBorder, bottom: { style: BorderStyle.SINGLE, size: 6, color: "000000" } },
         children: [
-          new Paragraph({
-            spacing: { before: 600 },
-            children: [new TextRun({ text: " ", font: "Calibri", size: 22 })],
-          }),
+          sig
+            ? new Paragraph({
+                spacing: { before: 200 },
+                children: [
+                  new ImageRun({
+                    type: "png",
+                    data: dataUrlToBytes(sig.dataUrl),
+                    transformation: {
+                      width: Math.round(sig.width * (96 / 72)),
+                      height: Math.round(sig.height * (96 / 72)),
+                    },
+                    altText: {
+                      title: "Signature",
+                      description: `Signature of ${d.name}`,
+                      name: "signature",
+                    },
+                  }),
+                ],
+              })
+            : new Paragraph({
+                spacing: { before: 600 },
+                children: [new TextRun({ text: " ", font: "Calibri", size: 22 })],
+              }),
         ],
       }),
+
     );
     nameCells.push(
       new TableCell({

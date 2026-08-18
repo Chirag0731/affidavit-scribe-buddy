@@ -97,6 +97,30 @@ export type Database = {
         }
         Relationships: []
       }
+      signatures: {
+        Row: {
+          created_at: string
+          id: string
+          label: string
+          storage_path: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          label: string
+          storage_path: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          label?: string
+          storage_path?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       templates: {
         Row: {
           body_template: string
