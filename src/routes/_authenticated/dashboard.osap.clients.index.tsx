@@ -37,6 +37,7 @@ import {
   MSFAA_STATUS_LABELS,
   PRIORITY_CONFIG,
   CREDENTIAL_STATUS_CONFIG,
+  OSAP_BATCH_ORDER,
 } from "@/types/osap";
 
 export const Route = createFileRoute("/_authenticated/dashboard/osap/clients/")({
@@ -225,7 +226,14 @@ function OsapClientsPage() {
       const b = c.batch_name || "General Batch";
       counts[b] = (counts[b] || 0) + 1;
     });
-    return Object.entries(counts).sort((a, b) => a[0].localeCompare(b[0]));
+    return Object.entries(counts).sort((a, b) => {
+      const idxA = OSAP_BATCH_ORDER.indexOf(a[0]);
+      const idxB = OSAP_BATCH_ORDER.indexOf(b[0]);
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
+      return a[0].localeCompare(b[0]);
+    });
   }, [clients]);
 
   const filteredClients = useMemo(() => {

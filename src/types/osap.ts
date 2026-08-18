@@ -254,3 +254,18 @@ export const DEFAULT_OSAP_PRESETS = {
   ],
 };
 
+export const OSAP_BATCH_ORDER: string[] = [
+  "May 11th List",
+  "May 25th List",
+  "June 15th List",
+  "June 29th List",
+  "July 13th List",
+  "July 27th List",
+  "August 24th List",
+  "Hold",
+  "March 2nd List",
+  "March 23rd List",
+  "April 13th List",
+  "April 27th List",
+];
+

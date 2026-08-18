@@ -14,7 +14,7 @@ import {
 import { toast } from "sonner";
 import { getOsapClients } from "@/lib/osap-db";
 import type { OsapClient } from "@/types/osap";
-import { APPLICATION_STATUS_LABELS } from "@/types/osap";
+import { APPLICATION_STATUS_LABELS, OSAP_BATCH_ORDER } from "@/types/osap";
 import { exportClientsToExcel } from "@/lib/osap-excel";
 
 export const Route = createFileRoute("/_authenticated/dashboard/osap/applications")({
@@ -46,7 +46,14 @@ function OsapApplicationsPage() {
     }
   };
 
-  const batches = Array.from(new Set(clients.map((c) => c.batch_name || "General Batch"))).sort();
+  const batches = Array.from(new Set(clients.map((c) => c.batch_name || "General Batch"))).sort((a, b) => {
+    const idxA = OSAP_BATCH_ORDER.indexOf(a);
+    const idxB = OSAP_BATCH_ORDER.indexOf(b);
+    if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+    if (idxA !== -1) return -1;
+    if (idxB !== -1) return 1;
+    return a.localeCompare(b);
+  });
 
   const filtered = clients.filter((c) => {
     if (search) {
