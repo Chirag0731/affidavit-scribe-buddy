@@ -254,6 +254,7 @@ function OsapAuditCenterPage() {
                 disabled={isRunning}
                 className="input-base text-sm font-medium border-gold/40"
               >
+                <option value="live_portal_login">🔴 Live Government Portal Login & Crawler (Physical OAN & Pass)</option>
                 <option value="live_file_audit">⚡ Smart Live Audit (Inspects Real MSFAA, Docs & Discrepancies)</option>
                 <option value="payment_released">💰 Payment Released (Mark File Funded & Fully Completed)</option>
                 <option value="msfaa_incomplete">⚠️ Flag Incomplete MSFAA on Batch</option>
@@ -267,7 +268,9 @@ function OsapAuditCenterPage() {
                 <option value="manual_review">📝 Flag for Manual Coordinator Review</option>
               </select>
               <p className="text-[11px] text-muted-foreground mt-1">
-                {batchScenario === "live_file_audit"
+                {batchScenario === "live_portal_login"
+                  ? "Uses stored OAN & Password to physically authenticate and scrape real-time OSAP status snapshots."
+                  : batchScenario === "live_file_audit"
                   ? "Evaluates each student's real file attributes (MSFAA completion, SIN discrepancies, hold notes, document statuses)."
                   : "Simulates test cases, detects changes against previous snapshots, and produces action items."}
               </p>

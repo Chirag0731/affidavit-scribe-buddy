@@ -10,6 +10,7 @@ import type {
 } from "@/types/osap";
 
 export type AuditScenario =
+  | "live_portal_login"
   | "live_file_audit"
   | "payment_released"
   | "approved"
@@ -160,6 +161,7 @@ export function runClientAudit(
         newDocStatus = "approved";
         newMsfaaStatus = "completed";
         break;
+      case "live_portal_login":
       case "live_file_audit":
         if (
           client.application_status === "completed" ||

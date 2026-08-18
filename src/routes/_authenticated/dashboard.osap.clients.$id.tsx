@@ -808,6 +808,7 @@ function OsapClientProfilePage() {
                 onChange={(e) => setAuditScenario(e.target.value as AuditScenario)}
                 className="input-base text-sm font-medium border-gold/40"
               >
+                <option value="live_portal_login">🔴 Live Government Portal Login (Physical OAN & Pass)</option>
                 <option value="live_file_audit">⚡ Smart Live Audit (Inspect Real MSFAA & File Status)</option>
                 <option value="payment_released">💰 Payment Released (Mark File Funded & Fully Completed)</option>
                 <option value="approved">✅ Approved Application ($9,450 Calculated Funding)</option>
