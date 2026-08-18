@@ -1,14 +1,18 @@
+import { useRef } from "react";
 import {
   type AffidavitDoc,
-  type TemplateLayout,
   type ElementPos,
+  type SignaturePlacement,
   buildIntroSentence,
   buildNotarySentence,
+  signatureLinePositions,
 } from "@/types/neptora";
 
 interface PdfHtmlPreviewProps {
   doc: AffidavitDoc;
   className?: string;
+  /** When provided, placed signatures can be dragged and resized. */
+  onSignaturesChange?: (next: SignaturePlacement[]) => void;
 }
 
 // A4 page dimensions in CSS pixels (96 DPI)
@@ -16,8 +20,15 @@ const PAGE_WIDTH_PX = 794; // 8.27in
 const PAGE_HEIGHT_PX = 1123; // 11.69in
 const PT_TO_PX = 96 / 72; // 1pt = 1.333px
 
-export function PdfHtmlPreview({ doc, className = "" }: PdfHtmlPreviewProps) {
+export function PdfHtmlPreview({ doc, className = "", onSignaturesChange }: PdfHtmlPreviewProps) {
   const layout = doc.layout;
+  const dragRef = useRef<{
+    index: number;
+    mode: "move" | "resize";
+    startX: number;
+    startY: number;
+    orig: SignaturePlacement;
+  } | null>(null);
 
   const toPx = (pt?: number) => (pt ?? 0) * PT_TO_PX;
   const pos = (p: ElementPos) => ({
@@ -26,14 +37,59 @@ export function PdfHtmlPreview({ doc, className = "" }: PdfHtmlPreviewProps) {
     width: toPx(p.width ?? (PAGE_WIDTH_PX / PT_TO_PX - (p.x ?? 54) * 2)),
   });
 
+  const signatures = doc.signatures ?? [];
+  const lines = signatureLinePositions(layout, doc.deponents.length);
+
+  const onPointerDown = (
+    e: React.PointerEvent,
+    index: number,
+    mode: "move" | "resize",
+  ) => {
+    if (!onSignaturesChange) return;
+    e.preventDefault();
+    e.stopPropagation();
+    dragRef.current = {
+      index,
+      mode,
+      startX: e.clientX,
+      startY: e.clientY,
+      orig: { ...signatures[index] },
+    };
+    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+  };
+
+  const onPointerMove = (e: React.PointerEvent) => {
+    const d = dragRef.current;
+    if (!d || !onSignaturesChange) return;
+    const dx = (e.clientX - d.startX) / PT_TO_PX;
+    const dy = (e.clientY - d.startY) / PT_TO_PX;
+    const next = signatures.map((s, i) => {
+      if (i !== d.index) return s;
+      if (d.mode === "move") {
+        return { ...s, x: d.orig.x + dx, top: d.orig.top + dy };
+      }
+      const ratio = d.orig.height / d.orig.width;
+      const width = Math.max(20, d.orig.width + dx);
+      return { ...s, width, height: width * ratio };
+    });
+    onSignaturesChange(next);
+  };
+
+  const onPointerUp = () => {
+    dragRef.current = null;
+  };
+
   const intro = buildIntroSentence(doc);
   const notarySentence = buildNotarySentence(doc);
   const swornText = `Sworn/Declared Remotely from the City of ${doc.city} in the Province of Ontario before me in the city of Toronto in the Province of Ontario & Country of Canada This ${doc.dayOfMonth} in accordance with O. Reg 431/20 Administering Oath or Declaration Remotely Ontario.`;
+
 
   return (
     <div className={`bg-white overflow-auto p-4 ${className}`}>
       <div
         className="relative bg-white shadow-sm mx-auto"
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
         style={{
           width: PAGE_WIDTH_PX,
           height: PAGE_HEIGHT_PX,
@@ -114,28 +170,24 @@ export function PdfHtmlPreview({ doc, className = "" }: PdfHtmlPreviewProps) {
         {/* Signature lines */}
         {layout.signatureLine &&
           doc.deponents.map((deponent, i) => {
-            const sig = layout.signatureLine;
-            const lineW = sig.width ?? 160;
-            const count = doc.deponents.length;
-            const gap = count > 1 ? 40 : 0;
-            const x = (sig.x ?? 54) + i * (lineW + gap);
+            const line = lines[i] ?? lines[0];
             return (
               <div key={i}>
                 <div
                   className="absolute border-b border-black"
                   style={{
-                    left: toPx(x),
-                    top: toPx(sig.top),
-                    width: toPx(lineW),
+                    left: toPx(line.x),
+                    top: toPx(line.top),
+                    width: toPx(line.width),
                   }}
                 />
                 <div
-                  className="absolute text-center"
+                  className="absolute"
                   style={{
-                    left: toPx(x),
-                    top: toPx(sig.top + 4),
-                    width: toPx(lineW),
-                    fontSize: toPx(10),
+                    left: toPx(line.x),
+                    top: toPx(line.top + 3.5),
+                    width: toPx(line.width),
+                    fontSize: toPx(10.5),
                   }}
                 >
                   {deponent.name}
@@ -143,6 +195,38 @@ export function PdfHtmlPreview({ doc, className = "" }: PdfHtmlPreviewProps) {
               </div>
             );
           })}
+
+        {/* Placed signature images */}
+        {signatures.map((sig, i) =>
+          sig.dataUrl ? (
+            <div
+              key={`sig-${i}`}
+              className={`absolute ${onSignaturesChange ? "cursor-move ring-1 ring-transparent hover:ring-blue-400" : ""}`}
+              style={{
+                left: toPx(sig.x),
+                top: toPx(sig.top),
+                width: toPx(sig.width),
+                height: toPx(sig.height),
+              }}
+              onPointerDown={(e) => onPointerDown(e, i, "move")}
+            >
+              <img
+                src={sig.dataUrl}
+                alt={`Signature of ${doc.deponents[sig.deponentIndex]?.name ?? ""}`}
+                className="w-full h-full select-none pointer-events-none"
+                draggable={false}
+              />
+              {onSignaturesChange && (
+                <span
+                  role="presentation"
+                  onPointerDown={(e) => onPointerDown(e, i, "resize")}
+                  className="absolute -right-1.5 -bottom-1.5 w-3 h-3 bg-blue-500 rounded-sm cursor-se-resize"
+                />
+              )}
+            </div>
+          ) : null,
+        )}
+
 
         {/* Acknowledgement title */}
         {layout.ackTitle && (
