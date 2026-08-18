@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   Users,
   CheckCircle2,
@@ -18,6 +18,8 @@ import {
   TrendingUp,
   Loader2,
   Activity,
+  FileSpreadsheet,
+  Folder,
 } from "lucide-react";
 import { toast } from "sonner";
 import { getOsapClients, getOsapAudits, getOsapActions } from "@/lib/osap-db";
@@ -26,6 +28,7 @@ import {
   APPLICATION_STATUS_LABELS,
   PRIORITY_CONFIG,
   ACTION_SEVERITY_CONFIG,
+  OSAP_BATCH_ORDER,
 } from "@/types/osap";
 
 export const Route = createFileRoute("/_authenticated/dashboard/osap/")({
@@ -77,6 +80,28 @@ function OsapDashboardPage() {
   const urgentClients = clients.filter((c) => c.action_required || c.priority === "urgent" || c.priority === "high").slice(0, 6);
   const openActions = actions.filter((a) => a.status === "open" || a.status === "in_progress").slice(0, 5);
   const recentAudits = audits.slice(0, 5);
+
+  const batchBreakdown = useMemo(() => {
+    const map: Record<string, { total: number; submittedMsfaa: number; pendingMsfaa: number; holdCount: number; fundedCount: number }> = {};
+    clients.forEach((c) => {
+      const b = c.batch_name || "General Batch";
+      if (!map[b]) map[b] = { total: 0, submittedMsfaa: 0, pendingMsfaa: 0, holdCount: 0, fundedCount: 0 };
+      map[b].total++;
+      if (c.msfaa_status === "submitted") map[b].submittedMsfaa++;
+      else map[b].pendingMsfaa++;
+      if (c.batch_name === "Hold" || c.notes?.toLowerCase().includes("discrepancy")) map[b].holdCount++;
+      if (c.application_status === "completed" || c.application_status === "funded") map[b].fundedCount++;
+    });
+
+    return Object.entries(map).sort((a, b) => {
+      const idxA = OSAP_BATCH_ORDER.indexOf(a[0]);
+      const idxB = OSAP_BATCH_ORDER.indexOf(b[0]);
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
+      return a[0].localeCompare(b[0]);
+    });
+  }, [clients]);
 
   if (loading) {
     return (
@@ -249,6 +274,98 @@ function OsapDashboardPage() {
           <div className="text-3xl font-serif font-bold text-purple-400">{manualReviewCount}</div>
           <span className="text-[11px] text-muted-foreground mt-1 block">Staff check required</span>
         </button>
+      </div>
+
+      {/* Spreadsheet Batches & Cohorts Grid */}
+      <div className="bg-card border-2 border-gold/30 rounded-xl p-5 shadow-sm space-y-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-border/80 pb-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-lg bg-gold/15 text-gold font-bold">
+              <FileSpreadsheet className="w-5 h-5" />
+            </div>
+            <div>
+              <h3 className="font-bold text-foreground text-lg flex items-center gap-2">
+                <span>Spreadsheet Batches & Cohorts</span>
+                <span className="text-xs px-2.5 py-0.5 rounded-full bg-gold/20 text-gold font-mono font-semibold">
+                  {batchBreakdown.length} Batches ({totalClients} Students)
+                </span>
+              </h3>
+              <p className="text-xs text-muted-foreground">
+                Separated cohorts matching each page from the Eight Branches Google Workbook.
+              </p>
+            </div>
+          </div>
+
+          <Link
+            to="/dashboard/osap/clients"
+            className="btn-secondary text-xs flex items-center gap-1.5 self-start sm:self-auto"
+          >
+            <Folder className="w-3.5 h-3.5 text-gold" /> View All in Clients Directory
+          </Link>
+        </div>
+
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5">
+          {batchBreakdown.map(([batchName, stats]) => {
+            const isHold = batchName === "Hold";
+            return (
+              <div
+                key={batchName}
+                className={`p-4 rounded-xl border transition-smooth bg-muted/20 hover:bg-muted/40 ${
+                  isHold ? "border-rose-500/40 hover:border-rose-500" : "border-border hover:border-gold/60"
+                } space-y-3 flex flex-col justify-between`}
+              >
+                <div>
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-center gap-2 min-w-0">
+                      <span className="text-base">{isHold ? "🚨" : "📁"}</span>
+                      <h4 className="font-bold text-foreground text-sm truncate" title={batchName}>
+                        {batchName}
+                      </h4>
+                    </div>
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-mono font-bold ${
+                      isHold ? "bg-rose-500/20 text-rose-300" : "bg-gold/20 text-gold"
+                    }`}>
+                      {stats.total}
+                    </span>
+                  </div>
+
+                  {/* Status Breakdown Pills */}
+                  <div className="grid grid-cols-2 gap-1.5 text-[11px] mt-3">
+                    <div className="p-1.5 rounded bg-card border border-border">
+                      <span className="text-muted-foreground block text-[10px]">MSFAA Done</span>
+                      <span className="font-bold text-emerald-400 font-mono">{stats.submittedMsfaa}</span>
+                    </div>
+                    <div className="p-1.5 rounded bg-card border border-border">
+                      <span className="text-muted-foreground block text-[10px]">MSFAA Pending</span>
+                      <span className={`font-bold font-mono ${stats.pendingMsfaa > 0 ? "text-amber-400" : "text-muted-foreground"}`}>
+                        {stats.pendingMsfaa}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 pt-2 border-t border-border/60">
+                  <Link
+                    to="/dashboard/osap/clients"
+                    search={{ batch: batchName }}
+                    className="flex-1 text-center py-1.5 px-2.5 rounded-lg bg-card hover:bg-muted border border-border text-xs font-semibold text-foreground transition-smooth flex items-center justify-center gap-1"
+                  >
+                    <span>View Batch</span>
+                    <ArrowRight className="w-3 h-3 text-gold" />
+                  </Link>
+                  <Link
+                    to="/dashboard/osap/audit-center"
+                    search={{ batch: batchName }}
+                    className="py-1.5 px-2.5 rounded-lg bg-gold/15 hover:bg-gold/25 text-gold border border-gold/30 text-xs font-semibold transition-smooth"
+                    title="Audit this batch"
+                  >
+                    <Scan className="w-3.5 h-3.5" />
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
 
       {/* Main Two-Column Layout */}

@@ -18,6 +18,10 @@ import {
   Loader2,
   X,
   RotateCcw,
+  Folder,
+  FileSpreadsheet,
+  Layers,
+  ChevronRight,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -42,10 +46,11 @@ import {
 } from "@/types/osap";
 
 export const Route = createFileRoute("/_authenticated/dashboard/osap/clients/")({
-  validateSearch: (search: Record<string, unknown>): { status?: string; msfaa?: string; add?: string } => ({
+  validateSearch: (search: Record<string, unknown>): { status?: string; msfaa?: string; add?: string; batch?: string } => ({
     status: typeof search.status === "string" ? search.status : undefined,
     msfaa: typeof search.msfaa === "string" ? search.msfaa : undefined,
     add: typeof search.add === "string" ? search.add : undefined,
+    batch: typeof search.batch === "string" ? search.batch : undefined,
   }),
   component: OsapClientsPage,
   ssr: false,
@@ -61,8 +66,9 @@ function OsapClientsPage() {
   const [statusFilter, setStatusFilter] = useState<string>(searchParams.status || "all");
   const [priorityFilter, setPriorityFilter] = useState<string>("all");
   const [credentialFilter, setCredentialFilter] = useState<string>("all");
-  const [batchFilter, setBatchFilter] = useState<string>("all");
+  const [batchFilter, setBatchFilter] = useState<string>(searchParams.batch || "all");
   const [msfaaFilter, setMsfaaFilter] = useState<string>(searchParams.msfaa || "all");
+  const [viewMode, setViewMode] = useState<"tabs" | "grouped">("tabs");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
   // Add / Edit Client Modal State
@@ -328,6 +334,114 @@ function OsapClientsPage() {
         </div>
       </div>
 
+      {/* Google Sheets / Spreadsheet Style Batch Tabs Navigation */}
+      <div className="bg-card border-2 border-gold/30 rounded-xl p-3.5 shadow-md space-y-2.5">
+        <div className="flex items-center justify-between gap-4 flex-wrap pb-2 border-b border-border/80 text-xs">
+          <div className="flex items-center gap-2">
+            <span className="p-1.5 rounded-lg bg-gold/15 text-gold font-bold">
+              <FileSpreadsheet className="w-4 h-4" />
+            </span>
+            <div>
+              <h2 className="font-bold text-foreground text-sm tracking-tight flex items-center gap-2">
+                <span>Spreadsheet Batch Cohorts</span>
+                <span className="text-[11px] px-2 py-0.5 rounded-full bg-gold/20 text-gold font-mono font-semibold">
+                  12 Batches ({clients.length} Students)
+                </span>
+              </h2>
+              <p className="text-[11px] text-muted-foreground">
+                Click any batch tab below to inspect, manage, and audit that cohort specifically.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <span className="text-muted-foreground text-[11px] font-medium hidden sm:inline">View Layout:</span>
+            <div className="flex items-center bg-muted/40 p-0.5 rounded-lg border border-border">
+              <button
+                type="button"
+                onClick={() => setViewMode("tabs")}
+                className={`px-3 py-1 rounded text-xs font-semibold transition-smooth ${
+                  viewMode === "tabs"
+                    ? "bg-gold text-black shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                📑 Batch Tabs
+              </button>
+              <button
+                type="button"
+                onClick={() => setViewMode("grouped")}
+                className={`px-3 py-1 rounded text-xs font-semibold transition-smooth ${
+                  viewMode === "grouped"
+                    ? "bg-gold text-black shadow-xs"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                🗂️ Grouped Sections
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Scrollable Tabs Ribbon */}
+        <div className="flex items-center gap-2 overflow-x-auto pb-1.5 pt-0.5 scrollbar-thin">
+          <button
+            type="button"
+            onClick={() => {
+              setBatchFilter("all");
+              setPage(1);
+            }}
+            className={`px-3.5 py-2 rounded-lg border text-xs font-bold transition-smooth whitespace-nowrap flex items-center gap-2 ${
+              batchFilter === "all"
+                ? "bg-gold text-black border-gold shadow-md ring-2 ring-gold/20"
+                : "bg-muted/40 border-border text-foreground hover:bg-muted hover:border-gold/40"
+            }`}
+          >
+            <Folder className="w-3.5 h-3.5" />
+            <span>🌐 All Batches</span>
+            <span className={`px-1.5 py-0.2 rounded-full font-mono text-[11px] ${
+              batchFilter === "all" ? "bg-black/20 text-black font-bold" : "bg-muted text-muted-foreground font-semibold"
+            }`}>
+              {clients.length}
+            </span>
+          </button>
+
+          {uniqueBatches.map(([batchName, count]) => {
+            const isSelected = batchFilter === batchName;
+            const isHold = batchName === "Hold";
+            return (
+              <button
+                key={batchName}
+                type="button"
+                onClick={() => {
+                  setBatchFilter(batchName);
+                  setPage(1);
+                }}
+                className={`px-3.5 py-2 rounded-lg border text-xs font-semibold transition-smooth whitespace-nowrap flex items-center gap-2 ${
+                  isSelected
+                    ? isHold
+                      ? "bg-rose-500 text-white border-rose-500 shadow-md ring-2 ring-rose-500/20 font-bold"
+                      : "bg-gold text-black border-gold shadow-md ring-2 ring-gold/20 font-bold"
+                    : isHold
+                    ? "bg-rose-950/30 border-rose-800/50 text-rose-300 hover:bg-rose-900/40"
+                    : "bg-card border-border text-foreground hover:bg-muted hover:border-gold/40"
+                }`}
+              >
+                <span>{isHold ? "🚨" : "📁"}</span>
+                <span>{batchName}</span>
+                <span className={`px-1.5 py-0.2 rounded-full font-mono text-[11px] ${
+                  isSelected
+                    ? "bg-black/20 text-black font-bold"
+                    : "bg-muted border border-border text-muted-foreground font-semibold"
+                }`}>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Quick Filter Status Pills */}
       <div className="flex items-center gap-2 overflow-x-auto pb-1 text-xs">
         <button
@@ -541,237 +655,505 @@ function OsapClientsPage() {
         )}
       </div>
 
-      {/* Table */}
-      <div className="bg-card border border-border rounded-xl overflow-hidden shadow-sm">
-        {loading ? (
-          <div className="flex items-center justify-center py-16">
-            <Loader2 className="w-8 h-8 text-gold animate-spin" />
-          </div>
-        ) : filteredClients.length === 0 ? (
-          <div className="p-12 text-center">
-            <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
-            <h3 className="font-semibold text-foreground text-base">No OSAP Clients Found</h3>
-            <p className="text-sm text-muted-foreground mt-1 mb-6">
-              {clients.length === 0
-                ? "Get started by importing an Excel spreadsheet or adding your first student record."
-                : "No clients match your search and filter criteria."}
-            </p>
-            {clients.length === 0 && (
-              <div className="flex items-center justify-center gap-3">
-                <button onClick={openAddModal} className="btn-primary inline-flex items-center gap-2 text-sm">
-                  <Plus className="w-4 h-4" /> Add Client
-                </button>
-                <Link to="/dashboard/osap/import-export" className="btn-secondary inline-flex items-center gap-2 text-sm">
-                  <ArrowUpDown className="w-4 h-4" /> Import Excel
-                </Link>
-              </div>
-            )}
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
-              <thead className="bg-muted/40 border-b border-border text-xs uppercase text-muted-foreground tracking-wider font-semibold">
-                <tr>
-                  <th className="p-4 w-10">
-                    <input
-                      type="checkbox"
-                      checked={selectedIds.size === filteredClients.length && filteredClients.length > 0}
-                      onChange={toggleSelectAll}
-                      className="rounded border-border"
-                    />
-                  </th>
-                  <th className="p-4">Student / Client</th>
-                  <th className="p-4">Batch / Sheet</th>
-                  <th className="p-4">OAN & Credentials</th>
-                  <th className="p-4">School & Program</th>
-                  <th className="p-4">OSAP Status</th>
-                  <th className="p-4">Docs & MSFAA</th>
-                  <th className="p-4">Priority</th>
-                  <th className="p-4 text-right">Actions</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {paginatedClients.map((client) => {
-                  const appStatus = APPLICATION_STATUS_LABELS[client.application_status];
-                  const docStatus = DOCUMENT_STATUS_LABELS[client.document_status];
-                  const msfaaStatus = MSFAA_STATUS_LABELS[client.msfaa_status];
-                  const priority = PRIORITY_CONFIG[client.priority];
-                  const credStatus = CREDENTIAL_STATUS_CONFIG[client.credential_status];
-                  const isSelected = selectedIds.has(client.id);
+      {/* Content Area: Grouped View vs Tabs View */}
+      {viewMode === "grouped" ? (
+        <div className="space-y-6">
+          {uniqueBatches.map(([batchName, count]) => {
+            const batchClients = filteredClients.filter((c) => (c.batch_name || "General Batch") === batchName);
+            if (batchClients.length === 0) return null;
+            const isHold = batchName === "Hold";
+            const submittedMsfaa = batchClients.filter((c) => c.msfaa_status === "submitted").length;
+            const pendingMsfaa = batchClients.length - submittedMsfaa;
+            const fundedCount = batchClients.filter((c) => c.application_status === "completed" || c.application_status === "funded").length;
 
-                  return (
-                    <tr
-                      key={client.id}
-                      className={`hover:bg-muted/20 transition-smooth ${
-                        isSelected ? "bg-gold/5" : ""
-                      }`}
+            return (
+              <div
+                key={batchName}
+                className={`bg-card border-2 rounded-xl overflow-hidden shadow-sm transition-smooth ${
+                  isHold ? "border-rose-500/30" : "border-border hover:border-gold/40"
+                }`}
+              >
+                {/* Batch Header Bar */}
+                <div className={`p-4 border-b flex items-center justify-between gap-4 flex-wrap ${
+                  isHold ? "bg-rose-950/20 border-rose-500/30" : "bg-muted/30 border-border"
+                }`}>
+                  <div className="flex items-center gap-3">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg ${
+                      isHold ? "bg-rose-500/20 text-rose-300 border border-rose-500/30" : "bg-gold/15 text-gold border border-gold/30"
+                    }`}>
+                      {isHold ? "🚨" : "📁"}
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-foreground text-base flex items-center gap-2">
+                        <span>{batchName}</span>
+                        <span className={`text-xs px-2.5 py-0.5 rounded-full font-mono font-semibold ${
+                          isHold ? "bg-rose-500/20 text-rose-300 border border-rose-500/40" : "bg-gold/20 text-gold border border-gold/30"
+                        }`}>
+                          {batchClients.length} Students
+                        </span>
+                      </h3>
+                      <div className="flex items-center gap-3 text-xs text-muted-foreground mt-0.5 flex-wrap">
+                        <span>✅ MSFAA Submitted: <strong className="text-emerald-400">{submittedMsfaa}</strong></span>
+                        <span>⚠️ MSFAA Pending: <strong className="text-amber-400">{pendingMsfaa}</strong></span>
+                        <span>💰 Funded: <strong className="text-emerald-400">{fundedCount}</strong></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <Link
+                      to="/dashboard/osap/audit-center"
+                      search={{ batch: batchName }}
+                      className="btn-primary py-1.5 px-3 text-xs flex items-center gap-1.5"
                     >
-                      <td className="p-4">
-                        <input
-                          type="checkbox"
-                          checked={isSelected}
-                          onChange={() => toggleSelect(client.id)}
-                          className="rounded border-border"
-                        />
-                      </td>
+                      <Scan className="w-3.5 h-3.5" /> Audit {batchName}
+                    </Link>
+                    <button
+                      onClick={() => exportClientsToExcel(batchClients, `OSAP_${batchName.replace(/\s+/g, "_")}.xlsx`)}
+                      className="btn-secondary py-1.5 px-3 text-xs flex items-center gap-1.5"
+                    >
+                      <Download className="w-3.5 h-3.5" /> Export
+                    </button>
+                  </div>
+                </div>
 
-                      <td className="p-4">
-                        <Link
-                          to="/dashboard/osap/clients/$id"
-                          params={{ id: client.id }}
-                          className="font-medium text-foreground hover:text-gold transition-smooth block"
-                        >
-                          {client.full_name}
-                        </Link>
-                        <span className="text-xs text-muted-foreground block">
-                          {client.email || client.phone || "No contact info"}
-                        </span>
-                      </td>
+                {/* Batch Students Table */}
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-sm">
+                    <thead className="bg-muted/20 border-b border-border text-xs uppercase text-muted-foreground tracking-wider font-semibold">
+                      <tr>
+                        <th className="p-3 w-10">
+                          <input
+                            type="checkbox"
+                            checked={batchClients.every((c) => selectedIds.has(c.id)) && batchClients.length > 0}
+                            onChange={() => {
+                              const allInBatch = batchClients.every((c) => selectedIds.has(c.id));
+                              setSelectedIds((prev) => {
+                                const next = new Set(prev);
+                                batchClients.forEach((c) => {
+                                  if (allInBatch) next.delete(c.id);
+                                  else next.add(c.id);
+                                });
+                                return next;
+                              });
+                            }}
+                            className="rounded border-border"
+                          />
+                        </th>
+                        <th className="p-3">Student / Client</th>
+                        <th className="p-3">OAN & Credentials</th>
+                        <th className="p-3">School & Program</th>
+                        <th className="p-3">OSAP Status</th>
+                        <th className="p-3">Docs & MSFAA</th>
+                        <th className="p-3">Priority</th>
+                        <th className="p-3 text-right">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-border">
+                      {batchClients.map((client) => {
+                        const appStatus = APPLICATION_STATUS_LABELS[client.application_status];
+                        const docStatus = DOCUMENT_STATUS_LABELS[client.document_status];
+                        const msfaaStatus = MSFAA_STATUS_LABELS[client.msfaa_status];
+                        const priority = PRIORITY_CONFIG[client.priority];
+                        const credStatus = CREDENTIAL_STATUS_CONFIG[client.credential_status];
+                        const isSelected = selectedIds.has(client.id);
 
-                      <td className="p-4 text-xs">
-                        <span
-                          className="inline-block px-2 py-0.5 rounded bg-muted/60 border border-border text-foreground font-mono font-medium text-[11px] truncate max-w-[130px]"
-                          title={client.batch_name || "General Batch"}
-                        >
-                          {client.batch_name || "General Batch"}
-                        </span>
-                      </td>
-
-                      <td className="p-4">
-                        <div className="font-mono text-xs text-foreground">
-                          {maskOan(client.oan)}
-                        </div>
-                        <span
-                          className={`inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full font-medium mt-1 ${credStatus.bg} ${credStatus.color}`}
-                        >
-                          <Shield className="w-2.5 h-2.5" /> {credStatus.label}
-                        </span>
-                      </td>
-
-                      <td className="p-4 text-xs">
-                        <div className="font-medium text-foreground truncate max-w-[160px]">
-                          {client.school || "—"}
-                        </div>
-                        <div className="text-muted-foreground truncate max-w-[160px]">
-                          {client.program || "—"} {client.application_year ? `(${client.application_year})` : ""}
-                        </div>
-                      </td>
-
-                      <td className="p-4">
-                        <span
-                          className={`inline-block text-xs px-2.5 py-1 rounded-full border font-medium ${appStatus.bg} ${appStatus.color} ${appStatus.border}`}
-                        >
-                          {appStatus.label}
-                        </span>
-                        {client.funding_status && (
-                          <span className="text-[11px] text-muted-foreground block mt-1 truncate max-w-[140px]">
-                            {client.funding_status}
-                          </span>
-                        )}
-                      </td>
-
-                      <td className="p-4 text-xs space-y-1">
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-muted-foreground text-[11px]">Docs:</span>
-                          <span className={`text-[11px] font-medium ${docStatus.color}`}>
-                            {docStatus.label}
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-muted-foreground text-[11px]">MSFAA:</span>
-                          <span className={`text-[11px] font-medium ${msfaaStatus.color}`}>
-                            {msfaaStatus.label}
-                          </span>
-                        </div>
-                      </td>
-
-                      <td className="p-4">
-                        <span
-                          className={`inline-flex items-center gap-1 text-xs px-2.5 py-0.5 rounded-full font-medium ${priority.bg} ${priority.color}`}
-                        >
-                          <span className={`w-1.5 h-1.5 rounded-full ${priority.dot}`} />
-                          {priority.label}
-                        </span>
-                      </td>
-
-                      <td className="p-4 text-right">
-                        <div className="flex items-center justify-end gap-1.5">
-                          <Link
-                            to="/dashboard/osap/clients/$id"
-                            params={{ id: client.id }}
-                            className="px-2.5 py-1 text-xs bg-muted hover:bg-muted/80 text-foreground rounded font-medium transition-smooth"
+                        return (
+                          <tr
+                            key={client.id}
+                            className={`hover:bg-muted/20 transition-smooth ${
+                              isSelected ? "bg-gold/5" : ""
+                            }`}
                           >
-                            Profile
-                          </Link>
-                          <button
-                            onClick={() => openEditModal(client)}
-                            className="p-1.5 text-muted-foreground hover:text-foreground rounded hover:bg-muted transition-smooth"
-                            title="Edit Client"
-                          >
-                            <Edit className="w-3.5 h-3.5" />
-                          </button>
-                          <button
-                            onClick={() => handleDeleteClient(client.id, client.full_name)}
-                            className="p-1.5 text-muted-foreground hover:text-destructive rounded hover:bg-destructive/10 transition-smooth"
-                            title="Delete Client"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-        )}
+                            <td className="p-3">
+                              <input
+                                type="checkbox"
+                                checked={isSelected}
+                                onChange={() => toggleSelect(client.id)}
+                                className="rounded border-border"
+                              />
+                            </td>
+                            <td className="p-3">
+                              <Link
+                                to="/dashboard/osap/clients/$id"
+                                params={{ id: client.id }}
+                                className="font-medium text-foreground hover:text-gold transition-smooth block"
+                              >
+                                {client.full_name}
+                              </Link>
+                              <span className="text-xs text-muted-foreground block">
+                                {client.email || client.phone || "No contact info"}
+                              </span>
+                            </td>
+                            <td className="p-3">
+                              <div className="font-mono text-xs text-foreground">
+                                {maskOan(client.oan)}
+                              </div>
+                              <span
+                                className={`inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full font-medium mt-1 ${credStatus.bg} ${credStatus.color}`}
+                              >
+                                <Shield className="w-2.5 h-2.5" /> {credStatus.label}
+                              </span>
+                            </td>
+                            <td className="p-3 text-xs">
+                              <div className="font-medium text-foreground truncate max-w-[160px]">
+                                {client.school || "—"}
+                              </div>
+                              <div className="text-muted-foreground truncate max-w-[160px]">
+                                {client.program || "—"} {client.application_year ? `(${client.application_year})` : ""}
+                              </div>
+                            </td>
+                            <td className="p-3">
+                              <span
+                                className={`inline-block text-xs px-2.5 py-1 rounded-full border font-medium ${appStatus.bg} ${appStatus.color} ${appStatus.border}`}
+                              >
+                                {appStatus.label}
+                              </span>
+                              {client.funding_status && (
+                                <span className="text-[11px] text-muted-foreground block mt-1 truncate max-w-[140px]">
+                                  {client.funding_status}
+                                </span>
+                              )}
+                            </td>
+                            <td className="p-3 text-xs space-y-1">
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-muted-foreground text-[11px]">Docs:</span>
+                                <span className={`text-[11px] font-medium ${docStatus.color}`}>
+                                  {docStatus.label}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-muted-foreground text-[11px]">MSFAA:</span>
+                                <span className={`text-[11px] font-medium ${msfaaStatus.color}`}>
+                                  {msfaaStatus.label}
+                                </span>
+                              </div>
+                            </td>
+                            <td className="p-3">
+                              <span
+                                className={`inline-flex items-center gap-1 text-xs px-2.5 py-0.5 rounded-full font-medium ${priority.bg} ${priority.color}`}
+                              >
+                                <span className={`w-1.5 h-1.5 rounded-full ${priority.dot}`} />
+                                {priority.label}
+                              </span>
+                            </td>
+                            <td className="p-3 text-right">
+                              <div className="flex items-center justify-end gap-1.5">
+                                <Link
+                                  to="/dashboard/osap/clients/$id"
+                                  params={{ id: client.id }}
+                                  className="px-2.5 py-1 text-xs bg-muted hover:bg-muted/80 text-foreground rounded font-medium transition-smooth"
+                                >
+                                  Profile
+                                </Link>
+                                <button
+                                  onClick={() => openEditModal(client)}
+                                  className="p-1.5 text-muted-foreground hover:text-foreground rounded hover:bg-muted transition-smooth"
+                                  title="Edit Client"
+                                >
+                                  <Edit className="w-3.5 h-3.5" />
+                                </button>
+                                <button
+                                  onClick={() => handleDeleteClient(client.id, client.full_name)}
+                                  className="p-1.5 text-muted-foreground hover:text-destructive rounded hover:bg-destructive/10 transition-smooth"
+                                  title="Delete Client"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      ) : (
+        /* Single Unified / Batch-Filtered Table */
+        <div className="bg-card border border-border rounded-xl overflow-hidden shadow-sm">
+          {/* Active Batch Header Banner if batch is selected */}
+          {batchFilter !== "all" && (
+            <div className="p-4 bg-gold/10 border-b border-gold/30 flex items-center justify-between gap-4 flex-wrap">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-gold/20 border border-gold/40 flex items-center justify-center font-bold text-lg text-gold">
+                  {batchFilter === "Hold" ? "🚨" : "📁"}
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="font-bold text-foreground text-base">Batch: {batchFilter}</h3>
+                    <span className="text-xs px-2.5 py-0.5 rounded-full bg-gold/20 text-gold font-mono font-semibold">
+                      {filteredClients.length} Students
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 text-xs text-muted-foreground mt-0.5 flex-wrap">
+                    <span>✅ MSFAA Submitted: <strong className="text-emerald-400">{filteredClients.filter((c) => c.msfaa_status === "submitted").length}</strong></span>
+                    <span>⚠️ MSFAA Pending: <strong className="text-amber-400">{filteredClients.filter((c) => c.msfaa_status !== "submitted").length}</strong></span>
+                    <span>💰 Funded: <strong className="text-emerald-400">{filteredClients.filter((c) => c.application_status === "completed" || c.application_status === "funded").length}</strong></span>
+                  </div>
+                </div>
+              </div>
 
-        {/* Pagination Bar */}
-        {filteredClients.length > 0 && (
-          <div className="p-4 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-xs bg-muted/10">
-            <span className="text-muted-foreground">
-              Showing <strong>{Math.min(filteredClients.length, (page - 1) * pageSize + 1)}</strong> to <strong>{Math.min(filteredClients.length, page * pageSize)}</strong> of <strong>{filteredClients.length}</strong> clients
-            </span>
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1.5">
-                <span className="text-muted-foreground">Per page:</span>
-                <select
-                  value={pageSize}
-                  onChange={(e) => {
-                    setPageSize(Number(e.target.value));
+              <div className="flex items-center gap-2 flex-wrap">
+                <Link
+                  to="/dashboard/osap/audit-center"
+                  search={{ batch: batchFilter }}
+                  className="btn-primary py-1.5 px-3 text-xs flex items-center gap-1.5"
+                >
+                  <Scan className="w-3.5 h-3.5" /> Audit {batchFilter}
+                </Link>
+                <button
+                  onClick={() => exportClientsToExcel(filteredClients, `OSAP_${batchFilter.replace(/\s+/g, "_")}.xlsx`)}
+                  className="btn-secondary py-1.5 px-3 text-xs flex items-center gap-1.5"
+                >
+                  <Download className="w-3.5 h-3.5" /> Export This Batch
+                </button>
+                <button
+                  onClick={() => {
+                    setBatchFilter("all");
                     setPage(1);
                   }}
-                  className="input-base text-xs py-1 px-2 h-auto"
+                  className="px-2.5 py-1.5 text-xs text-muted-foreground hover:text-foreground bg-muted/60 rounded"
                 >
-                  <option value={25}>25</option>
-                  <option value={50}>50</option>
-                  <option value={100}>100</option>
-                  <option value={250}>250</option>
-                  <option value={500}>All (400+)</option>
-                </select>
-              </div>
-              <div className="flex items-center gap-1">
-                <button
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                  disabled={page === 1}
-                  className="px-2.5 py-1 border border-border rounded bg-card hover:bg-muted disabled:opacity-40 font-medium"
-                >
-                  Previous
-                </button>
-                <span className="px-2 font-medium">Page {page} of {totalPages}</span>
-                <button
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                  disabled={page === totalPages}
-                  className="px-2.5 py-1 border border-border rounded bg-card hover:bg-muted disabled:opacity-40 font-medium"
-                >
-                  Next
+                  Show All Batches
                 </button>
               </div>
             </div>
-          </div>
-        )}
-      </div>
+          )}
+
+          {loading ? (
+            <div className="flex items-center justify-center py-16">
+              <Loader2 className="w-8 h-8 text-gold animate-spin" />
+            </div>
+          ) : filteredClients.length === 0 ? (
+            <div className="p-12 text-center">
+              <Users className="w-12 h-12 text-muted-foreground mx-auto mb-4 opacity-50" />
+              <h3 className="font-semibold text-foreground text-base">No OSAP Clients Found</h3>
+              <p className="text-sm text-muted-foreground mt-1 mb-6">
+                {clients.length === 0
+                  ? "Get started by importing an Excel spreadsheet or adding your first student record."
+                  : "No clients match your search and filter criteria."}
+              </p>
+              {clients.length === 0 && (
+                <div className="flex items-center justify-center gap-3">
+                  <button onClick={openAddModal} className="btn-primary inline-flex items-center gap-2 text-sm">
+                    <Plus className="w-4 h-4" /> Add Client
+                  </button>
+                  <Link to="/dashboard/osap/import-export" className="btn-secondary inline-flex items-center gap-2 text-sm">
+                    <ArrowUpDown className="w-4 h-4" /> Import Excel
+                  </Link>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-sm">
+                <thead className="bg-muted/40 border-b border-border text-xs uppercase text-muted-foreground tracking-wider font-semibold">
+                  <tr>
+                    <th className="p-4 w-10">
+                      <input
+                        type="checkbox"
+                        checked={selectedIds.size === filteredClients.length && filteredClients.length > 0}
+                        onChange={toggleSelectAll}
+                        className="rounded border-border"
+                      />
+                    </th>
+                    <th className="p-4">Student / Client</th>
+                    <th className="p-4">Batch / Sheet</th>
+                    <th className="p-4">OAN & Credentials</th>
+                    <th className="p-4">School & Program</th>
+                    <th className="p-4">OSAP Status</th>
+                    <th className="p-4">Docs & MSFAA</th>
+                    <th className="p-4">Priority</th>
+                    <th className="p-4 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {paginatedClients.map((client) => {
+                    const appStatus = APPLICATION_STATUS_LABELS[client.application_status];
+                    const docStatus = DOCUMENT_STATUS_LABELS[client.document_status];
+                    const msfaaStatus = MSFAA_STATUS_LABELS[client.msfaa_status];
+                    const priority = PRIORITY_CONFIG[client.priority];
+                    const credStatus = CREDENTIAL_STATUS_CONFIG[client.credential_status];
+                    const isSelected = selectedIds.has(client.id);
+
+                    return (
+                      <tr
+                        key={client.id}
+                        className={`hover:bg-muted/20 transition-smooth ${
+                          isSelected ? "bg-gold/5" : ""
+                        }`}
+                      >
+                        <td className="p-4">
+                          <input
+                            type="checkbox"
+                            checked={isSelected}
+                            onChange={() => toggleSelect(client.id)}
+                            className="rounded border-border"
+                          />
+                        </td>
+
+                        <td className="p-4">
+                          <Link
+                            to="/dashboard/osap/clients/$id"
+                            params={{ id: client.id }}
+                            className="font-medium text-foreground hover:text-gold transition-smooth block"
+                          >
+                            {client.full_name}
+                          </Link>
+                          <span className="text-xs text-muted-foreground block">
+                            {client.email || client.phone || "No contact info"}
+                          </span>
+                        </td>
+
+                        <td className="p-4 text-xs">
+                          <span
+                            className="inline-block px-2 py-0.5 rounded bg-muted/60 border border-border text-foreground font-mono font-medium text-[11px] truncate max-w-[130px]"
+                            title={client.batch_name || "General Batch"}
+                          >
+                            {client.batch_name || "General Batch"}
+                          </span>
+                        </td>
+
+                        <td className="p-4">
+                          <div className="font-mono text-xs text-foreground">
+                            {maskOan(client.oan)}
+                          </div>
+                          <span
+                            className={`inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full font-medium mt-1 ${credStatus.bg} ${credStatus.color}`}
+                          >
+                            <Shield className="w-2.5 h-2.5" /> {credStatus.label}
+                          </span>
+                        </td>
+
+                        <td className="p-4 text-xs">
+                          <div className="font-medium text-foreground truncate max-w-[160px]">
+                            {client.school || "—"}
+                          </div>
+                          <div className="text-muted-foreground truncate max-w-[160px]">
+                            {client.program || "—"} {client.application_year ? `(${client.application_year})` : ""}
+                          </div>
+                        </td>
+
+                        <td className="p-4">
+                          <span
+                            className={`inline-block text-xs px-2.5 py-1 rounded-full border font-medium ${appStatus.bg} ${appStatus.color} ${appStatus.border}`}
+                          >
+                            {appStatus.label}
+                          </span>
+                          {client.funding_status && (
+                            <span className="text-[11px] text-muted-foreground block mt-1 truncate max-w-[140px]">
+                              {client.funding_status}
+                            </span>
+                          )}
+                        </td>
+
+                        <td className="p-4 text-xs space-y-1">
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-muted-foreground text-[11px]">Docs:</span>
+                            <span className={`text-[11px] font-medium ${docStatus.color}`}>
+                              {docStatus.label}
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-muted-foreground text-[11px]">MSFAA:</span>
+                            <span className={`text-[11px] font-medium ${msfaaStatus.color}`}>
+                              {msfaaStatus.label}
+                            </span>
+                          </div>
+                        </td>
+
+                        <td className="p-4">
+                          <span
+                            className={`inline-flex items-center gap-1 text-xs px-2.5 py-0.5 rounded-full font-medium ${priority.bg} ${priority.color}`}
+                          >
+                            <span className={`w-1.5 h-1.5 rounded-full ${priority.dot}`} />
+                            {priority.label}
+                          </span>
+                        </td>
+
+                        <td className="p-4 text-right">
+                          <div className="flex items-center justify-end gap-1.5">
+                            <Link
+                              to="/dashboard/osap/clients/$id"
+                              params={{ id: client.id }}
+                              className="px-2.5 py-1 text-xs bg-muted hover:bg-muted/80 text-foreground rounded font-medium transition-smooth"
+                            >
+                              Profile
+                            </Link>
+                            <button
+                              onClick={() => openEditModal(client)}
+                              className="p-1.5 text-muted-foreground hover:text-foreground rounded hover:bg-muted transition-smooth"
+                              title="Edit Client"
+                            >
+                              <Edit className="w-3.5 h-3.5" />
+                            </button>
+                            <button
+                              onClick={() => handleDeleteClient(client.id, client.full_name)}
+                              className="p-1.5 text-muted-foreground hover:text-destructive rounded hover:bg-destructive/10 transition-smooth"
+                              title="Delete Client"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          )}
+
+          {/* Pagination Bar */}
+          {filteredClients.length > 0 && (
+            <div className="p-4 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-xs bg-muted/10">
+              <span className="text-muted-foreground">
+                Showing <strong>{Math.min(filteredClients.length, (page - 1) * pageSize + 1)}</strong> to <strong>{Math.min(filteredClients.length, page * pageSize)}</strong> of <strong>{filteredClients.length}</strong> clients
+              </span>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-muted-foreground">Per page:</span>
+                  <select
+                    value={pageSize}
+                    onChange={(e) => {
+                      setPageSize(Number(e.target.value));
+                      setPage(1);
+                    }}
+                    className="input-base text-xs py-1 px-2 h-auto"
+                  >
+                    <option value={25}>25</option>
+                    <option value={50}>50</option>
+                    <option value={100}>100</option>
+                    <option value={250}>250</option>
+                    <option value={500}>All (400+)</option>
+                  </select>
+                </div>
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => setPage((p) => Math.max(1, p - 1))}
+                    disabled={page === 1}
+                    className="px-2.5 py-1 border border-border rounded bg-card hover:bg-muted disabled:opacity-40 font-medium"
+                  >
+                    Previous
+                  </button>
+                  <span className="px-2 font-medium">Page {page} of {totalPages}</span>
+                  <button
+                    onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                    disabled={page === totalPages}
+                    className="px-2.5 py-1 border border-border rounded bg-card hover:bg-muted disabled:opacity-40 font-medium"
+                  >
+                    Next
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
 
       {/* Add / Edit Client Modal */}
       {modalOpen && (
