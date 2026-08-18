@@ -180,6 +180,24 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
     drawTextTop(d.name, x0, signatureLineTop + 3.5, BODY);
   });
 
+  // Signature images drawn on top of the lines
+  for (const sig of doc.signatures ?? []) {
+    if (!sig.dataUrl) continue;
+    try {
+      const img = await pdf.embedPng(dataUrlToBytes(sig.dataUrl));
+      page.drawImage(img, {
+        x: sig.x,
+        y: PAGE_H - sig.top - sig.height,
+        width: sig.width,
+        height: sig.height,
+      });
+    } catch {
+      /* skip unreadable signature */
+    }
+  }
+
+
+
 
   const blockW = L.notaryImage.width ?? 248;
   const blockH = L.notaryImage.height ?? (blockW * notaryBlockImg.height) / notaryBlockImg.width;
