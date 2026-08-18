@@ -170,28 +170,24 @@ export function PdfHtmlPreview({ doc, className = "", onSignaturesChange }: PdfH
         {/* Signature lines */}
         {layout.signatureLine &&
           doc.deponents.map((deponent, i) => {
-            const sig = layout.signatureLine;
-            const lineW = sig.width ?? 160;
-            const count = doc.deponents.length;
-            const gap = count > 1 ? 40 : 0;
-            const x = (sig.x ?? 54) + i * (lineW + gap);
+            const line = lines[i] ?? lines[0];
             return (
               <div key={i}>
                 <div
                   className="absolute border-b border-black"
                   style={{
-                    left: toPx(x),
-                    top: toPx(sig.top),
-                    width: toPx(lineW),
+                    left: toPx(line.x),
+                    top: toPx(line.top),
+                    width: toPx(line.width),
                   }}
                 />
                 <div
-                  className="absolute text-center"
+                  className="absolute"
                   style={{
-                    left: toPx(x),
-                    top: toPx(sig.top + 4),
-                    width: toPx(lineW),
-                    fontSize: toPx(10),
+                    left: toPx(line.x),
+                    top: toPx(line.top + 3.5),
+                    width: toPx(line.width),
+                    fontSize: toPx(10.5),
                   }}
                 >
                   {deponent.name}
@@ -199,6 +195,38 @@ export function PdfHtmlPreview({ doc, className = "", onSignaturesChange }: PdfH
               </div>
             );
           })}
+
+        {/* Placed signature images */}
+        {signatures.map((sig, i) =>
+          sig.dataUrl ? (
+            <div
+              key={`sig-${i}`}
+              className={`absolute ${onSignaturesChange ? "cursor-move ring-1 ring-transparent hover:ring-blue-400" : ""}`}
+              style={{
+                left: toPx(sig.x),
+                top: toPx(sig.top),
+                width: toPx(sig.width),
+                height: toPx(sig.height),
+              }}
+              onPointerDown={(e) => onPointerDown(e, i, "move")}
+            >
+              <img
+                src={sig.dataUrl}
+                alt={`Signature of ${doc.deponents[sig.deponentIndex]?.name ?? ""}`}
+                className="w-full h-full select-none pointer-events-none"
+                draggable={false}
+              />
+              {onSignaturesChange && (
+                <span
+                  role="presentation"
+                  onPointerDown={(e) => onPointerDown(e, i, "resize")}
+                  className="absolute -right-1.5 -bottom-1.5 w-3 h-3 bg-blue-500 rounded-sm cursor-se-resize"
+                />
+              )}
+            </div>
+          ) : null,
+        )}
+
 
         {/* Acknowledgement title */}
         {layout.ackTitle && (
