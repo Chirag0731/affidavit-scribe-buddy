@@ -7,6 +7,7 @@ import {
   Loader2,
   AlertCircle,
   ChevronDown,
+  Pencil,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -121,13 +122,21 @@ function SavedAffidavitsPage() {
                     <div>
                       <h3 className="font-semibold text-foreground">{a.client_name}</h3>
                       <p className="text-sm text-muted-foreground">{a.template_name || "Custom"}</p>
-                      <div className="flex items-center gap-2 mt-2">
+                      <div className="flex items-center gap-2 mt-2 flex-wrap">
                         <span className="text-xs bg-muted text-muted-foreground px-2 py-1 rounded">
                           {new Date(a.created_at).toLocaleDateString()}
                         </span>
                         <span className="text-xs px-2 py-1 rounded bg-green-100 text-green-400 capitalize">
                           {a.status}
                         </span>
+                        <Link
+                          to="/dashboard"
+                          search={{ edit: a.id }}
+                          onClick={(e) => e.stopPropagation()}
+                          className="flex items-center gap-1 text-xs px-2.5 py-1 rounded bg-gold/15 text-gold hover:bg-gold/25 font-medium transition-smooth ml-1"
+                        >
+                          <Pencil className="w-3 h-3" /> Edit
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -160,7 +169,14 @@ function SavedAffidavitsPage() {
                       </pre>
                     </div>
 
-                    <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-border">
+                    <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t border-border flex-wrap">
+                      <Link
+                        to="/dashboard"
+                        search={{ edit: a.id }}
+                        className="flex items-center justify-center gap-2 px-4 py-2 border border-gold/40 text-gold bg-gold/10 hover:bg-gold/20 rounded transition-smooth font-medium"
+                      >
+                        <Pencil className="w-4 h-4" /> Edit & Regenerate
+                      </Link>
                       <button
                         onClick={() =>
                           a.pdf_path

@@ -10,6 +10,7 @@ import {
   ArrowLeft,
   Save,
   SlidersHorizontal,
+  Pencil,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -19,6 +20,7 @@ import {
   type TemplateLayout,
   type AffidavitDoc,
   type SignaturePlacement,
+  type Affidavit,
   withLayoutDefaults,
   buildAffidavitDoc,
   renderAffidavitText,
@@ -31,6 +33,9 @@ import { PdfHtmlPreview } from "@/components/pdf-html-preview";
 import { SignaturePanel } from "@/components/signature-panel";
 
 export const Route = createFileRoute("/_authenticated/dashboard/")({
+  validateSearch: (search: Record<string, unknown>): { edit?: string } => ({
+    edit: typeof search.edit === "string" ? search.edit : undefined,
+  }),
   component: NewAffidavitPage,
   ssr: false,
 });
@@ -95,6 +100,9 @@ type Step = "template-selection" | "form-fill" | "preview";
 
 function NewAffidavitPage() {
   const navigate = useNavigate();
+  const search = Route.useSearch();
+  const editId = search.edit;
+
   const [step, setStep] = useState<Step>("template-selection");
   const [templates, setTemplates] = useState<Template[]>([]);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
@@ -117,12 +125,75 @@ function NewAffidavitPage() {
   const previewTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    fetchTemplates();
-  }, []);
+    if (editId) {
+      loadAffidavitForEdit(editId);
+    } else {
+      fetchTemplates();
+    }
+  }, [editId]);
 
-  // Auto-save draft whenever inputs change on form-fill or preview step
+  const loadAffidavitForEdit = async (id: string) => {
+    try {
+      setLoading(true);
+      setError("");
+      const { data, error: err } = await supabase
+        .from("affidavits" as never)
+        .select("*")
+        .eq("id", id)
+        .single();
+      if (err) throw err;
+      const aff = data as unknown as Affidavit;
+      if (!aff) throw new Error("Affidavit not found");
+
+      let currentTemplates = templates;
+      if (currentTemplates.length === 0) {
+        const { data: tpls } = await supabase
+          .from("templates" as never)
+          .select("*")
+          .eq("is_active", true)
+          .order("name");
+        currentTemplates = (tpls as unknown as Template[]) || [];
+        setTemplates(currentTemplates);
+      }
+
+      let tpl = currentTemplates.find((t) => t.id === aff.template_id);
+      if (!tpl && aff.template_name) {
+        tpl = currentTemplates.find((t) => t.name === aff.template_name);
+      }
+      if (!tpl && aff.template_id) {
+        const { data: tplData } = await supabase
+          .from("templates" as never)
+          .select("*")
+          .eq("id", aff.template_id)
+          .maybeSingle();
+        if (tplData) tpl = tplData as unknown as Template;
+      }
+
+      if (tpl) {
+        setSelectedTemplate(tpl);
+      }
+      setAffidavitId(aff.id);
+      setClientName(aff.client_name || "");
+      setMatterReference(aff.matter_reference || "");
+      setFormData((aff.form_data as Record<string, string>) || {});
+      setGeneratedContent(aff.generated_content || "");
+      setDocxPath(aff.docx_path || null);
+      setPdfPath(aff.pdf_path || null);
+      if ((aff as any).signatures && Array.isArray((aff as any).signatures)) {
+        setSignatures((aff as any).signatures);
+      }
+      setStep("form-fill");
+      toast.info(`Loaded affidavit for "${aff.client_name}" to edit`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load affidavit for editing");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Auto-save draft whenever inputs change on form-fill or preview step (only for unsaved new affidavits)
   useEffect(() => {
-    if (!selectedTemplate || step === "template-selection") return;
+    if (!selectedTemplate || step === "template-selection" || affidavitId) return;
     const hasContent =
       clientName.trim() ||
       matterReference.trim() ||
@@ -131,7 +202,7 @@ function NewAffidavitPage() {
     if (hasContent) {
       saveDraftToStorage(selectedTemplate.id, clientName, matterReference, formData, signatures);
     }
-  }, [clientName, matterReference, formData, signatures, selectedTemplate, step]);
+  }, [clientName, matterReference, formData, signatures, selectedTemplate, step, affidavitId]);
 
   // Live re-render of the PDF preview while adjusting the layout
   useEffect(() => {
@@ -175,7 +246,7 @@ function NewAffidavitPage() {
 
       // Check if there was an active draft from previous session
       const lastTemplateId = localStorage.getItem(LAST_DRAFT_KEY);
-      if (lastTemplateId && tpls.length > 0) {
+      if (lastTemplateId && tpls.length > 0 && !editId) {
         const found = tpls.find((t) => t.id === lastTemplateId);
         const draft = getSavedDraft(lastTemplateId);
         if (found && draft) {
@@ -196,6 +267,7 @@ function NewAffidavitPage() {
 
   const handleTemplateSelect = (template: Template) => {
     setSelectedTemplate(template);
+    setAffidavitId(null);
     setError("");
     const draft = getSavedDraft(template.id);
     if (draft && (draft.clientName || Object.keys(draft.formData || {}).length > 0)) {
@@ -274,26 +346,50 @@ function NewAffidavitPage() {
       });
       setLayoutDraft(withLayoutDefaults(selectedTemplate.layout));
 
-      const { data: inserted, error: insertErr } = await supabase
-        .from("affidavits" as never)
-        .insert({
-          user_id: user.id,
-          template_id: selectedTemplate.id,
-          template_name: selectedTemplate.name,
-          client_name: clientName,
-          matter_reference: matterReference || null,
-          form_data: formData,
-          generated_content: content,
-          docx_path: uploadedDocx,
-          pdf_path: uploadedPdf,
-          status: "generated",
-        } as never)
-        .select("id")
-        .single();
-      if (insertErr) throw insertErr;
-      setAffidavitId((inserted as unknown as { id: string })?.id ?? null);
+      if (affidavitId) {
+        // UPDATE existing affidavit
+        const { error: updateErr } = await supabase
+          .from("affidavits" as never)
+          .update({
+            template_id: selectedTemplate.id,
+            template_name: selectedTemplate.name,
+            client_name: clientName,
+            matter_reference: matterReference || null,
+            form_data: formData,
+            signatures: signatures as unknown as object,
+            generated_content: content,
+            docx_path: uploadedDocx,
+            pdf_path: uploadedPdf,
+            status: "generated",
+            updated_at: new Date().toISOString(),
+          } as never)
+          .eq("id", affidavitId);
+        if (updateErr) throw updateErr;
+        toast.success("Affidavit updated and files re-generated");
+      } else {
+        // INSERT new affidavit
+        const { data: inserted, error: insertErr } = await supabase
+          .from("affidavits" as never)
+          .insert({
+            user_id: user.id,
+            template_id: selectedTemplate.id,
+            template_name: selectedTemplate.name,
+            client_name: clientName,
+            matter_reference: matterReference || null,
+            form_data: formData,
+            signatures: signatures as unknown as object,
+            generated_content: content,
+            docx_path: uploadedDocx,
+            pdf_path: uploadedPdf,
+            status: "generated",
+          } as never)
+          .select("id")
+          .single();
+        if (insertErr) throw insertErr;
+        setAffidavitId((inserted as unknown as { id: string })?.id ?? null);
+        toast.success("Affidavit generated and saved");
+      }
 
-      toast.success("Affidavit generated and saved");
       setStep("preview");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to generate affidavit");
@@ -355,6 +451,7 @@ function NewAffidavitPage() {
     if (selectedTemplate) {
       clearSavedDraft(selectedTemplate.id);
     }
+    navigate({ to: "/dashboard", search: {} });
     setStep("template-selection");
     setSelectedTemplate(null);
     setFormData({});
@@ -435,10 +532,16 @@ function NewAffidavitPage() {
         <div className="flex items-start justify-between gap-4 flex-wrap">
           <div>
             <button
-              onClick={() => setStep("template-selection")}
+              onClick={() => {
+                if (affidavitId) {
+                  navigate({ to: "/dashboard/saved" });
+                } else {
+                  setStep("template-selection");
+                }
+              }}
               className="flex items-center gap-2 text-gold hover:text-gold-dark transition-smooth font-medium mb-4"
             >
-              <ArrowLeft className="w-4 h-4" /> Back to Templates
+              <ArrowLeft className="w-4 h-4" /> {affidavitId ? "Back to Saved Affidavits" : "Back to Templates"}
             </button>
             <h1 className="section-heading mb-2">{selectedTemplate.name}</h1>
             <p className="text-muted-foreground">
@@ -446,10 +549,17 @@ function NewAffidavitPage() {
               replaced.
             </p>
           </div>
-          <div className="flex items-center gap-2 text-xs text-muted-foreground bg-card border border-border px-3 py-1.5 rounded-full mt-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>Autosaving inputs</span>
-          </div>
+          {affidavitId ? (
+            <div className="flex items-center gap-1.5 text-xs text-gold bg-gold/15 border border-gold/30 px-3 py-1.5 rounded-full font-medium mt-2">
+              <Pencil className="w-3.5 h-3.5" />
+              <span>Editing Saved Affidavit</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 text-xs text-muted-foreground bg-card border border-border px-3 py-1.5 rounded-full mt-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Autosaving inputs</span>
+            </div>
+          )}
         </div>
 
         {error && (
@@ -563,7 +673,9 @@ function NewAffidavitPage() {
               className="btn-primary flex items-center gap-2"
             >
               {generating && <Loader2 className="w-4 h-4 animate-spin" />}
-              {generating ? "Generating DOCX & PDF..." : "Generate Affidavit"}
+              {generating
+                ? (affidavitId ? "Updating DOCX & PDF..." : "Generating DOCX & PDF...")
+                : (affidavitId ? "Save & Update Affidavit" : "Generate Affidavit")}
             </button>
             <button
               type="button"
@@ -575,11 +687,17 @@ function NewAffidavitPage() {
             </button>
             <button
               type="button"
-              onClick={() => setStep("template-selection")}
+              onClick={() => {
+                if (affidavitId) {
+                  navigate({ to: "/dashboard/saved" });
+                } else {
+                  setStep("template-selection");
+                }
+              }}
               className="btn-secondary"
               disabled={generating}
             >
-              Cancel
+              {affidavitId ? "Cancel Edit" : "Cancel"}
             </button>
           </div>
         </form>
@@ -687,7 +805,7 @@ function NewAffidavitPage() {
         </pre>
       </details>
 
-      <div className="flex flex-col sm:flex-row gap-3">
+      <div className="flex flex-col sm:flex-row gap-3 flex-wrap">
         <button
           onClick={() => pdfPath && downloadStorageFile(pdfPath, `${baseName}.pdf`)}
           disabled={!pdfPath}
@@ -701,6 +819,12 @@ function NewAffidavitPage() {
           className="btn-secondary flex items-center gap-2"
         >
           <Download className="w-4 h-4" /> Download DOCX
+        </button>
+        <button
+          onClick={() => setStep("form-fill")}
+          className="btn-secondary flex items-center gap-2 border-gold/40 text-gold hover:bg-gold/10"
+        >
+          <Pencil className="w-4 h-4" /> Edit Form Inputs
         </button>
         <button onClick={() => navigate({ to: "/dashboard/saved" })} className="btn-secondary">
           View Saved Affidavits
