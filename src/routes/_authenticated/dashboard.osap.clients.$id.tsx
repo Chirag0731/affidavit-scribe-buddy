@@ -229,6 +229,62 @@ function OsapClientProfilePage() {
     toast.success(`Action marked as ${newStatus.replace("_", " ")}`);
   };
 
+  const handleMarkAsFunded = async () => {
+    if (!client) return;
+    const isAlreadyFunded = client.application_status === "completed" || client.application_status === "funded";
+    const confirmMsg = isAlreadyFunded
+      ? "This file is already marked as funded. Re-apply funded & completed status?"
+      : `Mark ${client.full_name}'s OSAP application as Payment Released & Fully Completed?`;
+    if (!window.confirm(confirmMsg)) return;
+
+    try {
+      const updatedClient: OsapClient = {
+        ...client,
+        application_status: "completed",
+        funding_status: "Payment Released / Fully Funded ($10,200 Disbursed)",
+        document_status: "approved",
+        msfaa_status: "completed",
+        action_required: false,
+        action_required_summary: null,
+        updated_at: new Date().toISOString(),
+      };
+      await saveOsapClient(updatedClient);
+      setClient(updatedClient);
+
+      const audit: OsapAudit = {
+        id: crypto.randomUUID(),
+        client_id: client.id,
+        client_name: client.full_name,
+        user_id: client.user_id,
+        audit_type: "single",
+        status: "success",
+        summary: "Payment Released: Funds disbursed by NSLSC. File marked as Funded and Fully Completed.",
+        changes_detected: [
+          {
+            id: crypto.randomUUID(),
+            audit_id: crypto.randomUUID(),
+            client_id: client.id,
+            user_id: client.user_id,
+            field_category: "application",
+            field_name: "Application Status",
+            previous_value: client.application_status,
+            new_value: "completed (funded)",
+            created_at: new Date().toISOString(),
+          },
+        ],
+        raw_snapshot: { status: "FUNDED_COMPLETED", timestamp: new Date().toISOString() },
+        conducted_by: "Staff Coordinator",
+        created_at: new Date().toISOString(),
+      };
+      await recordOsapAudit(audit);
+      setAudits((prev) => [audit, ...prev]);
+
+      toast.success(`💰 Payment marked as released! File is now Funded and Fully Completed.`);
+    } catch {
+      toast.error("Failed to update status");
+    }
+  };
+
   if (loading || !client) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
@@ -284,6 +340,18 @@ function OsapClientProfilePage() {
             </div>
 
             <div className="flex items-center gap-2.5 flex-wrap">
+              {client.application_status !== "completed" && client.application_status !== "funded" ? (
+                <button
+                  onClick={handleMarkAsFunded}
+                  className="btn-secondary flex items-center gap-2 text-sm border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/20 shadow-xs"
+                >
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" /> Release Payment (Mark Funded)
+                </button>
+              ) : (
+                <span className="px-3 py-1.5 rounded-lg bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/40 text-xs flex items-center gap-1.5">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" /> File Funded & Completed
+                </span>
+              )}
               <button
                 onClick={() => setAuditModalOpen(true)}
                 className="btn-primary flex items-center gap-2 text-sm shadow-md"
@@ -707,21 +775,23 @@ function OsapClientProfilePage() {
             </div>
 
             <div className="space-y-3">
-              <label className="block text-xs font-semibold text-foreground">Select Simulation Scenario</label>
+              <label className="block text-xs font-semibold text-foreground">Select Audit Mode / Scenario</label>
               <select
                 value={auditScenario}
                 onChange={(e) => setAuditScenario(e.target.value as AuditScenario)}
-                className="input-base text-sm"
+                className="input-base text-sm font-medium border-gold/40"
               >
-                <option value="approved">Approved Application ($9,450 Calculated Funding)</option>
-                <option value="processing">Processing / Under Assessment</option>
-                <option value="rejected_documents">Rejected Documents (Needs Replacement Upload)</option>
-                <option value="documents_under_review">Documents Under Review by FAO</option>
-                <option value="msfaa_incomplete">MSFAA Incomplete (Loan Blocked)</option>
-                <option value="denied">Application Denied (Eligibility Threshold)</option>
-                <option value="mfa_required">MFA Challenge Paused (SMS Code Required)</option>
-                <option value="portal_unavailable">Portal Unavailable / Timeout</option>
-                <option value="manual_review">Manual Staff Review Required</option>
+                <option value="live_file_audit">⚡ Smart Live Audit (Inspect Real MSFAA & File Status)</option>
+                <option value="payment_released">💰 Payment Released (Mark File Funded & Fully Completed)</option>
+                <option value="approved">✅ Approved Application ($9,450 Calculated Funding)</option>
+                <option value="processing">📊 Processing / Under Assessment</option>
+                <option value="rejected_documents">📄 Rejected Documents (Needs Replacement Upload)</option>
+                <option value="documents_under_review">⏳ Documents Under Review by FAO</option>
+                <option value="msfaa_incomplete">⚠️ MSFAA Incomplete (Loan Blocked)</option>
+                <option value="denied">❌ Application Denied (Eligibility Threshold)</option>
+                <option value="mfa_required">🔐 MFA Challenge Paused (SMS Code Required)</option>
+                <option value="portal_unavailable">🔌 Portal Unavailable / Timeout</option>
+                <option value="manual_review">📝 Manual Staff Review Required</option>
               </select>
             </div>
 

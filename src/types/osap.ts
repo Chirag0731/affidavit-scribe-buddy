@@ -5,6 +5,7 @@ export type OsapApplicationStatus =
   | "processing"
   | "approved"
   | "partially_approved"
+  | "funded"
   | "denied"
   | "action_required"
   | "documents_required"
@@ -181,12 +182,13 @@ export const APPLICATION_STATUS_LABELS: Record<OsapApplicationStatus, { label: s
   processing: { label: "Processing", color: "text-amber-400", bg: "bg-amber-900/20", border: "border-amber-800/40" },
   approved: { label: "Approved", color: "text-emerald-400", bg: "bg-emerald-900/20", border: "border-emerald-800/40" },
   partially_approved: { label: "Partially Approved", color: "text-teal-400", bg: "bg-teal-900/20", border: "border-teal-800/40" },
+  funded: { label: "Funded / Paid", color: "text-emerald-300 font-bold", bg: "bg-emerald-500/25", border: "border-emerald-500/50" },
   denied: { label: "Denied", color: "text-rose-400", bg: "bg-rose-900/20", border: "border-rose-800/40" },
   action_required: { label: "Action Required", color: "text-red-400", bg: "bg-red-900/20", border: "border-red-800/40" },
   documents_required: { label: "Documents Required", color: "text-orange-400", bg: "bg-orange-900/20", border: "border-orange-800/40" },
   documents_under_review: { label: "Docs Under Review", color: "text-cyan-400", bg: "bg-cyan-900/20", border: "border-cyan-800/40" },
   information_required: { label: "Info Required", color: "text-amber-300", bg: "bg-amber-900/20", border: "border-amber-800/40" },
-  completed: { label: "Completed", color: "text-emerald-400", bg: "bg-emerald-900/20", border: "border-emerald-800/40" },
+  completed: { label: "Funded & Completed", color: "text-emerald-300 font-bold", bg: "bg-emerald-500/25", border: "border-emerald-500/50" },
   manual_review_required: { label: "Manual Review", color: "text-purple-400", bg: "bg-purple-900/20", border: "border-purple-800/40" },
   audit_failed: { label: "Audit Failed", color: "text-rose-400", bg: "bg-rose-900/20", border: "border-rose-800/40" },
 };

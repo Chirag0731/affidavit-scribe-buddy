@@ -91,7 +91,7 @@ export async function getOsapClientById(id: string): Promise<OsapClient | null> 
  */
 export async function saveOsapClient(
   client: Partial<OsapClient> & { rawPassword?: string },
-  userId: string,
+  userId: string = client.user_id || "system",
 ): Promise<OsapClient> {
   const isUpdate = Boolean(client.id);
   const payload = {

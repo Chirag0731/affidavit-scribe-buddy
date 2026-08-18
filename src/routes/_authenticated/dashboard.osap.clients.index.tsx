@@ -372,13 +372,32 @@ function OsapClientsPage() {
           }}
           className={`px-3 py-1.5 rounded-lg border font-medium transition-smooth whitespace-nowrap flex items-center gap-1.5 ${
             msfaaFilter === "submitted"
+              ? "bg-sky-500/20 text-sky-300 border-sky-500 font-semibold"
+              : "bg-card border-border text-sky-400/80 hover:text-sky-300"
+          }`}
+        >
+          <span>✅ MSFAA Submitted</span>
+          <span className="px-1.5 py-0.2 bg-sky-500/30 rounded-full font-mono text-[10px]">
+            {clients.length - pendingMsfaaClients.length}
+          </span>
+        </button>
+
+        <button
+          onClick={() => {
+            setStatusFilter("completed");
+            setMsfaaFilter("all");
+            setBatchFilter("all");
+            setPage(1);
+          }}
+          className={`px-3 py-1.5 rounded-lg border font-medium transition-smooth whitespace-nowrap flex items-center gap-1.5 ${
+            statusFilter === "completed" || statusFilter === "funded"
               ? "bg-emerald-500/20 text-emerald-300 border-emerald-500 font-semibold"
               : "bg-card border-border text-emerald-400/80 hover:text-emerald-300"
           }`}
         >
-          <span>✅ MSFAA Submitted</span>
+          <span>💰 Funded & Completed</span>
           <span className="px-1.5 py-0.2 bg-emerald-500/30 rounded-full font-mono text-[10px]">
-            {clients.length - pendingMsfaaClients.length}
+            {clients.filter((c) => c.application_status === "completed" || c.application_status === "funded").length}
           </span>
         </button>
       </div>

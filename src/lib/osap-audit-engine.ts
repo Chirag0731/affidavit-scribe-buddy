@@ -11,6 +11,7 @@ import type {
 
 export type AuditScenario =
   | "live_file_audit"
+  | "payment_released"
   | "approved"
   | "processing"
   | "denied"
@@ -153,6 +154,39 @@ export function runClientAudit(
 
   if (!manualOverrides && scenario) {
     switch (scenario) {
+      case "payment_released":
+        newAppStatus = "completed";
+        newFundingStatus = "Payment Released / Fully Funded ($10,200 Disbursed)";
+        newDocStatus = "approved";
+        newMsfaaStatus = "completed";
+        break;
+      case "live_file_audit":
+        if (
+          client.application_status === "completed" ||
+          client.application_status === "funded" ||
+          /released|funded|paid|disbursed/i.test(client.funding_status || "") ||
+          /released|funded|paid|disbursed/i.test(client.notes || "")
+        ) {
+          newAppStatus = "completed";
+          newFundingStatus = client.funding_status && /released|funded|paid|disbursed/i.test(client.funding_status)
+            ? client.funding_status
+            : "Payment Released / Fully Funded";
+          newDocStatus = "approved";
+          newMsfaaStatus = "completed";
+        } else if (client.batch_name === "Hold" || client.notes?.toLowerCase().includes("discrepancy")) {
+          newAppStatus = "action_required";
+          newMsfaaStatus = client.msfaa_status === "submitted" ? "submitted" : "required";
+        } else if (client.msfaa_status !== "submitted") {
+          newMsfaaStatus = "required";
+          if (newAppStatus === "not_started") newAppStatus = "action_required";
+        } else if (client.document_status === "under_review") {
+          newAppStatus = "documents_under_review";
+        } else {
+          if (newAppStatus === "not_started" || newAppStatus === "action_required") {
+            newAppStatus = "submitted";
+          }
+        }
+        break;
       case "approved":
         newAppStatus = "approved";
         newFundingStatus = "$9,450 ($6,200 Grant / $3,250 Loan)";
@@ -351,7 +385,15 @@ export function runClientAudit(
     },
   ];
 
-  const auditStatus = (client.batch_name === "Hold" || client.action_required || newMsfaaStatus === "required" || newDocStatus === "rejected")
+  const isFundedCompleted =
+    newAppStatus === "completed" ||
+    newAppStatus === "funded" ||
+    scenario === "payment_released" ||
+    /released|funded|paid|disbursed/i.test(newFundingStatus);
+
+  const auditStatus = isFundedCompleted
+    ? "success"
+    : (client.batch_name === "Hold" || client.action_required || newMsfaaStatus === "required" || newDocStatus === "rejected")
     ? "changes_detected"
     : changes.length > 0
     ? "changes_detected"
@@ -360,7 +402,10 @@ export function runClientAudit(
   let summary = "";
   let message = "";
 
-  if (scenario === "live_file_audit") {
+  if (isFundedCompleted) {
+    summary = `Payment Released & Funded: All OSAP grant & loan funds have been released by NSLSC. File is fully completed.`;
+    message = `💰 Payment Released & Funded: Funds disbursed. File marked as Funded & Completed.`;
+  } else if (scenario === "live_file_audit") {
     if (client.batch_name === "Hold" || client.notes?.toLowerCase().includes("discrepancy")) {
       summary = `Hold / Discrepancy: ${client.notes ? client.notes.split("\n")[0] : "SIN Registry personal information mismatch"}`;
       message = `🚨 Hold / Discrepancy File: ${client.notes ? client.notes.split("\n")[0] : "SIN Registry personal information mismatch"}`;
@@ -410,8 +455,8 @@ export function runClientAudit(
     funding_status: newFundingStatus,
     document_status: newDocStatus,
     msfaa_status: newMsfaaStatus,
-    action_required: actionRequired || client.action_required,
-    action_required_summary: actionSummary || client.action_required_summary,
+    action_required: isFundedCompleted ? false : (actionRequired || client.action_required),
+    action_required_summary: isFundedCompleted ? null : (actionSummary || client.action_required_summary),
     last_audit_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   };

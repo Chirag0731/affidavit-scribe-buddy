@@ -202,6 +202,7 @@ function OsapAuditCenterPage() {
                 className="input-base text-sm font-medium border-gold/40"
               >
                 <option value="live_file_audit">⚡ Smart Live Audit (Inspects Real MSFAA, Docs & Discrepancies)</option>
+                <option value="payment_released">💰 Payment Released (Mark File Funded & Fully Completed)</option>
                 <option value="msfaa_incomplete">⚠️ Flag Incomplete MSFAA on Batch</option>
                 <option value="rejected_documents">📄 Detect Rejected Documents</option>
                 <option value="documents_under_review">⏳ Documents Under Review Queue</option>
