@@ -66,9 +66,9 @@ function AuthPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="border-b border-border">
-        <div className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
-          <Link to="/" className="flex items-center hover:opacity-80 transition-smooth">
-            <BrandLogo height={28} />
+        <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+          <Link to="/" className="flex items-center hover:opacity-85 transition-smooth">
+            <BrandLogo height={34} />
           </Link>
           <Link to="/" className="text-muted-foreground hover:text-foreground transition-smooth">Back to Home</Link>
         </div>

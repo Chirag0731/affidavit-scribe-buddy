@@ -5,13 +5,13 @@ interface BrandLogoProps {
   height?: number;
 }
 
-export function BrandLogo({ className = "", height = 32 }: BrandLogoProps) {
+export function BrandLogo({ className = "", height = 34 }: BrandLogoProps) {
   return (
     <img
       src={logoAsset.url}
       alt="Neptora"
       style={{ height }}
-      className={`w-auto block ${className}`}
+      className={`w-auto block object-contain select-none max-w-full ${className}`}
     />
   );
 }

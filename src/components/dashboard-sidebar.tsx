@@ -49,10 +49,15 @@ export function DashboardSidebar() {
 
   return (
     <>
-      <div className="lg:hidden fixed top-0 right-0 z-50 p-4">
+      {/* Mobile Top Header */}
+      <div className="lg:hidden fixed top-0 left-0 right-0 z-30 h-16 px-4 bg-card border-b border-border flex items-center justify-between">
+        <Link to="/" className="flex items-center hover:opacity-85 transition-smooth">
+          <BrandLogo height={30} />
+        </Link>
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="p-2 rounded-lg border border-border bg-card hover:bg-muted"
+          aria-label="Toggle Navigation"
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -71,9 +76,9 @@ export function DashboardSidebar() {
         }`}
       >
         <div className="h-full flex flex-col">
-          <div className="p-6 border-b border-border">
-            <Link to="/" className="flex items-center hover:opacity-80 transition-smooth">
-              <BrandLogo height={22} />
+          <div className="h-20 px-6 border-b border-border flex items-center">
+            <Link to="/" className="flex items-center hover:opacity-85 transition-smooth py-1">
+              <BrandLogo height={36} />
             </Link>
           </div>
 

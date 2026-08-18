@@ -16,9 +16,9 @@ function LandingPage() {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border">
-        <div className="max-w-6xl mx-auto px-6 py-6 flex items-center justify-between">
-          <Link to="/" className="flex items-center hover:opacity-80 transition-smooth">
-            <BrandLogo height={28} />
+        <div className="max-w-6xl mx-auto px-6 py-5 flex items-center justify-between">
+          <Link to="/" className="flex items-center hover:opacity-85 transition-smooth">
+            <BrandLogo height={34} />
           </Link>
           <div className="flex items-center gap-4">
             <Link to="/auth" className="text-muted-foreground hover:text-foreground transition-smooth">Sign In</Link>
@@ -106,7 +106,7 @@ function LandingPage() {
       <footer className="border-t border-border mt-20">
         <div className="max-w-6xl mx-auto px-6 py-12">
           <div className="mb-4">
-            <BrandLogo height={24} />
+            <BrandLogo height={28} />
           </div>
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} Neptora. Professional document automation for law firms.
