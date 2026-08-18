@@ -15,15 +15,16 @@ import {
   Download,
   FileText,
   CheckCheck,
+  X,
 } from "lucide-react";
 import { toast } from "sonner";
-import { getOsapClients, recordOsapAudit, saveOsapClient, saveOsapAction, saveOsapDocument } from "@/lib/osap-db";
-import { runClientAudit, type AuditScenario } from "@/lib/osap-audit-engine";
+import { getOsapClients } from "@/lib/osap-db";
+import { type AuditScenario } from "@/lib/osap-audit-engine";
+import { backgroundAuditService, type OsapActiveAuditJob } from "@/lib/osap-background-audit";
 import {
   generateBatchAuditSessionPdf,
   downloadPdfBlob,
   type OsapBatchSessionReport,
-  type BatchAuditItemSummary,
 } from "@/lib/osap-pdf-generator";
 import type { OsapClient } from "@/types/osap";
 import { OSAP_BATCH_ORDER } from "@/types/osap";
@@ -52,6 +53,35 @@ function OsapAuditCenterPage() {
 
   useEffect(() => {
     loadClients();
+
+    // Check for previous completed session
+    const latest = backgroundAuditService.getLatestSession();
+    if (latest) {
+      setLastSessionReport(latest);
+    }
+
+    // Subscribe to persistent background audit
+    const unsub = backgroundAuditService.subscribe((job: OsapActiveAuditJob | null) => {
+      if (job) {
+        if (job.status === "running") {
+          setIsRunning(true);
+          setCurrentClientName(job.currentClientName);
+          setProgress(job.totalCount > 0 ? Math.round((job.currentIndex / job.totalCount) * 100) : 0);
+          setAuditLogs(job.logs);
+        } else if (job.status === "completed" && job.completedReport) {
+          setIsRunning(false);
+          setProgress(100);
+          setLastSessionReport(job.completedReport);
+          setAuditLogs(job.logs);
+        } else if (job.status === "cancelled") {
+          setIsRunning(false);
+        }
+      }
+    });
+
+    return () => {
+      unsub();
+    };
   }, []);
 
   const loadClients = async () => {
@@ -104,72 +134,28 @@ function OsapAuditCenterPage() {
       return;
     }
 
-    setIsRunning(true);
-    setProgress(0);
-    setAuditLogs([]);
     setLastSessionReport(null);
+    setAuditLogs([]);
+    setIsRunning(true);
+    toast.info(`⚡ Batch audit started for ${targetList.length} clients! It will continue in the background if you leave this page.`);
 
-    const sessionItems: BatchAuditItemSummary[] = [];
+    const report = await backgroundAuditService.startBatchAudit(
+      targetList,
+      selectedBatch,
+      batchScenario,
+      "Staff Coordinator"
+    );
 
-    for (let i = 0; i < targetList.length; i++) {
-      const client = targetList[i];
-      setCurrentClientName(client.full_name);
-
-      // Safe rate-limited step
-      await new Promise((resolve) => setTimeout(resolve, 200));
-
-      const res = runClientAudit(client, batchScenario);
-
-      // Save audit and updates
-      await recordOsapAudit(res.audit);
-      await saveOsapClient(res.client, client.user_id);
-      for (const act of res.newActions) {
-        await saveOsapAction(act);
-      }
-      for (const doc of res.updatedDocuments) {
-        await saveOsapDocument(doc);
-      }
-
-      sessionItems.push({
-        client: res.client,
-        status: res.status,
-        message: res.message,
-        msfaaStatus: res.client.msfaa_status,
-        notes: res.client.notes || res.client.action_required_summary || "",
-      });
-
-      setAuditLogs((prev) => [
-        {
-          name: client.full_name,
-          batch: client.batch_name,
-          status: res.status,
-          message: res.message,
-        },
-        ...prev,
-      ]);
-
-      setProgress(Math.round(((i + 1) / targetList.length) * 100));
+    if (report) {
+      setLastSessionReport(report);
+      await loadClients();
     }
+  };
 
-    const report: OsapBatchSessionReport = {
-      id: crypto.randomUUID(),
-      title: `Audit Session - ${selectedBatch === "all" ? "All Cohorts" : selectedBatch}`,
-      batchName: selectedBatch === "all" ? "All Batches" : selectedBatch,
-      scenario: batchScenario.replace(/_/g, " "),
-      conductedBy: "Staff Coordinator",
-      createdAt: new Date().toISOString(),
-      totalAudited: targetList.length,
-      updatedCount: sessionItems.filter((i) => i.status === "success" || i.client.application_status === "completed").length,
-      pendingMsfaaCount: sessionItems.filter((i) => i.client.msfaa_status !== "submitted").length,
-      holdCount: sessionItems.filter((i) => i.client.batch_name === "Hold" || i.client.notes?.toLowerCase().includes("discrepancy")).length,
-      fundedCount: sessionItems.filter((i) => i.client.application_status === "completed" || i.client.application_status === "funded").length,
-      items: sessionItems,
-    };
-
-    setLastSessionReport(report);
+  const handleCancelAudit = () => {
+    backgroundAuditService.cancelAudit();
     setIsRunning(false);
-    toast.success(`Batch audit completed for ${targetList.length} clients! PDF report is ready to download.`);
-    await loadClients();
+    toast.info("Active audit cancelled.");
   };
 
   const handleDownloadSessionPdf = async (reportToDownload = lastSessionReport) => {
@@ -289,18 +275,32 @@ function OsapAuditCenterPage() {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Safe rate limiting:</span>
-                <span className="text-emerald-400">Enabled (250ms delay)</span>
+                <span className="text-emerald-400">Enabled (Background Runner)</span>
               </div>
             </div>
 
-            <button
-              onClick={handleStartBatchAudit}
-              disabled={isRunning || targetList.length === 0}
-              className="w-full btn-primary flex items-center justify-center gap-2 text-sm py-3 shadow-md"
-            >
-              {isRunning ? <Loader2 className="w-4 h-4 animate-spin" /> : <Play className="w-4 h-4" />}
-              {isRunning ? `Auditing (${progress}%)...` : `Audit ${selectedBatch === "all" ? "All Clients" : `"${selectedBatch}"`} (${targetList.length})`}
-            </button>
+            {isRunning ? (
+              <div className="space-y-2">
+                <button
+                  onClick={handleCancelAudit}
+                  className="w-full btn-secondary text-rose-400 hover:text-rose-300 border-rose-500/40 hover:bg-rose-500/10 flex items-center justify-center gap-2 text-sm py-2.5 shadow-sm"
+                >
+                  <X className="w-4 h-4" /> Cancel Active Audit
+                </button>
+                <p className="text-[11px] text-center text-muted-foreground">
+                  Running in background. You can safely browse other pages while this runs.
+                </p>
+              </div>
+            ) : (
+              <button
+                onClick={handleStartBatchAudit}
+                disabled={targetList.length === 0}
+                className="w-full btn-primary flex items-center justify-center gap-2 text-sm py-3 shadow-md"
+              >
+                <Play className="w-4 h-4" />
+                Audit {selectedBatch === "all" ? "All Clients" : `"${selectedBatch}"`} ({targetList.length})
+              </button>
+            )}
           </div>
         </div>
 

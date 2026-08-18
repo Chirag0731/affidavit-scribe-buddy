@@ -1,5 +1,6 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { DashboardSidebar } from "@/components/dashboard-sidebar";
+import { GlobalAuditTracker } from "@/components/global-audit-tracker";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   ssr: false,
@@ -15,6 +16,7 @@ function DashboardLayout() {
           <Outlet />
         </div>
       </main>
+      <GlobalAuditTracker />
     </div>
   );
 }
