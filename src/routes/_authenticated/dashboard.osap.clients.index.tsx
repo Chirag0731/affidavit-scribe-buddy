@@ -211,6 +211,9 @@ function OsapClientsPage() {
     });
   };
 
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(50);
+
   const filteredClients = useMemo(() => {
     return clients.filter((c) => {
       if (searchTerm) {
@@ -233,6 +236,12 @@ function OsapClientsPage() {
       return true;
     });
   }, [clients, searchTerm, statusFilter, priorityFilter, credentialFilter]);
+
+  const totalPages = Math.ceil(filteredClients.length / pageSize) || 1;
+  const paginatedClients = useMemo(() => {
+    const start = (page - 1) * pageSize;
+    return filteredClients.slice(start, start + pageSize);
+  }, [filteredClients, page, pageSize]);
 
   const handleExportSelected = () => {
     const toExport = selectedIds.size > 0
@@ -380,7 +389,7 @@ function OsapClientsPage() {
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                {filteredClients.map((client) => {
+                {paginatedClients.map((client) => {
                   const appStatus = APPLICATION_STATUS_LABELS[client.application_status];
                   const docStatus = DOCUMENT_STATUS_LABELS[client.document_status];
                   const msfaaStatus = MSFAA_STATUS_LABELS[client.msfaa_status];
@@ -504,6 +513,51 @@ function OsapClientsPage() {
                 })}
               </tbody>
             </table>
+          </div>
+        )}
+
+        {/* Pagination Bar */}
+        {filteredClients.length > 0 && (
+          <div className="p-4 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4 text-xs bg-muted/10">
+            <span className="text-muted-foreground">
+              Showing <strong>{Math.min(filteredClients.length, (page - 1) * pageSize + 1)}</strong> to <strong>{Math.min(filteredClients.length, page * pageSize)}</strong> of <strong>{filteredClients.length}</strong> clients
+            </span>
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1.5">
+                <span className="text-muted-foreground">Per page:</span>
+                <select
+                  value={pageSize}
+                  onChange={(e) => {
+                    setPageSize(Number(e.target.value));
+                    setPage(1);
+                  }}
+                  className="input-base text-xs py-1 px-2 h-auto"
+                >
+                  <option value={25}>25</option>
+                  <option value={50}>50</option>
+                  <option value={100}>100</option>
+                  <option value={250}>250</option>
+                  <option value={500}>All (400+)</option>
+                </select>
+              </div>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  disabled={page === 1}
+                  className="px-2.5 py-1 border border-border rounded bg-card hover:bg-muted disabled:opacity-40 font-medium"
+                >
+                  Previous
+                </button>
+                <span className="px-2 font-medium">Page {page} of {totalPages}</span>
+                <button
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={page === totalPages}
+                  className="px-2.5 py-1 border border-border rounded bg-card hover:bg-muted disabled:opacity-40 font-medium"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
           </div>
         )}
       </div>
