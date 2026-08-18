@@ -264,6 +264,7 @@ export function buildAffidavitDoc(
     deponents,
     facts,
     layout: withLayoutDefaults(template.layout),
+    signatures: signatures ?? [],
   };
 }
 
