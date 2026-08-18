@@ -166,6 +166,19 @@ export interface Deponent {
   dob?: string; // already formatted pretty
 }
 
+/** A pasted/uploaded signature image placed on top of a deponent's signature line. */
+export interface SignaturePlacement {
+  /** Index into AffidavitDoc.deponents */
+  deponentIndex: number;
+  /** Transparent PNG data URL */
+  dataUrl: string;
+  /** Position in PDF points, top-left origin */
+  x: number;
+  top: number;
+  width: number;
+  height: number;
+}
+
 export interface AffidavitDoc {
   title: string;
   prettyDate: string;
@@ -174,7 +187,47 @@ export interface AffidavitDoc {
   deponents: Deponent[];
   facts: string[];
   layout: TemplateLayout;
+  signatures?: SignaturePlacement[];
 }
+
+/** Geometry of each deponent's signature line (shared by PDF, DOCX and preview). */
+export function signatureLinePositions(
+  layout: TemplateLayout,
+  count: number,
+): { x: number; width: number; top: number }[] {
+  const n = Math.max(1, count);
+  const startX = layout.signatureLine.x ?? MARGIN;
+  const available = PAGE_W - MARGIN - startX;
+  const w = Math.min(layout.signatureLine.width ?? 160, available / n - 10);
+  const step = n > 1 ? (available - w) / (n - 1) : 0;
+  return Array.from({ length: n }, (_, i) => ({
+    x: startX + i * step,
+    width: w,
+    top: layout.signatureLine.top,
+  }));
+}
+
+/** Default placement for a signature image: centered just above its line. */
+export function defaultSignaturePlacement(
+  layout: TemplateLayout,
+  deponentIndex: number,
+  count: number,
+  aspect: number, // natural width / height
+): SignaturePlacement {
+  const line = signatureLinePositions(layout, count)[deponentIndex] ??
+    signatureLinePositions(layout, count)[0];
+  const height = 30;
+  const width = Math.min(Math.max(height * aspect, 40), line.width);
+  return {
+    deponentIndex,
+    dataUrl: "",
+    x: line.x + (line.width - width) / 2,
+    top: line.top - height + 4,
+    width,
+    height,
+  };
+}
+
 
 /** Build the structured affidavit doc from a template + form values. */
 export function buildAffidavitDoc(
