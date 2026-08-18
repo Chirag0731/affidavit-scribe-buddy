@@ -88,6 +88,8 @@ export function PdfHtmlPreview({ doc, className = "", onSignaturesChange }: PdfH
     <div className={`bg-white overflow-auto p-4 ${className}`}>
       <div
         className="relative bg-white shadow-sm mx-auto"
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
         style={{
           width: PAGE_WIDTH_PX,
           height: PAGE_HEIGHT_PX,
