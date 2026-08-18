@@ -267,8 +267,14 @@ function OsapClientProfilePage() {
                   <span className={`text-xs px-2.5 py-0.5 rounded-full font-medium ${priority.bg} ${priority.color}`}>
                     {priority.label} Priority
                   </span>
+                  {client.batch_name && (
+                    <span className="text-xs px-2.5 py-0.5 rounded-full font-mono bg-muted border border-border text-foreground font-medium">
+                      📁 Batch: {client.batch_name}
+                    </span>
+                  )}
                 </div>
                 <div className="flex items-center gap-4 text-xs text-muted-foreground mt-2 flex-wrap">
+                  <span>Batch: <strong className="text-gold font-mono">{client.batch_name || "General Batch"}</strong></span>
                   <span>OAN: <strong className="text-foreground font-mono">{maskOan(client.oan)}</strong></span>
                   <span>School: <strong className="text-foreground">{client.school || "—"}</strong></span>
                   <span>Program: <strong className="text-foreground">{client.program || "—"}</strong></span>

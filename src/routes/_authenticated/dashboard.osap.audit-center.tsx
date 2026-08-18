@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import {
   Scan,
   Users,
@@ -28,6 +28,7 @@ type BatchScope = "all" | "action_required" | "stale" | "selected";
 function OsapAuditCenterPage() {
   const [clients, setClients] = useState<OsapClient[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedBatch, setSelectedBatch] = useState<string>("all");
   const [batchScope, setBatchScope] = useState<BatchScope>("all");
   const [batchScenario, setBatchScenario] = useState<AuditScenario>("approved");
 
@@ -35,7 +36,7 @@ function OsapAuditCenterPage() {
   const [isRunning, setIsRunning] = useState(false);
   const [progress, setProgress] = useState(0);
   const [currentClientName, setCurrentClientName] = useState("");
-  const [auditLogs, setAuditLogs] = useState<Array<{ name: string; status: string; message: string }>>([]);
+  const [auditLogs, setAuditLogs] = useState<Array<{ name: string; batch?: string | null; status: string; message: string }>>([]);
 
   useEffect(() => {
     loadClients();
@@ -53,16 +54,27 @@ function OsapAuditCenterPage() {
     }
   };
 
+  // Group unique batches with client counts
+  const batchOptions = useMemo(() => {
+    const counts: Record<string, number> = {};
+    clients.forEach((c) => {
+      const b = c.batch_name || "General Batch";
+      counts[b] = (counts[b] || 0) + 1;
+    });
+    return Object.entries(counts).sort((a, b) => a[0].localeCompare(b[0]));
+  }, [clients]);
+
   const getTargetClients = (): OsapClient[] => {
-    switch (batchScope) {
-      case "action_required":
-        return clients.filter((c) => c.action_required);
-      case "stale":
-        return clients.filter((c) => !c.last_audit_at);
-      case "all":
-      default:
-        return clients;
+    let list = clients;
+    if (selectedBatch !== "all") {
+      list = list.filter((c) => (c.batch_name || "General Batch") === selectedBatch);
     }
+    if (batchScope === "action_required") {
+      list = list.filter((c) => c.action_required);
+    } else if (batchScope === "stale") {
+      list = list.filter((c) => !c.last_audit_at);
+    }
+    return list;
   };
 
   const targetList = getTargetClients();
@@ -81,8 +93,8 @@ function OsapAuditCenterPage() {
       const client = targetList[i];
       setCurrentClientName(client.full_name);
 
-      // Simulating network step
-      await new Promise((resolve) => setTimeout(resolve, 350));
+      // Safe rate-limited step
+      await new Promise((resolve) => setTimeout(resolve, 250));
 
       const res = runClientAudit(client, batchScenario);
 
@@ -99,6 +111,7 @@ function OsapAuditCenterPage() {
       setAuditLogs((prev) => [
         {
           name: client.full_name,
+          batch: client.batch_name,
           status: res.status,
           message: res.message,
         },
@@ -109,7 +122,7 @@ function OsapAuditCenterPage() {
     }
 
     setIsRunning(false);
-    toast.success(`Batch audit completed for ${targetList.length} clients`);
+    toast.success(`Batch audit completed for ${targetList.length} clients${selectedBatch !== "all" ? ` in batch "${selectedBatch}"` : ""}`);
     await loadClients();
   };
 
@@ -118,7 +131,7 @@ function OsapAuditCenterPage() {
       <div>
         <h1 className="section-heading">OSAP Audit Center</h1>
         <p className="text-muted-foreground mt-1">
-          Execute automated batch audits, verify document queues, test edge cases, and detect changes across all client files.
+          Execute automated batch audits by spreadsheet sheet/batch, test edge cases, and detect changes across all student cohorts.
         </p>
       </div>
 
@@ -131,20 +144,43 @@ function OsapAuditCenterPage() {
           </div>
 
           <div className="space-y-4">
+            {/* Batch / Page Selector */}
             <div>
-              <label className="block text-xs font-semibold text-foreground mb-1.5">Target Client Scope</label>
+              <label className="block text-xs font-semibold text-foreground mb-1.5 flex items-center justify-between">
+                <span>Select Target Batch / Page</span>
+                <span className="text-gold text-[11px] font-mono font-normal">
+                  {batchOptions.length} batches available
+                </span>
+              </label>
+              <select
+                value={selectedBatch}
+                onChange={(e) => setSelectedBatch(e.target.value)}
+                disabled={isRunning}
+                className="input-base text-sm font-medium border-gold/40"
+              >
+                <option value="all">🌐 All Batches / Entire Portfolio ({clients.length} clients)</option>
+                {batchOptions.map(([name, count]) => (
+                  <option key={name} value={name}>
+                    📁 {name} ({count} clients)
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-xs font-semibold text-foreground mb-1.5">Filter Within Batch</label>
               <select
                 value={batchScope}
                 onChange={(e) => setBatchScope(e.target.value as BatchScope)}
                 disabled={isRunning}
                 className="input-base text-sm"
               >
-                <option value="all">Audit All Clients ({clients.length})</option>
+                <option value="all">All Clients in Selected Batch</option>
                 <option value="action_required">
-                  Audit Clients Requiring Action ({clients.filter((c) => c.action_required).length})
+                  Action Required Clients Only
                 </option>
                 <option value="stale">
-                  Audit Unaudited / Stale Files ({clients.filter((c) => !c.last_audit_at).length})
+                  Unaudited / Stale Files Only
                 </option>
               </select>
             </div>
@@ -174,12 +210,18 @@ function OsapAuditCenterPage() {
 
             <div className="p-4 bg-muted/20 border border-border rounded-lg text-xs space-y-1.5">
               <div className="flex justify-between">
+                <span className="text-muted-foreground">Active Batch:</span>
+                <strong className="text-gold font-medium truncate max-w-[170px]">
+                  {selectedBatch === "all" ? "All Batches" : selectedBatch}
+                </strong>
+              </div>
+              <div className="flex justify-between">
                 <span className="text-muted-foreground">Target records:</span>
                 <strong className="text-foreground">{targetList.length} clients</strong>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Safe rate limiting:</span>
-                <span className="text-emerald-400">Enabled (350ms delay)</span>
+                <span className="text-emerald-400">Enabled (250ms delay)</span>
               </div>
             </div>
 
@@ -189,7 +231,7 @@ function OsapAuditCenterPage() {
               className="w-full btn-primary flex items-center justify-center gap-2 text-sm py-3 shadow-md"
             >
               {isRunning ? <Loader2 className="w-4 h-4 animate-spin" /> : <Play className="w-4 h-4" />}
-              {isRunning ? `Auditing (${progress}%)...` : `Run Batch Audit (${targetList.length})`}
+              {isRunning ? `Auditing (${progress}%)...` : `Audit ${selectedBatch === "all" ? "All Clients" : `"${selectedBatch}"`} (${targetList.length})`}
             </button>
           </div>
         </div>
@@ -249,7 +291,14 @@ function OsapAuditCenterPage() {
                       <CheckCircle className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
                     )}
                     <div>
-                      <span className="font-semibold text-foreground text-sm block">{log.name}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="font-semibold text-foreground text-sm block">{log.name}</span>
+                        {log.batch && (
+                          <span className="text-[10px] px-1.5 py-0.5 bg-muted/60 border border-border rounded text-muted-foreground font-mono">
+                            {log.batch}
+                          </span>
+                        )}
+                      </div>
                       <p className="text-muted-foreground mt-0.5">{log.message}</p>
                     </div>
                   </div>

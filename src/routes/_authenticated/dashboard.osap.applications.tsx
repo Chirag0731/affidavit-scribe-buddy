@@ -26,6 +26,7 @@ function OsapApplicationsPage() {
   const [clients, setClients] = useState<OsapClient[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
+  const [batchFilter, setBatchFilter] = useState("all");
   const [yearFilter, setYearFilter] = useState("all");
   const [statusFilter, setStatusFilter] = useState("all");
 
@@ -45,15 +46,19 @@ function OsapApplicationsPage() {
     }
   };
 
+  const batches = Array.from(new Set(clients.map((c) => c.batch_name || "General Batch"))).sort();
+
   const filtered = clients.filter((c) => {
     if (search) {
       const q = search.toLowerCase();
       const match =
         c.full_name.toLowerCase().includes(q) ||
         (c.school && c.school.toLowerCase().includes(q)) ||
+        (c.batch_name && c.batch_name.toLowerCase().includes(q)) ||
         (c.program && c.program.toLowerCase().includes(q));
       if (!match) return false;
     }
+    if (batchFilter !== "all" && (c.batch_name || "General Batch") !== batchFilter) return false;
     if (yearFilter !== "all" && c.application_year !== yearFilter) return false;
     if (statusFilter !== "all" && c.application_status !== statusFilter) return false;
     return true;
@@ -67,29 +72,45 @@ function OsapApplicationsPage() {
         <div>
           <h1 className="section-heading">OSAP Applications</h1>
           <p className="text-muted-foreground mt-1">
-            Track student application submissions, calculated grants & loans, and academic year stages.
+            Track student application submissions, calculated grants & loans, and academic year stages across all spreadsheet batches.
           </p>
         </div>
 
         <button
-          onClick={() => exportClientsToExcel(filtered, `OSAP_Applications_${Date.now()}.xlsx`)}
+          onClick={() => {
+            exportClientsToExcel(filtered, "OSAP_Applications.xlsx");
+            toast.success("Applications exported to Excel");
+          }}
           className="btn-secondary flex items-center gap-2 text-sm"
         >
-          <Download className="w-4 h-4" /> Export Applications
+          <Download className="w-4 h-4" /> Export Applications ({filtered.length})
         </button>
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-card border border-border rounded-xl p-4 grid md:grid-cols-3 gap-3">
+      <div className="bg-card border border-border rounded-xl p-4 grid md:grid-cols-4 gap-3">
         <div className="relative">
           <Search className="w-4 h-4 text-muted-foreground absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search student, school, or program..."
+            placeholder="Search student, batch, school..."
             className="input-base pl-10 text-sm"
           />
+        </div>
+
+        <div>
+          <select
+            value={batchFilter}
+            onChange={(e) => setBatchFilter(e.target.value)}
+            className="input-base text-sm font-medium border-gold/40"
+          >
+            <option value="all">📁 All Batches ({clients.length})</option>
+            {batches.map((b) => (
+              <option key={b} value={b}>📁 {b}</option>
+            ))}
+          </select>
         </div>
 
         <div>
@@ -137,6 +158,7 @@ function OsapApplicationsPage() {
               <thead className="bg-muted/40 border-b border-border text-xs uppercase text-muted-foreground tracking-wider font-semibold">
                 <tr>
                   <th className="p-4">Student Name</th>
+                  <th className="p-4">Batch / Sheet</th>
                   <th className="p-4">Year & Institution</th>
                   <th className="p-4">Program & Period</th>
                   <th className="p-4">Funding Status</th>
@@ -154,6 +176,11 @@ function OsapApplicationsPage() {
                           {c.full_name}
                         </Link>
                         <span className="text-xs text-muted-foreground block">{c.email || c.phone || "—"}</span>
+                      </td>
+                      <td className="p-4 text-xs">
+                        <span className="inline-block px-2 py-0.5 rounded bg-muted/60 border border-border text-foreground font-mono font-medium text-[11px]">
+                          {c.batch_name || "General Batch"}
+                        </span>
                       </td>
                       <td className="p-4 text-xs">
                         <span className="font-semibold text-foreground">{c.application_year || "2026"}</span>

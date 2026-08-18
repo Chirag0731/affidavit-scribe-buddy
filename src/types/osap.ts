@@ -57,6 +57,7 @@ export interface OsapClient {
   program?: string | null;
   study_period?: string | null;
   application_year?: string | null;
+  batch_name?: string | null;
   assigned_staff?: string | null;
   notes?: string | null;
   credential_status: OsapCredentialStatus;

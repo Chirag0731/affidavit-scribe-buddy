@@ -59,6 +59,7 @@ function OsapClientsPage() {
   const [statusFilter, setStatusFilter] = useState<string>(searchParams.status || "all");
   const [priorityFilter, setPriorityFilter] = useState<string>("all");
   const [credentialFilter, setCredentialFilter] = useState<string>("all");
+  const [batchFilter, setBatchFilter] = useState<string>("all");
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set());
 
   // Add / Edit Client Modal State
@@ -77,6 +78,7 @@ function OsapClientsPage() {
   const [formProgram, setFormProgram] = useState("Acupuncture 50 weeks");
   const [formStudyPeriod, setFormStudyPeriod] = useState("Full-Time (50 weeks)");
   const [formYear, setFormYear] = useState("2026");
+  const [formBatch, setFormBatch] = useState("March 2026");
   const [formStaff, setFormStaff] = useState("Sales");
   const [formPriority, setFormPriority] = useState<OsapPriority>("medium");
   const [formAppStatus, setFormAppStatus] = useState<OsapApplicationStatus>("not_started");
@@ -110,6 +112,7 @@ function OsapClientsPage() {
     setFormProgram("Acupuncture 50 weeks");
     setFormStudyPeriod("Full-Time (50 weeks)");
     setFormYear("2026");
+    setFormBatch("March 2026");
     setFormStaff("Sales");
     setFormPriority("medium");
     setFormAppStatus("not_started");
@@ -129,6 +132,7 @@ function OsapClientsPage() {
     setFormProgram(c.program || "Acupuncture 50 weeks");
     setFormStudyPeriod(c.study_period || "Full-Time (50 weeks)");
     setFormYear(c.application_year || "2026");
+    setFormBatch(c.batch_name || "March 2026");
     setFormStaff(c.assigned_staff || "Sales");
     setFormPriority(c.priority);
     setFormAppStatus(c.application_status);
@@ -165,6 +169,7 @@ function OsapClientsPage() {
           program: formProgram.trim() || null,
           study_period: formStudyPeriod.trim() || null,
           application_year: formYear.trim() || "2026",
+          batch_name: formBatch.trim() || null,
           assigned_staff: formStaff.trim() || null,
           priority: formPriority,
           application_status: formAppStatus,
@@ -214,6 +219,15 @@ function OsapClientsPage() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(50);
 
+  const uniqueBatches = useMemo(() => {
+    const counts: Record<string, number> = {};
+    clients.forEach((c) => {
+      const b = c.batch_name || "General Batch";
+      counts[b] = (counts[b] || 0) + 1;
+    });
+    return Object.entries(counts).sort((a, b) => a[0].localeCompare(b[0]));
+  }, [clients]);
+
   const filteredClients = useMemo(() => {
     return clients.filter((c) => {
       if (searchTerm) {
@@ -225,17 +239,19 @@ function OsapClientsPage() {
           (c.phone && c.phone.includes(q)) ||
           (c.school && c.school.toLowerCase().includes(q)) ||
           (c.program && c.program.toLowerCase().includes(q)) ||
+          (c.batch_name && c.batch_name.toLowerCase().includes(q)) ||
           (c.assigned_staff && c.assigned_staff.toLowerCase().includes(q));
         if (!matches) return false;
       }
 
+      if (batchFilter !== "all" && (c.batch_name || "General Batch") !== batchFilter) return false;
       if (statusFilter !== "all" && c.application_status !== statusFilter) return false;
       if (priorityFilter !== "all" && c.priority !== priorityFilter) return false;
       if (credentialFilter !== "all" && c.credential_status !== credentialFilter) return false;
 
       return true;
     });
-  }, [clients, searchTerm, statusFilter, priorityFilter, credentialFilter]);
+  }, [clients, searchTerm, batchFilter, statusFilter, priorityFilter, credentialFilter]);
 
   const totalPages = Math.ceil(filteredClients.length / pageSize) || 1;
   const paginatedClients = useMemo(() => {
@@ -258,7 +274,7 @@ function OsapClientsPage() {
         <div>
           <h1 className="section-heading">OSAP Clients</h1>
           <p className="text-muted-foreground mt-1">
-            Search, manage student files, monitor credential connections, and trigger audits.
+            Search, manage student files, monitor credential connections, and trigger audits by spreadsheet batch.
           </p>
         </div>
 
@@ -277,23 +293,41 @@ function OsapClientsPage() {
 
       {/* Search & Filter Bar */}
       <div className="bg-card border border-border rounded-xl p-4 space-y-4">
-        <div className="grid md:grid-cols-4 gap-3">
+        <div className="grid md:grid-cols-5 gap-3">
           <div className="md:col-span-2 relative">
             <Search className="w-4 h-4 text-muted-foreground absolute left-3.5 top-1/2 -translate-y-1/2" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search by name, email, OAN, school, program, staff..."
+              placeholder="Search by name, email, OAN, batch, school..."
               className="input-base pl-10"
             />
           </div>
 
           <div>
             <select
+              value={batchFilter}
+              onChange={(e) => {
+                setBatchFilter(e.target.value);
+                setPage(1);
+              }}
+              className="input-base border-gold/40 text-xs font-medium"
+            >
+              <option value="all">📁 All Batches ({clients.length})</option>
+              {uniqueBatches.map(([b, count]) => (
+                <option key={b} value={b}>
+                  📁 {b} ({count})
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="input-base"
+              className="input-base text-xs"
             >
               <option value="all">All Application Statuses</option>
               {Object.entries(APPLICATION_STATUS_LABELS).map(([key, cfg]) => (
@@ -306,7 +340,7 @@ function OsapClientsPage() {
             <select
               value={priorityFilter}
               onChange={(e) => setPriorityFilter(e.target.value)}
-              className="input-base"
+              className="input-base text-xs"
             >
               <option value="all">All Priorities</option>
               <option value="urgent">Urgent Priority</option>
@@ -316,6 +350,24 @@ function OsapClientsPage() {
             </select>
           </div>
         </div>
+
+        {/* Batch Action Banner */}
+        {batchFilter !== "all" && (
+          <div className="flex items-center justify-between bg-muted/40 border border-border px-4 py-2.5 rounded-lg text-xs">
+            <div className="flex items-center gap-2">
+              <span className="font-semibold text-foreground">Active Batch View:</span>
+              <span className="px-2 py-0.5 bg-gold/15 text-gold font-mono font-semibold rounded border border-gold/30">
+                {batchFilter} ({filteredClients.length} clients)
+              </span>
+            </div>
+            <Link
+              to="/dashboard/osap/audit-center"
+              className="btn-primary py-1 px-3 text-xs flex items-center gap-1.5"
+            >
+              <Scan className="w-3.5 h-3.5" /> Audit This Entire Batch
+            </Link>
+          </div>
+        )}
 
         {selectedIds.size > 0 && (
           <div className="flex items-center justify-between bg-gold/10 border border-gold/30 px-4 py-2.5 rounded-lg text-xs">
@@ -380,6 +432,7 @@ function OsapClientsPage() {
                     />
                   </th>
                   <th className="p-4">Student / Client</th>
+                  <th className="p-4">Batch / Sheet</th>
                   <th className="p-4">OAN & Credentials</th>
                   <th className="p-4">School & Program</th>
                   <th className="p-4">OSAP Status</th>
@@ -423,6 +476,15 @@ function OsapClientsPage() {
                         </Link>
                         <span className="text-xs text-muted-foreground block">
                           {client.email || client.phone || "No contact info"}
+                        </span>
+                      </td>
+
+                      <td className="p-4 text-xs">
+                        <span
+                          className="inline-block px-2 py-0.5 rounded bg-muted/60 border border-border text-foreground font-mono font-medium text-[11px] truncate max-w-[130px]"
+                          title={client.batch_name || "General Batch"}
+                        >
+                          {client.batch_name || "General Batch"}
                         </span>
                       </td>
 
@@ -662,7 +724,23 @@ function OsapClientsPage() {
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-3 gap-4">
+              <div className="grid md:grid-cols-4 gap-4">
+                <div>
+                  <label className="block text-xs font-semibold text-foreground mb-1.5">Batch / Sheet</label>
+                  <input
+                    type="text"
+                    list="batch-form-presets"
+                    value={formBatch}
+                    onChange={(e) => setFormBatch(e.target.value)}
+                    placeholder="March 2026"
+                    className="input-base text-sm font-medium"
+                  />
+                  <datalist id="batch-form-presets">
+                    {uniqueBatches.map(([b]) => (
+                      <option key={b} value={b} />
+                    ))}
+                  </datalist>
+                </div>
                 <div>
                   <label className="block text-xs font-semibold text-foreground mb-1.5">School / College</label>
                   <input

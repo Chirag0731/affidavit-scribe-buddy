@@ -105,6 +105,7 @@ function generate() {
       school,
       program,
       application_year: "2026",
+      batch_name: raw.sheetName || "General Batch",
       study_period: "Full-Time (50 weeks)",
       assigned_staff: assignedStaff,
       credential_status: raw.pass ? "connected" : (oan ? "requires_verification" : "missing"),

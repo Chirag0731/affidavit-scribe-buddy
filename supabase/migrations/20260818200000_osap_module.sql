@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS public.osap_clients (
   program TEXT,
   study_period TEXT,
   application_year TEXT,
+  batch_name TEXT,
   assigned_staff TEXT,
   notes TEXT,
   credential_status TEXT NOT NULL DEFAULT 'missing' CHECK (credential_status IN ('connected', 'missing', 'requires_verification')),

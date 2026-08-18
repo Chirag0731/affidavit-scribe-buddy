@@ -14,6 +14,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -25,8 +26,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:23:49.661Z",
-    "updated_at": "2026-08-18T20:08:49.661Z"
+    "created_at": "2026-08-18T13:29:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-004-abdul-latif",
@@ -40,6 +41,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Ansh (Staff)",
     "credential_status": "connected",
@@ -51,8 +53,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "LOAN OVERPAYMENT/PROGRESS DOC",
-    "created_at": "2026-08-18T13:24:49.661Z",
-    "updated_at": "2026-08-18T20:08:49.661Z"
+    "created_at": "2026-08-18T13:30:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-005-abeya-sirika",
@@ -66,6 +68,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "missing",
@@ -77,8 +80,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "REJECTED",
-    "created_at": "2026-08-18T13:25:49.661Z",
-    "updated_at": "2026-08-18T20:08:49.661Z"
+    "created_at": "2026-08-18T13:31:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-006-adedigba-adetutu",
@@ -92,6 +95,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -103,8 +107,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:26:49.661Z",
-    "updated_at": "2026-08-18T20:08:49.661Z"
+    "created_at": "2026-08-18T13:32:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-007-adrian-anderson",
@@ -118,6 +122,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -129,8 +134,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:27:49.661Z",
-    "updated_at": "2026-08-18T20:08:49.661Z"
+    "created_at": "2026-08-18T13:33:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-008-ahmad-banat",
@@ -144,6 +149,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 2nd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -155,8 +161,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T13:28:49.661Z",
-    "updated_at": "2026-08-18T20:08:49.661Z"
+    "created_at": "2026-08-18T13:34:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-009-ajay-thakur",
@@ -170,6 +176,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 2nd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -181,8 +188,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T13:29:49.661Z",
-    "updated_at": "2026-08-18T20:08:49.661Z"
+    "created_at": "2026-08-18T13:35:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-010-ajayan-prasannan",
@@ -196,6 +203,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -207,8 +215,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:30:49.661Z",
-    "updated_at": "2026-08-18T20:08:49.661Z"
+    "created_at": "2026-08-18T13:36:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-011-akachukwu-nwachukwu",
@@ -222,6 +230,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -233,8 +242,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:31:49.661Z",
-    "updated_at": "2026-08-18T20:08:49.661Z"
+    "created_at": "2026-08-18T13:37:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-012-akwinder-basra",
@@ -248,6 +257,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -259,8 +269,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:32:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:38:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-013-albert-gordon",
@@ -274,6 +284,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -285,8 +296,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T13:33:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:39:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-014-alexander-perez",
@@ -300,6 +311,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -311,8 +323,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:34:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:40:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-015-alika-mullings-richards",
@@ -326,6 +338,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -337,8 +350,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Loan Default/Restricted",
-    "created_at": "2026-08-18T13:35:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:41:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-016-alison-gittens",
@@ -352,6 +365,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Abdul (Operations)",
     "credential_status": "connected",
@@ -363,8 +377,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Progress DOC",
-    "created_at": "2026-08-18T13:36:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:42:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-017-aliya",
@@ -378,6 +392,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -389,8 +404,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T13:37:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:43:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-018-alla-al-wasity",
@@ -404,6 +419,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Aman (Operations)",
     "credential_status": "connected",
@@ -415,8 +431,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:38:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:44:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-019-amandeep-kaur",
@@ -430,6 +446,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -441,8 +458,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:39:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:45:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-020-amandeep-kaur",
@@ -456,6 +473,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -467,8 +485,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:40:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:46:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-002-amarjit-kaur",
@@ -482,6 +500,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Aman (Operations)",
     "credential_status": "missing",
@@ -493,8 +512,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:22:49.660Z",
-    "updated_at": "2026-08-18T20:08:49.661Z"
+    "created_at": "2026-08-18T13:28:05.136Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-021-amir-rashid",
@@ -508,6 +527,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -519,8 +539,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Age",
-    "created_at": "2026-08-18T13:41:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:47:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-022-amodu-salawu",
@@ -534,6 +554,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -545,8 +566,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:42:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:48:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-023-amrit-singh",
@@ -560,6 +581,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -571,8 +593,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T13:43:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:49:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-024-anca-marginean",
@@ -586,6 +608,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Henry (Sales)",
     "credential_status": "connected",
@@ -597,8 +620,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Already Has an Account",
-    "created_at": "2026-08-18T13:44:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:50:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-025-andrew-lee",
@@ -612,6 +635,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -623,8 +647,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:45:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:51:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-026-angela-bernacchi",
@@ -638,6 +662,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -649,8 +674,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "1972",
-    "created_at": "2026-08-18T13:46:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:52:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-027-annemarie-caron",
@@ -664,6 +689,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -675,8 +701,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:47:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:53:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-028-annicko-jackson",
@@ -690,6 +716,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -701,8 +728,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:48:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:54:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-029-anser",
@@ -716,6 +743,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -727,8 +755,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T13:49:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:55:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-030-antonette-ellis",
@@ -742,6 +770,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Michael (Sales)",
     "credential_status": "connected",
@@ -753,8 +782,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:50:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:56:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-031-approved-coe",
@@ -768,6 +797,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "missing",
@@ -779,8 +809,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:51:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:57:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-032-aram-jaff",
@@ -794,6 +824,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -805,8 +836,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:52:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:58:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-033-arif-sufi",
@@ -820,6 +851,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -831,8 +863,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:53:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T13:59:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-034-arlene-thompson",
@@ -846,6 +878,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -857,8 +890,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:54:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:00:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-035-arminder-singh",
@@ -872,6 +905,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -883,8 +917,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T13:55:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:01:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-036-arshdeep-singh",
@@ -898,6 +932,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -909,8 +944,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T13:56:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:02:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-037-asad-janjua",
@@ -924,6 +959,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -935,8 +971,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "College Not Received",
-    "created_at": "2026-08-18T13:57:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:03:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-038-ashanti-faith-chambers-martin",
@@ -950,6 +986,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -961,8 +998,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:58:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:04:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-039-ashish-mannan",
@@ -976,6 +1013,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -987,8 +1025,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T13:59:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:05:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-040-ashish-mehta",
@@ -1002,6 +1040,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -1013,8 +1052,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:00:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:06:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-041-ashley-goncalves",
@@ -1028,6 +1067,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Michael (Sales)",
     "credential_status": "connected",
@@ -1039,8 +1079,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:01:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:07:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-042-atul-kumar",
@@ -1054,6 +1094,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -1065,8 +1106,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:02:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:08:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-043-aude-tanguy",
@@ -1080,6 +1121,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -1091,8 +1133,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:03:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:09:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-044-aug-24-2026---aug-9-2027",
@@ -1106,6 +1148,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "August 24th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "missing",
@@ -1117,8 +1160,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:04:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:10:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-045-aug-6-26---aug-10-26",
@@ -1132,6 +1175,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 23rd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "2nd Pay (Staff)",
     "credential_status": "missing",
@@ -1143,8 +1187,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:05:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:11:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-046-ayanleh-ismael",
@@ -1158,6 +1202,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -1169,8 +1214,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:06:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:12:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-047-ayesha-khan",
@@ -1184,6 +1229,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 2nd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -1195,8 +1241,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T14:07:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:13:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-048-ayooluwa-ajayi",
@@ -1210,6 +1256,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -1221,8 +1268,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:08:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:14:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-049-azeem-rana",
@@ -1236,6 +1283,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 23rd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -1247,8 +1295,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T14:09:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:15:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-050-babar-riaz",
@@ -1262,6 +1310,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -1273,8 +1322,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T14:10:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:16:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-051-babupraveen-pirati",
@@ -1288,6 +1337,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 23rd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -1299,8 +1349,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:11:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:17:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-052-bahman-chalabi",
@@ -1314,6 +1364,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -1325,8 +1376,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:12:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:18:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-053-barbara-lamoureux",
@@ -1340,6 +1391,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "missing",
@@ -1351,8 +1403,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "REJECTED",
-    "created_at": "2026-08-18T14:13:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:19:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-054-belinda-hanson",
@@ -1366,6 +1418,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -1377,8 +1430,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:14:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:20:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-055-belinda-hanson",
@@ -1392,6 +1445,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Michael (Sales)",
     "credential_status": "connected",
@@ -1403,8 +1457,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:15:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:21:05.137Z",
+    "updated_at": "2026-08-18T20:14:05.137Z"
   },
   {
     "id": "osap-client-056-benilouro-blanco",
@@ -1418,6 +1472,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -1429,8 +1484,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:16:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:22:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-057-beyonce-whyte",
@@ -1444,6 +1499,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -1455,8 +1511,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:17:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:23:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-058-bhanu-priya-nodagala",
@@ -1470,6 +1526,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -1481,8 +1538,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:18:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:24:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-059-bill-allison",
@@ -1496,6 +1553,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -1507,8 +1565,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:19:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:25:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-060-brandi-bonguange",
@@ -1522,6 +1580,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -1533,8 +1592,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "REJECTED",
-    "created_at": "2026-08-18T14:20:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:26:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-061-britaney-frazer",
@@ -1548,6 +1607,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -1559,8 +1619,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:21:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:27:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-062-bwakila--basila-antipas",
@@ -1574,6 +1634,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -1585,8 +1646,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:22:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:28:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-063-caitlin-sarris",
@@ -1600,6 +1661,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Henry (Sales)",
     "credential_status": "connected",
@@ -1611,8 +1673,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:23:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:29:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-064-camar-grant",
@@ -1626,6 +1688,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -1637,8 +1700,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:24:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:30:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-065-carla-dionisio",
@@ -1652,6 +1715,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -1663,8 +1727,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:25:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:31:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-066-carlos-munoz",
@@ -1678,6 +1742,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -1689,8 +1754,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:26:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:32:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-067-cassandra-bissonnette",
@@ -1704,6 +1769,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -1715,8 +1781,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:27:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:33:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-068-cassey-monica--bueno",
@@ -1730,6 +1796,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -1741,8 +1808,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:28:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:34:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-069-cecilia-manang",
@@ -1756,6 +1823,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "missing",
@@ -1767,8 +1835,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:29:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:35:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-070-chaltu-jirata",
@@ -1782,6 +1850,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -1793,8 +1862,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:30:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:36:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-071-charles-shannon",
@@ -1808,6 +1877,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -1819,8 +1889,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:31:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:37:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-072-christina-marsellos",
@@ -1834,6 +1904,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -1845,8 +1916,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:32:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:38:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-073-christine-fajingbesi",
@@ -1860,6 +1931,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -1871,8 +1943,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:33:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:39:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-074-christine-quilao",
@@ -1886,6 +1958,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -1897,8 +1970,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:34:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:40:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-075-christopher-neal",
@@ -1912,6 +1985,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -1923,8 +1997,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:35:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:41:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-076-christopher-smith",
@@ -1938,6 +2012,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -1949,8 +2024,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:36:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:42:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-077-corey-omar-bonilla",
@@ -1964,6 +2039,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "August 24th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -1975,8 +2051,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:37:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:43:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-078-craig-nelson",
@@ -1990,6 +2066,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -2001,8 +2078,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:38:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:44:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-079-dalwinder-kaur",
@@ -2016,6 +2093,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -2027,8 +2105,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Age",
-    "created_at": "2026-08-18T14:39:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:45:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-080-dana-bernard",
@@ -2042,6 +2120,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -2053,8 +2132,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:40:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:46:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-081-daniel-ahmed-khan",
@@ -2068,6 +2147,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 23rd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -2079,8 +2159,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T14:41:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:47:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-082-daniel-gyamfi",
@@ -2094,6 +2174,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Abdul (Operations)",
     "credential_status": "connected",
@@ -2105,8 +2186,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:42:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:48:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-083-danny-hoa",
@@ -2120,6 +2201,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -2131,8 +2213,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:43:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:49:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-084-darren-bennett",
@@ -2146,6 +2228,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -2157,8 +2240,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:44:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:50:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-085-darren-davis",
@@ -2172,6 +2255,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -2183,8 +2267,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:45:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:51:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-086-dashne-raouf",
@@ -2198,6 +2282,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -2209,8 +2294,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:46:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:52:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-087-dasran-burke",
@@ -2224,6 +2309,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -2235,8 +2321,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:47:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:53:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-088-david-forrester",
@@ -2250,6 +2336,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -2261,8 +2348,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:48:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:54:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-089-deepa-elangovan",
@@ -2276,6 +2363,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "missing",
@@ -2287,8 +2375,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Already has OSAP acct",
-    "created_at": "2026-08-18T14:49:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:55:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-090-denzil-daley",
@@ -2302,6 +2390,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "missing",
@@ -2313,8 +2402,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "EDU DRIVE",
-    "created_at": "2026-08-18T14:50:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:56:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-091-devah-thompson",
@@ -2328,6 +2417,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Michael (Sales)",
     "credential_status": "connected",
@@ -2339,8 +2429,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:51:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:57:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-092-devon-brady",
@@ -2354,6 +2444,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -2365,8 +2456,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:52:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:58:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-093-dharminder-humpal",
@@ -2380,6 +2471,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -2391,8 +2483,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:53:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T14:59:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-094-dharnidhar-bariwal",
@@ -2406,6 +2498,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -2417,8 +2510,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:54:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:00:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-095-dilkaran-singh-bajwa",
@@ -2432,6 +2525,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -2443,8 +2537,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T14:55:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:01:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-096-dinh-nguyen--quoc-nguyen",
@@ -2458,6 +2552,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -2469,8 +2564,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:56:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:02:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-097-duane-dasilva",
@@ -2484,6 +2579,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -2495,8 +2591,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:57:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:03:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-098-dwayne-bogle",
@@ -2510,6 +2606,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -2521,8 +2618,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:58:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:04:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-099-dwayne-ramroop",
@@ -2536,6 +2633,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -2547,8 +2645,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T14:59:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:05:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-100-dwight-johnson",
@@ -2562,6 +2660,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Abdul (Operations)",
     "credential_status": "connected",
@@ -2573,8 +2672,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:00:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:06:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-101-edith-mabel",
@@ -2588,6 +2687,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -2599,8 +2699,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:01:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:07:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-102-elizabeth-amador",
@@ -2614,6 +2714,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "missing",
@@ -2625,8 +2726,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:02:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:08:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-103-elizabeth-reis",
@@ -2640,6 +2741,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Henry (Sales)",
     "credential_status": "connected",
@@ -2651,8 +2753,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "FAO - Thursday",
-    "created_at": "2026-08-18T15:03:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:09:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-104-emeka-mejulu",
@@ -2666,6 +2768,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -2677,8 +2780,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:04:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:10:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-105-emmanuel-amoah",
@@ -2692,6 +2795,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -2703,8 +2807,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:05:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:11:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-106-emmanuil-daphnis",
@@ -2718,6 +2822,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -2729,8 +2834,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:06:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:12:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-107-erika-acevedo",
@@ -2744,6 +2849,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Canadian College of Business Science & Technology - Etobicoke",
     "program": "HUMAN RESOURCE MANAGEMENT",
     "application_year": "2026",
+    "batch_name": "March 2nd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -2755,8 +2861,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by college",
-    "created_at": "2026-08-18T15:07:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:13:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-108-erishwar-venkasammy",
@@ -2770,6 +2876,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 2nd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -2781,8 +2888,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "Application closed / ineligible.",
     "notes": "Issued by college",
-    "created_at": "2026-08-18T15:08:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:14:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-109-ernie-morrison",
@@ -2796,6 +2903,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -2807,8 +2915,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:09:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:15:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-110-eyad-taha",
@@ -2822,6 +2930,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -2833,8 +2942,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Age",
-    "created_at": "2026-08-18T15:10:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:16:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-111-faiza-sikander",
@@ -2848,6 +2957,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -2859,8 +2969,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:11:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:17:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-112-fanessa",
@@ -2874,6 +2984,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "missing",
@@ -2885,8 +2996,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:12:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:18:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-113-fao-issues",
@@ -2900,6 +3011,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "missing",
@@ -2911,8 +3023,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:13:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:19:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-114-farhan-nur",
@@ -2926,6 +3038,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -2937,8 +3050,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:14:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:20:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-115-farheen-ali",
@@ -2952,6 +3065,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -2963,8 +3077,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:15:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:21:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-116-fariyad-singh",
@@ -2978,6 +3092,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -2989,8 +3104,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T15:16:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:22:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-117-farkhanda-zerin",
@@ -3004,6 +3119,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "missing",
@@ -3015,8 +3131,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "EDU DRIVE",
-    "created_at": "2026-08-18T15:17:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:23:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-118-farzana-hossain",
@@ -3030,6 +3146,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -3041,8 +3158,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:18:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:24:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-119-fathima-jiffry",
@@ -3056,6 +3173,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -3067,8 +3185,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:19:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:25:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-120-fawad-hyder",
@@ -3082,6 +3200,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -3093,8 +3212,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:20:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:26:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-121-fitria",
@@ -3108,6 +3227,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "August 24th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "missing",
@@ -3119,8 +3239,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:21:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:27:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-122-form-1-link",
@@ -3134,6 +3254,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "missing",
@@ -3145,8 +3266,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:22:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:28:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-123-fozia-ismael",
@@ -3160,6 +3281,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -3171,8 +3293,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:23:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:29:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-124-franicko-jackson",
@@ -3186,6 +3308,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Michael (Sales)",
     "credential_status": "connected",
@@ -3197,8 +3320,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Loan default",
-    "created_at": "2026-08-18T15:24:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:30:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-125-funmilola-abdulsalam",
@@ -3212,6 +3335,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -3223,8 +3347,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:25:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:31:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-126-garry-lavigne",
@@ -3238,6 +3362,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -3249,8 +3374,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:26:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:32:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-127-geeta-catherine",
@@ -3264,6 +3389,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -3275,8 +3401,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:27:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:33:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-128-gem-daya-magsadia",
@@ -3290,6 +3416,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -3301,8 +3428,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:28:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:34:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-129-gibrilla-koroma",
@@ -3316,6 +3443,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -3327,8 +3455,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:29:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:35:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-130-gidget-torpio",
@@ -3342,6 +3470,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -3353,8 +3482,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:30:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:36:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-131-giovanni-bruno",
@@ -3368,6 +3497,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -3379,8 +3509,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:31:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:37:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-132-godwill-nkemdi",
@@ -3394,6 +3524,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -3405,8 +3536,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:32:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:38:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-133-gunjan-kumar",
@@ -3420,6 +3551,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 23rd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -3431,8 +3563,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T15:33:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:39:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-134-gurpal-bhinder",
@@ -3446,6 +3578,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 23rd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -3457,8 +3590,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T15:34:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:40:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-135-gurpreet-kaur",
@@ -3472,6 +3605,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 2nd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -3483,8 +3617,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T15:35:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:41:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-136-haider-abou-shamalah",
@@ -3498,6 +3632,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -3509,8 +3644,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Age",
-    "created_at": "2026-08-18T15:36:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:42:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-137-hasan-masud",
@@ -3524,6 +3659,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -3535,8 +3671,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:37:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:43:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-138-hashim-merchant",
@@ -3550,6 +3686,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -3561,8 +3698,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Age",
-    "created_at": "2026-08-18T15:38:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:44:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-139-hassam-syed",
@@ -3576,6 +3713,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -3587,8 +3725,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:39:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:45:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-140-hassan-muhammad",
@@ -3602,6 +3740,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Ansh (Staff)",
     "credential_status": "connected",
@@ -3613,8 +3752,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Enrolled till 30/07 CCBST",
-    "created_at": "2026-08-18T15:40:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:46:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-141-hayden-shaw",
@@ -3628,6 +3767,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -3639,8 +3779,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:41:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:47:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-142-heena-merchant",
@@ -3654,6 +3794,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -3665,8 +3806,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Age",
-    "created_at": "2026-08-18T15:42:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:48:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-143-hemant-sharma",
@@ -3680,6 +3821,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -3691,8 +3833,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "CBC2/ENROLLMENT LETTER",
-    "created_at": "2026-08-18T15:43:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:49:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-144-herve-tella",
@@ -3706,6 +3848,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -3717,8 +3860,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:44:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:50:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-145-hold-might-get-removed",
@@ -3732,6 +3875,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "missing",
@@ -3743,8 +3887,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T15:45:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:51:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-146-https---forms-gle-vwipxkcy4n2ggsfx6",
@@ -3758,6 +3902,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "August 24th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "missing",
@@ -3769,8 +3914,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:46:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:52:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-147-husnain-riaz",
@@ -3784,6 +3929,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -3795,8 +3941,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:47:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:53:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-148-ian-thompson",
@@ -3810,6 +3956,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -3821,8 +3968,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:48:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:54:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-149-imafidon-iize-iyamu",
@@ -3836,6 +3983,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -3847,8 +3995,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:49:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:55:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-150-immaculate-mirembe",
@@ -3862,6 +4010,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -3873,8 +4022,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:50:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:56:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-151-isaac-ansah",
@@ -3888,6 +4037,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -3899,8 +4049,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:51:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:57:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-152-isaac-christopher-whyte",
@@ -3914,6 +4064,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -3925,8 +4076,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:52:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:58:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-153-ishmael-ali",
@@ -3940,6 +4091,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -3951,8 +4103,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:53:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T15:59:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-154-jabir-mia",
@@ -3966,6 +4118,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Henry (Sales)",
     "credential_status": "connected",
@@ -3977,8 +4130,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:54:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:00:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-155-jada-harrison",
@@ -3992,6 +4145,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Abdul (Operations)",
     "credential_status": "connected",
@@ -4003,8 +4157,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T15:55:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:01:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-156-jaiden-hackett-mignon",
@@ -4018,6 +4172,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -4029,8 +4184,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:56:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:02:05.138Z",
+    "updated_at": "2026-08-18T20:14:05.138Z"
   },
   {
     "id": "osap-client-157-jamal-usamot",
@@ -4044,6 +4199,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -4055,8 +4211,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:57:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:03:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-158-james-drohan",
@@ -4070,6 +4226,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Henry (Sales)",
     "credential_status": "connected",
@@ -4081,8 +4238,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "FAO/schizophrenic",
-    "created_at": "2026-08-18T15:58:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:04:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-159-james-pike",
@@ -4096,6 +4253,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -4107,8 +4265,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T15:59:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:05:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-160-janarthanath-tharmaratnam",
@@ -4122,6 +4280,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Abdul (Operations)",
     "credential_status": "connected",
@@ -4133,8 +4292,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": "HOLD",
-    "created_at": "2026-08-18T16:00:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:06:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-161-janetta-obiasada",
@@ -4148,6 +4307,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -4159,8 +4319,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:01:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:07:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-162-jasdeep-singh",
@@ -4174,6 +4334,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -4185,8 +4346,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": "REJECTED",
-    "created_at": "2026-08-18T16:02:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:08:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-163-jasjeet-mushiana",
@@ -4200,6 +4361,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -4211,8 +4373,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:03:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:09:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-164-jasmine-ogbuagu",
@@ -4226,6 +4388,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -4237,8 +4400,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:04:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:10:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-165-jason-bryan",
@@ -4252,6 +4415,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -4263,8 +4427,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "academic progress",
-    "created_at": "2026-08-18T16:05:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:11:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-166-jason-crooks",
@@ -4278,6 +4442,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -4289,8 +4454,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:06:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:12:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-167-jason-martin",
@@ -4304,6 +4469,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -4315,8 +4481,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "FAO",
-    "created_at": "2026-08-18T16:07:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:13:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-168-jason-michaud",
@@ -4330,6 +4496,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -4341,8 +4508,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:08:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:14:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-169-jeffeth-robinson",
@@ -4356,6 +4523,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -4367,8 +4535,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:09:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:15:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-170-jennifer-couto",
@@ -4382,6 +4550,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Abdul (Operations)",
     "credential_status": "connected",
@@ -4393,8 +4562,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Clearance",
-    "created_at": "2026-08-18T16:10:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:16:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-171-jesse-bonnah",
@@ -4408,6 +4577,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -4419,8 +4589,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:11:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:17:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-172-jinto-paul",
@@ -4434,6 +4604,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -4445,8 +4616,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:12:49.662Z",
-    "updated_at": "2026-08-18T20:08:49.662Z"
+    "created_at": "2026-08-18T16:18:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-173-jocelyn-de-lon-reyes",
@@ -4460,6 +4631,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -4471,8 +4643,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:13:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:19:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-174-jonan-ampuriire",
@@ -4486,6 +4658,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -4497,8 +4670,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": "SIN issue?",
-    "created_at": "2026-08-18T16:14:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:20:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-175-jonathan-davis",
@@ -4512,6 +4685,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -4523,8 +4697,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:15:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:21:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-176-jonathan-sewel",
@@ -4538,6 +4712,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Michael (Sales)",
     "credential_status": "connected",
@@ -4549,8 +4724,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:16:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:22:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-177-joshua-fajingbesi",
@@ -4564,6 +4739,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -4575,8 +4751,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:17:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:23:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-178-joshua-stanley",
@@ -4590,6 +4766,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -4601,8 +4778,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:18:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:24:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-179-joycin-vas",
@@ -4616,6 +4793,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -4627,8 +4805,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:19:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:25:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-180-juliet-nanvuma",
@@ -4642,6 +4820,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -4653,8 +4832,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:20:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:26:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-181-kadian-ellis",
@@ -4668,6 +4847,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -4679,8 +4859,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:21:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:27:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-182-kamal-kamal",
@@ -4694,6 +4874,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -4705,8 +4886,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "REJECTED",
-    "created_at": "2026-08-18T16:22:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:28:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-183-kamaljit-kaur",
@@ -4720,6 +4901,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -4731,8 +4913,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Received",
-    "created_at": "2026-08-18T16:23:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:29:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-184-karen-d-lucca",
@@ -4746,6 +4928,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -4757,8 +4940,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:24:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:30:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-185-karthick-alagarsamy",
@@ -4772,6 +4955,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -4783,8 +4967,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:25:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:31:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-186-kashia-didier",
@@ -4798,6 +4982,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Abdul (Operations)",
     "credential_status": "connected",
@@ -4809,8 +4994,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:26:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:32:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-187-kendra-daniels",
@@ -4824,6 +5009,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "missing",
@@ -4835,8 +5021,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Already Has an Account",
-    "created_at": "2026-08-18T16:27:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:33:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-188-kenisha-young",
@@ -4850,6 +5036,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -4861,8 +5048,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:28:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:34:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-189-kevon-whyte",
@@ -4876,6 +5063,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -4887,8 +5075,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:29:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:35:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-190-khadeem-mcfarlane-beckford",
@@ -4902,6 +5090,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Michael (Sales)",
     "credential_status": "connected",
@@ -4913,8 +5102,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:30:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:36:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-191-khalil-joseph",
@@ -4928,6 +5117,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -4939,8 +5129,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:31:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:37:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-192-khawaza-ahmed",
@@ -4954,6 +5144,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -4965,8 +5156,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:32:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:38:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-193-kimarla-douglas",
@@ -4980,6 +5171,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Henry (Sales)",
     "credential_status": "connected",
@@ -4991,8 +5183,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Bankruptcy/Loan Default",
-    "created_at": "2026-08-18T16:33:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:39:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-194-kishore-khadoo",
@@ -5006,6 +5198,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -5017,8 +5210,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:34:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:40:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-195-krystel-echeverri-correa",
@@ -5032,6 +5225,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Abdul (Operations)",
     "credential_status": "connected",
@@ -5043,8 +5237,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:35:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:41:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-196-kuljit-kaur",
@@ -5058,6 +5252,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -5069,8 +5264,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:36:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:42:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-197-kulvir-kaur",
@@ -5084,6 +5279,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -5095,8 +5291,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:37:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:43:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-198-kulvir-singh-pandher",
@@ -5110,6 +5306,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -5121,8 +5318,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T16:38:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:44:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-199-kurian-betsy",
@@ -5136,6 +5333,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Ansh (Staff)",
     "credential_status": "connected",
@@ -5147,8 +5345,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "PROGRESS DOC",
-    "created_at": "2026-08-18T16:39:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:45:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-200-kwabena-boateng",
@@ -5162,6 +5360,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -5173,8 +5372,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:40:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:46:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-201-kwame-affary",
@@ -5188,6 +5387,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Henry (Sales)",
     "credential_status": "connected",
@@ -5199,8 +5399,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:41:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:47:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-202-leon-miller",
@@ -5214,6 +5414,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -5225,8 +5426,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:42:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:48:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-203-leonard-hamilton",
@@ -5240,6 +5441,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -5251,8 +5453,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:43:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:49:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-204-leroy-jackson",
@@ -5266,6 +5468,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -5277,8 +5480,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "PROGRESS DOC",
-    "created_at": "2026-08-18T16:44:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:50:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-205-lucy-drumonde",
@@ -5292,6 +5495,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -5303,8 +5507,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:45:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:51:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-206-lutfi-raka",
@@ -5318,6 +5522,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -5329,8 +5534,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "College Not Received",
-    "created_at": "2026-08-18T16:46:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:52:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-207-madiha-mateen",
@@ -5344,6 +5549,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Michael (Sales)",
     "credential_status": "connected",
@@ -5355,8 +5561,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:47:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:53:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-208-mahbub-hasnat",
@@ -5370,6 +5576,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Henry (Sales)",
     "credential_status": "connected",
@@ -5381,8 +5588,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:48:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:54:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-209-malik-hannain-mahmood",
@@ -5396,6 +5603,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -5407,8 +5615,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:49:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:55:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-210-mangal-ram",
@@ -5422,6 +5630,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -5433,8 +5642,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "College Not Received",
-    "created_at": "2026-08-18T16:50:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:56:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-211-maninder-singh",
@@ -5448,6 +5657,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -5459,8 +5669,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T16:51:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:57:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-212-manjit-singh",
@@ -5474,6 +5684,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -5485,8 +5696,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T16:52:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:58:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-213-manjot-singh",
@@ -5500,6 +5711,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "missing",
@@ -5511,8 +5723,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T16:53:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T16:59:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-214-mansi-hasija",
@@ -5526,6 +5738,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 23rd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -5537,8 +5750,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:54:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:00:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-215-maria-espinola",
@@ -5552,6 +5765,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -5563,8 +5777,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:55:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:01:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-216-marian-dmuchowdki",
@@ -5578,6 +5792,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -5589,8 +5804,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:56:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:02:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-217-marilyn-koumaris",
@@ -5604,6 +5819,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Michael (Sales)",
     "credential_status": "connected",
@@ -5615,8 +5831,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "FAO",
-    "created_at": "2026-08-18T16:57:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:03:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-218-mariotte-maduma-itoua",
@@ -5630,6 +5846,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "missing",
@@ -5641,8 +5858,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:58:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:04:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-219-mark-magsadia",
@@ -5656,6 +5873,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -5667,8 +5885,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T16:59:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:05:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-220-mark-rodo",
@@ -5682,6 +5900,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -5693,8 +5912,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:00:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:06:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-221-marlene-pereira",
@@ -5708,6 +5927,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -5719,8 +5939,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:01:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:07:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-222-marquel-anderson",
@@ -5734,6 +5954,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -5745,8 +5966,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:02:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:08:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-223-mary-afolayan",
@@ -5760,6 +5981,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -5771,8 +5993,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:03:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:09:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-224-mary-lalzad",
@@ -5786,6 +6008,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -5797,8 +6020,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:04:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:10:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-225-masud-ur-rehman",
@@ -5812,6 +6035,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -5823,8 +6047,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:05:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:11:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-226-maurizio-bruno",
@@ -5838,6 +6062,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -5849,8 +6074,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:06:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:12:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-227-maurizio-bruno",
@@ -5864,6 +6089,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "missing",
@@ -5875,8 +6101,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:07:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:13:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-228-mehak-mir",
@@ -5890,6 +6116,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 2nd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -5901,8 +6128,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by college",
-    "created_at": "2026-08-18T17:08:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:14:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-229-michael-adebiyi",
@@ -5916,6 +6143,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Henry (Sales)",
     "credential_status": "connected",
@@ -5927,8 +6155,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:09:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:15:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-230-michael-chambers",
@@ -5942,6 +6170,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Michael (Sales)",
     "credential_status": "connected",
@@ -5953,8 +6182,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:10:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:16:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-231-michael-itoua-mamic",
@@ -5968,6 +6197,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -5979,8 +6209,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:11:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:17:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-232-michael-mcdougall",
@@ -5994,6 +6224,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Michael (Sales)",
     "credential_status": "connected",
@@ -6005,8 +6236,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Already Has an Account",
-    "created_at": "2026-08-18T17:12:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:18:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-233-michael-oppong",
@@ -6020,6 +6251,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -6031,8 +6263,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:13:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:19:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-234-michael-samis",
@@ -6046,6 +6278,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -6057,8 +6290,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:14:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:20:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-235-michaela-wilford",
@@ -6072,6 +6305,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -6083,8 +6317,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:15:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:21:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-236-michelle-berryman",
@@ -6098,6 +6332,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -6109,8 +6344,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:16:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:22:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-237-michla-tucker",
@@ -6124,6 +6359,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Michael (Sales)",
     "credential_status": "connected",
@@ -6135,8 +6371,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:17:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:23:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-238-mikhala-beckford",
@@ -6150,6 +6386,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -6161,8 +6398,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:18:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:24:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-239-milanie-cerezo",
@@ -6176,6 +6413,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -6187,8 +6425,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:19:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:25:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-240-milosava-savic",
@@ -6202,6 +6440,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Henry (Sales)",
     "credential_status": "missing",
@@ -6213,8 +6452,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Not interested anymore",
-    "created_at": "2026-08-18T17:20:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:26:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-241-ming-zhang",
@@ -6228,6 +6467,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -6239,8 +6479,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:21:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:27:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-242-mir-zeeshan-ali",
@@ -6254,6 +6494,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Abdul (Operations)",
     "credential_status": "connected",
@@ -6265,8 +6506,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:22:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:28:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-243-miraj-patel",
@@ -6280,6 +6521,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -6291,8 +6533,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:23:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:29:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-244-mohamed-abdalla-elkheder",
@@ -6306,6 +6548,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -6317,8 +6560,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:24:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:30:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-245-mohamed-badawi",
@@ -6332,6 +6575,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -6343,8 +6587,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:25:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:31:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-246-mohamed-makanyaga",
@@ -6358,6 +6602,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -6369,8 +6614,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:26:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:32:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-247-mohammad-hannan",
@@ -6384,6 +6629,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -6395,8 +6641,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:27:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:33:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-248-mohammed-mahmood",
@@ -6410,6 +6656,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -6421,8 +6668,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T17:28:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:34:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-249-mokonzi-yaka",
@@ -6436,6 +6683,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -6447,8 +6695,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:29:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:35:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-250-mona-ali",
@@ -6462,6 +6710,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Abdul (Operations)",
     "credential_status": "connected",
@@ -6473,8 +6722,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "College Not Received",
-    "created_at": "2026-08-18T17:30:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:36:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-251-monique-conville",
@@ -6488,6 +6737,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -6499,8 +6749,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:31:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:37:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-252-morshada-sharif",
@@ -6514,6 +6764,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -6525,8 +6776,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:32:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:38:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-253-mubarak-nazeer",
@@ -6540,6 +6791,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -6551,8 +6803,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:33:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:39:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-254-muhammad-afzal",
@@ -6566,6 +6818,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -6577,8 +6830,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:34:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:40:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-255-muhammad-humyun-khan",
@@ -6592,6 +6845,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 2nd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -6603,8 +6857,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T17:35:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:41:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-256-muneeb-ahmed-khan",
@@ -6618,6 +6872,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 2nd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -6629,8 +6884,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T17:36:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:42:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-257-nabila-akbar",
@@ -6644,6 +6899,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -6655,8 +6911,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:37:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:43:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-258-nadine-taylor",
@@ -6670,6 +6926,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -6681,8 +6938,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:38:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:44:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-259-nahid-muhammad",
@@ -6696,6 +6953,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -6707,8 +6965,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:39:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:45:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-260-nandakishore-salikumar",
@@ -6722,6 +6980,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -6733,8 +6992,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:40:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:46:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-261-nataliya",
@@ -6748,6 +7007,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -6759,8 +7019,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:41:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:47:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-262-natasha-fong",
@@ -6774,6 +7034,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Michael (Sales)",
     "credential_status": "connected",
@@ -6785,8 +7046,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:42:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:48:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-263-nathan-conville",
@@ -6800,6 +7061,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -6811,8 +7073,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:43:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:49:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-264-nathaniel-brown",
@@ -6826,6 +7088,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -6837,8 +7100,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "CITI DOC",
-    "created_at": "2026-08-18T17:44:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:50:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-265-navjinder-singh",
@@ -6852,6 +7115,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -6863,8 +7127,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T17:45:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:51:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-266-navjot-navjot",
@@ -6878,6 +7142,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -6889,8 +7154,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:46:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:52:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-267-navneet-kaur",
@@ -6904,6 +7169,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -6915,8 +7181,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:47:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:53:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-268-nicholas-tumusiime",
@@ -6930,6 +7196,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -6941,8 +7208,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:48:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:54:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-269-nikhil-thomas",
@@ -6956,6 +7223,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 23rd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -6967,8 +7235,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:49:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:55:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-270-noah-tucci",
@@ -6982,6 +7250,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Abdul (Operations)",
     "credential_status": "missing",
@@ -6993,8 +7262,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "EDU DRIVE",
-    "created_at": "2026-08-18T17:50:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:56:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-271-obinna-weaweh",
@@ -7008,6 +7277,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -7019,8 +7289,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:51:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:57:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-272-ogary-walker",
@@ -7034,6 +7304,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -7045,8 +7316,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:52:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:58:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-273-olu-wifunmilola",
@@ -7060,6 +7331,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -7071,8 +7343,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:53:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T17:59:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-274-omerelfaroog-mohamed",
@@ -7086,6 +7358,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -7097,8 +7370,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:54:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T18:00:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-275-ompreet-singh",
@@ -7112,6 +7385,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -7123,8 +7397,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T17:55:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T18:01:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-276-orville-brown",
@@ -7138,6 +7412,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -7149,8 +7424,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:56:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T18:02:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-277-orville-pinnock",
@@ -7164,6 +7439,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Michael (Sales)",
     "credential_status": "connected",
@@ -7175,8 +7451,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:57:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T18:03:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-278-oscar-sunil",
@@ -7190,6 +7466,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -7201,8 +7478,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:58:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T18:04:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-279-osman-hamza-nooristani",
@@ -7216,6 +7493,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "August 24th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "missing",
@@ -7227,8 +7505,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T17:59:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T18:05:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-280-oyenyechi-ubah",
@@ -7242,6 +7520,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -7253,8 +7532,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:00:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T18:06:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-281-pankaj-gandhi",
@@ -7268,6 +7547,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 2nd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -7279,8 +7559,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T18:01:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T18:07:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-282-papayaw-brakoh",
@@ -7294,6 +7574,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -7305,8 +7586,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:02:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.663Z"
+    "created_at": "2026-08-18T18:08:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-283-parijat-sarkar",
@@ -7320,6 +7601,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -7331,8 +7613,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "RED",
-    "created_at": "2026-08-18T18:03:49.663Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:09:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-284-parminder-kaur",
@@ -7346,6 +7628,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 23rd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -7357,8 +7640,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:04:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:10:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-285-parshotem-singh-malhi",
@@ -7372,6 +7655,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -7383,8 +7667,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T18:05:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:11:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-286-patricia-richardson",
@@ -7398,6 +7682,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -7409,8 +7694,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "FAO - Sometime this week",
-    "created_at": "2026-08-18T18:06:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:12:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-287-patrick-armah",
@@ -7424,6 +7709,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -7435,8 +7721,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:07:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:13:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-288-paulraj-joseph-samadanam",
@@ -7450,6 +7736,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Michael (Sales)",
     "credential_status": "connected",
@@ -7461,8 +7748,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:08:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:14:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-289-peninah-namugenyi",
@@ -7476,6 +7763,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -7487,8 +7775,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:09:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:15:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-290-peter-gallagher",
@@ -7502,6 +7790,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "missing",
@@ -7513,8 +7802,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "REJECTED",
-    "created_at": "2026-08-18T18:10:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:16:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-291-peterson-mungai--nyakundi",
@@ -7528,6 +7817,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -7539,8 +7829,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:11:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:17:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-292-philip-wisdom",
@@ -7554,6 +7844,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -7565,8 +7856,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:12:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:18:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-293-pradeep-persaud",
@@ -7580,6 +7871,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -7591,8 +7883,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:13:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:19:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-294-prakashkumar-marvadi",
@@ -7606,6 +7898,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -7617,8 +7910,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:14:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:20:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-295-pravin-sivarajah",
@@ -7632,6 +7925,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "August 24th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "missing",
@@ -7643,8 +7937,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:15:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:21:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-296-priya-hasija",
@@ -7658,6 +7952,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -7669,8 +7964,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:16:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:22:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-297-radoje-kovinic",
@@ -7684,6 +7979,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -7695,8 +7991,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "FAO",
-    "created_at": "2026-08-18T18:17:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:23:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-298-raheel-mushtaq",
@@ -7710,6 +8006,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -7721,8 +8018,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:18:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:24:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-299-rajbir-singh",
@@ -7736,6 +8033,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "requires_verification",
@@ -7747,8 +8045,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T18:19:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:25:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-300-rajesh-rampersad",
@@ -7762,6 +8060,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -7773,8 +8072,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:20:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:26:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-301-rakulan-sakthivel",
@@ -7788,6 +8087,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -7799,8 +8099,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Loan Default/PROGRESS DOC",
-    "created_at": "2026-08-18T18:21:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:27:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-302-raman-kashyap",
@@ -7814,6 +8114,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -7825,8 +8126,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:22:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:28:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-303-ramandeep-singh",
@@ -7840,6 +8141,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -7851,8 +8153,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T18:23:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:29:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-304-ramandeep-singh--discrepancy-",
@@ -7866,6 +8168,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Canadian College of Business Science & Technology - Etobicoke",
     "program": "HUMAN RESOURCE MANAGEMENT",
     "application_year": "2026",
+    "batch_name": "March 2nd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -7877,8 +8180,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": "Issued by college",
-    "created_at": "2026-08-18T18:24:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:30:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-305-raneen-hasan",
@@ -7892,6 +8195,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -7903,8 +8207,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:25:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:31:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-306-ratinderpal-singh-kang",
@@ -7918,6 +8222,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -7929,8 +8234,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T18:26:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:32:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-307-ravandeep-singh--discrepancy-",
@@ -7944,6 +8249,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Canadian College of Business Science & Technology - Etobicoke",
     "program": "HUMAN RESOURCE MANAGEMENT",
     "application_year": "2026",
+    "batch_name": "March 2nd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -7955,8 +8261,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": "Issued by college",
-    "created_at": "2026-08-18T18:27:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:33:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-308-rayan-fakak",
@@ -7970,6 +8276,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Henry (Sales)",
     "credential_status": "requires_verification",
@@ -7981,8 +8288,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:28:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:34:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-309-rekah-bonnah",
@@ -7996,6 +8303,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Henry (Sales)",
     "credential_status": "connected",
@@ -8007,8 +8315,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "FAO",
-    "created_at": "2026-08-18T18:29:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:35:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-310-removed",
@@ -8022,6 +8330,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "requires_verification",
@@ -8033,8 +8342,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:30:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:36:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-311-renee-spence",
@@ -8048,6 +8357,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -8059,8 +8369,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Loan Default",
-    "created_at": "2026-08-18T18:31:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:37:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-312-richard-adu",
@@ -8074,6 +8384,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -8085,8 +8396,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:32:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:38:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-313-richard-chaput",
@@ -8100,6 +8411,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -8111,8 +8423,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:33:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:39:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-314-robert-bende",
@@ -8126,6 +8438,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -8137,8 +8450,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:34:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:40:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-315-robert-wale",
@@ -8152,6 +8465,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -8163,8 +8477,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:35:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:41:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-316-rohit-sood",
@@ -8178,6 +8492,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -8189,8 +8504,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:36:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:42:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-317-romoy-mullings",
@@ -8204,6 +8519,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -8215,8 +8531,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:37:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:43:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-318-ron-m",
@@ -8230,6 +8546,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "missing",
@@ -8241,8 +8558,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:38:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:44:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-319-rosalind-ilagan",
@@ -8256,6 +8573,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "missing",
@@ -8267,8 +8585,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:39:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:45:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-320-roselyn-pablo",
@@ -8282,6 +8600,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -8293,8 +8612,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:40:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:46:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-321-rupinder-singh",
@@ -8308,6 +8627,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -8319,8 +8639,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T18:41:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:47:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-322-russell-lambert",
@@ -8334,6 +8654,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -8345,8 +8666,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:42:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:48:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-323-safiya-cummings",
@@ -8360,6 +8681,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -8371,8 +8693,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:43:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:49:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-324-saif-ali-shaikh",
@@ -8386,6 +8708,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -8397,8 +8720,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:44:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:50:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-325-saima-bibi",
@@ -8412,6 +8735,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -8423,8 +8747,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T18:45:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:51:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-326-saira-mahmood",
@@ -8438,6 +8762,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -8449,8 +8774,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:46:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:52:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-327-sakina-hyder",
@@ -8464,6 +8789,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -8475,8 +8801,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:47:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:53:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-328-salah-abdillahi-ilyas",
@@ -8490,6 +8816,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -8501,8 +8828,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:48:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:54:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-329-saleha-maqbool",
@@ -8516,6 +8843,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 23rd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -8527,8 +8855,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:49:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:55:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-330-salosh-michael",
@@ -8542,6 +8870,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Ansh (Staff)",
     "credential_status": "connected",
@@ -8553,8 +8882,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "LOAN CLEARANCE/PROGRESS DOC",
-    "created_at": "2026-08-18T18:50:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:56:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-331-samantha-jones",
@@ -8568,6 +8897,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -8579,8 +8909,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:51:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:57:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-332-sameer-naz",
@@ -8594,6 +8924,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Simran (Sales)",
     "credential_status": "missing",
@@ -8605,8 +8936,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:52:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:58:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-333-samir-bashir",
@@ -8620,6 +8951,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -8631,8 +8963,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:53:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T18:59:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-334-samreen-ali",
@@ -8646,6 +8978,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -8657,8 +8990,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Wants to do ECA only",
-    "created_at": "2026-08-18T18:54:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:00:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-335-samriti-khanna",
@@ -8672,6 +9005,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -8683,8 +9017,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:55:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:01:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-336-samuel-mukasa",
@@ -8698,6 +9032,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -8709,8 +9044,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:56:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:02:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-337-sana-mir",
@@ -8724,6 +9059,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 23rd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -8735,8 +9071,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Previous OSAP post 2024",
-    "created_at": "2026-08-18T18:57:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:03:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-338-sandalpreet-kaur",
@@ -8750,6 +9086,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -8761,8 +9098,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T18:58:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:04:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-339-sandeep-kaur",
@@ -8776,6 +9113,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -8787,8 +9125,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": "DOB Issue",
-    "created_at": "2026-08-18T18:59:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:05:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-340-sandrelle-scimo",
@@ -8802,6 +9140,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -8813,8 +9152,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "REJECTED",
-    "created_at": "2026-08-18T19:00:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:06:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-341-sanjeev-sarkar",
@@ -8828,6 +9167,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -8839,8 +9179,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Age",
-    "created_at": "2026-08-18T19:01:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:07:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-342-sara-begum",
@@ -8854,6 +9194,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -8865,8 +9206,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:02:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:08:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-343-sarasvati-ramsumair-rambalie",
@@ -8880,6 +9221,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -8891,8 +9233,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:03:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:09:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-344-seema-rani",
@@ -8906,6 +9248,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -8917,8 +9260,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:04:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:10:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-345-selena-thackoordath",
@@ -8932,6 +9275,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -8943,8 +9287,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:05:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:11:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-346-seun-jegede",
@@ -8958,6 +9302,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -8969,8 +9314,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:06:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:12:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-347-sewa-singh",
@@ -8984,6 +9329,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -8995,8 +9341,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T19:07:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:13:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-348-shabana-sharif",
@@ -9010,6 +9356,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -9021,8 +9368,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:08:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:14:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-349-shabeer-ali",
@@ -9036,6 +9383,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -9047,8 +9395,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:09:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:15:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-350-shabeer-nawaz--pass-change-",
@@ -9062,6 +9410,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -9073,8 +9422,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by college",
-    "created_at": "2026-08-18T19:10:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:16:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-351-shalini-kundlass",
@@ -9088,6 +9437,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -9099,8 +9449,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:11:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:17:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-352-shannell-nagasar",
@@ -9114,6 +9464,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -9125,8 +9476,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:12:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:18:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-353-sharanjeet-singh",
@@ -9140,6 +9491,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 2nd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -9151,8 +9503,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": "Issued by College",
-    "created_at": "2026-08-18T19:13:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:19:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-354-sharmina-ahsan",
@@ -9166,6 +9518,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -9177,8 +9530,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:14:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:20:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-355-sharnette-beckett",
@@ -9192,6 +9545,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 23rd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -9203,8 +9557,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:15:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:21:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-356-sharon-stanley",
@@ -9218,6 +9572,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Henry (Sales)",
     "credential_status": "connected",
@@ -9229,8 +9584,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "REJECTED",
-    "created_at": "2026-08-18T19:16:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:22:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-357-shawneen-reid",
@@ -9244,6 +9599,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -9255,8 +9611,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Submitted",
-    "created_at": "2026-08-18T19:17:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:23:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-358-shazia-amir",
@@ -9270,6 +9626,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -9281,8 +9638,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:18:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:24:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-359-shidaine-chevannes",
@@ -9296,6 +9653,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -9307,8 +9665,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:19:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:25:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-360-sidra-qamar",
@@ -9322,6 +9680,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -9333,8 +9692,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:20:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:26:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-361-simranjeet-kaur",
@@ -9348,6 +9707,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "requires_verification",
@@ -9359,8 +9719,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:21:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:27:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-362-skarandeep-singh",
@@ -9374,6 +9734,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -9385,8 +9746,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T19:22:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:28:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-363-solange-delicieux",
@@ -9400,6 +9761,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Henry (Sales)",
     "credential_status": "connected",
@@ -9411,8 +9773,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Already Has an Account",
-    "created_at": "2026-08-18T19:23:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:29:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-364-soraya-hettiarachchi",
@@ -9426,6 +9788,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -9437,8 +9800,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:24:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:30:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-365-soubagleh-daher",
@@ -9452,6 +9815,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -9463,8 +9827,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:25:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:31:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-366-sourieh-mikhael",
@@ -9478,6 +9842,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -9489,8 +9854,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:26:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:32:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-367-spencer-wong",
@@ -9504,6 +9869,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 23rd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -9515,8 +9881,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:27:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:33:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-368-starsha-fletcher",
@@ -9530,6 +9896,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -9541,8 +9908,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:28:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:34:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-369-start-date--27-july-2026-end-date--11-july-2027",
@@ -9556,6 +9923,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "missing",
@@ -9567,8 +9935,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:29:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:35:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-370-start--july-13th-2026-end--june-27th-2027",
@@ -9582,6 +9950,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "missing",
@@ -9593,8 +9962,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:30:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:36:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-371-start--june-29th-2026-end--june-13th-2027",
@@ -9608,6 +9977,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "missing",
@@ -9619,8 +9989,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:31:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:37:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-372-stephan-bernacchi",
@@ -9634,6 +10004,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -9645,8 +10016,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "1964",
-    "created_at": "2026-08-18T19:32:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:38:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-373-stephanie-bonnah",
@@ -9660,6 +10031,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -9671,8 +10043,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:33:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:39:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-374-suher-saba",
@@ -9686,6 +10058,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -9697,8 +10070,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:34:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:40:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-375-suraj-singh",
@@ -9712,6 +10085,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -9723,8 +10097,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T19:35:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:41:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-376-suresh-ommi",
@@ -9738,6 +10112,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -9749,8 +10124,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:36:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:42:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-377-surinder-singh-kang",
@@ -9764,6 +10139,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -9775,8 +10151,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T19:37:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:43:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-378-swapna-bura",
@@ -9790,6 +10166,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -9801,8 +10178,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:38:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:44:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-379-syavash-chalabi",
@@ -9816,6 +10193,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -9827,8 +10205,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:39:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:45:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-380-taejuan-sparks",
@@ -9842,6 +10220,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -9853,8 +10232,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:40:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:46:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-381-tajai-brown-francis",
@@ -9868,6 +10247,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "JB (Operations)",
     "credential_status": "connected",
@@ -9879,8 +10259,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:41:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:47:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-382-tajinder-bharot",
@@ -9894,6 +10274,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -9905,8 +10286,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:42:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:48:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-383-tanvi-nar",
@@ -9920,6 +10301,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "missing",
@@ -9931,8 +10313,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:43:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:49:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-384-tanya-pickering",
@@ -9946,6 +10328,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "missing",
@@ -9957,8 +10340,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:44:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:50:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-385-tarun-hasija",
@@ -9972,6 +10355,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 23rd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -9983,8 +10367,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "LOA Pending",
-    "created_at": "2026-08-18T19:45:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:51:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-386-tejinder-uppal",
@@ -9998,6 +10382,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Abdul (Operations)",
     "credential_status": "connected",
@@ -10009,8 +10394,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:46:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:52:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-387-terencio-da-graca",
@@ -10024,6 +10409,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -10035,8 +10421,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:47:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:53:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-388-terry-ann-mcneil",
@@ -10050,6 +10436,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Michael (Sales)",
     "credential_status": "connected",
@@ -10061,8 +10448,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:48:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:54:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-389-thananjeyan-bala",
@@ -10076,6 +10463,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Henry (Sales)",
     "credential_status": "connected",
@@ -10087,8 +10475,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "15K OSAP Pending",
-    "created_at": "2026-08-18T19:49:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:55:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-390-tonny-ndasingwa",
@@ -10102,6 +10490,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -10113,8 +10502,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": true,
     "action_required_summary": "SIN Registry personal information discrepancy. Application on hold.",
     "notes": null,
-    "created_at": "2026-08-18T19:50:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:56:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-391-treseana-stewart-miller",
@@ -10128,6 +10517,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -10139,8 +10529,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:51:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:57:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-392-tyshaun-indriliunas",
@@ -10154,6 +10544,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Firas (Sales)",
     "credential_status": "connected",
@@ -10165,8 +10556,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:52:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:58:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-393-vanessa-ngang",
@@ -10180,6 +10571,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -10191,8 +10583,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:53:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T19:59:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-394-vannassa-freeman",
@@ -10206,6 +10598,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 11th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -10217,8 +10610,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Awaiting PR Card",
-    "created_at": "2026-08-18T19:54:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T20:00:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.139Z"
   },
   {
     "id": "osap-client-395-vergel--de-jesus",
@@ -10232,6 +10625,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -10243,8 +10637,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:55:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T20:01:05.139Z",
+    "updated_at": "2026-08-18T20:14:05.140Z"
   },
   {
     "id": "osap-client-396-victor-chibuzor",
@@ -10258,6 +10652,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -10269,8 +10664,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:56:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T20:02:05.140Z",
+    "updated_at": "2026-08-18T20:14:05.140Z"
   },
   {
     "id": "osap-client-397-vinod-kumar",
@@ -10284,6 +10679,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -10295,8 +10691,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T19:57:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T20:03:05.140Z",
+    "updated_at": "2026-08-18T20:14:05.140Z"
   },
   {
     "id": "osap-client-398-waleed-ali",
@@ -10310,6 +10706,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 2nd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Abdul (Operations)",
     "credential_status": "connected",
@@ -10321,8 +10718,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T19:58:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T20:04:05.140Z",
+    "updated_at": "2026-08-18T20:14:05.140Z"
   },
   {
     "id": "osap-client-399-wilson-nsasira",
@@ -10336,6 +10733,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "May 25th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -10347,8 +10745,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "REJECTED",
-    "created_at": "2026-08-18T19:59:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T20:05:05.140Z",
+    "updated_at": "2026-08-18T20:14:05.140Z"
   },
   {
     "id": "osap-client-400-wilson-onsare",
@@ -10362,6 +10760,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 15th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -10373,8 +10772,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T20:00:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T20:06:05.140Z",
+    "updated_at": "2026-08-18T20:14:05.140Z"
   },
   {
     "id": "osap-client-401-xander-mycheal-cornelius-miller",
@@ -10388,6 +10787,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "Hold",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Michael (Sales)",
     "credential_status": "requires_verification",
@@ -10399,8 +10799,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T20:01:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T20:07:05.140Z",
+    "updated_at": "2026-08-18T20:14:05.140Z"
   },
   {
     "id": "osap-client-402-yuri-glerup",
@@ -10414,6 +10814,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "March 2nd List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Abdul (Operations)",
     "credential_status": "connected",
@@ -10425,8 +10826,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": "Issued by College",
-    "created_at": "2026-08-18T20:02:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T20:08:05.140Z",
+    "updated_at": "2026-08-18T20:14:05.140Z"
   },
   {
     "id": "osap-client-403-yvonette-rajpattie",
@@ -10440,6 +10841,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Kaavish (Operations)",
     "credential_status": "connected",
@@ -10451,8 +10853,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T20:03:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T20:09:05.140Z",
+    "updated_at": "2026-08-18T20:14:05.140Z"
   },
   {
     "id": "osap-client-404-zakaria-jama",
@@ -10466,6 +10868,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 27th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -10477,8 +10880,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T20:04:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T20:10:05.140Z",
+    "updated_at": "2026-08-18T20:14:05.140Z"
   },
   {
     "id": "osap-client-405-zaniyar-mohamad",
@@ -10492,6 +10895,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "July 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Chirag (Operations)",
     "credential_status": "connected",
@@ -10503,8 +10907,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T20:05:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T20:11:05.140Z",
+    "updated_at": "2026-08-18T20:14:05.140Z"
   },
   {
     "id": "osap-client-406-zeeshan-mir",
@@ -10518,6 +10922,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "April 13th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Samar (Operations)",
     "credential_status": "connected",
@@ -10529,8 +10934,8 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T20:06:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T20:12:05.140Z",
+    "updated_at": "2026-08-18T20:14:05.140Z"
   },
   {
     "id": "osap-client-407-zubair-baig",
@@ -10544,6 +10949,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "school": "Eight Branches",
     "program": "Acupuncture 50 weeks",
     "application_year": "2026",
+    "batch_name": "June 29th List",
     "study_period": "Full-Time (50 weeks)",
     "assigned_staff": "Sales",
     "credential_status": "connected",
@@ -10555,7 +10961,7 @@ export const ALL_OSAP_CLIENTS: OsapClient[] = [
     "action_required": false,
     "action_required_summary": null,
     "notes": null,
-    "created_at": "2026-08-18T20:07:49.664Z",
-    "updated_at": "2026-08-18T20:08:49.664Z"
+    "created_at": "2026-08-18T20:13:05.140Z",
+    "updated_at": "2026-08-18T20:14:05.140Z"
   }
 ];
