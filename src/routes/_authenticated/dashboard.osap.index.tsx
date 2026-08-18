@@ -285,46 +285,49 @@ function OsapDashboardPage() {
             </div>
             <div>
               <h3 className="font-bold text-foreground text-lg flex items-center gap-2">
-                <span>Spreadsheet Batches & Cohorts</span>
+                <span>General Student Roster & Batch Portfolio</span>
                 <span className="text-xs px-2.5 py-0.5 rounded-full bg-gold/20 text-gold font-mono font-semibold">
-                  {batchBreakdown.length} Batches ({totalClients} Students)
+                  General Batch ({totalClients} Students)
                 </span>
               </h3>
               <p className="text-xs text-muted-foreground">
-                Separated cohorts matching each page from the Eight Branches Google Workbook.
+                All Eight Branches student files unified under one clean General Batch.
               </p>
             </div>
           </div>
 
-          <Link
-            to="/dashboard/osap/clients"
-            className="btn-secondary text-xs flex items-center gap-1.5 self-start sm:self-auto"
-          >
-            <Folder className="w-3.5 h-3.5 text-gold" /> View All in Clients Directory
-          </Link>
+          <div className="flex items-center gap-2 flex-wrap">
+            <Link
+              to="/dashboard/osap/clients"
+              className="btn-secondary text-xs flex items-center gap-1.5"
+            >
+              <Folder className="w-3.5 h-3.5 text-gold" /> View All in Clients Directory
+            </Link>
+            <Link
+              to="/dashboard/osap/audit-center"
+              className="btn-primary text-xs flex items-center gap-1.5"
+            >
+              <Scan className="w-3.5 h-3.5" /> Audit General Batch
+            </Link>
+          </div>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3.5">
           {batchBreakdown.map(([batchName, stats]) => {
-            const isHold = batchName === "Hold";
             return (
               <div
                 key={batchName}
-                className={`p-4 rounded-xl border transition-smooth bg-muted/20 hover:bg-muted/40 ${
-                  isHold ? "border-rose-500/40 hover:border-rose-500" : "border-border hover:border-gold/60"
-                } space-y-3 flex flex-col justify-between`}
+                className="p-4 rounded-xl border border-border hover:border-gold/60 transition-smooth bg-muted/20 hover:bg-muted/40 space-y-3 flex flex-col justify-between"
               >
                 <div>
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-2 min-w-0">
-                      <span className="text-base">{isHold ? "🚨" : "📁"}</span>
+                      <span className="text-base">📁</span>
                       <h4 className="font-bold text-foreground text-sm truncate" title={batchName}>
                         {batchName}
                       </h4>
                     </div>
-                    <span className={`text-xs px-2 py-0.5 rounded-full font-mono font-bold ${
-                      isHold ? "bg-rose-500/20 text-rose-300" : "bg-gold/20 text-gold"
-                    }`}>
+                    <span className="text-xs px-2 py-0.5 rounded-full font-mono font-bold bg-gold/20 text-gold">
                       {stats.total}
                     </span>
                   </div>
@@ -350,7 +353,7 @@ function OsapDashboardPage() {
                     search={{ batch: batchName }}
                     className="flex-1 text-center py-1.5 px-2.5 rounded-lg bg-card hover:bg-muted border border-border text-xs font-semibold text-foreground transition-smooth flex items-center justify-center gap-1"
                   >
-                    <span>View Batch</span>
+                    <span>View Clients</span>
                     <ArrowRight className="w-3 h-3 text-gold" />
                   </Link>
                   <Link

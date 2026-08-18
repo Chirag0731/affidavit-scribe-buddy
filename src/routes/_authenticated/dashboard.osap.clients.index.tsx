@@ -334,111 +334,54 @@ function OsapClientsPage() {
         </div>
       </div>
 
-      {/* Google Sheets / Spreadsheet Style Batch Tabs Navigation */}
-      <div className="bg-card border-2 border-gold/30 rounded-xl p-3.5 shadow-md space-y-2.5">
+      {/* General Batch Client Roster Header Card */}
+      <div className="bg-card border-2 border-gold/30 rounded-xl p-4 shadow-sm space-y-2">
         <div className="flex items-center justify-between gap-4 flex-wrap pb-2 border-b border-border/80 text-xs">
-          <div className="flex items-center gap-2">
-            <span className="p-1.5 rounded-lg bg-gold/15 text-gold font-bold">
-              <FileSpreadsheet className="w-4 h-4" />
+          <div className="flex items-center gap-2.5">
+            <span className="p-2 rounded-lg bg-gold/15 text-gold font-bold">
+              <FileSpreadsheet className="w-5 h-5" />
             </span>
             <div>
-              <h2 className="font-bold text-foreground text-sm tracking-tight flex items-center gap-2">
-                <span>Spreadsheet Batch Cohorts</span>
-                <span className="text-[11px] px-2 py-0.5 rounded-full bg-gold/20 text-gold font-mono font-semibold">
-                  12 Batches ({clients.length} Students)
+              <h2 className="font-bold text-foreground text-base tracking-tight flex items-center gap-2">
+                <span>📁 General Batch Student Roster</span>
+                <span className="text-xs px-2.5 py-0.5 rounded-full bg-gold/20 text-gold font-mono font-semibold">
+                  {clients.length} Students (Eight Branches)
                 </span>
               </h2>
-              <p className="text-[11px] text-muted-foreground">
-                Click any batch tab below to inspect, manage, and audit that cohort specifically.
+              <p className="text-xs text-muted-foreground mt-0.5">
+                Unified client directory for Acupuncture 50 weeks (2026 Academic Year).
               </p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-muted-foreground text-[11px] font-medium hidden sm:inline">View Layout:</span>
-            <div className="flex items-center bg-muted/40 p-0.5 rounded-lg border border-border">
-              <button
-                type="button"
-                onClick={() => setViewMode("tabs")}
-                className={`px-3 py-1 rounded text-xs font-semibold transition-smooth ${
-                  viewMode === "tabs"
-                    ? "bg-gold text-black shadow-xs"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                📑 Batch Tabs
-              </button>
-              <button
-                type="button"
-                onClick={() => setViewMode("grouped")}
-                className={`px-3 py-1 rounded text-xs font-semibold transition-smooth ${
-                  viewMode === "grouped"
-                    ? "bg-gold text-black shadow-xs"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                🗂️ Grouped Sections
-              </button>
-            </div>
+            <Link
+              to="/dashboard/osap/audit-center"
+              className="btn-primary text-xs flex items-center gap-1.5"
+            >
+              <Scan className="w-3.5 h-3.5" /> Audit General Batch
+            </Link>
           </div>
         </div>
 
-        {/* Scrollable Tabs Ribbon */}
-        <div className="flex items-center gap-2 overflow-x-auto pb-1.5 pt-0.5 scrollbar-thin">
-          <button
-            type="button"
-            onClick={() => {
-              setBatchFilter("all");
-              setPage(1);
-            }}
-            className={`px-3.5 py-2 rounded-lg border text-xs font-bold transition-smooth whitespace-nowrap flex items-center gap-2 ${
-              batchFilter === "all"
-                ? "bg-gold text-black border-gold shadow-md ring-2 ring-gold/20"
-                : "bg-muted/40 border-border text-foreground hover:bg-muted hover:border-gold/40"
-            }`}
-          >
-            <Folder className="w-3.5 h-3.5" />
-            <span>🌐 All Batches</span>
-            <span className={`px-1.5 py-0.2 rounded-full font-mono text-[11px] ${
-              batchFilter === "all" ? "bg-black/20 text-black font-bold" : "bg-muted text-muted-foreground font-semibold"
-            }`}>
-              {clients.length}
-            </span>
-          </button>
-
-          {uniqueBatches.map(([batchName, count]) => {
-            const isSelected = batchFilter === batchName;
-            const isHold = batchName === "Hold";
-            return (
-              <button
-                key={batchName}
-                type="button"
-                onClick={() => {
-                  setBatchFilter(batchName);
-                  setPage(1);
-                }}
-                className={`px-3.5 py-2 rounded-lg border text-xs font-semibold transition-smooth whitespace-nowrap flex items-center gap-2 ${
-                  isSelected
-                    ? isHold
-                      ? "bg-rose-500 text-white border-rose-500 shadow-md ring-2 ring-rose-500/20 font-bold"
-                      : "bg-gold text-black border-gold shadow-md ring-2 ring-gold/20 font-bold"
-                    : isHold
-                    ? "bg-rose-950/30 border-rose-800/50 text-rose-300 hover:bg-rose-900/40"
-                    : "bg-card border-border text-foreground hover:bg-muted hover:border-gold/40"
-                }`}
-              >
-                <span>{isHold ? "🚨" : "📁"}</span>
-                <span>{batchName}</span>
-                <span className={`px-1.5 py-0.2 rounded-full font-mono text-[11px] ${
-                  isSelected
-                    ? "bg-black/20 text-black font-bold"
-                    : "bg-muted border border-border text-muted-foreground font-semibold"
-                }`}>
-                  {count}
-                </span>
-              </button>
-            );
-          })}
+        {/* Status Indicators Strip */}
+        <div className="flex items-center gap-2 text-xs flex-wrap pt-1">
+          <div className="px-3 py-1.5 rounded-lg bg-muted/40 border border-border flex items-center gap-2">
+            <span className="text-muted-foreground">Total Students:</span>
+            <strong className="text-foreground font-mono">{clients.length}</strong>
+          </div>
+          <div className="px-3 py-1.5 rounded-lg bg-emerald-950/20 border border-emerald-800/40 flex items-center gap-2">
+            <span className="text-emerald-400">MSFAA Done:</span>
+            <strong className="text-emerald-300 font-mono">{clients.filter((c) => c.msfaa_status === "submitted").length}</strong>
+          </div>
+          <div className="px-3 py-1.5 rounded-lg bg-amber-950/20 border border-amber-800/40 flex items-center gap-2">
+            <span className="text-amber-400">MSFAA Pending:</span>
+            <strong className="text-amber-300 font-mono">{clients.filter((c) => c.msfaa_status !== "submitted").length}</strong>
+          </div>
+          <div className="px-3 py-1.5 rounded-lg bg-blue-950/20 border border-blue-800/40 flex items-center gap-2">
+            <span className="text-blue-400">Funded / Completed:</span>
+            <strong className="text-blue-300 font-mono">{clients.filter((c) => c.application_status === "completed" || c.application_status === "funded").length}</strong>
+          </div>
         </div>
       </div>
 
