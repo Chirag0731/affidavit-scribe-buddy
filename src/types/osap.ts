@@ -236,3 +236,20 @@ export const ACTION_SEVERITY_CONFIG: Record<OsapActionSeverity, { label: string;
   high: { label: "High", color: "text-orange-400", bg: "bg-orange-900/20" },
   critical: { label: "Critical", color: "text-rose-400", bg: "bg-rose-900/20" },
 };
+
+export const DEFAULT_OSAP_PRESETS = {
+  school: "Eight Branches",
+  program: "Acupuncture 50 weeks",
+  application_year: "2026",
+  application_status: "not_started" as OsapApplicationStatus,
+  priority: "medium" as OsapPriority,
+  staff_roles: ["Sales", "Operations"],
+  staff_members: [
+    "Sales",
+    "Operations",
+    "Firas (Sales)",
+    "JB (Operations)",
+    "Abdul (Operations)",
+  ],
+};
+

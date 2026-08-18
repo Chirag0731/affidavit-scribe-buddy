@@ -95,7 +95,63 @@ function OsapSettingsPage() {
           </div>
         </div>
 
-        {/* 2. CREDENTIAL SECURITY */}
+        {/* 2. DEFAULT PRESETS & STAFF ROLES */}
+        <div className="bg-card border border-border rounded-xl p-6 space-y-4 shadow-sm">
+          <div className="flex items-center gap-2 border-b border-border pb-3">
+            <Users className="w-5 h-5 text-gold" />
+            <h3 className="font-bold text-foreground text-base">Default Presets & Staff Roles</h3>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-4">
+            <div>
+              <label className="block text-xs font-semibold text-foreground mb-1.5">Default School / College</label>
+              <input
+                type="text"
+                defaultValue="Eight Branches"
+                className="input-base text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-foreground mb-1.5">Default Program of Study</label>
+              <input
+                type="text"
+                defaultValue="Acupuncture 50 weeks"
+                className="input-base text-sm"
+              />
+            </div>
+            <div>
+              <label className="block text-xs font-semibold text-foreground mb-1.5">Default Application Year</label>
+              <input
+                type="text"
+                defaultValue="2026"
+                className="input-base text-sm"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-semibold text-foreground mb-1.5">Configured Staff Roles & Departments</label>
+            <div className="flex flex-wrap gap-2">
+              <span className="px-3 py-1 bg-gold/15 text-gold border border-gold/30 rounded-lg text-xs font-semibold">
+                Sales
+              </span>
+              <span className="px-3 py-1 bg-gold/15 text-gold border border-gold/30 rounded-lg text-xs font-semibold">
+                Operations
+              </span>
+              <span className="px-3 py-1 bg-muted border border-border rounded-lg text-xs font-medium text-foreground">
+                Firas (Sales)
+              </span>
+              <span className="px-3 py-1 bg-muted border border-border rounded-lg text-xs font-medium text-foreground">
+                JB (Operations)
+              </span>
+              <span className="px-3 py-1 bg-muted border border-border rounded-lg text-xs font-medium text-foreground">
+                Abdul (Operations)
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* 3. CREDENTIAL SECURITY */}
         <div className="bg-card border border-border rounded-xl p-6 space-y-4 shadow-sm">
           <div className="flex items-center gap-2 border-b border-border pb-3">
             <Shield className="w-5 h-5 text-gold" />

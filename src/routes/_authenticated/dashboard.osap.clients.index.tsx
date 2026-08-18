@@ -66,18 +66,18 @@ function OsapClientsPage() {
   const [editingClient, setEditingClient] = useState<OsapClient | null>(null);
   const [saving, setSaving] = useState(false);
 
-  // Form state
+  // Form state with requested defaults
   const [formFirstName, setFormFirstName] = useState("");
   const [formLastName, setFormLastName] = useState("");
   const [formEmail, setFormEmail] = useState("");
   const [formPhone, setFormPhone] = useState("");
   const [formOan, setFormOan] = useState("");
   const [formPassword, setFormPassword] = useState("");
-  const [formSchool, setFormSchool] = useState("");
-  const [formProgram, setFormProgram] = useState("");
-  const [formStudyPeriod, setFormStudyPeriod] = useState("");
-  const [formYear, setFormYear] = useState(new Date().getFullYear().toString());
-  const [formStaff, setFormStaff] = useState("");
+  const [formSchool, setFormSchool] = useState("Eight Branches");
+  const [formProgram, setFormProgram] = useState("Acupuncture 50 weeks");
+  const [formStudyPeriod, setFormStudyPeriod] = useState("Full-Time (50 weeks)");
+  const [formYear, setFormYear] = useState("2026");
+  const [formStaff, setFormStaff] = useState("Sales");
   const [formPriority, setFormPriority] = useState<OsapPriority>("medium");
   const [formAppStatus, setFormAppStatus] = useState<OsapApplicationStatus>("not_started");
   const [formNotes, setFormNotes] = useState("");
@@ -106,11 +106,11 @@ function OsapClientsPage() {
     setFormPhone("");
     setFormOan("");
     setFormPassword("");
-    setFormSchool("");
-    setFormProgram("");
-    setFormStudyPeriod("");
-    setFormYear(new Date().getFullYear().toString());
-    setFormStaff("");
+    setFormSchool("Eight Branches");
+    setFormProgram("Acupuncture 50 weeks");
+    setFormStudyPeriod("Full-Time (50 weeks)");
+    setFormYear("2026");
+    setFormStaff("Sales");
     setFormPriority("medium");
     setFormAppStatus("not_started");
     setFormNotes("");
@@ -125,11 +125,11 @@ function OsapClientsPage() {
     setFormPhone(c.phone || "");
     setFormOan(c.oan || "");
     setFormPassword("");
-    setFormSchool(c.school || "");
-    setFormProgram(c.program || "");
-    setFormStudyPeriod(c.study_period || "");
-    setFormYear(c.application_year || new Date().getFullYear().toString());
-    setFormStaff(c.assigned_staff || "");
+    setFormSchool(c.school || "Eight Branches");
+    setFormProgram(c.program || "Acupuncture 50 weeks");
+    setFormStudyPeriod(c.study_period || "Full-Time (50 weeks)");
+    setFormYear(c.application_year || "2026");
+    setFormStaff(c.assigned_staff || "Sales");
     setFormPriority(c.priority);
     setFormAppStatus(c.application_status);
     setFormNotes(c.notes || "");
@@ -613,21 +613,37 @@ function OsapClientsPage() {
                   <label className="block text-xs font-semibold text-foreground mb-1.5">School / College</label>
                   <input
                     type="text"
+                    list="school-presets"
                     value={formSchool}
                     onChange={(e) => setFormSchool(e.target.value)}
-                    placeholder="e.g. Sheridan College"
+                    placeholder="Eight Branches"
                     className="input-base text-sm"
                   />
+                  <datalist id="school-presets">
+                    <option value="Eight Branches" />
+                    <option value="Canadian College of Business Science & Technology - Etobicoke" />
+                    <option value="Sheridan College" />
+                    <option value="Seneca College" />
+                    <option value="Humber College" />
+                    <option value="George Brown College" />
+                  </datalist>
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-foreground mb-1.5">Program of Study</label>
                   <input
                     type="text"
+                    list="program-presets"
                     value={formProgram}
                     onChange={(e) => setFormProgram(e.target.value)}
-                    placeholder="e.g. Computer Programming"
+                    placeholder="Acupuncture 50 weeks"
                     className="input-base text-sm"
                   />
+                  <datalist id="program-presets">
+                    <option value="Acupuncture 50 weeks" />
+                    <option value="HUMAN RESOURCE MANAGEMENT" />
+                    <option value="Computer Programming" />
+                    <option value="Business Administration" />
+                  </datalist>
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-foreground mb-1.5">Application Year</label>
@@ -668,14 +684,18 @@ function OsapClientsPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-xs font-semibold text-foreground mb-1.5">Assigned Staff</label>
-                  <input
-                    type="text"
+                  <label className="block text-xs font-semibold text-foreground mb-1.5">Assigned Staff / Role</label>
+                  <select
                     value={formStaff}
                     onChange={(e) => setFormStaff(e.target.value)}
-                    placeholder="e.g. Alex M."
                     className="input-base text-sm"
-                  />
+                  >
+                    <option value="Sales">Sales</option>
+                    <option value="Operations">Operations</option>
+                    <option value="Firas (Sales)">Firas (Sales)</option>
+                    <option value="JB (Operations)">JB (Operations)</option>
+                    <option value="Abdul (Operations)">Abdul (Operations)</option>
+                  </select>
                 </div>
               </div>
 
