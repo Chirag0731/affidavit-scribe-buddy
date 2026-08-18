@@ -12,12 +12,12 @@ import type {
 import { encryptCredential } from "./osap-crypto";
 import { ALL_OSAP_CLIENTS } from "./osap-seed-data";
 
-const LOCAL_CLIENTS_KEY = "neptora_osap_clients_cache_v2";
-const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache";
-const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache";
-const LOCAL_DOCS_KEY = "neptora_osap_docs_cache";
-const LOCAL_NOTES_KEY = "neptora_osap_notes_cache";
-const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache";
+const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v5_live_msfaa";
+const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v5";
+const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v5";
+const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v5";
+const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v5";
+const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v5";
 
 export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS;
 
@@ -38,11 +38,30 @@ function setLocalCache<T>(key: string, data: T[]) {
   }
 }
 
+export function resetOsapClientsToSpreadsheet(): OsapClient[] {
+  try {
+    localStorage.removeItem("neptora_osap_clients_cache");
+    localStorage.removeItem("neptora_osap_clients_cache_v2");
+    localStorage.removeItem("neptora_osap_clients_cache_v3");
+    localStorage.removeItem("neptora_osap_clients_cache_v4");
+    localStorage.setItem(LOCAL_CLIENTS_KEY, JSON.stringify(ALL_OSAP_CLIENTS));
+  } catch {
+    /* ignore */
+  }
+  return ALL_OSAP_CLIENTS;
+}
+
 /**
  * Fetch all OSAP clients
  */
 export async function getOsapClients(): Promise<OsapClient[]> {
   try {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("neptora_osap_clients_cache");
+      localStorage.removeItem("neptora_osap_clients_cache_v2");
+      localStorage.removeItem("neptora_osap_clients_cache_v3");
+    }
+
     const { data, error } = await supabase
       .from("osap_clients" as never)
       .select("*")

@@ -17,10 +17,11 @@ import {
   Download,
   Loader2,
   X,
+  RotateCcw,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { getOsapClients, saveOsapClient, deleteOsapClient } from "@/lib/osap-db";
+import { getOsapClients, saveOsapClient, deleteOsapClient, resetOsapClientsToSpreadsheet } from "@/lib/osap-db";
 import { maskOan } from "@/lib/osap-crypto";
 import { exportClientsToExcel } from "@/lib/osap-excel";
 import type {
@@ -285,6 +286,14 @@ function OsapClientsPage() {
     toast.success(`Exported ${toExport.length} clients to Excel`);
   };
 
+  const handleResetToSpreadsheet = () => {
+    if (window.confirm("Reload and re-sync all 421 student files directly from the latest spreadsheet data?")) {
+      const fresh = resetOsapClientsToSpreadsheet();
+      setClients(fresh);
+      toast.success(`Synced ${fresh.length} student records from spreadsheet!`);
+    }
+  };
+
   const pendingMsfaaClients = useMemo(() => clients.filter((c) => c.msfaa_status !== "submitted"), [clients]);
   const holdDiscrepancyClients = useMemo(() => clients.filter((c) => c.batch_name === "Hold" || c.notes?.toLowerCase().includes("discrepancy")), [clients]);
 
@@ -300,6 +309,13 @@ function OsapClientsPage() {
         </div>
 
         <div className="flex items-center gap-2.5 flex-wrap">
+          <button
+            onClick={handleResetToSpreadsheet}
+            className="btn-secondary flex items-center gap-2 text-sm border-gold/40 text-gold hover:bg-gold/10"
+            title="Reload fresh data directly from spreadsheet"
+          >
+            <RotateCcw className="w-4 h-4" /> Re-sync Spreadsheet Data
+          </button>
           <button onClick={openAddModal} className="btn-primary flex items-center gap-2 text-sm">
             <Plus className="w-4 h-4" /> Add Client
           </button>

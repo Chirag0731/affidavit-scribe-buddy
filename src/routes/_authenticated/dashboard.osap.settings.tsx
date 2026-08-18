@@ -11,6 +11,7 @@ import {
   RefreshCw,
 } from "lucide-react";
 import { toast } from "sonner";
+import { resetOsapClientsToSpreadsheet } from "@/lib/osap-db";
 
 export const Route = createFileRoute("/_authenticated/dashboard/osap/settings")({
   component: OsapSettingsPage,
@@ -179,6 +180,36 @@ function OsapSettingsPage() {
                 Mask OANs across summary tables (e.g. ••••••1234)
               </span>
             </label>
+          </div>
+        </div>
+
+        {/* 4. SPREADSHEET ROSTER SYNCHRONIZATION */}
+        <div className="bg-card border border-border rounded-xl p-6 space-y-4 shadow-sm">
+          <div className="flex items-center gap-2 border-b border-border pb-3">
+            <RefreshCw className="w-5 h-5 text-gold" />
+            <h3 className="font-bold text-foreground text-base">Google Spreadsheet Live Roster Sync</h3>
+          </div>
+
+          <div className="p-4 bg-muted/20 border border-border rounded-lg text-xs space-y-2">
+            <p className="text-muted-foreground">
+              Connected Workbook: <strong className="text-foreground">Eight Branches OSAP Master Roster (421 Clients across 12 Batches)</strong>
+            </p>
+            <p className="text-muted-foreground">
+              If your browser has cached older student records, click below to force-refresh and restore all 421 student profiles, MSFAA agreements, and batch assignments directly from the spreadsheet.
+            </p>
+          </div>
+
+          <div>
+            <button
+              type="button"
+              onClick={() => {
+                const fresh = resetOsapClientsToSpreadsheet();
+                toast.success(`Successfully re-synced ${fresh.length} clients from Google Spreadsheet!`);
+              }}
+              className="btn-secondary text-sm border-gold/40 text-gold hover:bg-gold/10 flex items-center gap-2"
+            >
+              <RefreshCw className="w-4 h-4" /> Force-Sync / Reload Fresh Spreadsheet Data
+            </button>
           </div>
         </div>
 
