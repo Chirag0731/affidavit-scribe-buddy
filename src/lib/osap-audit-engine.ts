@@ -156,18 +156,33 @@ export function runClientAudit(
   if (!manualOverrides && scenario) {
     switch (scenario) {
       case "payment_released":
-        newAppStatus = "completed";
-        newFundingStatus = "Payment Released / Fully Funded ($10,200 Disbursed)";
-        newDocStatus = "approved";
-        newMsfaaStatus = "completed";
+        if (
+          client.application_status === "completed" ||
+          client.application_status === "funded" ||
+          /released|funded|paid|disbursed|first payment/i.test(client.funding_status || "") ||
+          /released|funded|paid|disbursed|first payment/i.test(client.notes || "")
+        ) {
+          newAppStatus = "completed";
+          newFundingStatus = client.funding_status && /released|funded|paid|disbursed/i.test(client.funding_status)
+            ? client.funding_status
+            : "Payment Released / Fully Funded (1st Installment Disbursed)";
+          newDocStatus = "approved";
+          newMsfaaStatus = "completed";
+        } else {
+          // Preserve genuine unreleased status
+          newAppStatus = client.application_status;
+          newFundingStatus = "Pending Assessment / Not Yet Released";
+          newDocStatus = client.document_status;
+          newMsfaaStatus = client.msfaa_status;
+        }
         break;
       case "live_portal_login":
       case "live_file_audit":
         if (
           client.application_status === "completed" ||
           client.application_status === "funded" ||
-          /released|funded|paid|disbursed/i.test(client.funding_status || "") ||
-          /released|funded|paid|disbursed/i.test(client.notes || "")
+          /released|funded|paid|disbursed|first payment/i.test(client.funding_status || "") ||
+          /released|funded|paid|disbursed|first payment/i.test(client.notes || "")
         ) {
           newAppStatus = "completed";
           newFundingStatus = client.funding_status && /released|funded|paid|disbursed/i.test(client.funding_status)
@@ -175,18 +190,23 @@ export function runClientAudit(
             : "Payment Released / Fully Funded";
           newDocStatus = "approved";
           newMsfaaStatus = "completed";
-        } else if (client.batch_name === "Hold" || client.notes?.toLowerCase().includes("discrepancy")) {
+        } else if (client.notes?.toLowerCase().includes("discrepancy")) {
           newAppStatus = "action_required";
+          newFundingStatus = "On Hold (ESDC / SIN Discrepancy)";
           newMsfaaStatus = client.msfaa_status === "submitted" ? "submitted" : "required";
         } else if (client.msfaa_status !== "submitted") {
           newMsfaaStatus = "required";
+          newFundingStatus = "Pending MSFAA Agreement";
           if (newAppStatus === "not_started") newAppStatus = "action_required";
+        } else if (client.document_status === "rejected") {
+          newAppStatus = "action_required";
+          newFundingStatus = "On Hold (Documents Incomplete)";
         } else if (client.document_status === "under_review") {
           newAppStatus = "documents_under_review";
+          newFundingStatus = "Documents Under Review";
         } else {
-          if (newAppStatus === "not_started" || newAppStatus === "action_required") {
-            newAppStatus = "submitted";
-          }
+          newAppStatus = client.application_status === "not_started" ? "not_started" : "submitted";
+          newFundingStatus = client.funding_status || "Pending Assessment";
         }
         break;
       case "approved":

@@ -810,7 +810,7 @@ function OsapClientProfilePage() {
               >
                 <option value="live_portal_login">🔴 Live Government Portal Login (Physical OAN & Pass)</option>
                 <option value="live_file_audit">⚡ Smart Live Audit (Inspect Real MSFAA & File Status)</option>
-                <option value="payment_released">💰 Payment Released (Mark File Funded & Fully Completed)</option>
+                <option value="payment_released">💰 Payment Released Check (Verify First Payment Disbursement)</option>
                 <option value="approved">✅ Approved Application ($9,450 Calculated Funding)</option>
                 <option value="processing">📊 Processing / Under Assessment</option>
                 <option value="rejected_documents">📄 Rejected Documents (Needs Replacement Upload)</option>

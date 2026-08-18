@@ -273,16 +273,41 @@ async function crawlSingleClient(browser: Browser, client: OsapClient): Promise<
       docStatus = "under_review";
     }
 
-    // Evaluate Funding / Release
-    if (pageContent.includes("disbursed") || pageContent.includes("payment released") || pageContent.includes("funds deposited") || client.batch_name?.includes("March") || client.batch_name?.includes("April") || client.batch_name?.includes("May")) {
+    // Strict Evaluation of Funding / First Payment Release on OSAP Portal
+    const hasPaymentReleased =
+      pageContent.includes("payment has been released") ||
+      pageContent.includes("first payment released") ||
+      pageContent.includes("first instalment issued") ||
+      pageContent.includes("funds disbursed") ||
+      pageContent.includes("funds deposited to bank") ||
+      pageContent.includes("disbursement released");
+
+    if (hasPaymentReleased) {
       appStatus = "completed";
-      fundingStatus = "Payment Released / Fully Funded ($10,200 Disbursed)";
+      fundingStatus = "Payment Released / Fully Funded (1st Installment Disbursed)";
       actionRequired = false;
       actionSummary = "";
-    } else if (isDiscrepancy || client.batch_name === "Hold") {
+    } else if (isDiscrepancy || client.notes?.toLowerCase().includes("discrepancy")) {
       appStatus = "action_required";
+      fundingStatus = "On Hold (ESDC / SIN Discrepancy)";
       actionRequired = true;
       actionSummary = client.notes || "ESDC / SIN Personal Info Discrepancy on file";
+    } else if (msfaaStatus === "required") {
+      appStatus = "action_required";
+      fundingStatus = "Pending MSFAA Agreement";
+      actionRequired = true;
+      actionSummary = "MSFAA agreement required by National Student Loans Service Centre";
+    } else if (docStatus === "rejected") {
+      appStatus = "action_required";
+      fundingStatus = "On Hold (Documents Incomplete)";
+      actionRequired = true;
+      actionSummary = "Document upload rejected by FAO. Replacement upload required.";
+    } else {
+      // Unfunded / in assessment state
+      appStatus = client.application_status === "not_started" ? "not_started" : "submitted";
+      fundingStatus = client.funding_status || "Pending Assessment / Not Yet Released";
+      actionRequired = false;
+      actionSummary = "";
     }
 
     return {
