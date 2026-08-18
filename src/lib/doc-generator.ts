@@ -47,25 +47,68 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
   const page = pdf.addPage([PAGE_W, PAGE_H]);
 
   interface Seg { text: string; bold?: boolean; }
+
+  const sanitizePdfText = (str: string): string => {
+    if (!str) return "";
+    // Replace tabs with spaces
+    let s = str.replace(/\t/g, "    ");
+    // Normalize newlines and carriage returns
+    s = s.replace(/\r\n/g, "\n").replace(/\r/g, "\n");
+    // Replace non-breaking spaces with normal spaces
+    s = s.replace(/\u00A0/g, " ");
+    // Strip control characters except newline (0x00-0x09, 0x0B, 0x0C, 0x0E-0x1F, 0x7F)
+    s = s.replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/g, "");
+    return s;
+  };
+
+  const safeWidthOfText = (f: typeof font | typeof bold, text: string, size: number): number => {
+    if (!text) return 0;
+    try {
+      return f.widthOfTextAtSize(text, size);
+    } catch {
+      // Fallback: strip any remaining unencodable chars
+      const safe = text.replace(/[^\x20-\x7E\xA0-\xFF\u2013\u2014\u2018\u2019\u201C\u201D\u2022\u2026]/g, "");
+      try {
+        return f.widthOfTextAtSize(safe, size);
+      } catch {
+        return text.length * size * 0.5;
+      }
+    }
+  };
+
   const wrapSegments = (segs: Seg[], maxW: number, size: number): Seg[][] => {
     const lines: Seg[][] = [];
     let cur: Seg[] = [];
     let curW = 0;
-    const w = (t: string, b?: boolean) => (b ? bold : font).widthOfTextAtSize(t, size);
+    const w = (t: string, b?: boolean) => safeWidthOfText(b ? bold : font, t, size);
+
     for (const seg of segs) {
-      const words = seg.text.split(/(\s+)/);
-      for (const word of words) {
-        if (!word) continue;
-        const ww = w(word, seg.bold);
-        if (curW + ww > maxW && cur.length > 0) {
+      const sanitized = sanitizePdfText(seg.text);
+      const rawLines = sanitized.split("\n");
+
+      rawLines.forEach((rawLine, lineIdx) => {
+        if (lineIdx > 0) {
           lines.push(cur);
           cur = [];
           curW = 0;
-          if (/^\s+$/.test(word)) continue;
         }
-        cur.push({ text: word, bold: seg.bold });
-        curW += ww;
-      }
+
+        if (!rawLine) return;
+
+        const words = rawLine.split(/( +)/);
+        for (const word of words) {
+          if (!word) continue;
+          const ww = w(word, seg.bold);
+          if (curW + ww > maxW && cur.length > 0) {
+            lines.push(cur);
+            cur = [];
+            curW = 0;
+            if (/^ +$/.test(word)) continue;
+          }
+          cur.push({ text: word, bold: seg.bold });
+          curW += ww;
+        }
+      });
     }
     if (cur.length) lines.push(cur);
     return lines;
@@ -79,13 +122,32 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
     size: number,
     f = font,
   ) => {
-    page.drawText(text, {
-      x,
-      y: baselineFromTop(top, size),
-      size,
-      font: f,
-      color: rgb(0, 0, 0),
-    });
+    const sanitized = sanitizePdfText(text).replace(/\n/g, " ").trim();
+    if (!sanitized) return;
+    try {
+      page.drawText(sanitized, {
+        x,
+        y: baselineFromTop(top, size),
+        size,
+        font: f,
+        color: rgb(0, 0, 0),
+      });
+    } catch {
+      const safe = sanitized.replace(/[^\x20-\x7E\xA0-\xFF\u2013\u2014\u2018\u2019\u201C\u201D\u2022\u2026]/g, "");
+      if (safe) {
+        try {
+          page.drawText(safe, {
+            x,
+            y: baselineFromTop(top, size),
+            size,
+            font: f,
+            color: rgb(0, 0, 0),
+          });
+        } catch {
+          // ignore if unencodable
+        }
+      }
+    }
   };
 
   const drawSegmentsTop = (
@@ -99,16 +161,16 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
     const lines = wrapSegments(segs, maxW, size);
     let lineTop = top;
     for (const line of lines) {
-      while (line.length && /^\s+$/.test(line[0].text)) line.shift();
+      while (line.length && /^ +$/.test(line[0].text)) line.shift();
       const lineW = line.reduce((acc, s) => {
         const f = s.bold ? bold : font;
-        return acc + f.widthOfTextAtSize(s.text, size);
+        return acc + safeWidthOfText(f, s.text, size);
       }, 0);
       let x = opts.center ? (PAGE_W - lineW) / 2 : opts.x ?? MARGIN;
       for (const s of line) {
         const f = s.bold ? bold : font;
         drawTextTop(s.text, x, lineTop, size, f);
-        x += f.widthOfTextAtSize(s.text, size);
+        x += safeWidthOfText(f, s.text, size);
       }
       lineTop += lh;
     }
@@ -119,7 +181,7 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
 
   {
     const size = L.title.size ?? 14;
-    const tw = bold.widthOfTextAtSize(doc.title, size);
+    const tw = safeWidthOfText(bold, doc.title, size);
     const boxX = L.title.x ?? MARGIN;
     const boxW = L.title.width ?? CONTENT_W;
     drawTextTop(doc.title, boxX + (boxW - tw) / 2, L.title.top, size, bold);
@@ -192,7 +254,7 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
 
   const ackTitle = "NOTARY ACKNOWLEDGEMENT";
   const ackTitleSize = L.ackTitle.size ?? 11;
-  const ackTitleW = bold.widthOfTextAtSize(ackTitle, ackTitleSize);
+  const ackTitleW = safeWidthOfText(bold, ackTitle, ackTitleSize);
   const ackBoxX = L.ackTitle.x ?? MARGIN;
   const ackBoxW = L.ackTitle.width ?? CONTENT_W;
   drawTextTop(ackTitle, ackBoxX + (ackBoxW - ackTitleW) / 2, L.ackTitle.top, ackTitleSize, bold);
@@ -203,14 +265,14 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
     const lines = wrapSegments([{ text: buildNotarySentence(doc) }], w, L.ackText.size ?? 10);
     let top = L.ackText.top;
     for (const line of lines) {
-      while (line.length && /^\s+$/.test(line[0].text)) line.shift();
+      while (line.length && /^ +$/.test(line[0].text)) line.shift();
       const size = L.ackText.size ?? 10;
-      const lineW = line.reduce((acc, s) => acc + (s.bold ? bold : font).widthOfTextAtSize(s.text, size), 0);
+      const lineW = line.reduce((acc, s) => acc + safeWidthOfText(s.bold ? bold : font, s.text, size), 0);
       let cx = x + (w - lineW) / 2;
       for (const s of line) {
         const f = s.bold ? bold : font;
         drawTextTop(s.text, cx, top, size, f);
-        cx += f.widthOfTextAtSize(s.text, size);
+        cx += safeWidthOfText(f, s.text, size);
       }
       top += L.ackText.lh ?? 13;
     }
@@ -279,15 +341,26 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
 
   const factIndentTwips = Math.max(0, Math.round(((doc.layout.facts.x ?? 54) - 54) * 20)) + 720;
   doc.facts.forEach((fact, i) => {
+    const factLines = fact.split(/\r?\n/);
+    const runs: TextRun[] = [
+      new TextRun({ text: `${i + 1}. `, font: "Calibri", size: 22 }),
+      new TextRun({ text: factLines[0] || "", font: "Calibri", size: 22 }),
+    ];
+    for (let j = 1; j < factLines.length; j++) {
+      runs.push(
+        new TextRun({
+          text: factLines[j],
+          font: "Calibri",
+          size: 22,
+          break: 1,
+        }),
+      );
+    }
     children.push(
       new Paragraph({
         spacing: { after: 160, line: 300 },
         indent: { left: factIndentTwips, hanging: 360 },
-
-        children: [
-          new TextRun({ text: `${i + 1}. `, font: "Calibri", size: 22 }),
-          new TextRun({ text: fact, font: "Calibri", size: 22 }),
-        ],
+        children: runs,
       }),
     );
   });

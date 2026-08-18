@@ -99,7 +99,7 @@ export function PdfHtmlPreview({ doc, className = "" }: PdfHtmlPreviewProps) {
             {doc.facts.map((fact, i) => (
               <div
                 key={i}
-                className="pl-[1.2em] -indent-[1.2em]"
+                className="pl-[1.2em] -indent-[1.2em] whitespace-pre-wrap"
                 style={{
                   marginBottom: i < doc.facts.length - 1 ? toPx(6) : 0,
                 }}
