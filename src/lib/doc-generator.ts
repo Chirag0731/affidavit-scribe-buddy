@@ -25,6 +25,15 @@ async function fetchBytes(url: string): Promise<Uint8Array> {
   return new Uint8Array(buf);
 }
 
+function dataUrlToBytes(dataUrl: string): Uint8Array {
+  const body = dataUrl.split(",")[1] ?? "";
+  const bin = atob(body);
+  const bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return bytes;
+}
+
+
 // =====================================================================
 // PDF
 // =====================================================================
