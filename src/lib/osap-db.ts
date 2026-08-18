@@ -12,12 +12,12 @@ import type {
 import { encryptCredential } from "./osap-crypto";
 import { ALL_OSAP_CLIENTS } from "./osap-seed-data";
 
-const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v7_strict_funded";
-const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v7";
-const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v7";
-const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v7";
-const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v7";
-const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v7";
+const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v8_dated_clean_roster";
+const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v8";
+const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v8";
+const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v8";
+const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v8";
+const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v8";
 
 export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS;
 

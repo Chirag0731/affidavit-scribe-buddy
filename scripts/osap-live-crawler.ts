@@ -273,18 +273,50 @@ async function crawlSingleClient(browser: Browser, client: OsapClient): Promise<
       docStatus = "under_review";
     }
 
-    // Strict Evaluation of Funding / First Payment Release on OSAP Portal
+    // 1. Scrape Funding Section / Amounts & Entitlements
+    let calculatedAmount = "";
+    let releaseDate = "";
+
+    // Search for funding dollar figures on portal
+    const moneyMatches = pageContent.match(/\$\s*([0-9]{1,3}(,[0-9]{3})*(\.[0-9]{2})?)/g);
+    if (moneyMatches && moneyMatches.length > 0) {
+      const numericVals = moneyMatches
+        .map((m) => parseFloat(m.replace(/[\$,\s]/g, "")))
+        .filter((v) => v > 500 && v < 40000);
+      if (numericVals.length > 0) {
+        const maxVal = Math.max(...numericVals);
+        calculatedAmount = `$${maxVal.toLocaleString()}`;
+      }
+    }
+
+    // Check for payment release indicators
     const hasPaymentReleased =
       pageContent.includes("payment has been released") ||
       pageContent.includes("first payment released") ||
       pageContent.includes("first instalment issued") ||
       pageContent.includes("funds disbursed") ||
       pageContent.includes("funds deposited to bank") ||
-      pageContent.includes("disbursement released");
+      pageContent.includes("disbursement released") ||
+      pageContent.includes("payment issued on");
+
+    // Check for estimated disbursement date
+    const dateMatch = pageContent.match(/(estimated\s*release|payment\s*date|issued\s*on|disbursed\s*on)[:\s]*([a-z]{3,9}\s+\d{1,2},?\s+\d{4}|\d{1,2}\/\d{1,2}\/\d{2,4})/i);
+    if (dateMatch) {
+      releaseDate = dateMatch[2];
+    }
 
     if (hasPaymentReleased) {
       appStatus = "completed";
-      fundingStatus = "Payment Released / Fully Funded (1st Installment Disbursed)";
+      fundingStatus = calculatedAmount
+        ? `Payment Released: ${calculatedAmount} Disbursed (1st Installment Paid)`
+        : "Payment Released: 1st Installment Disbursed";
+      actionRequired = false;
+      actionSummary = "";
+    } else if (calculatedAmount) {
+      appStatus = "approved";
+      fundingStatus = releaseDate
+        ? `Calculated: ${calculatedAmount} (Estimated Release: ${releaseDate})`
+        : `Calculated: ${calculatedAmount} (Assessment Approved)`;
       actionRequired = false;
       actionSummary = "";
     } else if (isDiscrepancy || client.notes?.toLowerCase().includes("discrepancy")) {
