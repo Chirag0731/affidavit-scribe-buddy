@@ -12,10 +12,19 @@ import {
   Sliders,
   CheckCircle,
   HelpCircle,
+  Download,
+  FileText,
+  CheckCheck,
 } from "lucide-react";
 import { toast } from "sonner";
 import { getOsapClients, recordOsapAudit, saveOsapClient, saveOsapAction, saveOsapDocument } from "@/lib/osap-db";
 import { runClientAudit, type AuditScenario } from "@/lib/osap-audit-engine";
+import {
+  generateBatchAuditSessionPdf,
+  downloadPdfBlob,
+  type OsapBatchSessionReport,
+  type BatchAuditItemSummary,
+} from "@/lib/osap-pdf-generator";
 import type { OsapClient } from "@/types/osap";
 import { OSAP_BATCH_ORDER } from "@/types/osap";
 
@@ -38,6 +47,8 @@ function OsapAuditCenterPage() {
   const [progress, setProgress] = useState(0);
   const [currentClientName, setCurrentClientName] = useState("");
   const [auditLogs, setAuditLogs] = useState<Array<{ name: string; batch?: string | null; status: string; message: string }>>([]);
+  const [lastSessionReport, setLastSessionReport] = useState<OsapBatchSessionReport | null>(null);
+  const [generatingPdf, setGeneratingPdf] = useState(false);
 
   useEffect(() => {
     loadClients();
@@ -96,13 +107,16 @@ function OsapAuditCenterPage() {
     setIsRunning(true);
     setProgress(0);
     setAuditLogs([]);
+    setLastSessionReport(null);
+
+    const sessionItems: BatchAuditItemSummary[] = [];
 
     for (let i = 0; i < targetList.length; i++) {
       const client = targetList[i];
       setCurrentClientName(client.full_name);
 
       // Safe rate-limited step
-      await new Promise((resolve) => setTimeout(resolve, 250));
+      await new Promise((resolve) => setTimeout(resolve, 200));
 
       const res = runClientAudit(client, batchScenario);
 
@@ -115,6 +129,14 @@ function OsapAuditCenterPage() {
       for (const doc of res.updatedDocuments) {
         await saveOsapDocument(doc);
       }
+
+      sessionItems.push({
+        client: res.client,
+        status: res.status,
+        message: res.message,
+        msfaaStatus: res.client.msfaa_status,
+        notes: res.client.notes || res.client.action_required_summary || "",
+      });
 
       setAuditLogs((prev) => [
         {
@@ -129,9 +151,40 @@ function OsapAuditCenterPage() {
       setProgress(Math.round(((i + 1) / targetList.length) * 100));
     }
 
+    const report: OsapBatchSessionReport = {
+      id: crypto.randomUUID(),
+      title: `Audit Session - ${selectedBatch === "all" ? "All Cohorts" : selectedBatch}`,
+      batchName: selectedBatch === "all" ? "All Batches" : selectedBatch,
+      scenario: batchScenario.replace(/_/g, " "),
+      conductedBy: "Staff Coordinator",
+      createdAt: new Date().toISOString(),
+      totalAudited: targetList.length,
+      updatedCount: sessionItems.filter((i) => i.status === "success" || i.client.application_status === "completed").length,
+      pendingMsfaaCount: sessionItems.filter((i) => i.client.msfaa_status !== "submitted").length,
+      holdCount: sessionItems.filter((i) => i.client.batch_name === "Hold" || i.client.notes?.toLowerCase().includes("discrepancy")).length,
+      fundedCount: sessionItems.filter((i) => i.client.application_status === "completed" || i.client.application_status === "funded").length,
+      items: sessionItems,
+    };
+
+    setLastSessionReport(report);
     setIsRunning(false);
-    toast.success(`Batch audit completed for ${targetList.length} clients${selectedBatch !== "all" ? ` in batch "${selectedBatch}"` : ""}`);
+    toast.success(`Batch audit completed for ${targetList.length} clients! PDF report is ready to download.`);
     await loadClients();
+  };
+
+  const handleDownloadSessionPdf = async (reportToDownload = lastSessionReport) => {
+    if (!reportToDownload) return;
+    setGeneratingPdf(true);
+    try {
+      const blob = await generateBatchAuditSessionPdf(reportToDownload);
+      const filename = `OSAP_Audit_Session_${reportToDownload.batchName.replace(/\s+/g, "_")}_${new Date().toISOString().slice(0, 10)}.pdf`;
+      downloadPdfBlob(blob, filename);
+      toast.success("📥 Batch Audit Session PDF Report successfully downloaded!");
+    } catch {
+      toast.error("Failed to generate PDF report");
+    } finally {
+      setGeneratingPdf(false);
+    }
   };
 
   return (
@@ -275,6 +328,58 @@ function OsapAuditCenterPage() {
               />
             </div>
           </div>
+
+          {/* Session PDF Download Banner */}
+          {lastSessionReport && !isRunning && (
+            <div className="p-4 bg-gold/10 border-2 border-gold/40 rounded-xl space-y-3 animate-fade-in shadow-sm">
+              <div className="flex items-center justify-between gap-4 flex-wrap">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-gold/25 border border-gold/40 flex items-center justify-center font-bold text-gold">
+                    <FileText className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-foreground text-sm flex items-center gap-2">
+                      <span>Batch Audit Session PDF Ready</span>
+                      <span className="text-xs px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono font-semibold">
+                        {lastSessionReport.totalAudited} Files Audited
+                      </span>
+                    </h4>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Complete PDF session report for <strong>{lastSessionReport.batchName}</strong> with all updated statuses, MSFAA conditions, and pending action items.
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => handleDownloadSessionPdf(lastSessionReport)}
+                  disabled={generatingPdf}
+                  className="btn-primary py-2 px-4 text-xs font-bold flex items-center gap-2 shadow-md hover:scale-102 transition-transform"
+                >
+                  {generatingPdf ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
+                  {generatingPdf ? "Compiling PDF..." : "📥 Download Session Audit PDF"}
+                </button>
+              </div>
+
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-gold/20 text-xs">
+                <div className="p-2 rounded bg-card/60 border border-border">
+                  <span className="text-muted-foreground block text-[10px]">Updated / Synced</span>
+                  <span className="font-bold text-emerald-400">{lastSessionReport.updatedCount}</span>
+                </div>
+                <div className="p-2 rounded bg-card/60 border border-border">
+                  <span className="text-muted-foreground block text-[10px]">MSFAA Pending</span>
+                  <span className="font-bold text-amber-400">{lastSessionReport.pendingMsfaaCount}</span>
+                </div>
+                <div className="p-2 rounded bg-card/60 border border-border">
+                  <span className="text-muted-foreground block text-[10px]">Holds / Discrepancies</span>
+                  <span className="font-bold text-rose-400">{lastSessionReport.holdCount}</span>
+                </div>
+                <div className="p-2 rounded bg-card/60 border border-border">
+                  <span className="text-muted-foreground block text-[10px]">Funded / Completed</span>
+                  <span className="font-bold text-emerald-300">{lastSessionReport.fundedCount}</span>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* Real-time checklist */}
           <div className="space-y-2 max-h-[480px] overflow-y-auto pr-1">

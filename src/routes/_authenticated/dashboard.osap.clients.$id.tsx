@@ -37,6 +37,7 @@ import {
 } from "@/lib/osap-db";
 import { maskOan } from "@/lib/osap-crypto";
 import { runClientAudit, type AuditScenario } from "@/lib/osap-audit-engine";
+import { generateSingleAuditPdf, downloadPdfBlob } from "@/lib/osap-pdf-generator";
 import { downloadStorageFile } from "@/lib/storage";
 import type {
   OsapClient,
@@ -91,6 +92,7 @@ function OsapClientProfilePage() {
   const [actionTitle, setActionTitle] = useState("");
   const [actionSeverity, setActionSeverity] = useState<any>("medium");
   const [addingAction, setAddingAction] = useState(false);
+  const [downloadingAuditId, setDownloadingAuditId] = useState<string | null>(null);
 
   useEffect(() => {
     loadClientData();
@@ -282,6 +284,21 @@ function OsapClientProfilePage() {
       toast.success(`💰 Payment marked as released! File is now Funded and Fully Completed.`);
     } catch {
       toast.error("Failed to update status");
+    }
+  };
+
+  const handleDownloadAuditPdf = async (audit: OsapAudit) => {
+    if (!client) return;
+    setDownloadingAuditId(audit.id);
+    try {
+      const blob = await generateSingleAuditPdf(audit, client);
+      const filename = `OSAP_Audit_${client.full_name.replace(/\s+/g, "_")}_${audit.created_at.slice(0, 10)}.pdf`;
+      downloadPdfBlob(blob, filename);
+      toast.success("📥 Downloaded audit PDF report!");
+    } catch {
+      toast.error("Failed to generate audit PDF");
+    } finally {
+      setDownloadingAuditId(null);
     }
   };
 
@@ -624,11 +641,21 @@ function OsapClientProfilePage() {
               <div className="space-y-4">
                 {audits.map((a) => (
                   <div key={a.id} className="p-4 bg-muted/20 border border-border rounded-lg space-y-2 text-sm">
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-center justify-between gap-3 flex-wrap">
                       <span className="font-semibold text-foreground">
                         Audit • {new Date(a.created_at).toLocaleString()}
                       </span>
-                      <span className="text-xs text-muted-foreground">By {a.conducted_by || "System"}</span>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-muted-foreground">By {a.conducted_by || "System"}</span>
+                        <button
+                          onClick={() => handleDownloadAuditPdf(a)}
+                          disabled={downloadingAuditId === a.id}
+                          className="px-2.5 py-1 bg-gold/15 text-gold border border-gold/30 hover:bg-gold/25 rounded text-xs font-semibold inline-flex items-center gap-1.5 transition-smooth"
+                        >
+                          {downloadingAuditId === a.id ? <Loader2 className="w-3 h-3 animate-spin" /> : <Download className="w-3 h-3" />}
+                          <span>{downloadingAuditId === a.id ? "Generating PDF..." : "Download PDF"}</span>
+                        </button>
+                      </div>
                     </div>
                     <p className="text-muted-foreground text-xs">{a.summary}</p>
                     {a.changes_detected && a.changes_detected.length > 0 && (

@@ -8,10 +8,13 @@ import {
   Clock,
   Loader2,
   ExternalLink,
+  Download,
+  FileText,
 } from "lucide-react";
 import { toast } from "sonner";
-import { getOsapAudits } from "@/lib/osap-db";
-import type { OsapAudit } from "@/types/osap";
+import { getOsapAudits, getOsapClients } from "@/lib/osap-db";
+import { generateSingleAuditPdf, downloadPdfBlob } from "@/lib/osap-pdf-generator";
+import type { OsapAudit, OsapClient } from "@/types/osap";
 
 export const Route = createFileRoute("/_authenticated/dashboard/osap/audit-history")({
   validateSearch: (search: Record<string, unknown>): { status?: string } => ({
@@ -24,19 +27,22 @@ export const Route = createFileRoute("/_authenticated/dashboard/osap/audit-histo
 function OsapAuditHistoryPage() {
   const searchParams = Route.useSearch();
   const [audits, setAudits] = useState<OsapAudit[]>([]);
+  const [clients, setClients] = useState<OsapClient[]>([]);
   const [loading, setLoading] = useState(true);
+  const [downloadingId, setDownloadingId] = useState<string | null>(null);
   const [statusFilter, setStatusFilter] = useState<string>(searchParams.status || "all");
   const [search, setSearch] = useState("");
 
   useEffect(() => {
-    loadAudits();
+    loadData();
   }, []);
 
-  const loadAudits = async () => {
+  const loadData = async () => {
     setLoading(true);
     try {
-      const data = await getOsapAudits();
-      setAudits(data);
+      const [auditData, clientData] = await Promise.all([getOsapAudits(), getOsapClients()]);
+      setAudits(auditData);
+      setClients(clientData);
     } catch {
       toast.error("Failed to load audit history");
     } finally {
@@ -56,6 +62,41 @@ function OsapAuditHistoryPage() {
     }
     return true;
   });
+
+  const handleDownloadAuditPdf = async (audit: OsapAudit) => {
+    setDownloadingId(audit.id);
+    try {
+      let client = clients.find((c) => c.id === audit.client_id);
+      if (!client) {
+        client = {
+          id: audit.client_id,
+          user_id: audit.user_id || "system",
+          first_name: (audit.client_name || "Client").split(" ")[0] || "Client",
+          last_name: (audit.client_name || "").split(" ").slice(1).join(" ") || "",
+          full_name: audit.client_name || "Client",
+          school: "Eight Branches",
+          program: "Acupuncture 50 weeks",
+          application_year: "2026",
+          application_status: "submitted",
+          document_status: "approved",
+          msfaa_status: "submitted",
+          credential_status: "connected",
+          priority: "medium",
+          action_required: false,
+          created_at: audit.created_at,
+          updated_at: audit.created_at,
+        };
+      }
+      const blob = await generateSingleAuditPdf(audit, client);
+      const filename = `OSAP_Audit_${(client.full_name || "Client").replace(/\s+/g, "_")}_${audit.created_at.slice(0, 10)}.pdf`;
+      downloadPdfBlob(blob, filename);
+      toast.success(`📥 Audit report downloaded for ${client.full_name}`);
+    } catch {
+      toast.error("Failed to generate audit PDF");
+    } finally {
+      setDownloadingId(null);
+    }
+  };
 
   return (
     <div className="space-y-6 animate-fade-in">
@@ -133,15 +174,23 @@ function OsapAuditHistoryPage() {
                     </span>
                   </div>
 
-                  <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                  <div className="flex items-center gap-3 text-xs text-muted-foreground flex-wrap">
                     <span>Auditor: <strong className="text-foreground">{a.conducted_by || "System"}</strong></span>
                     <span>•</span>
                     <span>{new Date(a.created_at).toLocaleString()}</span>
+                    <button
+                      onClick={() => handleDownloadAuditPdf(a)}
+                      disabled={downloadingId === a.id}
+                      className="px-2.5 py-1 bg-gold/15 text-gold border border-gold/30 hover:bg-gold/25 rounded text-xs font-semibold inline-flex items-center gap-1.5 transition-smooth"
+                    >
+                      {downloadingId === a.id ? <Loader2 className="w-3 h-3 animate-spin" /> : <Download className="w-3 h-3" />}
+                      <span>{downloadingId === a.id ? "Generating PDF..." : "Download PDF"}</span>
+                    </button>
                     {a.client_id && (
                       <Link
                         to="/dashboard/osap/clients/$id"
                         params={{ id: a.client_id }}
-                        className="text-gold hover:text-gold-dark font-medium inline-flex items-center gap-1 ml-2"
+                        className="text-gold hover:text-gold-dark font-medium inline-flex items-center gap-1 ml-1"
                       >
                         Client File <ExternalLink className="w-3 h-3" />
                       </Link>
