@@ -233,6 +233,7 @@ export function defaultSignaturePlacement(
 export function buildAffidavitDoc(
   template: Template,
   data: Record<string, string>,
+  signatures?: SignaturePlacement[],
 ): AffidavitDoc {
   const prettyDate = formatPrettyDate(data.affidavit_date);
   const dayOfMonth = formatDayOfMonth(data.affidavit_date);
