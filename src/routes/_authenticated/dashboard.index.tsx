@@ -18,6 +18,7 @@ import {
   type MergeField,
   type TemplateLayout,
   type AffidavitDoc,
+  type SignaturePlacement,
   withLayoutDefaults,
   buildAffidavitDoc,
   renderAffidavitText,
@@ -27,6 +28,7 @@ import { generateDocx, generatePdf } from "@/lib/doc-generator";
 import { uploadAffidavitFile, downloadStorageFile } from "@/lib/storage";
 import { TemplateLayoutEditor } from "@/components/template-layout-editor";
 import { PdfHtmlPreview } from "@/components/pdf-html-preview";
+import { SignaturePanel } from "@/components/signature-panel";
 
 export const Route = createFileRoute("/_authenticated/dashboard/")({
   component: NewAffidavitPage,
@@ -54,6 +56,7 @@ function NewAffidavitPage() {
   const [affidavitDoc, setAffidavitDoc] = useState<AffidavitDoc | null>(null);
   const [layoutDraft, setLayoutDraft] = useState<TemplateLayout | null>(null);
   const [showEditor, setShowEditor] = useState(false);
+  const [signatures, setSignatures] = useState<SignaturePlacement[]>([]);
   const [savingLayout, setSavingLayout] = useState(false);
   const previewTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -70,6 +73,7 @@ function NewAffidavitPage() {
         const affDoc = buildAffidavitDoc(
           { ...selectedTemplate, layout: layoutDraft },
           formData,
+          signatures,
         );
         setAffidavitDoc(affDoc);
         const blob = await generatePdf(affDoc);
@@ -85,7 +89,7 @@ function NewAffidavitPage() {
       if (previewTimer.current) clearTimeout(previewTimer.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [layoutDraft, step]);
+  }, [layoutDraft, signatures, step]);
 
 
   const fetchTemplates = async () => {
@@ -134,7 +138,7 @@ function NewAffidavitPage() {
     setError("");
     setGenerating(true);
     try {
-      const affDoc = buildAffidavitDoc(selectedTemplate, formData);
+      const affDoc = buildAffidavitDoc(selectedTemplate, formData, signatures);
       setAffidavitDoc(affDoc);
       const content = renderAffidavitText(affDoc);
       setGeneratedContent(content);
@@ -207,7 +211,7 @@ function NewAffidavitPage() {
         prev.map((t) => (t.id === updatedTemplate.id ? updatedTemplate : t)),
       );
 
-      const affDoc = buildAffidavitDoc(updatedTemplate, formData);
+      const affDoc = buildAffidavitDoc(updatedTemplate, formData, signatures);
       const {
         data: { user },
       } = await supabase.auth.getUser();
@@ -253,6 +257,7 @@ function NewAffidavitPage() {
     setAffidavitDoc(null);
     setLayoutDraft(null);
     setShowEditor(false);
+    setSignatures([]);
     setPdfUrl((old) => {
       if (old) URL.revokeObjectURL(old);
       return null;
