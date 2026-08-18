@@ -35,6 +35,62 @@ export const Route = createFileRoute("/_authenticated/dashboard/")({
   ssr: false,
 });
 
+interface DraftData {
+  templateId: string;
+  clientName: string;
+  matterReference: string;
+  formData: Record<string, string>;
+  signatures?: SignaturePlacement[];
+  savedAt: number;
+}
+
+const DRAFT_PREFIX = "neptora_draft_";
+const LAST_DRAFT_KEY = "neptora_last_active_template";
+
+function getSavedDraft(templateId: string): DraftData | null {
+  try {
+    const raw = localStorage.getItem(DRAFT_PREFIX + templateId);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+function saveDraftToStorage(
+  templateId: string,
+  clientName: string,
+  matterReference: string,
+  formData: Record<string, string>,
+  signatures: SignaturePlacement[],
+) {
+  try {
+    const draft: DraftData = {
+      templateId,
+      clientName,
+      matterReference,
+      formData,
+      signatures,
+      savedAt: Date.now(),
+    };
+    localStorage.setItem(DRAFT_PREFIX + templateId, JSON.stringify(draft));
+    localStorage.setItem(LAST_DRAFT_KEY, templateId);
+  } catch {
+    /* ignore storage quota / disabled */
+  }
+}
+
+function clearSavedDraft(templateId: string) {
+  try {
+    localStorage.removeItem(DRAFT_PREFIX + templateId);
+    if (localStorage.getItem(LAST_DRAFT_KEY) === templateId) {
+      localStorage.removeItem(LAST_DRAFT_KEY);
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
 type Step = "template-selection" | "form-fill" | "preview";
 
 function NewAffidavitPage() {
@@ -64,6 +120,19 @@ function NewAffidavitPage() {
     fetchTemplates();
   }, []);
 
+  // Auto-save draft whenever inputs change on form-fill or preview step
+  useEffect(() => {
+    if (!selectedTemplate || step === "template-selection") return;
+    const hasContent =
+      clientName.trim() ||
+      matterReference.trim() ||
+      Object.values(formData).some((v) => (v ?? "").toString().trim().length > 0) ||
+      signatures.length > 0;
+    if (hasContent) {
+      saveDraftToStorage(selectedTemplate.id, clientName, matterReference, formData, signatures);
+    }
+  }, [clientName, matterReference, formData, signatures, selectedTemplate, step]);
+
   // Live re-render of the PDF preview while adjusting the layout
   useEffect(() => {
     if (step !== "preview" || !selectedTemplate || !layoutDraft) return;
@@ -91,7 +160,6 @@ function NewAffidavitPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [layoutDraft, signatures, step]);
 
-
   const fetchTemplates = async () => {
     try {
       setLoading(true);
@@ -102,7 +170,23 @@ function NewAffidavitPage() {
         .eq("is_active", true)
         .order("name");
       if (err) throw err;
-      setTemplates((data as unknown as Template[]) || []);
+      const tpls = (data as unknown as Template[]) || [];
+      setTemplates(tpls);
+
+      // Check if there was an active draft from previous session
+      const lastTemplateId = localStorage.getItem(LAST_DRAFT_KEY);
+      if (lastTemplateId && tpls.length > 0) {
+        const found = tpls.find((t) => t.id === lastTemplateId);
+        const draft = getSavedDraft(lastTemplateId);
+        if (found && draft) {
+          setSelectedTemplate(found);
+          setClientName(draft.clientName || "");
+          setMatterReference(draft.matterReference || "");
+          setFormData(draft.formData || {});
+          setSignatures(draft.signatures || []);
+          setStep("form-fill");
+        }
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load templates");
     } finally {
@@ -112,9 +196,33 @@ function NewAffidavitPage() {
 
   const handleTemplateSelect = (template: Template) => {
     setSelectedTemplate(template);
-    setFormData({});
     setError("");
+    const draft = getSavedDraft(template.id);
+    if (draft && (draft.clientName || Object.keys(draft.formData || {}).length > 0)) {
+      setClientName(draft.clientName || "");
+      setMatterReference(draft.matterReference || "");
+      setFormData(draft.formData || {});
+      setSignatures(draft.signatures || []);
+      toast.info("Restored your previously entered information for this template");
+    } else {
+      setFormData({});
+      setClientName("");
+      setMatterReference("");
+      setSignatures([]);
+    }
     setStep("form-fill");
+  };
+
+  const handleClearForm = () => {
+    if (!window.confirm("Clear all entered fields for this template?")) return;
+    if (selectedTemplate) {
+      clearSavedDraft(selectedTemplate.id);
+    }
+    setFormData({});
+    setClientName("");
+    setMatterReference("");
+    setSignatures([]);
+    toast.success("Form cleared");
   };
 
   const handleFormChange = (key: string, value: string) => {
@@ -244,6 +352,9 @@ function NewAffidavitPage() {
   };
 
   const handleReset = () => {
+    if (selectedTemplate) {
+      clearSavedDraft(selectedTemplate.id);
+    }
     setStep("template-selection");
     setSelectedTemplate(null);
     setFormData({});
@@ -321,18 +432,24 @@ function NewAffidavitPage() {
   if (step === "form-fill" && selectedTemplate) {
     return (
       <div className="space-y-8 animate-fade-in">
-        <div>
-          <button
-            onClick={() => setStep("template-selection")}
-            className="flex items-center gap-2 text-gold hover:text-gold-dark transition-smooth font-medium mb-4"
-          >
-            <ArrowLeft className="w-4 h-4" /> Back to Templates
-          </button>
-          <h1 className="section-heading mb-2">{selectedTemplate.name}</h1>
-          <p className="text-muted-foreground">
-            Fill in the information below. The legal wording is fixed — only these variables are
-            replaced.
-          </p>
+        <div className="flex items-start justify-between gap-4 flex-wrap">
+          <div>
+            <button
+              onClick={() => setStep("template-selection")}
+              className="flex items-center gap-2 text-gold hover:text-gold-dark transition-smooth font-medium mb-4"
+            >
+              <ArrowLeft className="w-4 h-4" /> Back to Templates
+            </button>
+            <h1 className="section-heading mb-2">{selectedTemplate.name}</h1>
+            <p className="text-muted-foreground">
+              Fill in the information below. The legal wording is fixed — only these variables are
+              replaced.
+            </p>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-muted-foreground bg-card border border-border px-3 py-1.5 rounded-full mt-2">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>Autosaving inputs</span>
+          </div>
         </div>
 
         {error && (
@@ -447,6 +564,14 @@ function NewAffidavitPage() {
             >
               {generating && <Loader2 className="w-4 h-4 animate-spin" />}
               {generating ? "Generating DOCX & PDF..." : "Generate Affidavit"}
+            </button>
+            <button
+              type="button"
+              onClick={handleClearForm}
+              className="btn-secondary"
+              disabled={generating}
+            >
+              Clear Form
             </button>
             <button
               type="button"
