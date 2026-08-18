@@ -490,34 +490,64 @@ function NewAffidavitPage() {
       <div className={showEditor ? "grid lg:grid-cols-2 gap-6 items-start" : ""}>
         <div className="bg-card border border-border rounded-lg overflow-hidden">
           {affidavitDoc ? (
-            <PdfHtmlPreview doc={affidavitDoc} className="w-full h-[900px]" />
+            <PdfHtmlPreview
+              doc={affidavitDoc}
+              className="w-full h-[900px]"
+              onSignaturesChange={setSignatures}
+            />
           ) : (
             <div className="p-8 text-muted-foreground">Preparing preview…</div>
           )}
         </div>
 
-        {showEditor && layoutDraft && (
-          <div className="space-y-4">
-            <TemplateLayoutEditor
-              value={layoutDraft}
-              onChange={setLayoutDraft}
-              templates={templates}
-              currentTemplateId={selectedTemplate?.id}
-            />
-            <button
-              onClick={handleSaveLayout}
-              disabled={savingLayout}
-              className="btn-primary flex items-center gap-2"
-            >
-              {savingLayout ? (
-                <Loader2 className="w-4 h-4 animate-spin" />
-              ) : (
-                <Save className="w-4 h-4" />
-              )}
-              Save layout to "{selectedTemplate?.name}" & update files
-            </button>
-          </div>
-        )}
+        <div className="space-y-6">
+          {affidavitDoc && (
+            <div className="bg-card border border-border rounded-lg p-4">
+              <SignaturePanel
+                deponents={affidavitDoc.deponents}
+                layout={layoutDraft ?? affidavitDoc.layout}
+                signatures={signatures}
+                onChange={setSignatures}
+              />
+              <button
+                onClick={handleSaveLayout}
+                disabled={savingLayout}
+                className="btn-primary flex items-center gap-2 mt-4"
+              >
+                {savingLayout ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Save className="w-4 h-4" />
+                )}
+                Update documents
+              </button>
+            </div>
+          )}
+
+          {showEditor && layoutDraft && (
+            <div className="space-y-4">
+              <TemplateLayoutEditor
+                value={layoutDraft}
+                onChange={setLayoutDraft}
+                templates={templates}
+                currentTemplateId={selectedTemplate?.id}
+              />
+              <button
+                onClick={handleSaveLayout}
+                disabled={savingLayout}
+                className="btn-primary flex items-center gap-2"
+              >
+                {savingLayout ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Save className="w-4 h-4" />
+                )}
+                Save layout to "{selectedTemplate?.name}" & update files
+              </button>
+            </div>
+          )}
+        </div>
+
       </div>
 
       <details className="bg-card border border-border rounded-lg p-6">
