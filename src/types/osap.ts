@@ -1,0 +1,238 @@
+export type OsapApplicationStatus =
+  | "not_started"
+  | "in_progress"
+  | "submitted"
+  | "processing"
+  | "approved"
+  | "partially_approved"
+  | "denied"
+  | "action_required"
+  | "documents_required"
+  | "documents_under_review"
+  | "information_required"
+  | "completed"
+  | "manual_review_required"
+  | "audit_failed";
+
+export type OsapDocumentStatus =
+  | "not_submitted"
+  | "submitted"
+  | "received"
+  | "under_review"
+  | "approved"
+  | "rejected"
+  | "additional_information_required";
+
+export type OsapMsfaaStatus =
+  | "not_started"
+  | "in_progress"
+  | "required"
+  | "submitted"
+  | "completed"
+  | "action_required";
+
+export type OsapPriority = "low" | "medium" | "high" | "urgent";
+
+export type OsapCredentialStatus = "connected" | "missing" | "requires_verification";
+
+export type OsapActionStatus =
+  | "open"
+  | "in_progress"
+  | "waiting_on_client"
+  | "completed"
+  | "dismissed";
+
+export type OsapActionSeverity = "low" | "medium" | "high" | "critical";
+
+export interface OsapClient {
+  id: string;
+  user_id: string;
+  first_name: string;
+  last_name: string;
+  full_name: string;
+  email?: string | null;
+  phone?: string | null;
+  oan?: string | null;
+  school?: string | null;
+  program?: string | null;
+  study_period?: string | null;
+  application_year?: string | null;
+  assigned_staff?: string | null;
+  notes?: string | null;
+  credential_status: OsapCredentialStatus;
+  application_status: OsapApplicationStatus;
+  funding_status?: string | null;
+  msfaa_status: OsapMsfaaStatus;
+  document_status: OsapDocumentStatus;
+  priority: OsapPriority;
+  action_required: boolean;
+  action_required_summary?: string | null;
+  last_audit_at?: string | null;
+  next_audit_at?: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OsapApplication {
+  id: string;
+  client_id: string;
+  user_id: string;
+  academic_year: string;
+  status: OsapApplicationStatus;
+  funding_calculated?: number | null;
+  grant_amount?: number | null;
+  loan_amount?: number | null;
+  application_number?: string | null;
+  submission_date?: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OsapDocument {
+  id: string;
+  client_id: string;
+  user_id: string;
+  document_name: string;
+  required: boolean;
+  status: OsapDocumentStatus;
+  submission_date?: string | null;
+  rejection_reason?: string | null;
+  instructions?: string | null;
+  last_checked_at?: string | null;
+  created_at: string;
+}
+
+export interface OsapAuditChange {
+  id: string;
+  audit_id: string;
+  client_id: string;
+  user_id: string;
+  field_category: "application" | "funding" | "document" | "msfaa" | "general";
+  field_name: string;
+  previous_value: string;
+  new_value: string;
+  created_at: string;
+}
+
+export interface OsapAudit {
+  id: string;
+  client_id: string;
+  client_name?: string;
+  user_id: string;
+  audit_type: "single" | "batch" | "scheduled";
+  status: "success" | "changes_detected" | "manual_review_required" | "mfa_required" | "failed";
+  summary?: string | null;
+  changes_detected: OsapAuditChange[];
+  raw_snapshot: Record<string, unknown>;
+  conducted_by?: string | null;
+  created_at: string;
+}
+
+export interface OsapActionItem {
+  id: string;
+  client_id: string;
+  client_name?: string;
+  user_id: string;
+  title: string;
+  description?: string | null;
+  severity: OsapActionSeverity;
+  status: OsapActionStatus;
+  assigned_to?: string | null;
+  due_date?: string | null;
+  created_at: string;
+  resolved_at?: string | null;
+}
+
+export interface OsapNote {
+  id: string;
+  client_id: string;
+  user_id: string;
+  author_name: string;
+  content: string;
+  created_at: string;
+}
+
+export interface OsapImportSummary {
+  id: string;
+  file_name: string;
+  uploaded_by: string;
+  total_records: number;
+  new_clients: number;
+  updated_clients: number;
+  duplicates: number;
+  errors: number;
+  status: "completed" | "completed_with_errors" | "failed";
+  created_at: string;
+}
+
+export interface OsapImportRowConflict {
+  index: number;
+  incoming: Partial<OsapClient> & { rawPassword?: string };
+  existing: OsapClient;
+  resolution: "keep_existing" | "update_existing" | "skip";
+}
+
+// Labels & Badge styling maps
+export const APPLICATION_STATUS_LABELS: Record<OsapApplicationStatus, { label: string; color: string; bg: string; border: string }> = {
+  not_started: { label: "Not Started", color: "text-muted-foreground", bg: "bg-muted/40", border: "border-border" },
+  in_progress: { label: "In Progress", color: "text-blue-400", bg: "bg-blue-900/20", border: "border-blue-800/40" },
+  submitted: { label: "Submitted", color: "text-sky-400", bg: "bg-sky-900/20", border: "border-sky-800/40" },
+  processing: { label: "Processing", color: "text-amber-400", bg: "bg-amber-900/20", border: "border-amber-800/40" },
+  approved: { label: "Approved", color: "text-emerald-400", bg: "bg-emerald-900/20", border: "border-emerald-800/40" },
+  partially_approved: { label: "Partially Approved", color: "text-teal-400", bg: "bg-teal-900/20", border: "border-teal-800/40" },
+  denied: { label: "Denied", color: "text-rose-400", bg: "bg-rose-900/20", border: "border-rose-800/40" },
+  action_required: { label: "Action Required", color: "text-red-400", bg: "bg-red-900/20", border: "border-red-800/40" },
+  documents_required: { label: "Documents Required", color: "text-orange-400", bg: "bg-orange-900/20", border: "border-orange-800/40" },
+  documents_under_review: { label: "Docs Under Review", color: "text-cyan-400", bg: "bg-cyan-900/20", border: "border-cyan-800/40" },
+  information_required: { label: "Info Required", color: "text-amber-300", bg: "bg-amber-900/20", border: "border-amber-800/40" },
+  completed: { label: "Completed", color: "text-emerald-400", bg: "bg-emerald-900/20", border: "border-emerald-800/40" },
+  manual_review_required: { label: "Manual Review", color: "text-purple-400", bg: "bg-purple-900/20", border: "border-purple-800/40" },
+  audit_failed: { label: "Audit Failed", color: "text-rose-400", bg: "bg-rose-900/20", border: "border-rose-800/40" },
+};
+
+export const DOCUMENT_STATUS_LABELS: Record<OsapDocumentStatus, { label: string; color: string; bg: string; border: string }> = {
+  not_submitted: { label: "Not Submitted", color: "text-muted-foreground", bg: "bg-muted/40", border: "border-border" },
+  submitted: { label: "Submitted", color: "text-sky-400", bg: "bg-sky-900/20", border: "border-sky-800/40" },
+  received: { label: "Received", color: "text-blue-400", bg: "bg-blue-900/20", border: "border-blue-800/40" },
+  under_review: { label: "Under Review", color: "text-amber-400", bg: "bg-amber-900/20", border: "border-amber-800/40" },
+  approved: { label: "Approved", color: "text-emerald-400", bg: "bg-emerald-900/20", border: "border-emerald-800/40" },
+  rejected: { label: "Rejected", color: "text-rose-400", bg: "bg-rose-900/20", border: "border-rose-800/40" },
+  additional_information_required: { label: "Additional Info Req.", color: "text-orange-400", bg: "bg-orange-900/20", border: "border-orange-800/40" },
+};
+
+export const MSFAA_STATUS_LABELS: Record<OsapMsfaaStatus, { label: string; color: string; bg: string }> = {
+  not_started: { label: "Not Started", color: "text-muted-foreground", bg: "bg-muted/40" },
+  in_progress: { label: "In Progress", color: "text-blue-400", bg: "bg-blue-900/20" },
+  required: { label: "MSFAA Required", color: "text-amber-400", bg: "bg-amber-900/20" },
+  submitted: { label: "Submitted", color: "text-sky-400", bg: "bg-sky-900/20" },
+  completed: { label: "Completed", color: "text-emerald-400", bg: "bg-emerald-900/20" },
+  action_required: { label: "Action Required", color: "text-rose-400", bg: "bg-rose-900/20" },
+};
+
+export const PRIORITY_CONFIG: Record<OsapPriority, { label: string; color: string; bg: string; dot: string }> = {
+  low: { label: "Low", color: "text-muted-foreground", bg: "bg-muted/40", dot: "bg-muted-foreground" },
+  medium: { label: "Medium", color: "text-blue-400", bg: "bg-blue-900/20", dot: "bg-blue-400" },
+  high: { label: "High", color: "text-amber-400", bg: "bg-amber-900/20", dot: "bg-amber-400" },
+  urgent: { label: "Urgent", color: "text-rose-400", bg: "bg-rose-900/20", dot: "bg-rose-500" },
+};
+
+export const CREDENTIAL_STATUS_CONFIG: Record<OsapCredentialStatus, { label: string; color: string; bg: string; icon: string }> = {
+  connected: { label: "Connected", color: "text-emerald-400", bg: "bg-emerald-900/20", icon: "CheckCircle" },
+  missing: { label: "Missing", color: "text-muted-foreground", bg: "bg-muted/40", icon: "AlertCircle" },
+  requires_verification: { label: "Requires Verification", color: "text-amber-400", bg: "bg-amber-900/20", icon: "Clock" },
+};
+
+export const ACTION_STATUS_CONFIG: Record<OsapActionStatus, { label: string; color: string; bg: string }> = {
+  open: { label: "Open", color: "text-red-400", bg: "bg-red-900/20" },
+  in_progress: { label: "In Progress", color: "text-amber-400", bg: "bg-amber-900/20" },
+  waiting_on_client: { label: "Waiting on Client", color: "text-blue-400", bg: "bg-blue-900/20" },
+  completed: { label: "Completed", color: "text-emerald-400", bg: "bg-emerald-900/20" },
+  dismissed: { label: "Dismissed", color: "text-muted-foreground", bg: "bg-muted/30" },
+};
+
+export const ACTION_SEVERITY_CONFIG: Record<OsapActionSeverity, { label: string; color: string; bg: string }> = {
+  low: { label: "Low", color: "text-muted-foreground", bg: "bg-muted/40" },
+  medium: { label: "Medium", color: "text-amber-400", bg: "bg-amber-900/20" },
+  high: { label: "High", color: "text-orange-400", bg: "bg-orange-900/20" },
+  critical: { label: "Critical", color: "text-rose-400", bg: "bg-rose-900/20" },
+};
