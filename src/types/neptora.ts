@@ -78,6 +78,7 @@ export interface Affidavit {
   client_name: string;
   matter_reference: string | null;
   form_data: Record<string, string>;
+  signatures?: SignaturePlacement[] | null;
   generated_content: string;
   docx_path: string | null;
   pdf_path: string | null;

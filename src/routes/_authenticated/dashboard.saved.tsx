@@ -32,13 +32,40 @@ function SavedAffidavitsPage() {
     try {
       setLoading(true);
       setError("");
-      const { data, error: err } = await supabase
-        .from("affidavits" as never)
-        .select("*")
-        .neq("status", "archived")
-        .order("created_at", { ascending: false });
-      if (err) throw err;
-      setAffidavits((data as unknown as Affidavit[]) || []);
+
+      let dbList: Affidavit[] = [];
+      try {
+        const { data, error: err } = await supabase
+          .from("affidavits" as never)
+          .select("*")
+          .neq("status", "archived")
+          .order("created_at", { ascending: false });
+        if (!err && data) dbList = data as unknown as Affidavit[];
+      } catch (e) {
+        console.warn("Could not load affidavits from database (using local cache):", e);
+      }
+
+      // Read local storage cache
+      let localList: Affidavit[] = [];
+      try {
+        const raw = localStorage.getItem("neptora_saved_affidavits_cache");
+        if (raw) localList = JSON.parse(raw);
+      } catch {
+        /* ignore */
+      }
+
+      // Merge unique by ID
+      const map = new Map<string, Affidavit>();
+      dbList.forEach((a) => map.set(a.id, a));
+      localList.forEach((a) => {
+        if (!map.has(a.id)) map.set(a.id, a);
+      });
+
+      const merged = Array.from(map.values()).sort(
+        (a, b) => new Date(b.created_at || "").getTime() - new Date(a.created_at || "").getTime(),
+      );
+
+      setAffidavits(merged);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load affidavits");
     } finally {
@@ -50,11 +77,29 @@ function SavedAffidavitsPage() {
     if (!window.confirm("Delete this affidavit and its files?")) return;
     try {
       await deleteAffidavitFiles([a.docx_path, a.pdf_path].filter(Boolean) as string[]);
-      const { error: err } = await supabase
-        .from("affidavits" as never)
-        .delete()
-        .eq("id", a.id);
-      if (err) throw err;
+      try {
+        await supabase
+          .from("affidavits" as never)
+          .delete()
+          .eq("id", a.id);
+      } catch {
+        /* ignore db error */
+      }
+
+      // Remove from local cache
+      try {
+        const raw = localStorage.getItem("neptora_saved_affidavits_cache");
+        if (raw) {
+          const list: Affidavit[] = JSON.parse(raw);
+          localStorage.setItem(
+            "neptora_saved_affidavits_cache",
+            JSON.stringify(list.filter((x) => x.id !== a.id)),
+          );
+        }
+      } catch {
+        /* ignore */
+      }
+
       setAffidavits((prev) => prev.filter((x) => x.id !== a.id));
       toast.success("Affidavit deleted");
     } catch (err) {

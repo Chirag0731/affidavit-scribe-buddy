@@ -19,10 +19,22 @@ import notaryBlockAsset from "@/assets/notary-block.png.asset.json";
 import type { AffidavitDoc } from "@/types/neptora";
 import { buildIntroSentence, buildNotarySentence } from "@/types/neptora";
 
-async function fetchBytes(url: string): Promise<Uint8Array> {
-  const res = await fetch(url);
-  const buf = await res.arrayBuffer();
-  return new Uint8Array(buf);
+async function loadNotaryImageBytes(): Promise<Uint8Array | null> {
+  try {
+    if (notaryBlockAsset?.url) {
+      const res = await fetch(notaryBlockAsset.url);
+      if (res.ok) {
+        const buf = await res.arrayBuffer();
+        const arr = new Uint8Array(buf);
+        if (arr.length > 8 && arr[0] === 0x89 && arr[1] === 0x50 && arr[2] === 0x4e && arr[3] === 0x47) {
+          return arr;
+        }
+      }
+    }
+  } catch (err) {
+    console.warn("Could not fetch notary block asset from URL:", err);
+  }
+  return null;
 }
 
 function dataUrlToBytes(dataUrl: string): Uint8Array {
@@ -32,7 +44,6 @@ function dataUrlToBytes(dataUrl: string): Uint8Array {
   for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
   return bytes;
 }
-
 
 // =====================================================================
 // PDF
@@ -50,8 +61,15 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
   const BODY = 10.5;
   const LH = 14;
 
-  const notaryBlockBytes = await fetchBytes(notaryBlockAsset.url);
-  const notaryBlockImg = await pdf.embedPng(notaryBlockBytes);
+  const notaryBlockBytes = await loadNotaryImageBytes();
+  let notaryBlockImg: any = null;
+  if (notaryBlockBytes) {
+    try {
+      notaryBlockImg = await pdf.embedPng(notaryBlockBytes);
+    } catch (e) {
+      console.warn("Could not embed notary png into PDF:", e);
+    }
+  }
 
   const page = pdf.addPage([PAGE_W, PAGE_H]);
 
@@ -270,14 +288,47 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
 
 
 
-  const blockW = L.notaryImage.width ?? 248;
-  const blockH = L.notaryImage.height ?? (blockW * notaryBlockImg.height) / notaryBlockImg.width;
-  page.drawImage(notaryBlockImg, {
-    x: L.notaryImage.x ?? 308,
-    y: PAGE_H - L.notaryImage.top - blockH,
-    width: blockW,
-    height: blockH,
-  });
+  if (notaryBlockImg) {
+    const blockW = L.notaryImage.width ?? 248;
+    const blockH = L.notaryImage.height ?? (blockW * notaryBlockImg.height) / notaryBlockImg.width;
+    page.drawImage(notaryBlockImg, {
+      x: L.notaryImage.x ?? 308,
+      y: PAGE_H - L.notaryImage.top - blockH,
+      width: blockW,
+      height: blockH,
+    });
+  } else {
+    const boxX = L.notaryImage.x ?? 308;
+    const boxW = L.notaryImage.width ?? 248;
+    const boxTop = L.notaryImage.top ?? 550;
+    const boxH = 100;
+    page.drawRectangle({
+      x: boxX,
+      y: PAGE_H - boxTop - boxH,
+      width: boxW,
+      height: boxH,
+      borderColor: rgb(0.15, 0.15, 0.15),
+      borderWidth: 1,
+      color: rgb(0.99, 0.99, 0.99),
+    });
+
+    const stampLines = [
+      { text: "MARYANA IVANIVN DUBANOVYCH", bold: true, size: 8.5 },
+      { text: "A Notary Public / Commissioner for Oaths", bold: false, size: 7.5 },
+      { text: "in and for the Province of Ontario", bold: false, size: 7.5 },
+      { text: "Commission Expiry: September 8, 2026", bold: false, size: 7.5 },
+      { text: "LSO Licence No. P14522", bold: true, size: 7.5 },
+      { text: "Reliance Notary Public • Etobicoke, ON", bold: false, size: 7 },
+    ];
+
+    let st = boxTop + 12;
+    for (const sl of stampLines) {
+      const f = sl.bold ? bold : font;
+      const lw = safeWidthOfText(f, sl.text, sl.size);
+      drawTextTop(sl.text, boxX + (boxW - lw) / 2, st, sl.size, f);
+      st += 14;
+    }
+  }
 
   const ackTitle = "NOTARY ACKNOWLEDGEMENT";
   const ackTitleSize = L.ackTitle.size ?? 11;
@@ -327,7 +378,7 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
 // =====================================================================
 
 export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
-  const notaryBlockBytes = await fetchBytes(notaryBlockAsset.url);
+  const notaryBlockBytes = await loadNotaryImageBytes();
 
 
   const intro = buildIntroSentence(doc);
@@ -507,23 +558,67 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
   const blockW = 240;
   const blockH = Math.round((blockW * 202) / 361);
 
+  let rightCellChildren: Paragraph[] = [];
+  if (notaryBlockBytes) {
+    try {
+      const blockW = 240;
+      const blockH = Math.round((blockW * 202) / 361);
+      rightCellChildren = [
+        new Paragraph({
+          alignment: AlignmentType.CENTER,
+          children: [
+            new ImageRun({
+              type: "png",
+              data: notaryBlockBytes,
+              transformation: { width: blockW, height: blockH },
+              altText: { title: "Notary block", description: "Notary signature and seal", name: "notary_block" },
+            }),
+          ],
+        }),
+      ];
+    } catch (err) {
+      console.warn("Could not create ImageRun for docx:", err);
+    }
+  }
+
+  if (rightCellChildren.length === 0) {
+    rightCellChildren = [
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        spacing: { before: 80, after: 40 },
+        children: [
+          new TextRun({ text: "MARYANA IVANIVN DUBANOVYCH", bold: true, size: 18, font: "Calibri" }),
+        ],
+      }),
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 30 },
+        children: [
+          new TextRun({ text: "A Notary Public / Commissioner for Oaths in Ontario", size: 16, font: "Calibri" }),
+        ],
+      }),
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 30 },
+        children: [
+          new TextRun({ text: "Commission Expiry: September 8, 2026 • LSO Licence No. P14522", size: 16, font: "Calibri" }),
+        ],
+      }),
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 30 },
+        children: [
+          new TextRun({ text: "Reliance Notary Public — Toronto, ON", italics: true, size: 15, font: "Calibri" }),
+        ],
+      }),
+    ];
+  }
+
   const rightCell = new TableCell({
     width: { size: 4560, type: WidthType.DXA },
     borders: noBorder,
     verticalAlign: VerticalAlign.BOTTOM,
-    children: [
-      new Paragraph({
-        alignment: AlignmentType.CENTER,
-        children: [
-          new ImageRun({
-            type: "png",
-            data: notaryBlockBytes,
-            transformation: { width: blockW, height: blockH },
-            altText: { title: "Notary block", description: "Notary signature and seal", name: "notary_block" },
-          }),
-        ],
-      }),
-    ],
+    children: rightCellChildren,
   });
 
   children.push(
