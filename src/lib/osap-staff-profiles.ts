@@ -115,24 +115,9 @@ Login URL: ${loginUrl}
 ==========================================`;
 }
 
-const LOCAL_STAFF_KEY = "neptora_staff_profiles_v4_kav_hussain";
+const LOCAL_STAFF_KEY = "neptora_staff_profiles_v5_kav_gmail";
 
 export const INITIAL_STAFF_PROFILES: StaffProfile[] = [
-  {
-    id: "staff-kav-hussain",
-    full_name: "Kav Hussain",
-    email: "kav.hussain@eightbranches.ca",
-    role: "super_admin",
-    department: "Executive Administration & Financial Aid",
-    phone: null,
-    status: "active",
-    temporary_password: "Kav#2026!Master",
-    notes: "Super Admin with master control and full system privileges.",
-    permissions: ROLE_CONFIG.super_admin.defaultPermissions,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-    last_login_at: new Date().toISOString(),
-  },
   {
     id: "staff-super-admin-root",
     full_name: "Primary Administrator (Owner)",
@@ -144,6 +129,21 @@ export const INITIAL_STAFF_PROFILES: StaffProfile[] = [
     temporary_password: "Admin#2026!Master",
     notes: "Master Super Admin with root access and full system privileges.",
     permissions: ROLE_CONFIG.super_admin.defaultPermissions,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    last_login_at: new Date().toISOString(),
+  },
+  {
+    id: "staff-kav-hussain",
+    full_name: "Kav Hussain",
+    email: "kav.hussain@gmail.com",
+    role: "staff",
+    department: "Financial Aid & Student Accounts",
+    phone: null,
+    status: "active",
+    temporary_password: "Kav#8319!Staff",
+    notes: "Staff account with full access to see all 419 students, batches, audits, MSFAA, and funding.",
+    permissions: ROLE_CONFIG.staff.defaultPermissions,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
     last_login_at: new Date().toISOString(),
