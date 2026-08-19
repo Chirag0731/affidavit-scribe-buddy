@@ -115,9 +115,24 @@ Login URL: ${loginUrl}
 ==========================================`;
 }
 
-const LOCAL_STAFF_KEY = "neptora_staff_profiles_v3_passwords";
+const LOCAL_STAFF_KEY = "neptora_staff_profiles_v4_kav_hussain";
 
 export const INITIAL_STAFF_PROFILES: StaffProfile[] = [
+  {
+    id: "staff-kav-hussain",
+    full_name: "Kav Hussain",
+    email: "kav.hussain@eightbranches.ca",
+    role: "super_admin",
+    department: "Executive Administration & Financial Aid",
+    phone: null,
+    status: "active",
+    temporary_password: "Kav#2026!Master",
+    notes: "Super Admin with master control and full system privileges.",
+    permissions: ROLE_CONFIG.super_admin.defaultPermissions,
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    last_login_at: new Date().toISOString(),
+  },
   {
     id: "staff-super-admin-root",
     full_name: "Primary Administrator (Owner)",
