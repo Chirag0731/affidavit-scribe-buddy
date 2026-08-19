@@ -12,14 +12,49 @@ import type {
 import { encryptCredential } from "./osap-crypto";
 import { ALL_OSAP_CLIENTS } from "./osap-seed-data";
 
-const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v9_clean_college_roster";
-const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v9";
-const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v9";
-const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v9";
-const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v9";
-const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v9";
+const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v10_revert_general_batch_july27";
+const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v10";
+const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v10";
+const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v10";
+const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v10";
+const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v10";
 
-export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS;
+// Build a seed map from ALL_OSAP_CLIENTS so each student's official cohort batch is permanently mapped
+const SEED_BATCH_MAP = new Map<string, string>();
+ALL_OSAP_CLIENTS.forEach((c) => {
+  if (c.batch_name) {
+    SEED_BATCH_MAP.set(c.id, c.batch_name);
+    if (c.oan) SEED_BATCH_MAP.set(c.oan, c.batch_name);
+    if (c.full_name) SEED_BATCH_MAP.set(c.full_name.trim().toLowerCase(), c.batch_name);
+  }
+});
+
+export function resolveClientBatch(client: Partial<OsapClient>, fallbackId?: string): string {
+  if (client.batch_name && client.batch_name !== "General Batch" && client.batch_name !== "undefined" && client.batch_name !== "null") {
+    return client.batch_name;
+  }
+  const byId = client.id ? SEED_BATCH_MAP.get(client.id) : undefined;
+  if (byId) return byId;
+  const byFallback = fallbackId ? SEED_BATCH_MAP.get(fallbackId) : undefined;
+  if (byFallback) return byFallback;
+  const byOan = client.oan ? SEED_BATCH_MAP.get(client.oan) : undefined;
+  if (byOan) return byOan;
+  const byName = client.full_name ? SEED_BATCH_MAP.get(client.full_name.trim().toLowerCase()) : undefined;
+  if (byName) return byName;
+  return "July 27th List";
+}
+
+export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS.map((c) => {
+  const properBatch = resolveClientBatch(c);
+  const isJuly27 = properBatch === "July 27th List";
+  return {
+    ...c,
+    batch_name: properBatch,
+    msfaa_status: isJuly27 ? "required" : c.msfaa_status,
+    action_required: isJuly27 ? true : c.action_required,
+    action_required_summary: isJuly27 ? "MSFAA online submission pending student action on NSLSC portal." : c.action_required_summary,
+  };
+});
 
 function getLocalCache<T>(key: string): T[] {
   try {
@@ -44,11 +79,12 @@ export function resetOsapClientsToSpreadsheet(): OsapClient[] {
     localStorage.removeItem("neptora_osap_clients_cache_v2");
     localStorage.removeItem("neptora_osap_clients_cache_v3");
     localStorage.removeItem("neptora_osap_clients_cache_v4");
-    localStorage.setItem(LOCAL_CLIENTS_KEY, JSON.stringify(ALL_OSAP_CLIENTS));
+    localStorage.removeItem("neptora_osap_clients_v9_clean_college_roster");
+    localStorage.setItem(LOCAL_CLIENTS_KEY, JSON.stringify(INITIAL_SPREADSHEET_CLIENTS));
   } catch {
     /* ignore */
   }
-  return ALL_OSAP_CLIENTS;
+  return INITIAL_SPREADSHEET_CLIENTS;
 }
 
 /**
@@ -60,28 +96,65 @@ export async function getOsapClients(): Promise<OsapClient[]> {
       localStorage.removeItem("neptora_osap_clients_cache");
       localStorage.removeItem("neptora_osap_clients_cache_v2");
       localStorage.removeItem("neptora_osap_clients_cache_v3");
+      localStorage.removeItem("neptora_osap_clients_v9_clean_college_roster");
     }
 
-    const { data, error } = await supabase
-      .from("osap_clients" as never)
-      .select("*")
-      .order("full_name", { ascending: true });
+    let clients: OsapClient[] = [];
+    try {
+      const { data, error } = await supabase
+        .from("osap_clients" as never)
+        .select("*")
+        .order("full_name", { ascending: true });
 
-    if (error) throw error;
-    let clients = (data as unknown as OsapClient[]) || [];
+      if (!error && data && (data as any).length > 0) {
+        clients = data as unknown as OsapClient[];
+      }
+    } catch {
+      /* fallback to local */
+    }
+
     if (clients.length === 0) {
       const cached = getLocalCache<OsapClient>(LOCAL_CLIENTS_KEY);
-      clients = cached.length > 0 ? cached : ALL_OSAP_CLIENTS;
-      setLocalCache(LOCAL_CLIENTS_KEY, clients);
-    } else {
-      setLocalCache(LOCAL_CLIENTS_KEY, clients);
+      clients = cached.length > 0 ? cached : INITIAL_SPREADSHEET_CLIENTS;
     }
-    return clients.sort((a, b) => a.full_name.localeCompare(b.full_name));
+
+    // Sanitize and ensure:
+    // 1. Revert any accidental "General Batch" back to their real batch ("July 27th List")
+    // 2. For July 27th List, set msfaa_status to "required" (Pending) and action_required to true as requested
+    const cleaned = clients.map((c) => {
+      const properBatch = resolveClientBatch(c);
+      const isJuly27 = properBatch === "July 27th List" || properBatch === "Jul 27" || properBatch === "July 27";
+      return {
+        ...c,
+        batch_name: isJuly27 ? "July 27th List" : properBatch,
+        msfaa_status: isJuly27 ? "required" : (c.msfaa_status || "not_started"),
+        action_required: isJuly27 ? true : (c.action_required ?? false),
+        action_required_summary: isJuly27
+          ? "MSFAA online submission required on NSLSC portal."
+          : c.action_required_summary,
+      };
+    });
+
+    setLocalCache(LOCAL_CLIENTS_KEY, cleaned);
+    return cleaned.sort((a, b) => a.full_name.localeCompare(b.full_name));
   } catch (err) {
     const cached = getLocalCache<OsapClient>(LOCAL_CLIENTS_KEY);
-    const clients = cached.length > 0 ? cached : ALL_OSAP_CLIENTS;
-    setLocalCache(LOCAL_CLIENTS_KEY, clients);
-    return clients.sort((a, b) => a.full_name.localeCompare(b.full_name));
+    const clients = cached.length > 0 ? cached : INITIAL_SPREADSHEET_CLIENTS;
+    const cleaned = clients.map((c) => {
+      const properBatch = resolveClientBatch(c);
+      const isJuly27 = properBatch === "July 27th List" || properBatch === "Jul 27" || properBatch === "July 27";
+      return {
+        ...c,
+        batch_name: isJuly27 ? "July 27th List" : properBatch,
+        msfaa_status: isJuly27 ? "required" : (c.msfaa_status || "not_started"),
+        action_required: isJuly27 ? true : (c.action_required ?? false),
+        action_required_summary: isJuly27
+          ? "MSFAA online submission required on NSLSC portal."
+          : c.action_required_summary,
+      };
+    });
+    setLocalCache(LOCAL_CLIENTS_KEY, cleaned);
+    return cleaned.sort((a, b) => a.full_name.localeCompare(b.full_name));
   }
 }
 
@@ -98,10 +171,15 @@ export async function getOsapClientById(id: string): Promise<OsapClient | null> 
       .single();
 
     if (error) throw error;
-    return data as unknown as OsapClient;
+    const c = data as unknown as OsapClient;
+    return {
+      ...c,
+      batch_name: resolveClientBatch(c),
+    };
   } catch (err) {
     const cached = getLocalCache<OsapClient>(LOCAL_CLIENTS_KEY);
-    return cached.find((c) => c.id === id) || null;
+    const c = cached.find((x) => x.id === id) || null;
+    return c ? { ...c, batch_name: resolveClientBatch(c) } : null;
   }
 }
 
@@ -113,8 +191,10 @@ export async function saveOsapClient(
   userId: string = client.user_id || "system",
 ): Promise<OsapClient> {
   const isUpdate = Boolean(client.id);
+  const properBatch = resolveClientBatch(client);
   const payload = {
     ...client,
+    batch_name: properBatch,
     user_id: userId,
     updated_at: new Date().toISOString(),
   };
@@ -139,6 +219,10 @@ export async function saveOsapClient(
         .single();
       if (error) throw error;
       saved = data as unknown as OsapClient;
+    }
+
+    if (!saved.batch_name || saved.batch_name === "General Batch") {
+      saved.batch_name = properBatch;
     }
 
     // Save encrypted credentials if supplied
@@ -168,36 +252,39 @@ export async function saveOsapClient(
   } catch (err) {
     // Fallback to local
     const fallbackId = client.id || crypto.randomUUID();
+    const cached = getLocalCache<OsapClient>(LOCAL_CLIENTS_KEY);
+    const existing = cached.find((c) => c.id === fallbackId);
+
     const fallbackClient: OsapClient = {
       id: fallbackId,
       user_id: userId,
-      first_name: client.first_name || "Client",
-      last_name: client.last_name || "",
-      full_name: client.full_name || `${client.first_name} ${client.last_name}`.trim(),
-      email: client.email || null,
-      phone: client.phone || null,
-      oan: client.oan || null,
-      school: client.school || null,
-      program: client.program || null,
-      study_period: client.study_period || null,
-      application_year: client.application_year || "2026",
-      assigned_staff: client.assigned_staff || null,
-      notes: client.notes || null,
-      credential_status: client.rawPassword ? "connected" : client.credential_status || "missing",
-      application_status: client.application_status || "not_started",
-      funding_status: client.funding_status || null,
-      msfaa_status: client.msfaa_status || "not_started",
-      document_status: client.document_status || "not_submitted",
-      priority: client.priority || "medium",
-      action_required: client.action_required ?? false,
-      action_required_summary: client.action_required_summary || null,
-      last_audit_at: client.last_audit_at || null,
-      next_audit_at: client.next_audit_at || null,
-      created_at: client.created_at || new Date().toISOString(),
+      first_name: client.first_name || existing?.first_name || "Client",
+      last_name: client.last_name || existing?.last_name || "",
+      full_name: client.full_name || existing?.full_name || `${client.first_name || ""} ${client.last_name || ""}`.trim(),
+      email: client.email !== undefined ? client.email : existing?.email || null,
+      phone: client.phone !== undefined ? client.phone : existing?.phone || null,
+      oan: client.oan !== undefined ? client.oan : existing?.oan || null,
+      school: client.school !== undefined ? client.school : existing?.school || null,
+      program: client.program !== undefined ? client.program : existing?.program || null,
+      study_period: client.study_period !== undefined ? client.study_period : existing?.study_period || null,
+      batch_name: properBatch || existing?.batch_name || "July 27th List",
+      application_year: client.application_year || existing?.application_year || "2026",
+      assigned_staff: client.assigned_staff !== undefined ? client.assigned_staff : existing?.assigned_staff || null,
+      notes: client.notes !== undefined ? client.notes : existing?.notes || null,
+      credential_status: client.rawPassword ? "connected" : client.credential_status || existing?.credential_status || "missing",
+      application_status: client.application_status || existing?.application_status || "not_started",
+      funding_status: client.funding_status !== undefined ? client.funding_status : existing?.funding_status || null,
+      msfaa_status: client.msfaa_status || existing?.msfaa_status || "not_started",
+      document_status: client.document_status || existing?.document_status || "not_submitted",
+      priority: client.priority || existing?.priority || "medium",
+      action_required: client.action_required !== undefined ? client.action_required : existing?.action_required ?? false,
+      action_required_summary: client.action_required_summary !== undefined ? client.action_required_summary : existing?.action_required_summary || null,
+      last_audit_at: client.last_audit_at || existing?.last_audit_at || null,
+      next_audit_at: client.next_audit_at || existing?.next_audit_at || null,
+      created_at: client.created_at || existing?.created_at || new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
 
-    const cached = getLocalCache<OsapClient>(LOCAL_CLIENTS_KEY);
     const updatedCache = isUpdate
       ? cached.map((c) => (c.id === fallbackId ? fallbackClient : c))
       : [fallbackClient, ...cached];
