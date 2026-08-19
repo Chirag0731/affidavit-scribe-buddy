@@ -183,9 +183,9 @@ function OsapDocumentsPage() {
                 onChange={(e) => setBatchFilter(e.target.value)}
                 className="input-base text-sm font-medium border-gold/40"
               >
-                <option value="all">📁 All Batches ({allClients.length})</option>
+                <option value="all">All Batches ({allClients.length})</option>
                 {Array.from(new Set(allClients.map((c) => c.batch_name || "General Batch"))).sort().map((b) => (
-                  <option key={b} value={b}>📁 {b}</option>
+                  <option key={b} value={b}>{b}</option>
                 ))}
               </select>
             </div>
@@ -197,8 +197,8 @@ function OsapDocumentsPage() {
                 className="input-base text-sm font-medium"
               >
                 <option value="all">All MSFAA Statuses</option>
-                <option value="pending">⚠️ Pending / Required MSFAA ({pendingMsfaaClients.length})</option>
-                <option value="submitted">✅ Submitted MSFAA ({allClients.length - pendingMsfaaClients.length})</option>
+                <option value="pending">Pending / Required MSFAA ({pendingMsfaaClients.length})</option>
+                <option value="submitted">Submitted MSFAA ({allClients.length - pendingMsfaaClients.length})</option>
               </select>
             </div>
           </div>

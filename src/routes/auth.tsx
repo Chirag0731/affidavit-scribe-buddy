@@ -247,10 +247,9 @@ function AuthPage() {
             </div>
           </div>
 
-          <div className="p-3.5 bg-muted/20 border border-border rounded-xl text-center">
-            <p className="text-[11px] text-muted-foreground">
-              🔒 Enterprise authentication with role-based access control.
-            </p>
+          <div className="p-3.5 bg-muted/20 border border-border rounded-xl text-center flex items-center justify-center gap-2 text-[11px] text-muted-foreground">
+            <Lock className="w-3.5 h-3.5 text-gold flex-shrink-0" />
+            <span>Enterprise authentication with role-based access control.</span>
           </div>
         </div>
       </div>

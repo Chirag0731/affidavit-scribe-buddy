@@ -90,7 +90,7 @@ function OsapAuditHistoryPage() {
       const blob = await generateSingleAuditPdf(audit, client);
       const filename = `OSAP_Audit_${(client.full_name || "Client").replace(/\s+/g, "_")}_${audit.created_at.slice(0, 10)}.pdf`;
       downloadPdfBlob(blob, filename);
-      toast.success(`📥 Audit report downloaded for ${client.full_name}`);
+      toast.success(`Audit report downloaded for ${client.full_name}`);
     } catch {
       toast.error("Failed to generate audit PDF");
     } finally {

@@ -235,8 +235,9 @@ function OsapImportExportPage() {
                 <p>
                   Full Name, First/Last Name, Email, Phone, OAN, OSAP Password, School, Program, Study Period, Year, Application Status, MSFAA Status, Document Status, Notes, Staff, Priority.
                 </p>
-                <p className="text-emerald-400 font-medium">
-                  ✓ The system automatically maps your headers and never requires all columns to be present.
+                <p className="text-emerald-400 font-medium flex items-center gap-1.5">
+                  <CheckCircle2 className="w-3.5 h-3.5 flex-shrink-0" />
+                  <span>The system automatically maps your headers and never requires all columns to be present.</span>
                 </p>
               </div>
             </div>

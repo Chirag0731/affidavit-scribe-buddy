@@ -113,9 +113,9 @@ function OsapApplicationsPage() {
             onChange={(e) => setBatchFilter(e.target.value)}
             className="input-base text-sm font-medium border-gold/40"
           >
-            <option value="all">📁 All Batches ({clients.length})</option>
+            <option value="all">All Batches ({clients.length})</option>
             {batches.map((b) => (
-              <option key={b} value={b}>📁 {b}</option>
+              <option key={b} value={b}>{b}</option>
             ))}
           </select>
         </div>

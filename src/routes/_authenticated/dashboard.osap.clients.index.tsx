@@ -22,6 +22,10 @@ import {
   FileSpreadsheet,
   Layers,
   ChevronRight,
+  LayoutGrid,
+  AlertOctagon,
+  Coins,
+  Globe,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -360,24 +364,26 @@ function OsapClientsPage() {
               <button
                 type="button"
                 onClick={() => setViewMode("tabs")}
-                className={`px-3 py-1 rounded text-xs font-semibold transition-smooth ${
+                className={`px-3 py-1 rounded-lg text-xs font-semibold transition-smooth flex items-center gap-1.5 ${
                   viewMode === "tabs"
-                    ? "bg-gold text-black shadow-xs"
+                    ? "bg-gold text-black shadow-xs font-bold"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                📑 Batch Tabs
+                <Layers className="w-3.5 h-3.5" />
+                <span>Batch Tabs</span>
               </button>
               <button
                 type="button"
                 onClick={() => setViewMode("grouped")}
-                className={`px-3 py-1 rounded text-xs font-semibold transition-smooth ${
+                className={`px-3 py-1 rounded-lg text-xs font-semibold transition-smooth flex items-center gap-1.5 ${
                   viewMode === "grouped"
-                    ? "bg-gold text-black shadow-xs"
+                    ? "bg-gold text-black shadow-xs font-bold"
                     : "text-muted-foreground hover:text-foreground"
                 }`}
               >
-                🗂️ Grouped Sections
+                <LayoutGrid className="w-3.5 h-3.5" />
+                <span>Grouped Sections</span>
               </button>
             </div>
           </div>
@@ -397,8 +403,8 @@ function OsapClientsPage() {
                 : "bg-muted/40 border-border text-foreground hover:bg-muted hover:border-gold/40"
             }`}
           >
-            <Folder className="w-3.5 h-3.5" />
-            <span>🌐 All Batches</span>
+            <Globe className="w-3.5 h-3.5" />
+            <span>All Batches</span>
             <span className={`px-1.5 py-0.2 rounded-full font-mono text-[11px] ${
               batchFilter === "all" ? "bg-black/20 text-black font-bold" : "bg-muted text-muted-foreground font-semibold"
             }`}>
@@ -427,7 +433,11 @@ function OsapClientsPage() {
                     : "bg-card border-border text-foreground hover:bg-muted hover:border-gold/40"
                 }`}
               >
-                <span>{isHold ? "🚨" : "📁"}</span>
+                {isHold ? (
+                  <AlertOctagon className="w-3.5 h-3.5 text-rose-400" />
+                ) : (
+                  <Folder className={`w-3.5 h-3.5 ${isSelected ? "text-black" : "text-gold"}`} />
+                )}
                 <span>{batchName}</span>
                 <span className={`px-1.5 py-0.2 rounded-full font-mono text-[11px] ${
                   isSelected
@@ -471,7 +481,8 @@ function OsapClientsPage() {
               : "bg-card border-border text-amber-400/80 hover:text-amber-300"
           }`}
         >
-          <span>⚠️ Pending MSFAA</span>
+          <Clock className="w-3.5 h-3.5" />
+          <span>Pending MSFAA</span>
           <span className="px-1.5 py-0.2 bg-amber-500/30 rounded-full font-mono text-[10px]">
             {pendingMsfaaClients.length}
           </span>
@@ -489,7 +500,8 @@ function OsapClientsPage() {
               : "bg-card border-border text-rose-400/80 hover:text-rose-300"
           }`}
         >
-          <span>🚨 Holds & Discrepancies</span>
+          <AlertOctagon className="w-3.5 h-3.5" />
+          <span>Holds & Discrepancies</span>
           <span className="px-1.5 py-0.2 bg-rose-500/30 rounded-full font-mono text-[10px]">
             {holdDiscrepancyClients.length}
           </span>
@@ -506,7 +518,8 @@ function OsapClientsPage() {
               : "bg-card border-border text-sky-400/80 hover:text-sky-300"
           }`}
         >
-          <span>✅ MSFAA Submitted</span>
+          <CheckCircle2 className="w-3.5 h-3.5" />
+          <span>MSFAA Submitted</span>
           <span className="px-1.5 py-0.2 bg-sky-500/30 rounded-full font-mono text-[10px]">
             {clients.length - pendingMsfaaClients.length}
           </span>
@@ -525,7 +538,8 @@ function OsapClientsPage() {
               : "bg-card border-border text-emerald-400/80 hover:text-emerald-300"
           }`}
         >
-          <span>💰 Funded & Completed</span>
+          <Coins className="w-3.5 h-3.5" />
+          <span>Funded & Completed</span>
           <span className="px-1.5 py-0.2 bg-emerald-500/30 rounded-full font-mono text-[10px]">
             {clients.filter((c) => c.application_status === "completed" || c.application_status === "funded").length}
           </span>
@@ -555,10 +569,10 @@ function OsapClientsPage() {
               }}
               className="input-base border-gold/40 text-xs font-medium"
             >
-              <option value="all">📁 All Batches ({clients.length})</option>
+              <option value="all">All Batches ({clients.length})</option>
               {uniqueBatches.map(([b, count]) => (
                 <option key={b} value={b}>
-                  📁 {b} ({count})
+                  {b} ({count})
                 </option>
               ))}
             </select>
@@ -574,8 +588,8 @@ function OsapClientsPage() {
               className="input-base text-xs font-medium"
             >
               <option value="all">All MSFAA Statuses</option>
-              <option value="pending">⚠️ Pending / Incomplete MSFAA ({pendingMsfaaClients.length})</option>
-              <option value="submitted">✅ Submitted MSFAA ({clients.length - pendingMsfaaClients.length})</option>
+              <option value="pending">Pending / Incomplete MSFAA ({pendingMsfaaClients.length})</option>
+              <option value="submitted">Submitted MSFAA ({clients.length - pendingMsfaaClients.length})</option>
             </select>
           </div>
 
@@ -618,8 +632,9 @@ function OsapClientsPage() {
                 </span>
               )}
               {msfaaFilter === "pending" && (
-                <span className="px-2 py-0.5 bg-amber-500/20 text-amber-300 font-semibold rounded border border-amber-500/40">
-                  ⚠️ Showing {filteredClients.length} Students with Pending MSFAA
+                <span className="px-2 py-0.5 bg-amber-500/20 text-amber-300 font-semibold rounded border border-amber-500/40 flex items-center gap-1.5">
+                  <Clock className="w-3.5 h-3.5" />
+                  <span>Showing {filteredClients.length} Students with Pending MSFAA</span>
                 </span>
               )}
             </div>
@@ -681,7 +696,11 @@ function OsapClientsPage() {
                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-bold text-lg ${
                       isHold ? "bg-rose-500/20 text-rose-300 border border-rose-500/30" : "bg-gold/15 text-gold border border-gold/30"
                     }`}>
-                      {isHold ? "🚨" : "📁"}
+                      {isHold ? (
+                        <AlertOctagon className="w-5 h-5 text-rose-400" />
+                      ) : (
+                        <Folder className="w-5 h-5 text-gold" />
+                      )}
                     </div>
                     <div>
                       <h3 className="font-bold text-foreground text-base flex items-center gap-2">
@@ -692,10 +711,19 @@ function OsapClientsPage() {
                           {batchClients.length} Students
                         </span>
                       </h3>
-                      <div className="flex items-center gap-3 text-xs text-muted-foreground mt-0.5 flex-wrap">
-                        <span>✅ MSFAA Submitted: <strong className="text-emerald-400">{submittedMsfaa}</strong></span>
-                        <span>⚠️ MSFAA Pending: <strong className="text-amber-400">{pendingMsfaa}</strong></span>
-                        <span>💰 Funded: <strong className="text-emerald-400">{fundedCount}</strong></span>
+                      <div className="flex items-center gap-4 text-xs text-muted-foreground mt-1 flex-wrap">
+                        <span className="flex items-center gap-1.5">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                          <span>MSFAA Submitted: <strong className="text-emerald-400">{submittedMsfaa}</strong></span>
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <Clock className="w-3.5 h-3.5 text-amber-400" />
+                          <span>MSFAA Pending: <strong className="text-amber-400">{pendingMsfaa}</strong></span>
+                        </span>
+                        <span className="flex items-center gap-1.5">
+                          <Coins className="w-3.5 h-3.5 text-emerald-400" />
+                          <span>Funded: <strong className="text-emerald-400">{fundedCount}</strong></span>
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -880,7 +908,11 @@ function OsapClientsPage() {
             <div className="p-4 bg-gold/10 border-b border-gold/30 flex items-center justify-between gap-4 flex-wrap">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gold/20 border border-gold/40 flex items-center justify-center font-bold text-lg text-gold">
-                  {batchFilter === "Hold" ? "🚨" : "📁"}
+                  {batchFilter === "Hold" ? (
+                    <AlertOctagon className="w-5 h-5 text-rose-400" />
+                  ) : (
+                    <Folder className="w-5 h-5 text-gold" />
+                  )}
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
@@ -889,10 +921,19 @@ function OsapClientsPage() {
                       {filteredClients.length} Students
                     </span>
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-muted-foreground mt-0.5 flex-wrap">
-                    <span>✅ MSFAA Submitted: <strong className="text-emerald-400">{filteredClients.filter((c) => c.msfaa_status === "submitted").length}</strong></span>
-                    <span>⚠️ MSFAA Pending: <strong className="text-amber-400">{filteredClients.filter((c) => c.msfaa_status !== "submitted").length}</strong></span>
-                    <span>💰 Funded: <strong className="text-emerald-400">{filteredClients.filter((c) => c.application_status === "completed" || c.application_status === "funded").length}</strong></span>
+                  <div className="flex items-center gap-4 text-xs text-muted-foreground mt-1 flex-wrap">
+                    <span className="flex items-center gap-1.5">
+                      <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>MSFAA Submitted: <strong className="text-emerald-400">{filteredClients.filter((c) => c.msfaa_status === "submitted").length}</strong></span>
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Clock className="w-3.5 h-3.5 text-amber-400" />
+                      <span>MSFAA Pending: <strong className="text-amber-400">{filteredClients.filter((c) => c.msfaa_status !== "submitted").length}</strong></span>
+                    </span>
+                    <span className="flex items-center gap-1.5">
+                      <Coins className="w-3.5 h-3.5 text-emerald-400" />
+                      <span>Funded: <strong className="text-emerald-400">{filteredClients.filter((c) => c.application_status === "completed" || c.application_status === "funded").length}</strong></span>
+                    </span>
                   </div>
                 </div>
               </div>

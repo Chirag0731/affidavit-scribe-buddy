@@ -20,6 +20,7 @@ import {
   Loader2,
   RefreshCw,
   ExternalLink,
+  Folder,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -281,7 +282,7 @@ function OsapClientProfilePage() {
       await recordOsapAudit(audit);
       setAudits((prev) => [audit, ...prev]);
 
-      toast.success(`💰 Payment marked as released! File is now Funded and Fully Completed.`);
+      toast.success("Payment marked as released! File is now Funded and Fully Completed.");
     } catch {
       toast.error("Failed to update status");
     }
@@ -294,7 +295,7 @@ function OsapClientProfilePage() {
       const blob = await generateSingleAuditPdf(audit, client);
       const filename = `OSAP_Audit_${client.full_name.replace(/\s+/g, "_")}_${audit.created_at.slice(0, 10)}.pdf`;
       downloadPdfBlob(blob, filename);
-      toast.success("📥 Downloaded audit PDF report!");
+      toast.success("Downloaded audit PDF report!");
     } catch {
       toast.error("Failed to generate audit PDF");
     } finally {
@@ -341,8 +342,9 @@ function OsapClientProfilePage() {
                     {priority.label} Priority
                   </span>
                   {client.batch_name && (
-                    <span className="text-xs px-2.5 py-0.5 rounded-full font-mono bg-muted border border-border text-foreground font-medium">
-                      📁 Batch: {client.batch_name}
+                    <span className="text-xs px-2.5 py-0.5 rounded-full font-mono bg-muted border border-border text-foreground font-medium flex items-center gap-1">
+                      <Folder className="w-3 h-3 text-gold" />
+                      <span>Batch: {client.batch_name}</span>
                     </span>
                   )}
                 </div>
@@ -662,8 +664,11 @@ function OsapClientProfilePage() {
                       <div className="p-2.5 bg-emerald-900/20 border border-emerald-800/40 rounded text-xs space-y-1">
                         <span className="font-semibold text-emerald-400 block">Changes Detected:</span>
                         {a.changes_detected.map((c) => (
-                          <div key={c.id} className="text-emerald-300">
-                            ✓ {c.field_name}: <span className="line-through opacity-70">{c.previous_value}</span> → <strong>{c.new_value}</strong>
+                          <div key={c.id} className="text-emerald-300 flex items-center gap-1.5">
+                            <CheckCircle2 className="w-3 h-3 text-emerald-400 flex-shrink-0" />
+                            <span>
+                              {c.field_name}: <span className="line-through opacity-70">{c.previous_value}</span> → <strong>{c.new_value}</strong>
+                            </span>
                           </div>
                         ))}
                       </div>
@@ -808,18 +813,18 @@ function OsapClientProfilePage() {
                 onChange={(e) => setAuditScenario(e.target.value as AuditScenario)}
                 className="input-base text-sm font-medium border-gold/40"
               >
-                <option value="live_portal_login">🔴 Live Government Portal Login (Physical OAN & Pass)</option>
-                <option value="live_file_audit">⚡ Smart Live Audit (Inspect Real MSFAA & File Status)</option>
-                <option value="payment_released">💰 Payment Released Check (Verify First Payment Disbursement)</option>
-                <option value="approved">✅ Approved Application ($9,450 Calculated Funding)</option>
-                <option value="processing">📊 Processing / Under Assessment</option>
-                <option value="rejected_documents">📄 Rejected Documents (Needs Replacement Upload)</option>
-                <option value="documents_under_review">⏳ Documents Under Review by FAO</option>
-                <option value="msfaa_incomplete">⚠️ MSFAA Incomplete (Loan Blocked)</option>
-                <option value="denied">❌ Application Denied (Eligibility Threshold)</option>
-                <option value="mfa_required">🔐 MFA Challenge Paused (SMS Code Required)</option>
-                <option value="portal_unavailable">🔌 Portal Unavailable / Timeout</option>
-                <option value="manual_review">📝 Manual Staff Review Required</option>
+                <option value="live_portal_login">Live Government Portal Login (Physical OAN & Pass)</option>
+                <option value="live_file_audit">Smart Live Audit (Inspect Real MSFAA & File Status)</option>
+                <option value="payment_released">Payment Released Check (Verify First Payment Disbursement)</option>
+                <option value="approved">Approved Application ($9,450 Calculated Funding)</option>
+                <option value="processing">Processing / Under Assessment</option>
+                <option value="rejected_documents">Rejected Documents (Needs Replacement Upload)</option>
+                <option value="documents_under_review">Documents Under Review by FAO</option>
+                <option value="msfaa_incomplete">MSFAA Incomplete (Loan Blocked)</option>
+                <option value="denied">Application Denied (Eligibility Threshold)</option>
+                <option value="mfa_required">MFA Challenge Paused (SMS Code Required)</option>
+                <option value="portal_unavailable">Portal Unavailable / Timeout</option>
+                <option value="manual_review">Manual Staff Review Required</option>
               </select>
             </div>
 

@@ -20,6 +20,7 @@ import {
   Activity,
   FileSpreadsheet,
   Folder,
+  AlertOctagon,
 } from "lucide-react";
 import { toast } from "sonner";
 import { getOsapClients, getOsapAudits, getOsapActions } from "@/lib/osap-db";
@@ -317,7 +318,11 @@ function OsapDashboardPage() {
                 <div>
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-2 min-w-0">
-                      <span className="text-base">{isHold ? "🚨" : "📁"}</span>
+                      {isHold ? (
+                        <AlertOctagon className="w-4 h-4 text-rose-400 flex-shrink-0" />
+                      ) : (
+                        <Folder className="w-4 h-4 text-gold flex-shrink-0" />
+                      )}
                       <h4 className="font-bold text-foreground text-sm truncate" title={batchName}>
                         {batchName}
                       </h4>
@@ -491,8 +496,9 @@ function OsapDashboardPage() {
                     </div>
                     <p className="text-muted-foreground line-clamp-2">{audit.summary}</p>
                     {audit.changes_detected && audit.changes_detected.length > 0 && (
-                      <span className="inline-block px-1.5 py-0.5 bg-emerald-900/30 text-emerald-400 border border-emerald-800/40 rounded text-[10px] font-medium">
-                        ✓ {audit.changes_detected.length} change(s) detected
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 bg-emerald-900/30 text-emerald-400 border border-emerald-800/40 rounded text-[10px] font-medium">
+                        <CheckCircle2 className="w-3 h-3" />
+                        <span>{audit.changes_detected.length} change(s) detected</span>
                       </span>
                     )}
                   </div>

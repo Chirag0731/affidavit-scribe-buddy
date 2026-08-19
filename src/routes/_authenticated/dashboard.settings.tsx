@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import {
   Loader2,
   CheckCircle,
+  CheckCircle2,
   AlertCircle,
   Users,
   UserPlus,
+  User,
   Shield,
   Crown,
   Eye,
@@ -284,7 +286,7 @@ function SettingsPage() {
             }`}
           >
             <Users className="w-4 h-4" />
-            <span>👥 Team Profiles & Roles</span>
+            <span>Team Profiles & Roles</span>
             <span className="px-1.5 py-0.2 rounded-full bg-black/20 text-[11px] font-mono">
               {staffList.length}
             </span>
@@ -299,8 +301,8 @@ function SettingsPage() {
                 : "text-muted-foreground hover:text-foreground"
             }`}
           >
-            <Building className="w-4 h-4" />
-            <span>👤 My Account</span>
+            <User className="w-4 h-4" />
+            <span>My Account</span>
           </button>
         </div>
       </div>
@@ -326,8 +328,9 @@ function SettingsPage() {
               <p className="text-xs text-muted-foreground leading-relaxed">
                 Full unrestricted control. Same view and privileges as owner. Can manage team profiles, generate passwords, and conduct physical portal crawls.
               </p>
-              <div className="text-[11px] text-amber-300/80 font-medium pt-1">
-                ✓ Full Control & Master View
+              <div className="text-[11px] text-amber-300/90 font-medium pt-1 flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Full Control & Master View</span>
               </div>
             </div>
 
@@ -347,8 +350,9 @@ function SettingsPage() {
               <p className="text-xs text-muted-foreground leading-relaxed">
                 Can see everything across all 419 client files, dated batches, audits, MSFAA, funding, notes, and documents. Can run batch audits and edit files.
               </p>
-              <div className="text-[11px] text-emerald-300/80 font-medium pt-1">
-                ✓ Full Visibility Over All Students
+              <div className="text-[11px] text-emerald-300/90 font-medium pt-1 flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Full Visibility Over All Students</span>
               </div>
             </div>
 
@@ -368,8 +372,9 @@ function SettingsPage() {
               <p className="text-xs text-muted-foreground leading-relaxed">
                 Read-only inspection of client rosters, MSFAA tracking matrix, and student file progress. Cannot make destructive modifications.
               </p>
-              <div className="text-[11px] text-blue-300/80 font-medium pt-1">
-                ✓ Student Roster Inspection
+              <div className="text-[11px] text-blue-300/90 font-medium pt-1 flex items-center gap-1">
+                <CheckCircle2 className="w-3.5 h-3.5" />
+                <span>Student Roster Inspection</span>
               </div>
             </div>
           </div>
@@ -742,7 +747,7 @@ function SettingsPage() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Crown className="w-4 h-4 text-amber-300" />
-                        <span className="font-bold text-foreground">👑 Super Admin</span>
+                        <span className="font-bold text-foreground">Super Admin</span>
                       </div>
                       {formRole === "super_admin" && <Check className="w-4 h-4 text-amber-300" />}
                     </div>
@@ -763,7 +768,7 @@ function SettingsPage() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Shield className="w-4 h-4 text-emerald-300" />
-                        <span className="font-bold text-foreground">🛡️ Staff (Full Access)</span>
+                        <span className="font-bold text-foreground">Staff (Full Access)</span>
                       </div>
                       {formRole === "staff" && <Check className="w-4 h-4 text-emerald-300" />}
                     </div>
@@ -784,7 +789,7 @@ function SettingsPage() {
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
                         <Eye className="w-4 h-4 text-blue-300" />
-                        <span className="font-bold text-foreground">👁️ Advisor / Coordinator</span>
+                        <span className="font-bold text-foreground">Advisor / Coordinator</span>
                       </div>
                       {formRole === "advisor" && <Check className="w-4 h-4 text-blue-300" />}
                     </div>

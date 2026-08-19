@@ -426,20 +426,20 @@ export function runClientAudit(
 
   if (isFundedCompleted) {
     summary = `Payment Released & Funded: All OSAP grant & loan funds have been released by NSLSC. File is fully completed.`;
-    message = `💰 Payment Released & Funded: Funds disbursed. File marked as Funded & Completed.`;
+    message = `Payment Released & Funded: Funds disbursed. File marked as Funded & Completed.`;
   } else if (scenario === "live_file_audit") {
     if (client.batch_name === "Hold" || client.notes?.toLowerCase().includes("discrepancy")) {
       summary = `Hold / Discrepancy: ${client.notes ? client.notes.split("\n")[0] : "SIN Registry personal information mismatch"}`;
-      message = `🚨 Hold / Discrepancy File: ${client.notes ? client.notes.split("\n")[0] : "SIN Registry personal information mismatch"}`;
+      message = `Hold / Discrepancy File: ${client.notes ? client.notes.split("\n")[0] : "SIN Registry personal information mismatch"}`;
     } else if (newMsfaaStatus === "required" || newMsfaaStatus === "action_required") {
       summary = `MSFAA Incomplete: Master Student Financial Assistance Agreement pending student online signature.`;
-      message = `⚠️ MSFAA Incomplete: Student must complete online MSFAA on NSLSC portal.`;
+      message = `MSFAA Incomplete: Student must complete online MSFAA on NSLSC portal.`;
     } else if (newDocStatus === "under_review") {
       summary = `Documents Under Review: Supporting college registration / PR verification under assessment.`;
-      message = `📄 Documents Under Review: Awaiting portal document verification.`;
+      message = `Documents Under Review: Awaiting portal document verification.`;
     } else {
       summary = `Application In Good Standing: All required documents and MSFAA agreement submitted.`;
-      message = `✅ Application In Good Standing: MSFAA submitted, documents received.`;
+      message = `Application In Good Standing: MSFAA submitted, documents received.`;
     }
   } else {
     summary = changes.length > 0

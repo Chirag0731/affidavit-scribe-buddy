@@ -22,7 +22,7 @@ export function GlobalAuditTracker() {
       const report = e.detail;
       toast.success(`Batch Audit Completed for ${report.batchName}! (${report.totalAudited} students)`, {
         action: {
-          label: "📥 Download PDF",
+          label: "Download PDF",
           onClick: async () => {
             try {
               const blob = await generateBatchAuditSessionPdf(report);
@@ -59,7 +59,7 @@ export function GlobalAuditTracker() {
       const blob = await generateBatchAuditSessionPdf(job.completedReport);
       const filename = `OSAP_Audit_Session_${job.completedReport.batchName.replace(/\s+/g, "_")}_${new Date().toISOString().slice(0, 10)}.pdf`;
       downloadPdfBlob(blob, filename);
-      toast.success("📥 Batch Audit Session PDF downloaded!");
+      toast.success("Batch Audit Session PDF downloaded!");
     } catch {
       toast.error("Failed to generate PDF report");
     } finally {
@@ -142,7 +142,7 @@ export function GlobalAuditTracker() {
               className="btn-primary py-1.5 px-3 text-xs font-bold flex items-center gap-1.5 shadow-sm"
             >
               {downloading ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <Download className="w-3.5 h-3.5" />}
-              <span>{downloading ? "Compiling..." : "📥 Download Session PDF"}</span>
+              <span>{downloading ? "Compiling..." : "Download Session PDF"}</span>
             </button>
           )}
         </div>

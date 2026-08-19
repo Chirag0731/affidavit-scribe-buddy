@@ -137,7 +137,7 @@ function OsapAuditCenterPage() {
     setLastSessionReport(null);
     setAuditLogs([]);
     setIsRunning(true);
-    toast.info(`⚡ Batch audit started for ${targetList.length} clients! It will continue in the background if you leave this page.`);
+    toast.info(`Batch audit started for ${targetList.length} clients. It will continue in the background if you leave this page.`);
 
     const report = await backgroundAuditService.startBatchAudit(
       targetList,
@@ -165,7 +165,7 @@ function OsapAuditCenterPage() {
       const blob = await generateBatchAuditSessionPdf(reportToDownload);
       const filename = `OSAP_Audit_Session_${reportToDownload.batchName.replace(/\s+/g, "_")}_${new Date().toISOString().slice(0, 10)}.pdf`;
       downloadPdfBlob(blob, filename);
-      toast.success("📥 Batch Audit Session PDF Report successfully downloaded!");
+      toast.success("Batch Audit Session PDF Report successfully downloaded!");
     } catch {
       toast.error("Failed to generate PDF report");
     } finally {
@@ -205,10 +205,10 @@ function OsapAuditCenterPage() {
                 disabled={isRunning}
                 className="input-base text-sm font-medium border-gold/40"
               >
-                <option value="all">🌐 All Batches / Entire Portfolio ({clients.length} clients)</option>
+                <option value="all">All Batches / Entire Portfolio ({clients.length} clients)</option>
                 {batchOptions.map(([name, count]) => (
                   <option key={name} value={name}>
-                    📁 {name} ({count} clients)
+                    {name} ({count} clients)
                   </option>
                 ))}
               </select>
@@ -240,18 +240,18 @@ function OsapAuditCenterPage() {
                 disabled={isRunning}
                 className="input-base text-sm font-medium border-gold/40"
               >
-                <option value="live_portal_login">🔴 Live Government Portal Login & Crawler (Physical OAN & Pass)</option>
-                <option value="live_file_audit">⚡ Smart Live Audit (Inspects Real MSFAA, Docs & Discrepancies)</option>
-                <option value="payment_released">💰 Payment Released Verification (Only Updates Files with Confirmed Disbursement)</option>
-                <option value="msfaa_incomplete">⚠️ Flag Incomplete MSFAA on Batch</option>
-                <option value="rejected_documents">📄 Detect Rejected Documents</option>
-                <option value="documents_under_review">⏳ Documents Under Review Queue</option>
-                <option value="approved">✅ Simulated Approved State</option>
-                <option value="processing">📊 Simulated In-Assessment State</option>
-                <option value="denied">❌ Simulated Denied State</option>
-                <option value="mfa_required">🔐 Simulate MFA 2FA Login Pause</option>
-                <option value="portal_unavailable">🔌 Simulate Portal Timeout Failure</option>
-                <option value="manual_review">📝 Flag for Manual Coordinator Review</option>
+                <option value="live_portal_login">Live Government Portal Login & Crawler (Physical OAN & Pass)</option>
+                <option value="live_file_audit">Smart Live Audit (Inspects Real MSFAA, Docs & Discrepancies)</option>
+                <option value="payment_released">Payment Released Verification (Only Updates Files with Confirmed Disbursement)</option>
+                <option value="msfaa_incomplete">Flag Incomplete MSFAA on Batch</option>
+                <option value="rejected_documents">Detect Rejected Documents</option>
+                <option value="documents_under_review">Documents Under Review Queue</option>
+                <option value="approved">Simulated Approved State</option>
+                <option value="processing">Simulated In-Assessment State</option>
+                <option value="denied">Simulated Denied State</option>
+                <option value="mfa_required">Simulate MFA 2FA Login Pause</option>
+                <option value="portal_unavailable">Simulate Portal Timeout Failure</option>
+                <option value="manual_review">Flag for Manual Coordinator Review</option>
               </select>
               <p className="text-[11px] text-muted-foreground mt-1">
                 {batchScenario === "live_portal_login"
@@ -361,7 +361,7 @@ function OsapAuditCenterPage() {
                   className="btn-primary py-2 px-4 text-xs font-bold flex items-center gap-2 shadow-md hover:scale-102 transition-transform"
                 >
                   {generatingPdf ? <Loader2 className="w-4 h-4 animate-spin" /> : <Download className="w-4 h-4" />}
-                  {generatingPdf ? "Compiling PDF..." : "📥 Download Session Audit PDF"}
+                  {generatingPdf ? "Compiling PDF..." : "Download Session Audit PDF"}
                 </button>
               </div>
 
