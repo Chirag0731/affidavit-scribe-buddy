@@ -9,17 +9,16 @@ import {
   Shield,
   Crown,
   Eye,
-  Mail,
+  EyeOff,
   Building,
-  Phone,
   Edit2,
   Trash2,
   Lock,
-  UserCheck,
-  UserX,
   X,
-  Save,
   Check,
+  Key,
+  Copy,
+  Sparkles,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -29,6 +28,8 @@ import {
   saveStaffProfile,
   deleteStaffProfile,
   toggleStaffStatus,
+  generateRandomStaffPassword,
+  formatStaffInviteSnippet,
   type StaffProfile,
   type StaffRole,
   ROLE_CONFIG,
@@ -40,7 +41,7 @@ export const Route = createFileRoute("/_authenticated/dashboard/settings")({
 });
 
 function SettingsPage() {
-  const [activeTab, setActiveTab] = useState<"account" | "team">("team");
+  const [activeTab, setActiveTab] = useState<"team" | "account">("team");
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -53,11 +54,14 @@ function SettingsPage() {
   const [staffList, setStaffList] = useState<StaffProfile[]>([]);
   const [staffLoading, setStaffLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [credentialsModalStaff, setCredentialsModalStaff] = useState<StaffProfile | null>(null);
   const [editingStaff, setEditingStaff] = useState<StaffProfile | null>(null);
 
   // Form inputs for Staff Profile
   const [formName, setFormName] = useState("");
   const [formEmail, setFormEmail] = useState("");
+  const [formPassword, setFormPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [formRole, setFormRole] = useState<StaffRole>("staff");
   const [formDepartment, setFormDepartment] = useState("Financial Aid Office");
   const [formPhone, setFormPhone] = useState("");
@@ -132,6 +136,8 @@ function SettingsPage() {
     setEditingStaff(null);
     setFormName("");
     setFormEmail("");
+    setFormPassword(generateRandomStaffPassword());
+    setShowPassword(true);
     setFormRole("staff");
     setFormDepartment("Financial Aid Office");
     setFormPhone("");
@@ -143,6 +149,8 @@ function SettingsPage() {
     setEditingStaff(s);
     setFormName(s.full_name);
     setFormEmail(s.email);
+    setFormPassword(s.temporary_password || generateRandomStaffPassword());
+    setShowPassword(false);
     setFormRole(s.role);
     setFormDepartment(s.department);
     setFormPhone(s.phone || "");
@@ -150,10 +158,29 @@ function SettingsPage() {
     setModalOpen(true);
   };
 
+  const handleGeneratePassword = () => {
+    const pw = generateRandomStaffPassword();
+    setFormPassword(pw);
+    setShowPassword(true);
+    toast.success("Generated new secure staff password");
+  };
+
+  const handleCopyInvite = (s: StaffProfile) => {
+    const origin = typeof window !== "undefined" ? window.location.origin : "";
+    const snippet = formatStaffInviteSnippet(s, origin);
+    navigator.clipboard.writeText(snippet);
+    toast.success(`Copied login credentials for ${s.full_name}`);
+  };
+
   const handleSaveStaffProfile = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formName.trim() || !formEmail.trim()) {
       toast.error("Please provide both full name and email address");
+      return;
+    }
+
+    if (!formPassword.trim()) {
+      toast.error("Please provide or generate a password for this profile");
       return;
     }
 
@@ -167,6 +194,7 @@ function SettingsPage() {
         department: formDepartment,
         phone: formPhone || null,
         notes: formNotes || null,
+        temporary_password: formPassword.trim(),
       });
 
       toast.success(
@@ -177,6 +205,9 @@ function SettingsPage() {
 
       setModalOpen(false);
       await loadStaffProfiles();
+
+      // Show credentials modal so owner can copy credentials right away
+      setCredentialsModalStaff(saved);
     } catch {
       toast.error("Failed to save staff profile");
     } finally {
@@ -237,7 +268,7 @@ function SettingsPage() {
         <div>
           <h1 className="section-heading">System & Team Settings</h1>
           <p className="text-muted-foreground mt-1">
-            Manage your personal profile, configure team access, and assign Super Admin / Staff roles.
+            Manage your personal profile, configure team access, generate passwords, and assign Super Admin / Staff roles.
           </p>
         </div>
 
@@ -293,7 +324,7 @@ function SettingsPage() {
                 </span>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Full unrestricted control. Same view and privileges as owner. Can manage team profiles, change system settings, and conduct physical audits.
+                Full unrestricted control. Same view and privileges as owner. Can manage team profiles, generate passwords, and conduct physical portal crawls.
               </p>
               <div className="text-[11px] text-amber-300/80 font-medium pt-1">
                 ✓ Full Control & Master View
@@ -352,7 +383,7 @@ function SettingsPage() {
               <div>
                 <h3 className="font-bold text-sm text-foreground">Staff & User Profiles</h3>
                 <p className="text-xs text-muted-foreground">
-                  {activeCount} active team members with configured access
+                  {activeCount} active team members with configured passwords and access
                 </p>
               </div>
             </div>
@@ -373,8 +404,8 @@ function SettingsPage() {
                 <thead className="bg-muted/40 text-muted-foreground font-semibold uppercase tracking-wider border-b border-border text-[10px]">
                   <tr>
                     <th className="py-3 px-4">Staff Member</th>
-                    <th className="py-3 px-4">Email</th>
-                    <th className="py-3 px-4">Department / Title</th>
+                    <th className="py-3 px-4">Email / Login</th>
+                    <th className="py-3 px-4">Password Credentials</th>
                     <th className="py-3 px-4">Role & Visibility</th>
                     <th className="py-3 px-4">Status</th>
                     <th className="py-3 px-4 text-right">Actions</th>
@@ -390,9 +421,13 @@ function SettingsPage() {
                       <tr key={s.id} className="hover:bg-muted/20 transition-smooth">
                         <td className="py-3 px-4">
                           <div className="flex items-center gap-2.5">
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs ${
-                              isSuper ? "bg-amber-500/20 text-amber-300 border border-amber-500/40" : "bg-gold/20 text-gold border border-gold/40"
-                            }`}>
+                            <div
+                              className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs ${
+                                isSuper
+                                  ? "bg-amber-500/20 text-amber-300 border border-amber-500/40"
+                                  : "bg-gold/20 text-gold border border-gold/40"
+                              }`}
+                            >
                               {s.full_name.charAt(0).toUpperCase()}
                             </div>
                             <div>
@@ -404,7 +439,7 @@ function SettingsPage() {
                                   </span>
                                 )}
                               </div>
-                              {s.phone && <span className="text-[11px] text-muted-foreground">{s.phone}</span>}
+                              <span className="text-[11px] text-muted-foreground">{s.department}</span>
                             </div>
                           </div>
                         </td>
@@ -413,15 +448,35 @@ function SettingsPage() {
                           {s.email}
                         </td>
 
-                        <td className="py-3 px-4 text-foreground">
-                          <span className="px-2 py-0.5 rounded bg-muted/40 border border-border text-[11px]">
-                            {s.department}
-                          </span>
+                        <td className="py-3 px-4">
+                          <div className="flex items-center gap-2">
+                            <span className="font-mono text-[11px] px-2 py-0.5 rounded bg-muted/50 border border-border text-foreground">
+                              {s.temporary_password ? "••••••••••••" : "Standard Account"}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => setCredentialsModalStaff(s)}
+                              className="p-1 rounded hover:bg-muted text-gold hover:text-gold/80 transition-smooth"
+                              title="View & Copy Password Credentials"
+                            >
+                              <Key className="w-3.5 h-3.5" />
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => handleCopyInvite(s)}
+                              className="p-1 rounded hover:bg-muted text-muted-foreground hover:text-foreground transition-smooth"
+                              title="Copy Login Details"
+                            >
+                              <Copy className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
                         </td>
 
                         <td className="py-3 px-4">
                           <div className="space-y-1">
-                            <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold border ${roleCfg.badgeBg} ${roleCfg.badgeColor} ${roleCfg.badgeBorder}`}>
+                            <span
+                              className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold border ${roleCfg.badgeBg} ${roleCfg.badgeColor} ${roleCfg.badgeBorder}`}
+                            >
                               {s.role === "super_admin" ? (
                                 <Crown className="w-3 h-3" />
                               ) : s.role === "staff" ? (
@@ -473,7 +528,7 @@ function SettingsPage() {
                               type="button"
                               onClick={() => openEditStaffModal(s)}
                               className="p-1.5 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground transition-smooth"
-                              title="Edit profile & role"
+                              title="Edit profile & password"
                             >
                               <Edit2 className="w-3.5 h-3.5" />
                             </button>
@@ -554,7 +609,7 @@ function SettingsPage() {
         </div>
       )}
 
-      {/* ADD / EDIT STAFF PROFILE MODAL */}
+      {/* ADD / EDIT STAFF PROFILE MODAL (WITH PASSWORD MAKER) */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
           <div className="bg-card border border-border rounded-xl w-full max-w-lg shadow-xl animate-fade-in overflow-hidden">
@@ -564,7 +619,7 @@ function SettingsPage() {
                   <UserPlus className="w-4 h-4" />
                 </div>
                 <h3 className="font-bold text-sm text-foreground">
-                  {editingStaff ? `Edit Staff Profile — ${editingStaff.full_name}` : "Create New Staff / Admin Profile"}
+                  {editingStaff ? `Edit Profile & Password — ${editingStaff.full_name}` : "Create New Staff / Admin Profile"}
                 </h3>
               </div>
               <button
@@ -600,6 +655,49 @@ function SettingsPage() {
                     className="input-base text-xs"
                   />
                 </div>
+              </div>
+
+              {/* PASSWORD SETUP & GENERATOR */}
+              <div className="bg-muted/30 border border-gold/30 rounded-xl p-3.5 space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <label className="font-bold text-foreground flex items-center gap-1.5 text-xs">
+                    <Key className="w-3.5 h-3.5 text-gold" />
+                    <span>Login Password Setup *</span>
+                  </label>
+
+                  <button
+                    type="button"
+                    onClick={handleGeneratePassword}
+                    className="text-[11px] text-gold hover:text-gold/80 font-semibold flex items-center gap-1 bg-gold/10 px-2 py-0.5 rounded border border-gold/20 transition-smooth"
+                  >
+                    <Sparkles className="w-3 h-3" /> Auto-Generate
+                  </button>
+                </div>
+
+                <div className="relative">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    required
+                    value={formPassword}
+                    onChange={(e) => setFormPassword(e.target.value)}
+                    placeholder="Set password (e.g. EightBranches#2026!)"
+                    className="input-base text-xs font-mono pr-20"
+                  />
+                  <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+                    <button
+                      type="button"
+                      onClick={() => setShowPassword(!showPassword)}
+                      className="p-1 text-muted-foreground hover:text-foreground"
+                      title={showPassword ? "Hide password" : "Show password"}
+                    >
+                      {showPassword ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                    </button>
+                  </div>
+                </div>
+
+                <p className="text-[10px] text-muted-foreground">
+                  This password will be assigned to the staff profile and can be shared directly with the user.
+                </p>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
@@ -703,7 +801,7 @@ function SettingsPage() {
                   value={formNotes}
                   onChange={(e) => setFormNotes(e.target.value)}
                   placeholder="Notes on responsibilities, cohort assignments..."
-                  className="input-base text-xs h-16 resize-none"
+                  className="input-base text-xs h-14 resize-none"
                 />
               </div>
 
@@ -721,10 +819,77 @@ function SettingsPage() {
                   className="btn-primary text-xs flex items-center gap-1.5"
                 >
                   {savingStaff && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
-                  <span>{editingStaff ? "Save Profile Changes" : "Create Profile"}</span>
+                  <span>{editingStaff ? "Save Profile & Password" : "Create Profile & Password"}</span>
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* VIEW & COPY CREDENTIALS POPUP MODAL */}
+      {credentialsModalStaff && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-card border-2 border-gold/40 rounded-xl w-full max-w-md shadow-2xl animate-fade-in overflow-hidden">
+            <div className="p-4 border-b border-border flex items-center justify-between bg-gold/10">
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 rounded-lg bg-gold/20 text-gold">
+                  <Key className="w-4 h-4" />
+                </div>
+                <h3 className="font-bold text-sm text-foreground">
+                  Login Credentials — {credentialsModalStaff.full_name}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setCredentialsModalStaff(null)}
+                className="p-1 rounded-lg hover:bg-muted text-muted-foreground hover:text-foreground"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="p-5 space-y-4 text-xs">
+              <p className="text-muted-foreground">
+                You can copy and share these credentials directly with{" "}
+                <strong className="text-foreground">{credentialsModalStaff.full_name}</strong> to grant them access to the portal.
+              </p>
+
+              <div className="bg-muted/40 border border-border rounded-xl p-4 space-y-3 font-mono">
+                <div className="flex justify-between items-center border-b border-border/60 pb-2">
+                  <span className="text-muted-foreground">Email / Login:</span>
+                  <span className="text-foreground font-bold">{credentialsModalStaff.email}</span>
+                </div>
+                <div className="flex justify-between items-center border-b border-border/60 pb-2">
+                  <span className="text-muted-foreground">Password:</span>
+                  <span className="text-amber-400 font-bold bg-amber-950/40 px-2 py-0.5 rounded border border-amber-800/40">
+                    {credentialsModalStaff.temporary_password || "[Standard Security Password]"}
+                  </span>
+                </div>
+                <div className="flex justify-between items-center border-b border-border/60 pb-2">
+                  <span className="text-muted-foreground">Assigned Role:</span>
+                  <span className="text-emerald-400 font-bold">{ROLE_CONFIG[credentialsModalStaff.role].label}</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-muted-foreground">Department:</span>
+                  <span className="text-foreground">{credentialsModalStaff.department}</span>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    handleCopyInvite(credentialsModalStaff);
+                    setCredentialsModalStaff(null);
+                  }}
+                  className="btn-primary w-full text-xs flex items-center justify-center gap-2"
+                >
+                  <Copy className="w-3.5 h-3.5" />
+                  <span>Copy Credentials to Clipboard</span>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}

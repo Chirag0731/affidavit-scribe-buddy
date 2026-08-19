@@ -19,6 +19,8 @@ export interface StaffProfile {
   phone?: string | null;
   status: "active" | "inactive" | "invited";
   notes?: string | null;
+  temporary_password?: string | null;
+  password_last_reset_at?: string | null;
   permissions: StaffPermissions;
   created_at: string;
   updated_at: string;
@@ -90,7 +92,30 @@ export const ROLE_CONFIG: Record<
   },
 };
 
-const LOCAL_STAFF_KEY = "neptora_staff_profiles_v2";
+export function generateRandomStaffPassword(): string {
+  const digits = Math.floor(1000 + Math.random() * 9000);
+  const symbols = ["!", "@", "#", "$", "%", "*"];
+  const sym = symbols[Math.floor(Math.random() * symbols.length)];
+  return `EightBranches#${digits}${sym}`;
+}
+
+export function formatStaffInviteSnippet(staff: StaffProfile, origin = ""): string {
+  const loginUrl = origin ? `${origin}/auth` : "https://your-portal.com/auth";
+  return `==========================================
+Eight Branches Financial Aid & OSAP Portal
+Staff Account Credentials
+==========================================
+Name: ${staff.full_name}
+Email / Login: ${staff.email}
+Password: ${staff.temporary_password || "[Standard Security Account]"}
+Role: ${ROLE_CONFIG[staff.role].label}
+Department: ${staff.department}
+
+Login URL: ${loginUrl}
+==========================================`;
+}
+
+const LOCAL_STAFF_KEY = "neptora_staff_profiles_v3_passwords";
 
 export const INITIAL_STAFF_PROFILES: StaffProfile[] = [
   {
@@ -101,6 +126,7 @@ export const INITIAL_STAFF_PROFILES: StaffProfile[] = [
     department: "Executive & Compliance Administration",
     phone: "437-263-4264",
     status: "active",
+    temporary_password: "Admin#2026!Master",
     notes: "Master Super Admin with root access and full system privileges.",
     permissions: ROLE_CONFIG.super_admin.defaultPermissions,
     created_at: new Date().toISOString(),
@@ -115,6 +141,7 @@ export const INITIAL_STAFF_PROFILES: StaffProfile[] = [
     department: "Admissions & Student Recruitment",
     phone: null,
     status: "active",
+    temporary_password: "Firas#2026!Sales",
     notes: "Sales and Student Onboarding Coordinator.",
     permissions: ROLE_CONFIG.staff.defaultPermissions,
     created_at: new Date().toISOString(),
@@ -129,6 +156,7 @@ export const INITIAL_STAFF_PROFILES: StaffProfile[] = [
     department: "Operations & Quality Assurance",
     phone: null,
     status: "active",
+    temporary_password: "JB#2026!Operations",
     notes: "Operations Coordinator & Audit Reviewer.",
     permissions: ROLE_CONFIG.staff.defaultPermissions,
     created_at: new Date().toISOString(),
@@ -143,6 +171,7 @@ export const INITIAL_STAFF_PROFILES: StaffProfile[] = [
     department: "Financial Aid & Student Accounts",
     phone: null,
     status: "active",
+    temporary_password: "Abdul#2026!FAO",
     notes: "Financial Aid Officer (FAO) & Document Reviewer.",
     permissions: ROLE_CONFIG.staff.defaultPermissions,
     created_at: new Date().toISOString(),
@@ -157,6 +186,7 @@ export const INITIAL_STAFF_PROFILES: StaffProfile[] = [
     department: "Financial Aid Office",
     phone: "437-555-0192",
     status: "active",
+    temporary_password: "Sarah#2026!Compliance",
     notes: "OSAP Compliance Specialist & MSFAA Coordinator.",
     permissions: ROLE_CONFIG.staff.defaultPermissions,
     created_at: new Date().toISOString(),
@@ -184,11 +214,18 @@ export async function getStaffProfiles(): Promise<StaffProfile[]> {
 }
 
 export async function saveStaffProfile(
-  data: Partial<StaffProfile> & { email: string; full_name: string; role: StaffRole }
+  data: Partial<StaffProfile> & {
+    email: string;
+    full_name: string;
+    role: StaffRole;
+    temporary_password?: string | null;
+  }
 ): Promise<StaffProfile> {
   const existing = await getStaffProfiles();
   const id = data.id || `staff-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
   const role = data.role || "staff";
+
+  const password = data.temporary_password || (existing.find((p) => p.id === id)?.temporary_password) || generateRandomStaffPassword();
 
   const profile: StaffProfile = {
     id,
@@ -199,6 +236,8 @@ export async function saveStaffProfile(
     phone: data.phone || null,
     status: data.status || "active",
     notes: data.notes || null,
+    temporary_password: password,
+    password_last_reset_at: new Date().toISOString(),
     permissions: data.permissions || ROLE_CONFIG[role].defaultPermissions,
     created_at: data.created_at || new Date().toISOString(),
     updated_at: new Date().toISOString(),
