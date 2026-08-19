@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   Sliders,
@@ -130,25 +130,19 @@ function OsapSettingsPage() {
             </div>
           </div>
 
-          <div>
-            <label className="block text-xs font-semibold text-foreground mb-1.5">Configured Staff Roles & Departments</label>
-            <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 bg-gold/15 text-gold border border-gold/30 rounded-lg text-xs font-semibold">
-                Sales
-              </span>
-              <span className="px-3 py-1 bg-gold/15 text-gold border border-gold/30 rounded-lg text-xs font-semibold">
-                Operations
-              </span>
-              <span className="px-3 py-1 bg-muted border border-border rounded-lg text-xs font-medium text-foreground">
-                Firas (Sales)
-              </span>
-              <span className="px-3 py-1 bg-muted border border-border rounded-lg text-xs font-medium text-foreground">
-                JB (Operations)
-              </span>
-              <span className="px-3 py-1 bg-muted border border-border rounded-lg text-xs font-medium text-foreground">
-                Abdul (Operations)
-              </span>
+          <div className="pt-2 border-t border-border/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <label className="block text-xs font-semibold text-foreground mb-0.5">Team & Staff Access Profiles</label>
+              <p className="text-xs text-muted-foreground">
+                Assign Super Admin (full control & master view) and Staff (full visibility over all 419 students).
+              </p>
             </div>
+            <Link
+              to="/dashboard/settings"
+              className="btn-primary text-xs flex items-center gap-1.5 self-start sm:self-auto"
+            >
+              <Users className="w-3.5 h-3.5" /> Manage Team Profiles & Roles
+            </Link>
           </div>
         </div>
 

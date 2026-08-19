@@ -257,6 +257,10 @@ export const DEFAULT_OSAP_PRESETS = {
 };
 
 export const OSAP_BATCH_ORDER: string[] = [
+  "March 2nd List",
+  "March 23rd List",
+  "April 13th List",
+  "April 27th List",
   "May 11th List",
   "May 25th List",
   "June 15th List",
@@ -265,9 +269,46 @@ export const OSAP_BATCH_ORDER: string[] = [
   "July 27th List",
   "August 24th List",
   "Hold",
-  "March 2nd List",
-  "March 23rd List",
-  "April 13th List",
-  "April 27th List",
 ];
 
+export interface OsapEmailProfile {
+  id: string;
+  client_id: string;
+  user_id: string;
+  primary_email: string;
+  college_email?: string | null;
+  secondary_email?: string | null;
+  preferred_channel: "primary" | "college" | "secondary";
+  status: "active" | "unverified" | "bounced" | "opted_out";
+  notify_msfaa_reminders: boolean;
+  notify_document_status: boolean;
+  notify_funding_release: boolean;
+  notify_audit_updates: boolean;
+  notes?: string | null;
+  last_contacted_at?: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface OsapEmailLog {
+  id: string;
+  client_id: string;
+  user_id: string;
+  recipient_email: string;
+  template_type: "msfaa_reminder" | "payment_released" | "documents_required" | "general_notice" | "custom";
+  subject: string;
+  body: string;
+  sent_by: string;
+  sent_at: string;
+  status: "sent" | "draft" | "failed";
+}
+
+export const EMAIL_PROFILE_STATUS_CONFIG: Record<
+  "active" | "unverified" | "bounced" | "opted_out",
+  { label: string; color: string; bg: string }
+> = {
+  active: { label: "Active & Verified", color: "text-emerald-400", bg: "bg-emerald-900/20" },
+  unverified: { label: "Unverified / Pending", color: "text-amber-400", bg: "bg-amber-900/20" },
+  bounced: { label: "Bounced / Invalid", color: "text-rose-400", bg: "bg-rose-900/20" },
+  opted_out: { label: "Opted Out", color: "text-muted-foreground", bg: "bg-muted/30" },
+};
