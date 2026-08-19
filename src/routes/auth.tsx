@@ -168,9 +168,9 @@ function AuthPage() {
                         type="text"
                         value={fullName}
                         onChange={(e) => setFullName(e.target.value)}
-                        placeholder="e.g. Kav Hussain"
+                        placeholder="e.g. Sarah Jenkins"
                         required
-                        className="input-base pl-9 text-xs"
+                        className="input-base pl-10 text-xs"
                         disabled={loading}
                       />
                     </div>
@@ -197,9 +197,9 @@ function AuthPage() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="kav.hussain@gmail.com"
+                    placeholder="staff@eightbranches.ca"
                     required
-                    className="input-base pl-9 text-xs"
+                    className="input-base pl-10 text-xs placeholder:text-muted-foreground/60"
                     disabled={loading}
                   />
                 </div>
@@ -216,7 +216,7 @@ function AuthPage() {
                     placeholder="••••••••"
                     required
                     minLength={6}
-                    className="input-base pl-9 text-xs font-mono"
+                    className="input-base pl-10 text-xs font-mono placeholder:text-muted-foreground/60"
                     disabled={loading}
                   />
                 </div>
