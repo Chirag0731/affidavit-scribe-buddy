@@ -241,7 +241,7 @@ export const ACTION_SEVERITY_CONFIG: Record<OsapActionSeverity, { label: string;
 };
 
 export const DEFAULT_OSAP_PRESETS = {
-  school: "Eight Branches",
+  school: "College",
   program: "Acupuncture 50 weeks",
   application_year: "2026",
   application_status: "not_started" as OsapApplicationStatus,

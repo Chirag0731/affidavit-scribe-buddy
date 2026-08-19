@@ -67,20 +67,20 @@ function LandingPage() {
 
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="text-center mb-16">
-          <h2 className="section-heading mb-4">Complete Legal & OSAP Workflow Platform</h2>
+          <h2 className="section-heading mb-4">Complete Legal Automation Platform</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Built for legal professionals and caseworkers who demand precision, security, and automated client intelligence.
+            Built for legal professionals, law firms, and caseworkers who demand precision, security, and effortless document automation.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[
-            { Icon: FileText, title: "Affidavit Automation", desc: "Generate professional court & tribunal affidavits in under 60 seconds with live preview and PDF/DOCX downloads." },
-            { Icon: Zap, title: "OSAP Client Management", desc: "Track student funding applications, document review matrices, and Master Student Loan Agreements (MSFAA)." },
-            { Icon: Lock, title: "Encrypted Credential Vault", desc: "Enterprise client-side WebCrypto AES-GCM encryption protects student access codes and credentials." },
-            { Icon: Download, title: "Excel Import & Dupe Detection", desc: "Upload multi-column spreadsheets with smart mapping, duplicate resolver, and password-safe export." },
-            { Icon: Lock, title: "Automated Audit Center", desc: "Execute single or batch portal audits with instant change detection diffs and actionable task generation." },
-            { Icon: FileText, title: "Integrated Case Profiles", desc: "7-tab student file system linking generated affidavits, case notes, action items, and audit trails." },
+            { Icon: FileText, title: "Affidavit Automation", desc: "Generate professional court & tribunal affidavits in under 60 seconds with live preview and instant PDF/DOCX downloads." },
+            { Icon: Zap, title: "Clause & Template Library", desc: "Standard legal affidavit templates with dynamic merge fields, conditional paragraphs, and custom notary stamps." },
+            { Icon: Lock, title: "Encrypted Document Vault", desc: "Enterprise client-side WebCrypto AES-GCM encryption protects sensitive client records and sworn statements." },
+            { Icon: Download, title: "Multi-Format Export", desc: "Export court-ready PDFs with precise legal typography, page numbering, and fully editable Microsoft Word DOCX files." },
+            { Icon: Lock, title: "Role-Based Team Access", desc: "Granular access control for Super Admins, Staff with full visibility, and review coordinators." },
+            { Icon: FileText, title: "Integrated Case Records", desc: "Centralized client management linking sworn affidavits, case notes, action items, and verifiable audit trails." },
           ].map(({ Icon, title, desc }) => (
             <div key={title} className="card-gold p-6 rounded-lg hover:shadow-md transition-smooth">
               <div className="w-12 h-12 bg-gold/20 rounded-lg flex items-center justify-center mb-4">
@@ -97,9 +97,9 @@ function LandingPage() {
 
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="bg-card rounded-xl p-12 text-center border border-border">
-          <h2 className="section-heading mb-4">Ready to Streamline Your Legal & OSAP Workflow?</h2>
+          <h2 className="section-heading mb-4">Ready to Streamline Your Legal Document Workflow?</h2>
           <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
-            Generate professional affidavits and manage OSAP student portfolios from one unified, secure platform.
+            Generate professional, court-ready affidavits and manage client files from one unified, secure platform.
           </p>
           <Link to="/auth" className="btn-primary inline-flex">Get Started Free</Link>
         </div>
@@ -111,7 +111,7 @@ function LandingPage() {
             <BrandLogo height={28} />
           </div>
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Neptora. Professional legal automation and OSAP client management.
+            © {new Date().getFullYear()} Neptora. Professional legal document automation and affidavit management.
           </p>
         </div>
       </footer>

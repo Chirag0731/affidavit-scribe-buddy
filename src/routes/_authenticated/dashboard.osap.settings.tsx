@@ -108,7 +108,7 @@ function OsapSettingsPage() {
               <label className="block text-xs font-semibold text-foreground mb-1.5">Default School / College</label>
               <input
                 type="text"
-                defaultValue="Eight Branches"
+                defaultValue="College"
                 className="input-base text-sm"
               />
             </div>
@@ -186,7 +186,7 @@ function OsapSettingsPage() {
 
           <div className="p-4 bg-muted/20 border border-border rounded-lg text-xs space-y-2">
             <p className="text-muted-foreground">
-              Connected Workbook: <strong className="text-foreground">Eight Branches OSAP Master Roster (421 Clients across 12 Batches)</strong>
+              Connected Workbook: <strong className="text-foreground">College OSAP Master Roster (419 Clients across 12 Batches)</strong>
             </p>
             <p className="text-muted-foreground">
               If your browser has cached older student records, click below to force-refresh and restore all 421 student profiles, MSFAA agreements, and batch assignments directly from the spreadsheet.

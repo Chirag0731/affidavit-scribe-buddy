@@ -9,8 +9,8 @@ import { getStaffProfiles, type StaffProfile } from "@/lib/osap-staff-profiles";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign In — Eight Branches OSAP & Legal Portal" },
-      { name: "description", content: "Sign in to your Eight Branches staff account." },
+      { title: "Sign In — Neptora Legal Platform" },
+      { name: "description", content: "Sign in to your Neptora legal and document automation account." },
     ],
   }),
   ssr: false,
@@ -27,7 +27,7 @@ function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [fullName, setFullName] = useState("");
-  const [firmName, setFirmName] = useState("Eight Branches College");
+  const [firmName, setFirmName] = useState("Legal & Compliance Practice");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [staffList, setStaffList] = useState<StaffProfile[]>([]);
@@ -81,7 +81,7 @@ function AuthPage() {
           return;
         }
 
-        // 2. Check if matching staff profile (like Kav Hussain)
+        // 2. Check if matching staff profile (like Kav Hussain or Administrator)
         const staffMatch = staffList.find(
           (s) =>
             s.email.toLowerCase() === cleanEmail ||
@@ -96,7 +96,7 @@ function AuthPage() {
             options: {
               data: {
                 full_name: staffMatch.full_name,
-                firm_name: "Eight Branches College",
+                firm_name: "Legal & Compliance Practice",
                 role: staffMatch.role,
               },
             },
@@ -141,12 +141,12 @@ function AuthPage() {
           <div className="bg-card border border-border rounded-xl shadow-sm p-8 space-y-6">
             <div>
               <h1 className="font-serif text-3xl font-bold text-foreground mb-2">
-                {mode === "signin" ? "Welcome Back" : "Create Staff Account"}
+                {mode === "signin" ? "Welcome Back" : "Create Account"}
               </h1>
               <p className="text-xs text-muted-foreground">
                 {mode === "signin"
-                  ? "Sign in to access Eight Branches OSAP & Client Management."
-                  : "Register your institutional credentials."}
+                  ? "Sign in to access your legal document automation and case management portal."
+                  : "Register your legal or institutional credentials."}
               </p>
             </div>
 
@@ -176,12 +176,12 @@ function AuthPage() {
                     </div>
                   </div>
                   <div>
-                    <label className="block font-semibold text-foreground mb-1">Institution</label>
+                    <label className="block font-semibold text-foreground mb-1">Organization / Practice</label>
                     <input
                       type="text"
                       value={firmName}
                       onChange={(e) => setFirmName(e.target.value)}
-                      placeholder="Eight Branches College"
+                      placeholder="Legal & Compliance Practice"
                       className="input-base text-xs"
                       disabled={loading}
                     />
@@ -197,7 +197,7 @@ function AuthPage() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="staff@eightbranches.ca"
+                    placeholder="name@organization.com"
                     required
                     className="input-base pl-10 text-xs placeholder:text-muted-foreground/60"
                     disabled={loading}
@@ -249,7 +249,7 @@ function AuthPage() {
 
           <div className="p-3.5 bg-muted/20 border border-border rounded-xl text-center">
             <p className="text-[11px] text-muted-foreground">
-              🔒 Enterprise authentication with role-based access for Eight Branches staff.
+              🔒 Enterprise authentication with role-based access control.
             </p>
           </div>
         </div>

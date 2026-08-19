@@ -96,13 +96,13 @@ export function generateRandomStaffPassword(): string {
   const digits = Math.floor(1000 + Math.random() * 9000);
   const symbols = ["!", "@", "#", "$", "%", "*"];
   const sym = symbols[Math.floor(Math.random() * symbols.length)];
-  return `EightBranches#${digits}${sym}`;
+  return `Staff#${digits}${sym}`;
 }
 
 export function formatStaffInviteSnippet(staff: StaffProfile, origin = ""): string {
   const loginUrl = origin ? `${origin}/auth` : "https://your-portal.com/auth";
   return `==========================================
-Eight Branches Financial Aid & OSAP Portal
+College Financial Aid & Document Portal
 Staff Account Credentials
 ==========================================
 Name: ${staff.full_name}
@@ -115,16 +115,16 @@ Login URL: ${loginUrl}
 ==========================================`;
 }
 
-const LOCAL_STAFF_KEY = "neptora_staff_profiles_v5_kav_gmail";
+const LOCAL_STAFF_KEY = "neptora_staff_profiles_v6_generic_college";
 
 export const INITIAL_STAFF_PROFILES: StaffProfile[] = [
   {
     id: "staff-super-admin-root",
     full_name: "Primary Administrator (Owner)",
-    email: "admin@eightbranches.ca",
+    email: "admin@college.ca",
     role: "super_admin",
     department: "Executive & Compliance Administration",
-    phone: "437-263-4264",
+    phone: null,
     status: "active",
     temporary_password: "Admin#2026!Master",
     notes: "Master Super Admin with root access and full system privileges.",
@@ -151,7 +151,7 @@ export const INITIAL_STAFF_PROFILES: StaffProfile[] = [
   {
     id: "staff-firas-sales",
     full_name: "Firas",
-    email: "firas@eightbranches.ca",
+    email: "firas@college.ca",
     role: "staff",
     department: "Admissions & Student Recruitment",
     phone: null,
@@ -166,7 +166,7 @@ export const INITIAL_STAFF_PROFILES: StaffProfile[] = [
   {
     id: "staff-jb-operations",
     full_name: "JB",
-    email: "jb@eightbranches.ca",
+    email: "jb@college.ca",
     role: "staff",
     department: "Operations & Quality Assurance",
     phone: null,
@@ -181,7 +181,7 @@ export const INITIAL_STAFF_PROFILES: StaffProfile[] = [
   {
     id: "staff-abdul-operations",
     full_name: "Abdul",
-    email: "abdul@eightbranches.ca",
+    email: "abdul@college.ca",
     role: "staff",
     department: "Financial Aid & Student Accounts",
     phone: null,
@@ -196,13 +196,13 @@ export const INITIAL_STAFF_PROFILES: StaffProfile[] = [
   {
     id: "staff-sarah-jenkins",
     full_name: "Sarah Jenkins",
-    email: "s.jenkins@eightbranches.ca",
+    email: "s.jenkins@college.ca",
     role: "staff",
     department: "Financial Aid Office",
-    phone: "437-555-0192",
+    phone: null,
     status: "active",
     temporary_password: "Sarah#2026!Compliance",
-    notes: "OSAP Compliance Specialist & MSFAA Coordinator.",
+    notes: "Compliance Specialist & MSFAA Coordinator.",
     permissions: ROLE_CONFIG.staff.defaultPermissions,
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),

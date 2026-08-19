@@ -126,7 +126,7 @@ export async function generateBatchAuditSessionPdf(report: OsapBatchSessionRepor
       color: rgb(0.12, 0.16, 0.22),
     });
 
-    page.drawText("Eight Branches College of Eastern Medicine — Financial Aid Office", {
+    page.drawText("College Financial Aid Office — Audit & Compliance", {
       x: MARGIN + 14,
       y: y - 32,
       size: 8.5,
@@ -213,7 +213,7 @@ export async function generateBatchAuditSessionPdf(report: OsapBatchSessionRepor
       thickness: 0.5,
       color: rgb(0.8, 0.8, 0.8),
     });
-    page.drawText("CONFIDENTIAL — Eight Branches College OSAP Administration & Compliance Record", {
+    page.drawText("CONFIDENTIAL — College Financial Aid & Compliance Record • Generated via Neptora", {
       x: MARGIN,
       y: MARGIN + 3,
       size: 7,
@@ -424,7 +424,7 @@ export async function generateSingleAuditPdf(audit: OsapAudit, client: OsapClien
     color: rgb(0.12, 0.16, 0.22),
   });
 
-  page.drawText("Eight Branches College of Eastern Medicine — Student File Audit", {
+  page.drawText("College Financial Aid Office — Student File Audit", {
     x: MARGIN + 14,
     y: y - 34,
     size: 8.5,
@@ -464,7 +464,7 @@ export async function generateSingleAuditPdf(audit: OsapAudit, client: OsapClien
   page.drawText(`Full Name: ${sanitizeText(client.full_name)}`, { x: MARGIN + 12, y: y - 34, size: 8.5, font: bold, color: rgb(0.1, 0.1, 0.1) });
   page.drawText(`OAN: ${maskOan(client.oan)}`, { x: MARGIN + 260, y: y - 34, size: 8.5, font: font, color: rgb(0.2, 0.2, 0.2) });
 
-  page.drawText(`Institution: Eight Branches College`, { x: MARGIN + 12, y: y - 50, size: 8.5, font: font, color: rgb(0.2, 0.2, 0.2) });
+  page.drawText(`Institution: College`, { x: MARGIN + 12, y: y - 50, size: 8.5, font: font, color: rgb(0.2, 0.2, 0.2) });
   page.drawText(`Program: Acupuncture 50 weeks (2026)`, { x: MARGIN + 260, y: y - 50, size: 8.5, font: font, color: rgb(0.2, 0.2, 0.2) });
 
   page.drawText(`Application Status: ${(APPLICATION_STATUS_LABELS[client.application_status]?.label || client.application_status)}`, { x: MARGIN + 12, y: y - 66, size: 8.5, font: bold, color: rgb(0.15, 0.25, 0.4) });
@@ -550,7 +550,7 @@ export async function generateSingleAuditPdf(audit: OsapAudit, client: OsapClien
     thickness: 0.5,
     color: rgb(0.8, 0.8, 0.8),
   });
-  page.drawText("CONFIDENTIAL — Eight Branches College OSAP Administration Record", {
+  page.drawText("CONFIDENTIAL — College Financial Aid Administration Record • Generated via Neptora", {
     x: MARGIN,
     y: MARGIN + 4,
     size: 7,

@@ -590,12 +590,12 @@ function SettingsPage() {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-foreground mb-1.5">College / Firm Name</label>
+              <label className="block text-xs font-semibold text-foreground mb-1.5">Organization / Practice Name</label>
               <input
                 type="text"
                 value={firmName}
                 onChange={(e) => setFirmName(e.target.value)}
-                placeholder="Eight Branches College"
+                placeholder="Legal Practice / College"
                 className="input-base text-sm"
                 disabled={saving}
               />

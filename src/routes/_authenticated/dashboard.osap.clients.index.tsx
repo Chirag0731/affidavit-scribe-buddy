@@ -83,7 +83,7 @@ function OsapClientsPage() {
   const [formPhone, setFormPhone] = useState("");
   const [formOan, setFormOan] = useState("");
   const [formPassword, setFormPassword] = useState("");
-  const [formSchool, setFormSchool] = useState("Eight Branches");
+  const [formSchool, setFormSchool] = useState("College");
   const [formProgram, setFormProgram] = useState("Acupuncture 50 weeks");
   const [formStudyPeriod, setFormStudyPeriod] = useState("Full-Time (50 weeks)");
   const [formYear, setFormYear] = useState("2026");
@@ -117,7 +117,7 @@ function OsapClientsPage() {
     setFormPhone("");
     setFormOan("");
     setFormPassword("");
-    setFormSchool("Eight Branches");
+    setFormSchool("College");
     setFormProgram("Acupuncture 50 weeks");
     setFormStudyPeriod("Full-Time (50 weeks)");
     setFormYear("2026");
@@ -137,7 +137,7 @@ function OsapClientsPage() {
     setFormPhone(c.phone || "");
     setFormOan(c.oan || "");
     setFormPassword("");
-    setFormSchool(c.school || "Eight Branches");
+    setFormSchool(c.school || "College");
     setFormProgram(c.program || "Acupuncture 50 weeks");
     setFormStudyPeriod(c.study_period || "Full-Time (50 weeks)");
     setFormYear(c.application_year || "2026");
@@ -1279,11 +1279,11 @@ function OsapClientsPage() {
                     list="school-presets"
                     value={formSchool}
                     onChange={(e) => setFormSchool(e.target.value)}
-                    placeholder="Eight Branches"
+                    placeholder="College"
                     className="input-base text-sm"
                   />
                   <datalist id="school-presets">
-                    <option value="Eight Branches" />
+                    <option value="College" />
                     <option value="Canadian College of Business Science & Technology - Etobicoke" />
                     <option value="Sheridan College" />
                     <option value="Seneca College" />

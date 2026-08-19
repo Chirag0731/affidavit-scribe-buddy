@@ -74,7 +74,7 @@ function OsapAuditHistoryPage() {
           first_name: (audit.client_name || "Client").split(" ")[0] || "Client",
           last_name: (audit.client_name || "").split(" ").slice(1).join(" ") || "",
           full_name: audit.client_name || "Client",
-          school: "Eight Branches",
+          school: "College",
           program: "Acupuncture 50 weeks",
           application_year: "2026",
           application_status: "submitted",

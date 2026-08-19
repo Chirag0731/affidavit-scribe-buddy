@@ -291,7 +291,7 @@ function OsapDashboardPage() {
                 </span>
               </h3>
               <p className="text-xs text-muted-foreground">
-                Dated cohorts matching each page from the Eight Branches Google Workbook.
+                Dated cohorts matching each page from the College Google Workbook.
               </p>
             </div>
           </div>
