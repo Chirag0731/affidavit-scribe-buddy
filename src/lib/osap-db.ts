@@ -12,12 +12,12 @@ import type {
 import { encryptCredential } from "./osap-crypto";
 import { ALL_OSAP_CLIENTS } from "./osap-seed-data";
 
-const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v10_revert_general_batch_july27";
-const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v10";
-const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v10";
-const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v10";
-const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v10";
-const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v10";
+const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v11_clean_crawler_ashish_fix";
+const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v11";
+const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v11";
+const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v11";
+const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v11";
+const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v11";
 
 // Build a seed map from ALL_OSAP_CLIENTS so each student's official cohort batch is permanently mapped
 const SEED_BATCH_MAP = new Map<string, string>();
@@ -44,17 +44,61 @@ export function resolveClientBatch(client: Partial<OsapClient>, fallbackId?: str
   return "July 27th List";
 }
 
-export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS.map((c) => {
-  const properBatch = resolveClientBatch(c);
-  const isJuly27 = properBatch === "July 27th List";
-  return {
-    ...c,
-    batch_name: properBatch,
-    msfaa_status: isJuly27 ? "required" : c.msfaa_status,
-    action_required: isJuly27 ? true : c.action_required,
-    action_required_summary: isJuly27 ? "MSFAA online submission pending student action on NSLSC portal." : c.action_required_summary,
-  };
-});
+export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS
+  .filter((c) => !/approved coe|hold might get removed|fao issues|^issues$|^removed$|start date.*end date/i.test(c.full_name.trim()))
+  .map((c) => {
+    const properBatch = resolveClientBatch(c);
+    const nameLower = c.full_name.toLowerCase();
+    const isAshishMehta = nameLower.includes("ashish mehta") || c.oan === "826915448";
+    const isMarkRodo = nameLower.includes("mark rodo") || c.oan === "826771036";
+    const isZubairBaig = nameLower.includes("zubair baig") || c.oan === "304675510";
+
+    if (isAshishMehta) {
+      return {
+        ...c,
+        batch_name: "July 27th List",
+        application_status: "documents_under_review",
+        document_status: "under_review",
+        msfaa_status: "completed",
+        funding_status: "Under Assessment (Marital Status Docs Upload Received Aug 4/26 — FAO Review 3-6 Weeks)",
+        action_required: false,
+        action_required_summary: null,
+      };
+    }
+
+    if (isMarkRodo) {
+      return {
+        ...c,
+        batch_name: "July 27th List",
+        application_status: "approved",
+        document_status: "approved",
+        msfaa_status: "completed",
+        funding_status: "Est. Release: Aug 24/26 - Aug 26/26 ($15,750 1st Payment)",
+        action_required: false,
+        action_required_summary: null,
+      };
+    }
+
+    if (isZubairBaig) {
+      return {
+        ...c,
+        batch_name: "July 27th List",
+        application_status: "completed",
+        document_status: "approved",
+        msfaa_status: "completed",
+        funding_status: "Funded: $18,664 Deposited ($9,225 Tuition Paid directly to School)",
+        action_required: false,
+        action_required_summary: null,
+      };
+    }
+
+    return {
+      ...c,
+      batch_name: properBatch,
+      msfaa_status: c.msfaa_status || "submitted",
+      action_required: c.action_required ?? false,
+    };
+  });
 
 function getLocalCache<T>(key: string): T[] {
   try {
@@ -80,6 +124,7 @@ export function resetOsapClientsToSpreadsheet(): OsapClient[] {
     localStorage.removeItem("neptora_osap_clients_cache_v3");
     localStorage.removeItem("neptora_osap_clients_cache_v4");
     localStorage.removeItem("neptora_osap_clients_v9_clean_college_roster");
+    localStorage.removeItem("neptora_osap_clients_v10_revert_general_batch_july27");
     localStorage.setItem(LOCAL_CLIENTS_KEY, JSON.stringify(INITIAL_SPREADSHEET_CLIENTS));
   } catch {
     /* ignore */
@@ -97,6 +142,7 @@ export async function getOsapClients(): Promise<OsapClient[]> {
       localStorage.removeItem("neptora_osap_clients_cache_v2");
       localStorage.removeItem("neptora_osap_clients_cache_v3");
       localStorage.removeItem("neptora_osap_clients_v9_clean_college_roster");
+      localStorage.removeItem("neptora_osap_clients_v10_revert_general_batch_july27");
     }
 
     let clients: OsapClient[] = [];
@@ -118,41 +164,74 @@ export async function getOsapClients(): Promise<OsapClient[]> {
       clients = cached.length > 0 ? cached : INITIAL_SPREADSHEET_CLIENTS;
     }
 
-    // Sanitize and ensure:
-    // 1. Revert any accidental "General Batch" back to their real batch ("July 27th List")
-    // 2. For July 27th List, set msfaa_status to "required" (Pending) and action_required to true as requested
-    const cleaned = clients.map((c) => {
-      const properBatch = resolveClientBatch(c);
-      const isJuly27 = properBatch === "July 27th List" || properBatch === "Jul 27" || properBatch === "July 27";
-      return {
-        ...c,
-        batch_name: isJuly27 ? "July 27th List" : properBatch,
-        msfaa_status: isJuly27 ? "required" : (c.msfaa_status || "not_started"),
-        action_required: isJuly27 ? true : (c.action_required ?? false),
-        action_required_summary: isJuly27
-          ? "MSFAA online submission required on NSLSC portal."
-          : c.action_required_summary,
-      };
-    });
+    // Filter non-student header rows and sanitize
+    const cleaned = clients
+      .filter((c) => !/approved coe|hold might get removed|fao issues|^issues$|^removed$|start date.*end date/i.test(c.full_name.trim()))
+      .map((c) => {
+        const properBatch = resolveClientBatch(c);
+        const nameLower = c.full_name.toLowerCase();
+        const isAshishMehta = nameLower.includes("ashish mehta") || c.oan === "826915448";
+        const isMarkRodo = nameLower.includes("mark rodo") || c.oan === "826771036";
+        const isZubairBaig = nameLower.includes("zubair baig") || c.oan === "304675510";
+
+        if (isAshishMehta) {
+          return {
+            ...c,
+            batch_name: "July 27th List",
+            application_status: "documents_under_review" as const,
+            document_status: "under_review" as const,
+            msfaa_status: "completed" as const,
+            funding_status: "Under Assessment (Marital Status Docs Upload Received Aug 4/26 — FAO Review 3-6 Weeks)",
+            action_required: false,
+            action_required_summary: null,
+          };
+        }
+
+        if (isMarkRodo) {
+          return {
+            ...c,
+            batch_name: "July 27th List",
+            application_status: "approved" as const,
+            document_status: "approved" as const,
+            msfaa_status: "completed" as const,
+            funding_status: "Est. Release: Aug 24/26 - Aug 26/26 ($15,750 1st Payment)",
+            action_required: false,
+            action_required_summary: null,
+          };
+        }
+
+        if (isZubairBaig) {
+          return {
+            ...c,
+            batch_name: "July 27th List",
+            application_status: "completed" as const,
+            document_status: "approved" as const,
+            msfaa_status: "completed" as const,
+            funding_status: "Funded: $18,664 Deposited ($9,225 Tuition Paid directly to School)",
+            action_required: false,
+            action_required_summary: null,
+          };
+        }
+
+        return {
+          ...c,
+          batch_name: properBatch,
+          msfaa_status: c.msfaa_status || "submitted",
+          action_required: c.action_required ?? false,
+        };
+      });
 
     setLocalCache(LOCAL_CLIENTS_KEY, cleaned);
     return cleaned.sort((a, b) => a.full_name.localeCompare(b.full_name));
   } catch (err) {
     const cached = getLocalCache<OsapClient>(LOCAL_CLIENTS_KEY);
     const clients = cached.length > 0 ? cached : INITIAL_SPREADSHEET_CLIENTS;
-    const cleaned = clients.map((c) => {
-      const properBatch = resolveClientBatch(c);
-      const isJuly27 = properBatch === "July 27th List" || properBatch === "Jul 27" || properBatch === "July 27";
-      return {
+    const cleaned = clients
+      .filter((c) => !/approved coe|hold might get removed|fao issues|^issues$|^removed$|start date.*end date/i.test(c.full_name.trim()))
+      .map((c) => ({
         ...c,
-        batch_name: isJuly27 ? "July 27th List" : properBatch,
-        msfaa_status: isJuly27 ? "required" : (c.msfaa_status || "not_started"),
-        action_required: isJuly27 ? true : (c.action_required ?? false),
-        action_required_summary: isJuly27
-          ? "MSFAA online submission required on NSLSC portal."
-          : c.action_required_summary,
-      };
-    });
+        batch_name: resolveClientBatch(c),
+      }));
     setLocalCache(LOCAL_CLIENTS_KEY, cleaned);
     return cleaned.sort((a, b) => a.full_name.localeCompare(b.full_name));
   }

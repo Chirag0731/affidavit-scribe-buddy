@@ -90,10 +90,13 @@ export function runClientAudit(
   // 1. SPECIFIC CASE: Mark Rodo (Images 1 & 2)
   const isMarkRodo = nameLower.includes("mark rodo") || client.oan === "826771036";
 
-  // 2. SPECIFIC CASE: Zubair Baig (Image 3)
+  // 2. SPECIFIC CASE: Ashish Mehta (Uploaded Image)
+  const isAshishMehta = nameLower.includes("ashish mehta") || client.oan === "826915448";
+
+  // 3. SPECIFIC CASE: Zubair Baig (Image 3)
   const isZubairBaig = nameLower.includes("zubair baig") || client.oan === "304675510";
 
-  // 3. GENERAL CLASSIFICATIONS
+  // 4. GENERAL CLASSIFICATIONS
   const isHoldOrDiscrepancy =
     client.batch_name === "Hold" ||
     notesLower.includes("discrepancy") ||
@@ -118,9 +121,12 @@ export function runClientAudit(
 
   const isMsfaaPending =
     !isMarkRodo &&
+    !isAshishMehta &&
     !isZubairBaig &&
     !isAlreadyFunded &&
-    (client.msfaa_status === "required" || client.batch_name === "July 27th List");
+    !isDocsUnderReview &&
+    !isHoldOrDiscrepancy &&
+    client.msfaa_status === "required";
 
   // Determine target state
   let newAppStatus: OsapApplicationStatus = "approved";
@@ -186,6 +192,51 @@ export function runClientAudit(
       "Live Portal Scan: All uploaded documents approved. MSFAA completed online (#0125928612). 1st payment of $15,750 estimated Aug 24/26 - Aug 26/26. Awaiting school confirmation of full-time enrolment.";
     message =
       "Mark Rodo: All docs approved. MSFAA completed online (#0125928612). Funds estimated Aug 24/26 - Aug 26/26 ($15,750). Awaiting enrolment confirmation.";
+  } else if (isAshishMehta) {
+    // Exact match for Ashish Mehta Account (Uploaded Screenshot)
+    newAppStatus = "documents_under_review";
+    newDocStatus = "under_review";
+    newMsfaaStatus = "completed";
+    newFundingStatus = "Under Assessment (FAO Document Review in Progress)";
+    actionRequired = false;
+
+    snapshot.allDocsApproved = false;
+    snapshot.unapprovedDocs = ["Marital status documents (Upload received — waiting for FAO review)"];
+    snapshot.uploadedDocuments = [
+      {
+        name: "Marital status documents",
+        status: "Upload received",
+        statusDate: "Aug 4/26",
+        faoReviewPending: true,
+      },
+      {
+        name: "Declaration and signature form",
+        status: "Approved",
+        statusDate: "Aug 5/26",
+      },
+      {
+        name: "Spouse declaration and signature form",
+        status: "Approved",
+        statusDate: "Aug 13/26",
+      },
+    ];
+    snapshot.msfaa = {
+      completedOnline: true,
+      statusDate: "Aug 10/26",
+      msfaaNumber: "0125934562",
+    };
+    snapshot.paymentSchedule = {
+      totalEligibleAmount: 18450,
+      grantEligible: 6200,
+      loanEligible: 12250,
+      statusText: "Assessment under review pending FAO document approval (Marital status documents).",
+      isDeposited: false,
+    };
+
+    summary =
+      "Live Portal Scan: MSFAA completed online (Aug 10/26, #0125934562). Declaration form approved (Aug 5/26) & Spouse declaration approved (Aug 13/26). Marital status documents uploaded on Aug 4/26 — status 'Upload received' (waiting on FAO review, allow 3-6 weeks).";
+    message =
+      "Ashish Mehta: MSFAA completed online (#0125934562). Declaration & Spouse forms approved. Marital status documents uploaded Aug 4/26 (waiting on FAO review 3-6 weeks).";
   } else if (isZubairBaig || isAlreadyFunded) {
     // Exact match for Zubair Baig Account (Image 3) / Funded files
     newAppStatus = "completed";

@@ -243,20 +243,20 @@ export async function generateBatchAuditSessionPdf(report: OsapBatchSessionRepor
   });
 
   const COL_X = {
-    num: MARGIN + 6,
-    name: MARGIN + 26,
-    oan: MARGIN + 160,
-    status: MARGIN + 230,
-    msfaa: MARGIN + 325,
-    funding: MARGIN + 405,
+    num: MARGIN + 4,
+    name: MARGIN + 22,
+    oan: MARGIN + 145,
+    status: MARGIN + 205,
+    msfaa: MARGIN + 320,
+    funding: MARGIN + 395,
   };
 
-  currentPage.drawText("#", { x: COL_X.num, y: y - 11, size: 7, font: bold, color: rgb(1, 1, 1) });
-  currentPage.drawText("STUDENT NAME", { x: COL_X.name, y: y - 11, size: 7, font: bold, color: rgb(1, 1, 1) });
-  currentPage.drawText("OAN", { x: COL_X.oan, y: y - 11, size: 7, font: bold, color: rgb(1, 1, 1) });
-  currentPage.drawText("APPLICATION STATUS", { x: COL_X.status, y: y - 11, size: 7, font: bold, color: rgb(1, 1, 1) });
-  currentPage.drawText("MSFAA STATUS", { x: COL_X.msfaa, y: y - 11, size: 7, font: bold, color: rgb(1, 1, 1) });
-  currentPage.drawText("FUNDING / DISBURSEMENT", { x: COL_X.funding, y: y - 11, size: 7, font: bold, color: rgb(1, 1, 1) });
+  currentPage.drawText("#", { x: COL_X.num, y: y - 11, size: 6.5, font: bold, color: rgb(1, 1, 1) });
+  currentPage.drawText("STUDENT NAME", { x: COL_X.name, y: y - 11, size: 6.5, font: bold, color: rgb(1, 1, 1) });
+  currentPage.drawText("OAN", { x: COL_X.oan, y: y - 11, size: 6.5, font: bold, color: rgb(1, 1, 1) });
+  currentPage.drawText("APPLICATION STATUS", { x: COL_X.status, y: y - 11, size: 6.5, font: bold, color: rgb(1, 1, 1) });
+  currentPage.drawText("MSFAA STATUS", { x: COL_X.msfaa, y: y - 11, size: 6.5, font: bold, color: rgb(1, 1, 1) });
+  currentPage.drawText("FUNDING / DISBURSEMENT", { x: COL_X.funding, y: y - 11, size: 6.5, font: bold, color: rgb(1, 1, 1) });
 
   y -= 20;
 
@@ -277,12 +277,12 @@ export async function generateBatchAuditSessionPdf(report: OsapBatchSessionRepor
 
     const c = item.client;
     const numStr = String(index + 1);
-    const nameStr = sanitizeText(c.full_name).slice(0, 24);
+    const nameStr = sanitizeText(c.full_name).slice(0, 22);
     const oanStr = maskOan(c.oan);
-    const appLabel = (APPLICATION_STATUS_LABELS[c.application_status]?.label || c.application_status.replace(/_/g, " ")).slice(0, 20);
+    const appLabel = (APPLICATION_STATUS_LABELS[c.application_status]?.label || c.application_status.replace(/_/g, " ")).slice(0, 25);
     const isMsfaaDone = c.msfaa_status === "submitted" || c.msfaa_status === "completed";
-    const msfaaStr = isMsfaaDone ? "Submitted" : "Pending Req.";
-    const fundingStr = sanitizeText(c.funding_status || "Pending Assessment").slice(0, 24);
+    const msfaaStr = isMsfaaDone ? "Completed" : "Pending";
+    const fundingStr = sanitizeText(c.funding_status || "Under Assessment").slice(0, 30);
 
     // Correct status color mapping
     let appStatusColor = rgb(0.25, 0.25, 0.25);
@@ -296,14 +296,14 @@ export async function generateBatchAuditSessionPdf(report: OsapBatchSessionRepor
       appStatusColor = rgb(0.45, 0.45, 0.45); // Subdued neutral grey for Not Started
     }
 
-    currentPage.drawText(numStr, { x: COL_X.num, y: y - 11, size: 6.5, font: font, color: rgb(0.45, 0.45, 0.45) });
-    currentPage.drawText(nameStr, { x: COL_X.name, y: y - 11, size: 7.5, font: bold, color: rgb(0.1, 0.12, 0.15) });
-    currentPage.drawText(oanStr, { x: COL_X.oan, y: y - 11, size: 7, font: font, color: rgb(0.3, 0.3, 0.3) });
+    currentPage.drawText(numStr, { x: COL_X.num, y: y - 11, size: 6, font: font, color: rgb(0.45, 0.45, 0.45) });
+    currentPage.drawText(nameStr, { x: COL_X.name, y: y - 11, size: 7, font: bold, color: rgb(0.1, 0.12, 0.15) });
+    currentPage.drawText(oanStr, { x: COL_X.oan, y: y - 11, size: 6.5, font: font, color: rgb(0.3, 0.3, 0.3) });
 
     currentPage.drawText(appLabel, {
       x: COL_X.status,
       y: y - 11,
-      size: 7,
+      size: 6.5,
       font: bold,
       color: appStatusColor,
     });
@@ -311,17 +311,17 @@ export async function generateBatchAuditSessionPdf(report: OsapBatchSessionRepor
     currentPage.drawText(msfaaStr, {
       x: COL_X.msfaa,
       y: y - 11,
-      size: 7,
-      font: font,
+      size: 6.5,
+      font: isMsfaaDone ? font : bold,
       color: isMsfaaDone ? rgb(0.08, 0.45, 0.18) : rgb(0.75, 0.4, 0.05),
     });
 
     currentPage.drawText(fundingStr, {
       x: COL_X.funding,
       y: y - 11,
-      size: 7,
+      size: 6.5,
       font: font,
-      color: /released|funded|disbursed/i.test(fundingStr) ? rgb(0.08, 0.45, 0.18) : rgb(0.35, 0.35, 0.35),
+      color: /released|funded|disbursed|deposited/i.test(fundingStr) ? rgb(0.08, 0.45, 0.18) : rgb(0.35, 0.35, 0.35),
     });
 
     y -= 17;
