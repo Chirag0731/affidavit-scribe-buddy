@@ -749,7 +749,7 @@ function NewAffidavitPage() {
           {affidavitDoc ? (
             <PdfHtmlPreview
               doc={affidavitDoc}
-              className="w-full h-[900px]"
+              className="w-full h-[520px] sm:h-[750px] lg:h-[900px]"
               onSignaturesChange={setSignatures}
             />
           ) : (

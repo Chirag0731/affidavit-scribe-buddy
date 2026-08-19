@@ -611,9 +611,9 @@ function SettingsPage() {
 
       {/* ADD / EDIT STAFF PROFILE MODAL (WITH PASSWORD MAKER) */}
       {modalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-card border border-border rounded-xl w-full max-w-lg shadow-xl animate-fade-in overflow-hidden">
-            <div className="p-4 border-b border-border flex items-center justify-between bg-muted/20">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-card border border-border rounded-2xl w-full max-w-lg shadow-2xl animate-fade-in overflow-hidden max-h-[92vh] flex flex-col">
+            <div className="p-4 border-b border-border flex items-center justify-between bg-muted/20 flex-shrink-0">
               <div className="flex items-center gap-2">
                 <div className="p-1.5 rounded-lg bg-gold/15 text-gold">
                   <UserPlus className="w-4 h-4" />
@@ -631,8 +631,8 @@ function SettingsPage() {
               </button>
             </div>
 
-            <form onSubmit={handleSaveStaffProfile} className="p-5 space-y-4 text-xs">
-              <div className="grid grid-cols-2 gap-3">
+            <form onSubmit={handleSaveStaffProfile} className="p-4 sm:p-5 space-y-4 text-xs overflow-y-auto flex-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block font-semibold text-foreground mb-1">Full Name *</label>
                   <input
@@ -829,9 +829,9 @@ function SettingsPage() {
 
       {/* VIEW & COPY CREDENTIALS POPUP MODAL */}
       {credentialsModalStaff && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-card border-2 border-gold/40 rounded-xl w-full max-w-md shadow-2xl animate-fade-in overflow-hidden">
-            <div className="p-4 border-b border-border flex items-center justify-between bg-gold/10">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-card border-2 border-gold/40 rounded-2xl w-full max-w-md shadow-2xl animate-fade-in overflow-hidden max-h-[92vh] flex flex-col">
+            <div className="p-4 border-b border-border flex items-center justify-between bg-gold/10 flex-shrink-0">
               <div className="flex items-center gap-2">
                 <div className="p-1.5 rounded-lg bg-gold/20 text-gold">
                   <Key className="w-4 h-4" />
