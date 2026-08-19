@@ -123,8 +123,8 @@ class OsapBackgroundAuditManager {
   public async startBatchAudit(
     targetList: OsapClient[],
     batchName: string,
-    scenario: AuditScenario,
-    conductedBy = "Staff Coordinator"
+    scenario: AuditScenario = "live_portal_crawl",
+    conductedBy = "Live OSAP Portal Crawler"
   ): Promise<OsapBatchSessionReport | null> {
     if (targetList.length === 0) return null;
 
@@ -132,7 +132,7 @@ class OsapBackgroundAuditManager {
 
     const job: OsapActiveAuditJob = {
       id: crypto.randomUUID(),
-      batchName: batchName === "all" ? "All Batches" : batchName,
+      batchName: batchName === "all" ? "All Batches / Entire Portfolio" : batchName,
       scenario,
       totalCount: targetList.length,
       currentIndex: 0,

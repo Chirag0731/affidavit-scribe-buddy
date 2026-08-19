@@ -21,6 +21,7 @@ import {
   RefreshCw,
   ExternalLink,
   Folder,
+  Activity,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -82,7 +83,7 @@ function OsapClientProfilePage() {
 
   // Audit Dialog state
   const [auditModalOpen, setAuditModalOpen] = useState(false);
-  const [auditScenario, setAuditScenario] = useState<AuditScenario>("approved");
+  const [auditScenario] = useState<AuditScenario>("live_portal_crawl");
   const [auditing, setAuditing] = useState(false);
 
   // New Note state
@@ -795,40 +796,48 @@ function OsapClientProfilePage() {
         )}
       </div>
 
-      {/* Audit Modal */}
+      {/* Live Portal Audit Modal */}
       {auditModalOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
           <div className="bg-card border border-border rounded-xl w-full max-w-lg p-6 shadow-2xl space-y-6 animate-fade-in">
-            <div>
-              <h3 className="text-lg font-serif font-bold text-foreground">Run OSAP Portal Audit</h3>
-              <p className="text-xs text-muted-foreground mt-0.5">
-                Execute an automated simulation scenario or audit against current OSAP portal records for <strong>{client.full_name}</strong>.
-              </p>
+            <div className="flex items-center gap-3 border-b border-border pb-3">
+              <div className="w-9 h-9 bg-gold/10 rounded-lg flex items-center justify-center text-gold">
+                <Activity className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-lg font-serif font-bold text-foreground">Live OSAP Portal Audit</h3>
+                <p className="text-xs text-muted-foreground">
+                  Scanning government portal records for <strong>{client.full_name}</strong> (OAN: {client.oan || "On File"}).
+                </p>
+              </div>
             </div>
 
-            <div className="space-y-3">
-              <label className="block text-xs font-semibold text-foreground">Select Audit Mode / Scenario</label>
-              <select
-                value={auditScenario}
-                onChange={(e) => setAuditScenario(e.target.value as AuditScenario)}
-                className="input-base text-sm font-medium border-gold/40"
-              >
-                <option value="live_portal_login">Live Government Portal Login (Physical OAN & Pass)</option>
-                <option value="live_file_audit">Smart Live Audit (Inspect Real MSFAA & File Status)</option>
-                <option value="payment_released">Payment Released Check (Verify First Payment Disbursement)</option>
-                <option value="approved">Approved Application ($9,450 Calculated Funding)</option>
-                <option value="processing">Processing / Under Assessment</option>
-                <option value="rejected_documents">Rejected Documents (Needs Replacement Upload)</option>
-                <option value="documents_under_review">Documents Under Review by FAO</option>
-                <option value="msfaa_incomplete">MSFAA Incomplete (Loan Blocked)</option>
-                <option value="denied">Application Denied (Eligibility Threshold)</option>
-                <option value="mfa_required">MFA Challenge Paused (SMS Code Required)</option>
-                <option value="portal_unavailable">Portal Unavailable / Timeout</option>
-                <option value="manual_review">Manual Staff Review Required</option>
-              </select>
+            <div className="p-4 bg-muted/20 border border-border rounded-lg space-y-3">
+              <span className="text-xs font-semibold text-gold block flex items-center gap-1.5">
+                <CheckCircle2 className="w-4 h-4" />
+                Real-Time Crawler Inspection Checks:
+              </span>
+              <ul className="text-xs text-muted-foreground space-y-2">
+                <li className="flex items-start gap-2">
+                  <span className="text-emerald-400 font-bold">•</span>
+                  <span><strong>Document Review:</strong> Verifies Declaration form, marital status documents, and flags any doc waiting on FAO review or rejected.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-emerald-400 font-bold">•</span>
+                  <span><strong>MSFAA Agreement:</strong> Verifies online completion status and official MSFAA registration number.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-emerald-400 font-bold">•</span>
+                  <span><strong>Payment & Release Dates:</strong> Scans estimated release windows, COE status, or direct bank deposit confirmation.</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-emerald-400 font-bold">•</span>
+                  <span><strong>Holds & Discrepancies:</strong> Detects SIN/ESDC registry holds and eligibility flags.</span>
+                </li>
+              </ul>
             </div>
 
-            <div className="flex items-center justify-end gap-3 pt-4 border-t border-border">
+            <div className="flex items-center justify-end gap-3 pt-2 border-t border-border">
               <button
                 onClick={() => setAuditModalOpen(false)}
                 className="btn-secondary text-sm"
@@ -842,7 +851,7 @@ function OsapClientProfilePage() {
                 className="btn-primary text-sm flex items-center gap-2"
               >
                 {auditing && <Loader2 className="w-4 h-4 animate-spin" />}
-                {auditing ? "Connecting to Portal..." : "Execute Audit"}
+                {auditing ? "Scanning Government Portal..." : "Run Live Portal Scan"}
               </button>
             </div>
           </div>

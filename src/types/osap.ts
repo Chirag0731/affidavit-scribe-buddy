@@ -174,42 +174,42 @@ export interface OsapImportRowConflict {
   resolution: "keep_existing" | "update_existing" | "skip";
 }
 
-// Labels & Badge styling maps
+// Labels & Badge styling maps (Cleaned & aligned directly with Ontario OSAP Portal)
 export const APPLICATION_STATUS_LABELS: Record<OsapApplicationStatus, { label: string; color: string; bg: string; border: string }> = {
-  not_started: { label: "Not Started", color: "text-muted-foreground", bg: "bg-muted/40", border: "border-border" },
-  in_progress: { label: "In Progress", color: "text-blue-400", bg: "bg-blue-900/20", border: "border-blue-800/40" },
-  submitted: { label: "Submitted", color: "text-sky-400", bg: "bg-sky-900/20", border: "border-sky-800/40" },
-  processing: { label: "Processing", color: "text-amber-400", bg: "bg-amber-900/20", border: "border-amber-800/40" },
-  approved: { label: "Approved", color: "text-emerald-400", bg: "bg-emerald-900/20", border: "border-emerald-800/40" },
-  partially_approved: { label: "Partially Approved", color: "text-teal-400", bg: "bg-teal-900/20", border: "border-teal-800/40" },
-  funded: { label: "Funded / Paid", color: "text-emerald-300 font-bold", bg: "bg-emerald-500/25", border: "border-emerald-500/50" },
-  denied: { label: "Denied", color: "text-rose-400", bg: "bg-rose-900/20", border: "border-rose-800/40" },
-  action_required: { label: "Action Required", color: "text-red-400", bg: "bg-red-900/20", border: "border-red-800/40" },
-  documents_required: { label: "Documents Required", color: "text-orange-400", bg: "bg-orange-900/20", border: "border-orange-800/40" },
-  documents_under_review: { label: "Docs Under Review", color: "text-cyan-400", bg: "bg-cyan-900/20", border: "border-cyan-800/40" },
-  information_required: { label: "Info Required", color: "text-amber-300", bg: "bg-amber-900/20", border: "border-amber-800/40" },
-  completed: { label: "Funded & Completed", color: "text-emerald-300 font-bold", bg: "bg-emerald-500/25", border: "border-emerald-500/50" },
-  manual_review_required: { label: "Manual Review", color: "text-purple-400", bg: "bg-purple-900/20", border: "border-purple-800/40" },
-  audit_failed: { label: "Audit Failed", color: "text-rose-400", bg: "bg-rose-900/20", border: "border-rose-800/40" },
+  completed: { label: "Funded / Deposited", color: "text-emerald-300 font-bold", bg: "bg-emerald-500/25", border: "border-emerald-500/50" },
+  funded: { label: "Funded / Deposited", color: "text-emerald-300 font-bold", bg: "bg-emerald-500/25", border: "border-emerald-500/50" },
+  approved: { label: "Approved (Enrolment Required)", color: "text-emerald-400 font-semibold", bg: "bg-emerald-950/40", border: "border-emerald-700/50" },
+  processing: { label: "Under Assessment", color: "text-amber-400 font-medium", bg: "bg-amber-950/40", border: "border-amber-700/40" },
+  in_progress: { label: "Under Assessment", color: "text-amber-400 font-medium", bg: "bg-amber-950/40", border: "border-amber-700/40" },
+  submitted: { label: "Under Assessment", color: "text-amber-400 font-medium", bg: "bg-amber-950/40", border: "border-amber-700/40" },
+  documents_under_review: { label: "Docs Waiting on FAO Review", color: "text-cyan-400 font-medium", bg: "bg-cyan-950/40", border: "border-cyan-700/40" },
+  action_required: { label: "Hold / Action Required", color: "text-rose-400 font-semibold", bg: "bg-rose-950/40", border: "border-rose-700/50" },
+  documents_required: { label: "Hold / Action Required", color: "text-rose-400 font-semibold", bg: "bg-rose-950/40", border: "border-rose-700/50" },
+  information_required: { label: "Hold / Action Required", color: "text-rose-400 font-semibold", bg: "bg-rose-950/40", border: "border-rose-700/50" },
+  partially_approved: { label: "Approved (Enrolment Required)", color: "text-emerald-400", bg: "bg-emerald-950/40", border: "border-emerald-700/40" },
+  denied: { label: "Denied / Ineligible", color: "text-rose-400 font-semibold", bg: "bg-rose-950/40", border: "border-rose-700/50" },
+  manual_review_required: { label: "Hold / Action Required", color: "text-rose-400", bg: "bg-rose-950/40", border: "border-rose-700/50" },
+  audit_failed: { label: "Audit Failed / Retry", color: "text-rose-400", bg: "bg-rose-950/40", border: "border-rose-700/50" },
+  not_started: { label: "Not Started", color: "text-muted-foreground", bg: "bg-muted/30", border: "border-border" },
 };
 
 export const DOCUMENT_STATUS_LABELS: Record<OsapDocumentStatus, { label: string; color: string; bg: string; border: string }> = {
-  not_submitted: { label: "Not Submitted", color: "text-muted-foreground", bg: "bg-muted/40", border: "border-border" },
-  submitted: { label: "Submitted", color: "text-sky-400", bg: "bg-sky-900/20", border: "border-sky-800/40" },
-  received: { label: "Received", color: "text-blue-400", bg: "bg-blue-900/20", border: "border-blue-800/40" },
-  under_review: { label: "Under Review", color: "text-amber-400", bg: "bg-amber-900/20", border: "border-amber-800/40" },
-  approved: { label: "Approved", color: "text-emerald-400", bg: "bg-emerald-900/20", border: "border-emerald-800/40" },
-  rejected: { label: "Rejected", color: "text-rose-400", bg: "bg-rose-900/20", border: "border-rose-800/40" },
-  additional_information_required: { label: "Additional Info Req.", color: "text-orange-400", bg: "bg-orange-900/20", border: "border-orange-800/40" },
+  approved: { label: "All Documents Approved", color: "text-emerald-400 font-semibold", bg: "bg-emerald-950/40", border: "border-emerald-700/40" },
+  under_review: { label: "Upload Received (Waiting on FAO)", color: "text-cyan-400 font-medium", bg: "bg-cyan-950/40", border: "border-cyan-700/40" },
+  submitted: { label: "Upload Received (Waiting on FAO)", color: "text-cyan-400 font-medium", bg: "bg-cyan-950/40", border: "border-cyan-700/40" },
+  received: { label: "Upload Received (Waiting on FAO)", color: "text-cyan-400 font-medium", bg: "bg-cyan-950/40", border: "border-cyan-700/40" },
+  rejected: { label: "Document Rejected / Action Required", color: "text-rose-400 font-semibold", bg: "bg-rose-950/40", border: "border-rose-700/40" },
+  additional_information_required: { label: "Document Rejected / Action Required", color: "text-rose-400 font-semibold", bg: "bg-rose-950/40", border: "border-rose-700/40" },
+  not_submitted: { label: "Not Submitted", color: "text-muted-foreground", bg: "bg-muted/30", border: "border-border" },
 };
 
 export const MSFAA_STATUS_LABELS: Record<OsapMsfaaStatus, { label: string; color: string; bg: string }> = {
-  not_started: { label: "Not Started", color: "text-muted-foreground", bg: "bg-muted/40" },
-  in_progress: { label: "In Progress", color: "text-blue-400", bg: "bg-blue-900/20" },
-  required: { label: "MSFAA Required", color: "text-amber-400", bg: "bg-amber-900/20" },
-  submitted: { label: "Submitted", color: "text-sky-400", bg: "bg-sky-900/20" },
-  completed: { label: "Completed", color: "text-emerald-400", bg: "bg-emerald-900/20" },
-  action_required: { label: "Action Required", color: "text-rose-400", bg: "bg-rose-900/20" },
+  completed: { label: "Completed Online", color: "text-emerald-400 font-semibold", bg: "bg-emerald-950/40" },
+  submitted: { label: "Completed Online", color: "text-emerald-400 font-semibold", bg: "bg-emerald-950/40" },
+  required: { label: "Pending Online Signature", color: "text-amber-400 font-semibold", bg: "bg-amber-950/40" },
+  not_started: { label: "Pending Online Signature", color: "text-amber-400 font-semibold", bg: "bg-amber-950/40" },
+  in_progress: { label: "Pending Online Signature", color: "text-amber-400 font-semibold", bg: "bg-amber-950/40" },
+  action_required: { label: "Pending Online Signature", color: "text-rose-400 font-semibold", bg: "bg-rose-950/40" },
 };
 
 export const PRIORITY_CONFIG: Record<OsapPriority, { label: string; color: string; bg: string; dot: string }> = {
