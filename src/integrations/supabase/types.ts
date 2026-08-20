@@ -70,6 +70,39 @@ export type Database = {
           },
         ]
       }
+      credential_templates: {
+        Row: {
+          created_at: string
+          design: string
+          id: string
+          kind: string
+          name: string
+          spec: Json
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          design: string
+          id?: string
+          kind?: string
+          name: string
+          spec?: Json
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          design?: string
+          id?: string
+          kind?: string
+          name?: string
+          spec?: Json
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
