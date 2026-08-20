@@ -167,6 +167,42 @@ export const DESIGNS: DesignMeta[] = [
     pageH: 612,
     accent: "#5b1a32",
   },
+  {
+    key: "phoenix",
+    label: "University of Phoenix — Official Transcript",
+    institution: "University of Phoenix",
+    kind: "transcript",
+    pageW: 612,
+    pageH: 792,
+    accent: "#1a3a5c",
+  },
+  {
+    key: "queens",
+    label: "Queen's University — Official Transcript",
+    institution: "Queen's University",
+    kind: "transcript",
+    pageW: 792,
+    pageH: 612,
+    accent: "#b90e31",
+  },
+  {
+    key: "lse",
+    label: "LSE — Academic Transcript",
+    institution: "The London School of Economics and Political Science",
+    kind: "transcript",
+    pageW: 595,
+    pageH: 842,
+    accent: "#e02020",
+  },
+  {
+    key: "fleming",
+    label: "Fleming College — Unofficial Transcript",
+    institution: "Fleming College",
+    kind: "transcript",
+    pageW: 612,
+    pageH: 792,
+    accent: "#1f5c45",
+  },
 ];
 
 export const designMeta = (key: DesignKey): DesignMeta =>
