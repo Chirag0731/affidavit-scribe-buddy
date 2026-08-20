@@ -674,8 +674,12 @@ export function randomGrade(spec: CredentialSpec, current: string, opts: GradeRa
   return hasPercent ? `${text}%` : text;
 }
 
+export const isMarkerRow = (c: { code: string }) => c.code === TERM_ROW || c.code === GPA_ROW;
+
 export function randomizeGrades(spec: CredentialSpec, opts: GradeRandomOptions): CredentialSpec {
-  const courses = spec.courses.map((c) => ({ ...c, grade: randomGrade(spec, c.grade, opts) }));
+  const courses = spec.courses.map((c) =>
+    isMarkerRow(c) ? c : { ...c, grade: randomGrade(spec, c.grade, opts) },
+  );
   const next = { ...spec, courses };
   return { ...next, average: computeAverage(next) };
 }
@@ -683,6 +687,7 @@ export function randomizeGrades(spec: CredentialSpec, opts: GradeRandomOptions):
 export function computeAverage(spec: CredentialSpec): string {
   if (spec.gradeMode !== "percent") return spec.average;
   const nums = spec.courses
+    .filter((c) => !isMarkerRow(c))
     .map((c) => parseFloat(c.grade.replace("%", "")))
     .filter((n) => !Number.isNaN(n));
   if (!nums.length) return spec.average;
