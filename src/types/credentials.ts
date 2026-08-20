@@ -684,8 +684,11 @@ export function randomizeGrades(spec: CredentialSpec, opts: GradeRandomOptions):
   return { ...next, average: computeAverage(next) };
 }
 
+/** Designs whose "average" field is a GPA that must not be recomputed from marks. */
+const GPA_DESIGNS: DesignKey[] = ["queens", "fleming", "lse", "phoenix"];
+
 export function computeAverage(spec: CredentialSpec): string {
-  if (spec.gradeMode !== "percent") return spec.average;
+  if (spec.gradeMode !== "percent" || GPA_DESIGNS.includes(spec.design)) return spec.average;
   const nums = spec.courses
     .filter((c) => !isMarkerRow(c))
     .map((c) => parseFloat(c.grade.replace("%", "")))
