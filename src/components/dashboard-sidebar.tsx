@@ -21,6 +21,7 @@ import {
   ArrowUpDown,
   Sliders,
   Sparkles,
+  GraduationCap,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsAdmin } from "@/hooks/use-is-admin";
@@ -51,6 +52,10 @@ export function DashboardSidebar() {
     { icon: History, label: "Audit History", to: "/dashboard/osap/audit-history" as const },
     { icon: ArrowUpDown, label: "Import / Export", to: "/dashboard/osap/import-export" as const },
     { icon: Sliders, label: "OSAP Settings", to: "/dashboard/osap/settings" as const },
+  ];
+
+  const credentialNav = [
+    { icon: GraduationCap, label: "Transcript / Diploma", to: "/dashboard/credentials" as const },
   ];
 
   const handleLogout = async () => {
@@ -122,6 +127,36 @@ export function DashboardSidebar() {
                   {affidavitNav.map((item) => {
                     const Icon = item.icon;
                     const active = isActive(item.to, (item as { exact?: boolean }).exact);
+                    return (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        onClick={() => setMobileOpen(false)}
+                        className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-smooth ${
+                          active
+                            ? "bg-gold text-black font-bold shadow-sm"
+                            : "text-muted-foreground hover:bg-muted hover:text-foreground font-medium"
+                        }`}
+                      >
+                        <Icon className="w-4 h-4" />
+                        <span className="flex-1">{item.label}</span>
+                        {active && <ChevronRight className="w-3.5 h-3.5" />}
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </div>
+
+              {/* CREDENTIALS GROUP */}
+              <div>
+                <div className="px-3 mb-2 text-[11px] font-bold tracking-wider uppercase text-muted-foreground/70 flex items-center justify-between">
+                  <span>Credentials Studio</span>
+                  <GraduationCap className="w-3.5 h-3.5 text-gold" />
+                </div>
+                <nav className="space-y-1">
+                  {credentialNav.map((item) => {
+                    const Icon = item.icon;
+                    const active = isActive(item.to);
                     return (
                       <Link
                         key={item.to}
