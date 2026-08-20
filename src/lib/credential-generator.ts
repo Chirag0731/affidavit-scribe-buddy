@@ -1,6 +1,6 @@
 import { PDFDocument, PDFFont, PDFPage, StandardFonts, rgb, RGB } from "pdf-lib";
 import type { CredentialSpec } from "@/types/credentials";
-import { computeAverage, designMeta } from "@/types/credentials";
+import { GPA_ROW, TERM_ROW, computeAverage, designMeta } from "@/types/credentials";
 
 import sheridanLogo from "@/assets/credentials/sheridan.png.asset.json";
 import niitLogo from "@/assets/credentials/niit.png.asset.json";
@@ -14,6 +14,13 @@ import sigYork from "@/assets/credentials/sig-york.png.asset.json";
 import sigMarca from "@/assets/credentials/sig-marca.png.asset.json";
 import sigFhs1 from "@/assets/credentials/sig-fhs1.png.asset.json";
 import sigFhs2 from "@/assets/credentials/sig-fhs2.png.asset.json";
+import uopLogo from "@/assets/credentials/uop-logo.png.asset.json";
+import uopSeal from "@/assets/credentials/uop-seal.png.asset.json";
+import queensLogo from "@/assets/credentials/queens-logo.png.asset.json";
+import queensSig from "@/assets/credentials/queens-sig.png.asset.json";
+import lseLogo from "@/assets/credentials/lse-logo.png.asset.json";
+import lseSeal from "@/assets/credentials/lse-seal.png.asset.json";
+import lseSig from "@/assets/credentials/lse-sig.png.asset.json";
 
 // ------------------------------------------------------------------ helpers
 
@@ -193,6 +200,18 @@ export async function generateCredentialPdf(spec: CredentialSpec): Promise<Blob>
       break;
     case "fernourt":
       await fernourt(ctx, pdf, spec, times, timesBold);
+      break;
+    case "phoenix":
+      await phoenix(ctx, pdf, spec, times, timesBold);
+      break;
+    case "queens":
+      await queens(ctx, pdf, spec, times, timesBold);
+      break;
+    case "lse":
+      await lse(ctx, pdf, spec, times, timesBold);
+      break;
+    case "fleming":
+      await fleming(ctx, pdf, spec);
       break;
   }
 
