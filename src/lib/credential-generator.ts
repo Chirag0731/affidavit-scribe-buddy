@@ -1,6 +1,6 @@
 import { PDFDocument, PDFFont, PDFPage, StandardFonts, rgb, RGB } from "pdf-lib";
 import type { CredentialSpec } from "@/types/credentials";
-import { computeAverage, designMeta } from "@/types/credentials";
+import { GPA_ROW, TERM_ROW, computeAverage, designMeta } from "@/types/credentials";
 
 import sheridanLogo from "@/assets/credentials/sheridan.png.asset.json";
 import niitLogo from "@/assets/credentials/niit.png.asset.json";
@@ -14,6 +14,13 @@ import sigYork from "@/assets/credentials/sig-york.png.asset.json";
 import sigMarca from "@/assets/credentials/sig-marca.png.asset.json";
 import sigFhs1 from "@/assets/credentials/sig-fhs1.png.asset.json";
 import sigFhs2 from "@/assets/credentials/sig-fhs2.png.asset.json";
+import uopLogo from "@/assets/credentials/uop-logo.png.asset.json";
+import uopSeal from "@/assets/credentials/uop-seal.png.asset.json";
+import queensLogo from "@/assets/credentials/queens-logo.png.asset.json";
+import queensSig from "@/assets/credentials/queens-sig.png.asset.json";
+import lseLogo from "@/assets/credentials/lse-logo.png.asset.json";
+import lseSeal from "@/assets/credentials/lse-seal.png.asset.json";
+import lseSig from "@/assets/credentials/lse-sig.png.asset.json";
 
 // ------------------------------------------------------------------ helpers
 
@@ -193,6 +200,18 @@ export async function generateCredentialPdf(spec: CredentialSpec): Promise<Blob>
       break;
     case "fernourt":
       await fernourt(ctx, pdf, spec, times, timesBold);
+      break;
+    case "phoenix":
+      await phoenix(ctx, pdf, spec, times, timesBold);
+      break;
+    case "queens":
+      await queens(ctx, pdf, spec, times, timesBold);
+      break;
+    case "lse":
+      await lse(ctx, pdf, spec, times, timesBold);
+      break;
+    case "fleming":
+      await fleming(ctx, pdf, spec);
       break;
   }
 
@@ -605,4 +624,400 @@ async function fernourt(ctx: Ctx, pdf: PDFDocument, s: CredentialSpec, times: PD
   line(ctx, 512, 446, 712, 0.8);
   text(ctx, s.secondOfficialName, 512, 452, { size: 11, font: timesBold, align: "center", width: 200 });
   text(ctx, s.secondOfficialTitle, 512, 468, { size: 9.5, font: times, align: "center", width: 200 });
+}
+
+// ------------------------------------------------------------ University of Phoenix
+
+async function phoenix(ctx: Ctx, pdf: PDFDocument, s: CredentialSpec, times: PDFFont, timesBold: PDFFont) {
+  const W = 612;
+  const navy = "#1c4a63";
+  await image(ctx, pdf, uopLogo.url, 421, 25, 169);
+  let a = 72;
+  for (const l of s.addressLines) {
+    text(ctx, l, 476, a, { size: 8.2, font: times });
+    a += 10.4;
+  }
+
+  const field = (l: string, v: string, top: number) => {
+    text(ctx, l, 41, top, { size: 9, font: times });
+    text(ctx, v, 111, top, { size: 9, font: times });
+  };
+  field("Date Issued:", s.issueDate, 71);
+  field("Record of:", s.studentName, 82.6);
+  field("Student Number:", s.studentId, 94.2);
+  field("Birthdate:", s.extra.birthdate ?? "", 105.8);
+
+  line(ctx, 40, 134, 581, 1.1);
+
+  let st = 158;
+  text(ctx, "SENT TO:", 188, st, { size: 9, font: times });
+  st += 11.6;
+  for (const l of s.studentAddress) {
+    text(ctx, l, 188, st, { size: 9, font: times });
+    st += 11.6;
+  }
+
+  line(ctx, 40, 236, 581, 1.1);
+  text(ctx, "Prior Schools Attended", 41, 241, { size: 9, font: timesBold });
+  text(ctx, "Credits", 430, 241, { size: 8.6, font: ctx.boldItalic, align: "center", width: 60 });
+  text(ctx, "Degrees", 500, 241, { size: 8.6, font: ctx.boldItalic, align: "center", width: 60 });
+  let pt = 262;
+  for (const n of s.notes) {
+    const [name, credits, degree] = n.split("|");
+    text(ctx, name ?? "", 41, pt, { size: 9, font: times });
+    text(ctx, credits ?? "", 430, pt, { size: 9, font: times, align: "center", width: 60 });
+    text(ctx, degree ?? "", 500, pt, { size: 9, font: times, align: "center", width: 60 });
+    pt += 11.6;
+  }
+
+  const headTop = Math.max(pt + 12, 340);
+  line(ctx, 40, headTop - 8, 581, 1.1);
+  const heads: Array<[string, string, number, number]> = [
+    ["Mo/Year", "", 40, 46],
+    ["Course ID", "", 85, 60],
+    ["Course Title", "", 153, 120],
+    ["Grade", "", 396, 34],
+    ["Credits", "Attempted", 430, 52],
+    ["Credits", "Earned", 484, 46],
+    ["Quality", "Points", 524, 42],
+    ["Rep", "", 556, 22],
+  ];
+  for (const [h1, h2, x, w] of heads) {
+    text(ctx, h1, x, headTop, { size: 8.6, font: ctx.boldItalic, align: "center", width: w });
+    if (h2) text(ctx, h2, x, headTop + 11, { size: 8.6, font: ctx.boldItalic, align: "center", width: w });
+  }
+  line(ctx, 40, headTop + 24, 581, 1.1);
+
+  let t = headTop + 34;
+  text(ctx, s.extra.schoolHeading ?? "", 41, t, { size: 9, font: timesBold });
+  t += 15;
+  for (const c of s.courses) {
+    const [earned, quality] = (c.extra ?? "").split("|");
+    text(ctx, c.code, 40, t, { size: 9, font: times, align: "center", width: 46 });
+    text(ctx, c.num ?? "", 88, t, { size: 9, font: times });
+    const titleLines = wrap(times, c.name, 9, 238);
+    for (const [i, l] of titleLines.entries()) text(ctx, l, 153, t + i * 10.4, { size: 9, font: times });
+    text(ctx, c.grade, 396, t, { size: 9, font: times, align: "center", width: 34 });
+    text(ctx, c.credits ?? "", 430, t, { size: 9, font: times, align: "center", width: 52 });
+    text(ctx, earned ?? "", 484, t, { size: 9, font: times, align: "center", width: 46 });
+    text(ctx, quality ?? "", 524, t, { size: 9, font: times, align: "center", width: 42 });
+    t += 10.4 * Math.max(1, titleLines.length) + 0.6;
+  }
+
+  text(ctx, s.extra.pageLabel ?? "", 480, 705, { size: 8.6, font: times, align: "right", width: 101 });
+
+  box(ctx, 0, 718, W, 14, { fill: navy });
+  text(ctx, s.extra.bannerLeft ?? "", 40, 721.5, { size: 7.6, font: ctx.bold, color: "#ffffff", align: "center", width: 340 });
+  text(ctx, s.extra.bannerRight ?? "", 380, 721.5, { size: 7.6, font: ctx.bold, color: "#ffffff", align: "center", width: 200 });
+
+  let ft = 738;
+  for (const l of wrap(ctx.reg, s.extra.security ?? "", 6.2, 320)) {
+    text(ctx, l, 40, ft, { size: 6.2 });
+    ft += 8.4;
+  }
+  await image(ctx, pdf, uopSeal.url, 546, 736, 42);
+  text(ctx, s.officialName, 380, 768, { size: 7.6, font: ctx.bold, align: "center", width: 150 });
+
+  box(ctx, 0, 778, W, 14, { fill: navy });
+  text(ctx, s.extra.bottomBanner ?? "", 0, 781, { size: 8, font: ctx.bold, color: "#ffffff", align: "center", width: W });
+}
+
+// -------------------------------------------------------------------- Queen's
+
+async function queens(ctx: Ctx, pdf: PDFDocument, s: CredentialSpec, times: PDFFont, timesBold: PDFFont) {
+  const W = 792;
+  await image(ctx, pdf, queensLogo.url, 25, 16, 68);
+
+  let a = 34;
+  for (const l of s.addressLines) {
+    text(ctx, l, 101, a, { size: 8.2, font: timesBold });
+    a += 10;
+  }
+
+  const field = (l: string, v: string, top: number) => {
+    text(ctx, l, 243, top, { size: 8.2, font: ctx.bold });
+    text(ctx, v, 299, top, { size: 8.2, font: ctx.bold });
+  };
+  field("Name:", s.studentName, 58);
+  field("Student ID:", s.studentId, 69);
+  field("OEN:", s.extra.oen ?? "", 80);
+  text(ctx, s.extra.pageLabel ?? "", 620, 58, { size: 8.2, align: "right", width: 145 });
+
+  const COLS = [
+    { x: 52, code: 52, num: 90, desc: 126, units: 250, grade: 300, points: 348 },
+    { x: 406, code: 406, num: 444, desc: 480, units: 604, grade: 654, points: 702 },
+  ];
+  const TOP = 118;
+  const BOTTOM = 500;
+  const LH = 10.2;
+  let col = 0;
+  let t = TOP;
+  const nextCol = () => {
+    col = Math.min(col + 1, 1);
+    t = TOP;
+    needHeader = true;
+  };
+  const advance = (n = 1) => {
+    t += LH * n;
+    if (t > BOTTOM && col === 0) nextCol();
+  };
+
+  const header = (c: (typeof COLS)[number]) => {
+    const u = (label: string, x: number, w: number) => {
+      text(ctx, label, x, t, { size: 8, align: "left", width: w });
+      const wdt = ctx.reg.widthOfTextAtSize(label, 8);
+      line(ctx, x, t + 9.4, x + wdt, 0.5);
+    };
+    u("Course", c.code, 40);
+    u("Description", c.desc, 80);
+    u("Units", c.units, 32);
+    u("Grade", c.grade, 32);
+    u("Points", c.points, 32);
+    advance();
+  };
+
+  let needHeader = true;
+  for (const row of s.courses) {
+    const c = COLS[col];
+    if (row.code === TERM_ROW) {
+      advance();
+      text(ctx, row.name, c.x, t, { size: 8.6, font: ctx.bold, align: "center", width: 300 });
+      advance(2);
+      needHeader = true;
+      continue;
+    }
+    if (row.code === GPA_ROW) {
+      const cc = COLS[col];
+      text(ctx, "Units", cc.units, t, { size: 8 });
+      text(ctx, "GPA Units", cc.grade - 8, t, { size: 8 });
+      text(ctx, "Points", cc.points, t, { size: 8 });
+      line(ctx, cc.units, t + 9.4, cc.points + 30, 0.5);
+      advance();
+      text(ctx, "Term GPA", cc.code + 8, t, { size: 8 });
+      text(ctx, row.name, cc.desc - 20, t, { size: 8 });
+      text(ctx, "Term Totals", cc.desc + 30, t, { size: 8 });
+      text(ctx, row.credits ?? "", cc.units, t, { size: 8, align: "right", width: 34 });
+      text(ctx, row.grade, cc.grade, t, { size: 8, align: "right", width: 40 });
+      text(ctx, row.extra ?? "", cc.points, t, { size: 8, align: "right", width: 34 });
+      advance();
+      continue;
+    }
+    if (needHeader) {
+      header(COLS[col]);
+      needHeader = false;
+    }
+    const cc = COLS[col];
+    text(ctx, row.code, cc.code, t, { size: 8 });
+    text(ctx, row.num ?? "", cc.num, t, { size: 8 });
+    text(ctx, row.name, cc.desc, t, { size: 8 });
+    text(ctx, row.credits ?? "", cc.units, t, { size: 8, align: "right", width: 34 });
+    text(ctx, row.grade, cc.grade, t, { size: 8, align: "center", width: 34 });
+    text(ctx, row.extra ?? "", cc.points, t, { size: 8, align: "right", width: 34 });
+    advance();
+  }
+
+  // career totals in the right column
+  const c1 = COLS[1];
+  let ct = Math.max(t + 18, TOP + 40);
+  if (col === 0) ct = TOP + 40;
+  text(ctx, s.extra.careerTotalsLabel ?? "", c1.code, ct, { size: 8.6, font: ctx.bold });
+  ct += 16;
+  const [u, gu, pts] = (s.extra.cumTotals ?? "").split("|");
+  text(ctx, "Cum Totals", c1.desc + 30, ct, { size: 8 });
+  text(ctx, u ?? "", c1.units, ct, { size: 8, align: "right", width: 34 });
+  text(ctx, gu ?? "", c1.grade, ct, { size: 8, align: "right", width: 40 });
+  text(ctx, pts ?? "", c1.points, ct, { size: 8, align: "right", width: 34 });
+  ct += 20;
+  text(ctx, s.extra.endLine ?? "", c1.x, ct, { size: 8.6, font: ctx.bold, align: "center", width: 300 });
+
+  line(ctx, 25, 528, 767, 1.2);
+  text(ctx, `Date Printed: ${s.printDate}`, 25, 532, { size: 7.6, font: ctx.bold });
+  for (const [i, n] of s.notes.entries()) text(ctx, n, 25, 544 + i * 9, { size: 7.6 });
+  text(ctx, s.extra.stamp ?? "", 25, 566, { size: 17, font: timesBold });
+  text(ctx, s.officialTitle, 516, 532, { size: 7.4 });
+  text(ctx, s.officialName, 516, 541, { size: 7.4 });
+  await image(ctx, pdf, queensSig.url, 628, 526, 130);
+}
+
+// ------------------------------------------------------------------------ LSE
+
+async function lse(ctx: Ctx, pdf: PDFDocument, s: CredentialSpec, times: PDFFont, timesBold: PDFFont) {
+  const W = 595;
+  const M = 28;
+  const banner = (top: number) => {
+    text(ctx, s.extra.pageLabel ?? "", M, top, { size: 9, font: times });
+    text(ctx, s.extra.banner ?? "", 0, top, { size: 9, font: times, align: "center", width: W });
+    text(ctx, s.extra.pageLabel ?? "", W - M - 90, top, { size: 9, font: times, align: "right", width: 90 });
+  };
+  banner(12);
+  banner(824);
+
+  await image(ctx, pdf, lseLogo.url, 406, 39, 167);
+  text(ctx, "ACADEMIC TRANSCRIPT", 0, 121, { size: 10.5, font: timesBold, align: "center", width: W });
+
+  const pair = (l: string, v: string, x: number, vx: number, top: number) => {
+    text(ctx, l, x, top, { size: 9.5, font: times });
+    text(ctx, v, vx, top, { size: 9.5, font: timesBold });
+  };
+  pair("Name:", s.studentName, M, 94, 153);
+  pair("Date of Birth:", s.extra.dob ?? "", M, 94, 166);
+  pair("LSE ID No:", s.studentId, 215, 281, 166);
+  pair("UK Higher Education ID No:", s.extra.ukHeId ?? "", 377, 520, 166);
+
+  let t = 189;
+  for (const l of wrap(times, s.extra.statement ?? "", 9.5, 538)) {
+    text(ctx, l, M, t, { size: 9.5, font: times });
+    t += 12;
+  }
+
+  t = 225;
+  pair("Programme:", s.program, M, 108, t);
+  t += 13;
+  pair("Start Date:", s.startDate, M, 108, t);
+  pair("Completion Date:", s.endDate, 380, 480, t);
+  t += 13;
+  text(ctx, "Language of", M, t, { size: 9.5, font: times });
+  t += 13;
+  pair("institution:", s.extra.language ?? "", M, 108, t);
+  t += 22;
+  pair("Award:", s.credential, M, 108, t);
+  t += 13;
+  pair("Awarding Body:", s.extra.awardingBody ?? "", M, 108, t);
+  t += 13;
+  pair("Class:", s.extra.class ?? "", M, 108, t);
+  pair("Official Date of Award:", s.printDate, 355, 500, t);
+
+  const head = 344;
+  const cols: Array<[string, number, number, "left" | "center"]> = [
+    ["Session", M, 44, "left"],
+    ["Course", 72, 44, "left"],
+    ["Title", 121, 200, "left"],
+    ["Level", 428, 34, "center"],
+    ["Value", 466, 34, "center"],
+    ["Mark", 504, 34, "center"],
+    ["Grade", 538, 34, "center"],
+  ];
+  for (const [l, x, w, al] of cols) text(ctx, l, x, head, { size: 9.5, font: times, align: al, width: w });
+  line(ctx, M, head + 15, W - M, 0.8);
+
+  let rt = head + 22;
+  for (const c of s.courses) {
+    const [level, letter] = (c.extra ?? "").split("|");
+    text(ctx, c.code, M, rt, { size: 9.5, font: timesBold });
+    text(ctx, c.num ?? "", 72, rt, { size: 9.5, font: timesBold });
+    text(ctx, c.name, 121, rt, { size: 9.5, font: timesBold });
+    text(ctx, level ?? "", 428, rt, { size: 9.5, font: timesBold, align: "center", width: 34 });
+    text(ctx, c.credits ?? "", 466, rt, { size: 9.5, font: timesBold, align: "center", width: 34 });
+    text(ctx, c.grade, 504, rt, { size: 9.5, font: timesBold, align: "center", width: 34 });
+    text(ctx, letter ?? "", 538, rt, { size: 9.5, font: timesBold, align: "center", width: 34 });
+    rt += 12.6;
+  }
+
+  await image(ctx, pdf, lseSig.url, M, 505, 100);
+  await image(ctx, pdf, lseSeal.url, 412, 500, 92);
+  text(ctx, s.officialName, M, 583, { size: 9.5, font: times });
+  text(ctx, s.officialTitle, M, 596, { size: 9.5, font: times });
+  text(ctx, `Issued and signed on:   ${s.issueDate}`, 340, 583, { size: 9.5, font: times, align: "right", width: 227 });
+  text(ctx, "Page 1", 480, 812, { size: 7.6, font: times, align: "right", width: 87 });
+}
+
+// -------------------------------------------------------------------- Fleming
+
+async function fleming(ctx: Ctx, pdf: PDFDocument, s: CredentialSpec) {
+  const W = 612;
+  const green = "#1f5c45";
+  const M = 50;
+  text(ctx, s.institution, M, 56, { size: 19, font: ctx.bold, color: green });
+  line(ctx, M, 82, 190, 0.8, "#8fae9f");
+  text(ctx, (s.extra.tagline ?? "LEARN  |  BELONG  |  BECOME").split("").join(" ").replace(/\s{3,}/g, "   "), M, 88, {
+    size: 5.6,
+    color: "#7c8c86",
+  });
+  text(ctx, s.extra.pageLabel ?? "", 440, 52, { size: 9, align: "right", width: 122 });
+
+  text(ctx, s.extra.title ?? "Unofficial Transcript", 0, 124, { size: 10.5, font: ctx.bold, align: "center", width: W });
+
+  const pair = (l: string, v: string, top: number, bold = false) => {
+    text(ctx, l, M, top, { size: 9, font: bold ? ctx.bold : ctx.reg });
+    text(ctx, v, 152, top, { size: 9, font: bold ? ctx.bold : ctx.reg });
+  };
+  pair("Name:", s.studentName, 138, true);
+  pair("Student ID:", s.studentId, 150, true);
+
+  text(ctx, "Student Address:", M, 170, { size: 9 });
+  let at = 170;
+  for (const l of s.studentAddress) {
+    text(ctx, l, 152, at, { size: 9 });
+    at += 12;
+  }
+  pair("Print Date:", s.printDate, at);
+
+  text(ctx, "Degrees Awarded", 0, at + 24, { size: 9.5, align: "center", width: W });
+  let dt = at + 46;
+  pair("Degree:", s.credential, dt);
+  dt += 12;
+  pair("Confer Date:", s.endDate, dt);
+  dt += 12;
+  pair("Plan:", s.plan, dt);
+
+  let t = dt + 28;
+  text(ctx, "Beginning of Credit Record", 0, t, { size: 9.5, font: ctx.bold, align: "center", width: W });
+  t += 26;
+
+  const under = (label: string, x: number, top: number, align: "left" | "right" = "left", w = 0) => {
+    text(ctx, label, x, top, { size: 9, align, width: w });
+    const tw = ctx.reg.widthOfTextAtSize(label, 9);
+    const sx = align === "right" ? x + w - tw : x;
+    line(ctx, sx, top + 10.4, sx + tw, 0.5);
+  };
+
+  let needHeader = false;
+  for (const row of s.courses) {
+    if (row.code === TERM_ROW) {
+      const [bold, rest] = [row.name.split(" (")[0], row.name.includes("(") ? ` (${row.name.split(" (")[1]}` : ""];
+      const bw = ctx.bold.widthOfTextAtSize(clean(bold), 9.5);
+      const rw = ctx.reg.widthOfTextAtSize(clean(rest), 9.5);
+      const sx = (W - bw - rw) / 2;
+      text(ctx, bold, sx, t, { size: 9.5, font: ctx.bold });
+      text(ctx, rest, sx + bw, t, { size: 9.5 });
+      t += 22;
+      text(ctx, "Program:", M, t, { size: 9 });
+      text(ctx, s.program, 152, t, { size: 9 });
+      t += 18;
+      needHeader = true;
+      continue;
+    }
+    if (row.code === GPA_ROW) {
+      t += 12;
+      text(ctx, "Term GPA", M, t, { size: 9 });
+      text(ctx, row.name, 178, t, { size: 9 });
+      t += 26;
+      continue;
+    }
+    if (needHeader) {
+      under("Course", M, t);
+      under("Description", 152, t);
+      under("Earned", 420, t, "right", 60);
+      under("Grade", 494, t, "right", 44);
+      t += 14;
+      needHeader = false;
+    }
+    text(ctx, row.code, M, t, { size: 9 });
+    text(ctx, row.num ?? "", 105, t, { size: 9, align: "right", width: 26 });
+    text(ctx, row.name, 152, t, { size: 9 });
+    text(ctx, row.credits ?? "", 420, t, { size: 9, align: "right", width: 60 });
+    text(ctx, row.grade, 494, t, { size: 9, align: "right", width: 44 });
+    t += 12;
+  }
+
+  text(ctx, "Credit Career Totals", M, t, { size: 9, font: ctx.bold });
+  t += 20;
+  text(ctx, `${s.averageLabel}: ${s.average}   ${s.program}`, M, t, { size: 9 });
+  t += 18;
+  text(ctx, s.extra.endLine ?? "End of Unofficial Transcript", 0, t, {
+    size: 15,
+    font: ctx.bold,
+    align: "center",
+    width: W,
+  });
 }
