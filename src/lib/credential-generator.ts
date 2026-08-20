@@ -49,7 +49,7 @@ const clean = (t: string) =>
     .replace(/[\u2018\u2019]/g, "'")
     .replace(/[\u201c\u201d]/g, '"')
     .replace(/\u2013/g, "-")
-    .replace(/\u2014/g, "--")
+    .replace(/\u2014/g, "-")
     .replace(/[^\x20-\x7E]/g, "");
 
 interface Ctx {
@@ -371,12 +371,12 @@ async function york(ctx: Ctx, pdf: PDFDocument, s: CredentialSpec) {
   mono(`${s.term}`, true);
   mono(`${s.program}`);
   t += 4;
-  mono("Course       Description                              Grade  Units   Class Info");
+  mono("Course          Description                             Grade  Units   Class Info");
   line(ctx, M, t - 2, W - M, 0.5);
   t += 3;
   for (const c of s.courses) {
     const code = `${c.code} ${c.num ?? ""}`.padEnd(16).slice(0, 16);
-    const name = clean(c.name).replace(/\s+/g, " ").padEnd(38).slice(0, 38);
+    const name = clean(c.name).replace(/\s+/g, " ").padEnd(40).slice(0, 40);
     const grade = clean(c.grade).padEnd(6).slice(0, 6);
     const units = clean(c.credits ?? "").padStart(5);
     mono(`${code}${name}${grade}${units}   ${c.extra ?? ""}`);
@@ -388,7 +388,7 @@ async function york(ctx: Ctx, pdf: PDFDocument, s: CredentialSpec) {
   t += 4;
   mono("End of Official Transcript", true);
 
-  await image(ctx, pdf, sigYork.url, 400, 660, 130);
+  await image(ctx, pdf, sigYork.url, 415, 650, 118, 46);
   line(ctx, 380, 700, 560, 0.6);
   const titleLines = (s.officialTitle || "").split("\n");
   text(ctx, s.officialName, 380, 704, { size: 7, align: "center", width: 180 });
