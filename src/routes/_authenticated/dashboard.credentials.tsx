@@ -24,6 +24,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { generateCredentialPdf } from "@/lib/credential-generator";
+import { PdfBlobPreview } from "@/components/pdf-blob-preview";
 import {
   DESIGNS,
   DEFAULT_DATE_OPTIONS,
@@ -79,6 +80,7 @@ function CredentialsStudio() {
   const [gradeOpts, setGradeOpts] = useState<GradeRandomOptions>(DEFAULT_GRADE_OPTIONS);
   const [dateOpts, setDateOpts] = useState<DateRandomOptions>(DEFAULT_DATE_OPTIONS);
   const [url, setUrl] = useState<string>("");
+  const [previewBlob, setPreviewBlob] = useState<Blob | null>(null);
   const [busy, setBusy] = useState(false);
   const [saving, setSaving] = useState(false);
   const [templates, setTemplates] = useState<SavedTemplate[]>([]);
@@ -108,6 +110,7 @@ function CredentialsStudio() {
       setBusy(true);
       try {
         const blob = await generateCredentialPdf(spec);
+        setPreviewBlob(blob);
         const next = URL.createObjectURL(blob);
         if (lastUrl.current) URL.revokeObjectURL(lastUrl.current);
         lastUrl.current = next;
@@ -580,15 +583,16 @@ function CredentialsStudio() {
               </span>
               {busy && <span className="text-[11px] text-gold">rendering…</span>}
             </div>
-            <div className="bg-white rounded-xl overflow-hidden" style={{ aspectRatio: `${meta.pageW} / ${meta.pageH}` }}>
-              {url && (
-                <iframe
-                  key={meta.key}
-                  title="Credential preview"
-                  src={`${url}#toolbar=0&navpanes=0&view=FitH`}
-                  className="w-full h-full"
-                />
-              )}
+            <div className="bg-white rounded-xl overflow-hidden">
+              <PdfBlobPreview key={meta.key} blob={previewBlob} aspect={meta.pageW / meta.pageH} />
+            </div>
+            <div className="flex items-center gap-2 mt-2 px-1">
+              <Button size="sm" variant="outline" onClick={() => url && window.open(url, "_blank")}>
+                Open full size
+              </Button>
+              <Button size="sm" onClick={download}>
+                <Download className="w-3.5 h-3.5 mr-1.5" /> Download PDF
+              </Button>
             </div>
           </div>
         </div>
