@@ -53,6 +53,10 @@ export function DashboardSidebar() {
     { icon: Sliders, label: "OSAP Settings", to: "/dashboard/osap/settings" as const },
   ];
 
+  const credentialNav = [
+    { icon: GraduationCap, label: "Transcript / Diploma", to: "/dashboard/credentials" as const },
+  ];
+
   const handleLogout = async () => {
     setLoading(true);
     await queryClient.cancelQueries();

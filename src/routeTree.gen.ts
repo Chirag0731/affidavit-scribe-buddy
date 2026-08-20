@@ -16,6 +16,7 @@ import { Route as AuthenticatedDashboardRouteImport } from './routes/_authentica
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
 import { Route as AuthenticatedDashboardSettingsRouteImport } from './routes/_authenticated/dashboard.settings'
 import { Route as AuthenticatedDashboardSavedRouteImport } from './routes/_authenticated/dashboard.saved'
+import { Route as AuthenticatedDashboardCredentialsRouteImport } from './routes/_authenticated/dashboard.credentials'
 import { Route as AuthenticatedDashboardOsapIndexRouteImport } from './routes/_authenticated/dashboard.osap.index'
 import { Route as AuthenticatedDashboardOsapSettingsRouteImport } from './routes/_authenticated/dashboard.osap.settings'
 import { Route as AuthenticatedDashboardOsapImportExportRouteImport } from './routes/_authenticated/dashboard.osap.import-export'
@@ -63,6 +64,12 @@ const AuthenticatedDashboardSavedRoute =
   AuthenticatedDashboardSavedRouteImport.update({
     id: '/saved',
     path: '/saved',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardCredentialsRoute =
+  AuthenticatedDashboardCredentialsRouteImport.update({
+    id: '/credentials',
+    path: '/credentials',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardOsapIndexRoute =
@@ -136,6 +143,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/dashboard/credentials': typeof AuthenticatedDashboardCredentialsRoute
   '/dashboard/saved': typeof AuthenticatedDashboardSavedRoute
   '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/dashboard/': typeof AuthenticatedDashboardIndexRoute
@@ -154,6 +162,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/dashboard/credentials': typeof AuthenticatedDashboardCredentialsRoute
   '/dashboard/saved': typeof AuthenticatedDashboardSavedRoute
   '/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/dashboard': typeof AuthenticatedDashboardIndexRoute
@@ -175,6 +184,7 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRouteWithChildren
+  '/_authenticated/dashboard/credentials': typeof AuthenticatedDashboardCredentialsRoute
   '/_authenticated/dashboard/saved': typeof AuthenticatedDashboardSavedRoute
   '/_authenticated/dashboard/settings': typeof AuthenticatedDashboardSettingsRoute
   '/_authenticated/dashboard/': typeof AuthenticatedDashboardIndexRoute
@@ -196,6 +206,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/dashboard'
+    | '/dashboard/credentials'
     | '/dashboard/saved'
     | '/dashboard/settings'
     | '/dashboard/'
@@ -214,6 +225,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/dashboard/credentials'
     | '/dashboard/saved'
     | '/dashboard/settings'
     | '/dashboard'
@@ -234,6 +246,7 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/_authenticated/dashboard'
+    | '/_authenticated/dashboard/credentials'
     | '/_authenticated/dashboard/saved'
     | '/_authenticated/dashboard/settings'
     | '/_authenticated/dashboard/'
@@ -305,6 +318,13 @@ declare module '@tanstack/react-router' {
       path: '/saved'
       fullPath: '/dashboard/saved'
       preLoaderRoute: typeof AuthenticatedDashboardSavedRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/credentials': {
+      id: '/_authenticated/dashboard/credentials'
+      path: '/credentials'
+      fullPath: '/dashboard/credentials'
+      preLoaderRoute: typeof AuthenticatedDashboardCredentialsRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
     '/_authenticated/dashboard/osap/': {
@@ -388,6 +408,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedDashboardRouteChildren {
+  AuthenticatedDashboardCredentialsRoute: typeof AuthenticatedDashboardCredentialsRoute
   AuthenticatedDashboardSavedRoute: typeof AuthenticatedDashboardSavedRoute
   AuthenticatedDashboardSettingsRoute: typeof AuthenticatedDashboardSettingsRoute
   AuthenticatedDashboardIndexRoute: typeof AuthenticatedDashboardIndexRoute
@@ -406,6 +427,8 @@ interface AuthenticatedDashboardRouteChildren {
 
 const AuthenticatedDashboardRouteChildren: AuthenticatedDashboardRouteChildren =
   {
+    AuthenticatedDashboardCredentialsRoute:
+      AuthenticatedDashboardCredentialsRoute,
     AuthenticatedDashboardSavedRoute: AuthenticatedDashboardSavedRoute,
     AuthenticatedDashboardSettingsRoute: AuthenticatedDashboardSettingsRoute,
     AuthenticatedDashboardIndexRoute: AuthenticatedDashboardIndexRoute,
