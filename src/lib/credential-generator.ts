@@ -680,7 +680,7 @@ async function phoenix(ctx: Ctx, pdf: PDFDocument, s: CredentialSpec, times: PDF
     ["Credits", "Attempted", 430, 52],
     ["Credits", "Earned", 484, 46],
     ["Quality", "Points", 524, 42],
-    ["Rep", "", 570, 22],
+    ["Rep", "", 556, 22],
   ];
   for (const [h1, h2, x, w] of heads) {
     text(ctx, h1, x, headTop, { size: 8.6, font: ctx.boldItalic, align: "center", width: w });
@@ -755,6 +755,7 @@ async function queens(ctx: Ctx, pdf: PDFDocument, s: CredentialSpec, times: PDFF
   const nextCol = () => {
     col = Math.min(col + 1, 1);
     t = TOP;
+    needHeader = true;
   };
   const advance = (n = 1) => {
     t += LH * n;
