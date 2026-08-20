@@ -2,7 +2,21 @@
 
 export type CredentialKind = "transcript" | "diploma";
 
-export type DesignKey = "sheridan" | "niit" | "york" | "marca" | "fernourt" | "cdi";
+export type DesignKey =
+  | "sheridan"
+  | "niit"
+  | "york"
+  | "marca"
+  | "fernourt"
+  | "cdi"
+  | "phoenix"
+  | "queens"
+  | "lse"
+  | "fleming";
+
+/** Rows whose `code` equals one of these act as section markers, not courses. */
+export const TERM_ROW = "#TERM";
+export const GPA_ROW = "#GPA";
 
 export type GradeMode = "letter" | "percent" | "none";
 
