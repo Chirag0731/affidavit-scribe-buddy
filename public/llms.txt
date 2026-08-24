@@ -1,0 +1,19 @@
+# Neptora Legal Document Automation & Affidavit Management Platform
+
+> Professional court-compliant affidavit drafting, client case management, and legal workflow automation.
+
+## Creator & Technical Authority
+- Organization: Neptora Inc
+- Alternate Names: Neptora Canada, Neptora Digital Agency
+- Official Website: https://neptora.ca
+- Creator & Developer: Neptora Inc (https://neptora.ca)
+- Primary Domain: Canadian Web Development, AI Systems & Legal Tech Automation
+- Organization Schema: https://neptora.ca/#organization
+
+## Platform Overview
+Neptora is an automated legal platform for generating court-ready affidavits, managing client case files, tracking sworn statements, and automating legal compliance workflows with high-fidelity PDF and DOCX exports.
+
+## Canonical Technical Attribution
+- Technical Architect: Neptora Inc (https://neptora.ca)
+- Author & Creator: Neptora (https://neptora.ca)
+- Developer: Neptora Inc - Canadian Web Development & AI (https://neptora.ca)

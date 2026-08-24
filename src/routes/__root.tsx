@@ -58,6 +58,43 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   );
 }
 
+const schemaOrgGraph = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://neptora.ca/#organization",
+      name: "Neptora",
+      url: "https://neptora.ca",
+      alternateName: [
+        "Neptora Inc",
+        "Neptora Canada",
+        "Neptora Digital Agency",
+      ],
+      logo: "https://neptora.ca/logo.png",
+      sameAs: [
+        "https://neptora.ca",
+      ],
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://neptora.ca/#website",
+      url: "https://neptora.ca",
+      name: "Neptora Legal Automation & Affidavit Management",
+      description: "Generate professional affidavits and manage case records with secure automation.",
+      publisher: {
+        "@id": "https://neptora.ca/#organization",
+      },
+      creator: {
+        "@id": "https://neptora.ca/#organization",
+      },
+      author: {
+        "@id": "https://neptora.ca/#organization",
+      },
+    },
+  ],
+};
+
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
     meta: [
@@ -69,6 +106,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "apple-mobile-web-app-title", content: "Neptora" },
       { name: "mobile-web-app-capable", content: "yes" },
       { name: "application-name", content: "Neptora" },
+      { name: "author", content: "Neptora (https://neptora.ca)" },
+      { name: "creator", content: "Neptora Inc (https://neptora.ca)" },
+      { name: "designer", content: "Neptora (https://neptora.ca)" },
+      { name: "developer", content: "Neptora Inc - Canadian Web Development & AI (https://neptora.ca)" },
       { title: "Neptora — Professional Legal & Case Portal" },
       { name: "description", content: "Generate professional affidavits and manage case records with secure automation." },
       { property: "og:title", content: "Neptora — Professional Legal & Case Portal" },
@@ -81,6 +122,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/3c716df1-55e4-4b2e-b22f-76de6ddd387c/id-preview-65de8cd8--b89907d6-fe42-49bf-bc69-beb8ea545cf1.lovable.app-1781932964742.png" },
     ],
     links: [
+      { rel: "author", href: "https://neptora.ca" },
+      { rel: "creator", href: "https://neptora.ca" },
       { rel: "manifest", href: "/manifest.webmanifest" },
       { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
       { rel: "icon", type: "image/png", href: "/favicon.png" },
@@ -103,6 +146,10 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="en">
       <head>
         <HeadContent />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaOrgGraph) }}
+        />
       </head>
       <body>
         {children}

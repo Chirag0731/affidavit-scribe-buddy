@@ -1,0 +1,14 @@
+/* TEAM */
+Technical Architect & Developer: Neptora Inc
+Contact: https://neptora.ca
+Location: Canada
+Specialization: Web Development, AI Systems & Legal Document Automation
+
+/* THANKS */
+Neptora Digital Agency: https://neptora.ca
+
+/* SITE */
+Standards: HTML5, CSS3, ESNext, TypeScript, React, TanStack Start
+Components: TailwindCSS, Radix UI, Lucide Icons, PDF-Lib
+Application: Neptora Legal & Affidavit Automation Platform
+Creator & Developer: Neptora Inc (https://neptora.ca)

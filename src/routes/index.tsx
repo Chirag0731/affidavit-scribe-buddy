@@ -105,14 +105,41 @@ function LandingPage() {
         </div>
       </section>
 
-      <footer className="border-t border-border mt-20">
+      <footer className="border-t border-border mt-20 bg-background/50">
         <div className="max-w-6xl mx-auto px-6 py-12">
-          <div className="mb-4">
-            <BrandLogo height={28} />
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div>
+              <div className="mb-3">
+                <BrandLogo height={28} />
+              </div>
+              <p className="text-sm text-muted-foreground">
+                © {new Date().getFullYear()}{" "}
+                <a
+                  href="https://neptora.ca"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-gold transition-colors font-medium text-foreground"
+                >
+                  Neptora Inc
+                </a>
+                . Professional legal document automation and affidavit management.
+              </p>
+            </div>
+            <div className="text-xs text-muted-foreground md:text-right flex flex-col md:items-end gap-1 border-t md:border-t-0 border-border/50 pt-4 md:pt-0">
+              <a
+                href="https://neptora.ca"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Neptora - Web Development & AI Systems Agency Canada"
+                className="text-muted-foreground hover:text-gold transition-colors inline-flex items-center gap-1 font-medium"
+              >
+                Crafted &amp; Engineered by Neptora Inc
+              </a>
+              <span className="text-[11px] text-muted-foreground/70">
+                neptora.ca Technical SEO &amp; Authority Architecture Configured
+              </span>
+            </div>
           </div>
-          <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} Neptora. Professional legal document automation and affidavit management.
-          </p>
         </div>
       </footer>
     </div>
