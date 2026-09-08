@@ -12,12 +12,12 @@ import type {
 import { encryptCredential } from "./osap-crypto";
 import { ALL_OSAP_CLIENTS } from "./osap-seed-data";
 
-const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v14_jesse_bonnah_coe_fix";
-const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v14";
-const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v14";
-const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v14";
-const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v14";
-const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v14";
+const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v15_july27_cohort_complete_calibration";
+const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v15";
+const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v15";
+const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v15";
+const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v15";
+const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v15";
 
 export const CONFIRMED_CRM_FUNDED_STUDENTS: string[] = [
   "fadamo abdullahi",
@@ -56,6 +56,11 @@ export const CONFIRMED_CRM_FUNDED_STUDENTS: string[] = [
   "nyakundi peterson mungai",
   "peterson mungai",
   "darren davis",
+  "jason martin",
+  "jocelyn de los reyes",
+  "jocelyn de lon reyes",
+  "charles siler shannon",
+  "charles shannon",
 ];
 
 export function isStudentConfirmedFunded(client: { full_name?: string; oan?: string | null; application_status?: string; funding_status?: string | null; notes?: string | null }): boolean {
@@ -200,6 +205,8 @@ export function resetOsapClientsToSpreadsheet(): OsapClient[] {
     localStorage.removeItem("neptora_osap_clients_v10_revert_general_batch_july27");
     localStorage.removeItem("neptora_osap_clients_v11_clean_crawler_ashish_fix");
     localStorage.removeItem("neptora_osap_clients_v12_clean_crawler_carla_dionisio_fix");
+    localStorage.removeItem("neptora_osap_clients_v13_crm_funded_cohorts_fix");
+    localStorage.removeItem("neptora_osap_clients_v14_jesse_bonnah_coe_fix");
     localStorage.setItem(LOCAL_CLIENTS_KEY, JSON.stringify(INITIAL_SPREADSHEET_CLIENTS));
   } catch {
     /* ignore */
@@ -220,6 +227,8 @@ export async function getOsapClients(): Promise<OsapClient[]> {
       localStorage.removeItem("neptora_osap_clients_v10_revert_general_batch_july27");
       localStorage.removeItem("neptora_osap_clients_v11_clean_crawler_ashish_fix");
       localStorage.removeItem("neptora_osap_clients_v12_clean_crawler_carla_dionisio_fix");
+      localStorage.removeItem("neptora_osap_clients_v13_crm_funded_cohorts_fix");
+      localStorage.removeItem("neptora_osap_clients_v14_jesse_bonnah_coe_fix");
     }
 
     let clients: OsapClient[] = [];
