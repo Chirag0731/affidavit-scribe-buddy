@@ -329,7 +329,10 @@ export async function generateBatchAuditSessionPdf(report: OsapBatchSessionRepor
 
   // Action Required Follow-Up Section
   const pendingBlockers = report.items.filter(
-    (i) => i.client.action_required || i.client.msfaa_status !== "submitted" || i.client.notes?.toLowerCase().includes("discrepancy")
+    (i) =>
+      i.client.action_required ||
+      (i.client.msfaa_status !== "submitted" && i.client.msfaa_status !== "completed") ||
+      i.client.notes?.toLowerCase().includes("discrepancy")
   );
 
   if (pendingBlockers.length > 0) {
@@ -346,7 +349,8 @@ export async function generateBatchAuditSessionPdf(report: OsapBatchSessionRepor
 
     pendingBlockers.slice(0, 20).forEach((b) => {
       checkPageBreak(15);
-      const blockerReason = b.client.action_required_summary || b.client.notes || (b.client.msfaa_status !== "submitted" ? "Pending MSFAA Agreement with NSLSC" : "Action Required");
+      const isMsfaaPending = b.client.msfaa_status !== "submitted" && b.client.msfaa_status !== "completed";
+      const blockerReason = b.client.action_required_summary || b.client.notes || (isMsfaaPending ? "Pending MSFAA Agreement with NSLSC" : "Action Required");
       const cleanReason = sanitizeText(blockerReason).slice(0, 80);
 
       currentPage.drawText(`• ${b.client.full_name}: `, {

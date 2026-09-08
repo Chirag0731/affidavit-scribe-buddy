@@ -92,7 +92,7 @@ function OsapDocumentsPage() {
     }
   };
 
-  const pendingMsfaaClients = allClients.filter((c) => c.msfaa_status !== "submitted");
+  const pendingMsfaaClients = allClients.filter((c) => c.msfaa_status !== "submitted" && c.msfaa_status !== "completed");
 
   const filteredDocs = documents.filter((d) => {
     const client = clientsMap[d.client_id];
@@ -118,8 +118,8 @@ function OsapDocumentsPage() {
       if (!match) return false;
     }
     if (batchFilter !== "all" && (c.batch_name || "General Batch") !== batchFilter) return false;
-    if (msfaaFilter === "pending" && c.msfaa_status === "submitted") return false;
-    if (msfaaFilter === "submitted" && c.msfaa_status !== "submitted") return false;
+    if (msfaaFilter === "pending" && (c.msfaa_status === "submitted" || c.msfaa_status === "completed")) return false;
+    if (msfaaFilter === "submitted" && c.msfaa_status !== "submitted" && c.msfaa_status !== "completed") return false;
     return true;
   });
 
@@ -233,7 +233,7 @@ function OsapDocumentsPage() {
                   </thead>
                   <tbody className="divide-y divide-border">
                     {filteredMsfaaClients.map((c) => {
-                      const isPending = c.msfaa_status !== "submitted";
+                      const isPending = c.msfaa_status !== "submitted" && c.msfaa_status !== "completed";
                       return (
                         <tr key={c.id} className="hover:bg-muted/20 transition-smooth">
                           <td className="p-4 font-medium text-foreground">

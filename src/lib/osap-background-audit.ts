@@ -234,7 +234,7 @@ class OsapBackgroundAuditManager {
       createdAt: new Date().toISOString(),
       totalAudited: targetList.length,
       updatedCount: sessionItems.filter((i) => i.status === "success" || i.client.application_status === "completed").length,
-      pendingMsfaaCount: sessionItems.filter((i) => i.client.msfaa_status !== "submitted").length,
+      pendingMsfaaCount: sessionItems.filter((i) => i.client.msfaa_status !== "submitted" && i.client.msfaa_status !== "completed").length,
       holdCount: sessionItems.filter((i) => i.client.batch_name === "Hold" || i.client.notes?.toLowerCase().includes("discrepancy")).length,
       fundedCount: sessionItems.filter((i) => i.client.application_status === "completed" || i.client.application_status === "funded").length,
       items: sessionItems,

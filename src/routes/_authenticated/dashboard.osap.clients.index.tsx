@@ -271,9 +271,9 @@ function OsapClientsPage() {
 
       // MSFAA filtering
       if (msfaaFilter === "pending") {
-        if (c.msfaa_status === "submitted") return false;
+        if (c.msfaa_status === "submitted" || c.msfaa_status === "completed") return false;
       } else if (msfaaFilter === "submitted") {
-        if (c.msfaa_status !== "submitted") return false;
+        if (c.msfaa_status !== "submitted" && c.msfaa_status !== "completed") return false;
       } else if (msfaaFilter !== "all" && c.msfaa_status !== msfaaFilter) {
         return false;
       }
@@ -304,7 +304,7 @@ function OsapClientsPage() {
     }
   };
 
-  const pendingMsfaaClients = useMemo(() => clients.filter((c) => c.msfaa_status !== "submitted"), [clients]);
+  const pendingMsfaaClients = useMemo(() => clients.filter((c) => c.msfaa_status !== "submitted" && c.msfaa_status !== "completed"), [clients]);
   const holdDiscrepancyClients = useMemo(() => clients.filter((c) => c.batch_name === "Hold" || c.notes?.toLowerCase().includes("discrepancy")), [clients]);
 
   return (
@@ -924,11 +924,11 @@ function OsapClientsPage() {
                   <div className="flex items-center gap-4 text-xs text-muted-foreground mt-1 flex-wrap">
                     <span className="flex items-center gap-1.5">
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                      <span>MSFAA Submitted: <strong className="text-emerald-400">{filteredClients.filter((c) => c.msfaa_status === "submitted").length}</strong></span>
+                      <span>MSFAA Submitted: <strong className="text-emerald-400">{filteredClients.filter((c) => c.msfaa_status === "submitted" || c.msfaa_status === "completed").length}</strong></span>
                     </span>
                     <span className="flex items-center gap-1.5">
                       <Clock className="w-3.5 h-3.5 text-amber-400" />
-                      <span>MSFAA Pending: <strong className="text-amber-400">{filteredClients.filter((c) => c.msfaa_status !== "submitted").length}</strong></span>
+                      <span>MSFAA Pending: <strong className="text-amber-400">{filteredClients.filter((c) => c.msfaa_status !== "submitted" && c.msfaa_status !== "completed").length}</strong></span>
                     </span>
                     <span className="flex items-center gap-1.5">
                       <Coins className="w-3.5 h-3.5 text-emerald-400" />
