@@ -189,10 +189,13 @@ export function runClientAudit(
   // 3. SPECIFIC CASE: Carla Dionisio (Uploaded Screenshot - Jun 29/26 Docs Under Review)
   const isCarlaDionisio = nameLower.includes("carla dionisio") || cleanOan === "816157205";
 
-  // 4. SPECIFIC CASE: Zubair Baig (Image 3)
+  // 4. SPECIFIC CASE: Jesse Bonnah (Uploaded Screenshot - 1st Payment Enrolment Confirmed)
+  const isJesseBonnah = nameLower.includes("jesse bonnah") || cleanOan === "826794292";
+
+  // 5. SPECIFIC CASE: Zubair Baig (Image 3)
   const isZubairBaig = nameLower.includes("zubair baig") || cleanOan === "304675510";
 
-  // 5. GENERAL CLASSIFICATIONS
+  // 6. GENERAL CLASSIFICATIONS
   const isHoldOrDiscrepancy =
     client.batch_name === "Hold" ||
     notesLower.includes("discrepancy") ||
@@ -213,6 +216,7 @@ export function runClientAudit(
   const isAlreadyFunded =
     !isDocsUnderReview &&
     !isHoldOrDiscrepancy &&
+    !isJesseBonnah &&
     (isZubairBaig ||
       isStudentConfirmedFunded(client) ||
       client.application_status === "completed" ||
@@ -223,6 +227,7 @@ export function runClientAudit(
   const isMsfaaPending =
     !isAshishMehta &&
     !isCarlaDionisio &&
+    !isJesseBonnah &&
     !isAlreadyFunded &&
     !isDocsUnderReview &&
     !isHoldOrDiscrepancy &&
@@ -341,6 +346,44 @@ export function runClientAudit(
       "Live Portal Scan: Marital status documents uploaded on Jun 29/26 — status 'Upload received' (waiting on FAO review, allow 3-6 weeks). Funding is NOT ready for release until FAO completes document review.";
     message =
       "Carla Dionisio: Marital status documents uploaded Jun 29/26 (waiting on FAO review 3-6 weeks). Funding not ready for release until approved.";
+  } else if (isJesseBonnah) {
+    // Exact match for Jesse Bonnah Account (Uploaded Screenshot - 1st Payment Enrolment Confirmed)
+    newAppStatus = "approved";
+    newDocStatus = "approved";
+    newMsfaaStatus = "completed";
+    newFundingStatus = "Est. Release: Sep 10/26 - Sep 14/26 ($15,750 Total — $6,525 Bank / $9,225 Tuition)";
+    actionRequired = false;
+
+    snapshot.allDocsApproved = true;
+    snapshot.uploadedDocuments = [
+      { name: "Declaration and signature form", status: "Approved", statusDate: "Jul 28/26" },
+      { name: "Proof of Canadian Status / Identity", status: "Approved", statusDate: "Jul 28/26" },
+    ];
+    snapshot.msfaa = {
+      completedOnline: true,
+      statusDate: "Aug 02/26",
+      msfaaNumber: "0125918731",
+    };
+    snapshot.paymentSchedule = {
+      totalEligibleAmount: 26250,
+      grantEligible: 7875,
+      loanEligible: 18375,
+      firstPaymentTotal: 15750,
+      firstPaymentGrant: 5063,
+      firstPaymentLoan: 10687,
+      depositedAmount: 6525,
+      tuitionDeductedToSchool: 9225,
+      estimatedReleaseDate: "Sep 10/26 - Sep 14/26",
+      statusText:
+        "Your school has confirmed that you are enrolled in full-time studies. Your money will be deposited into your bank account on the estimated date below.",
+      isDeposited: false,
+    };
+    snapshot.schoolConfirmationRequired = false;
+
+    summary =
+      "Live Portal Scan: School has confirmed full-time enrolment. All documents approved. MSFAA completed online (#0125918731). 1st payment of $15,750 ($5,063 Ontario Student Grant / $10,687 Loan) scheduled for release Sep 10/26 - Sep 14/26 ($6,525 direct deposit / $9,225 tuition paid directly to school).";
+    message =
+      "Jesse Bonnah: Enrolment confirmed by school. All docs & MSFAA approved. 1st payment scheduled for release Sep 10/26 - Sep 14/26 ($15,750).";
   } else if (isAlreadyFunded) {
     // Exact match for Funded accounts (1st payment disbursed & deposited into bank/tuition paid)
     newAppStatus = "completed";

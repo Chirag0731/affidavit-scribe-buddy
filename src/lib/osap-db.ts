@@ -12,12 +12,12 @@ import type {
 import { encryptCredential } from "./osap-crypto";
 import { ALL_OSAP_CLIENTS } from "./osap-seed-data";
 
-const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v13_crm_funded_cohorts_fix";
-const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v13";
-const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v13";
-const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v13";
-const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v13";
-const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v13";
+const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v14_jesse_bonnah_coe_fix";
+const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v14";
+const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v14";
+const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v14";
+const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v14";
+const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v14";
 
 export const CONFIRMED_CRM_FUNDED_STUDENTS: string[] = [
   "fadamo abdullahi",
@@ -102,6 +102,7 @@ export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS
     const nameLower = c.full_name.toLowerCase();
     const isAshishMehta = nameLower.includes("ashish mehta") || c.oan === "826915448";
     const isCarlaDionisio = nameLower.includes("carla dionisio") || c.oan === "816157205";
+    const isJesseBonnah = nameLower.includes("jesse bonnah") || c.oan === "826794292";
     const isZubairBaig = nameLower.includes("zubair baig") || c.oan === "304675510";
     const isMarkRodo = nameLower.includes("mark rodo") || c.oan === "826771036";
     const isFunded = isStudentConfirmedFunded(c);
@@ -127,6 +128,19 @@ export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS
         document_status: "under_review",
         msfaa_status: "completed",
         funding_status: "Under Assessment (Marital Status Docs Upload Received Jun 29/26 — FAO Review 3-6 Weeks)",
+        action_required: false,
+        action_required_summary: null,
+      };
+    }
+
+    if (isJesseBonnah) {
+      return {
+        ...c,
+        batch_name: "July 27th List",
+        application_status: "approved",
+        document_status: "approved",
+        msfaa_status: "completed",
+        funding_status: "Est. Release: Sep 10/26 - Sep 14/26 ($15,750 1st Payment — COE Confirmed)",
         action_required: false,
         action_required_summary: null,
       };
@@ -235,6 +249,7 @@ export async function getOsapClients(): Promise<OsapClient[]> {
         const nameLower = c.full_name.toLowerCase();
         const isAshishMehta = nameLower.includes("ashish mehta") || c.oan === "826915448";
         const isCarlaDionisio = nameLower.includes("carla dionisio") || c.oan === "816157205";
+        const isJesseBonnah = nameLower.includes("jesse bonnah") || c.oan === "826794292";
         const isZubairBaig = nameLower.includes("zubair baig") || c.oan === "304675510";
         const isMarkRodo = nameLower.includes("mark rodo") || c.oan === "826771036";
         const isFunded = isStudentConfirmedFunded(c);
@@ -260,6 +275,19 @@ export async function getOsapClients(): Promise<OsapClient[]> {
             document_status: "under_review" as const,
             msfaa_status: "completed" as const,
             funding_status: "Under Assessment (Marital Status Docs Upload Received Jun 29/26 — FAO Review 3-6 Weeks)",
+            action_required: false,
+            action_required_summary: null,
+          };
+        }
+
+        if (isJesseBonnah) {
+          return {
+            ...c,
+            batch_name: "July 27th List",
+            application_status: "approved" as const,
+            document_status: "approved" as const,
+            msfaa_status: "completed" as const,
+            funding_status: "Est. Release: Sep 10/26 - Sep 14/26 ($15,750 1st Payment — COE Confirmed)",
             action_required: false,
             action_required_summary: null,
           };
