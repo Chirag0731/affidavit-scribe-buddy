@@ -12,12 +12,12 @@ import type {
 import { encryptCredential } from "./osap-crypto";
 import { ALL_OSAP_CLIENTS } from "./osap-seed-data";
 
-const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v17_jesse_bonnah_msfaa_fixed";
-const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v17";
-const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v17";
-const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v17";
-const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v17";
-const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v17";
+const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v18_complete_portfolio_accuracy_cleanup";
+const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v18";
+const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v18";
+const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v18";
+const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v18";
+const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v18";
 
 export const CONFIRMED_CRM_FUNDED_STUDENTS: string[] = [
   "fadamo abdullahi",
@@ -101,21 +101,48 @@ export function resolveClientBatch(client: Partial<OsapClient>, fallbackId?: str
   return "July 27th List";
 }
 
+export function isInvalidStudentRow(c: Partial<OsapClient>): boolean {
+  const name = (c.full_name || "").trim().toLowerCase();
+  return (
+    name.length < 3 ||
+    /approved coe|hold might get removed|fao issues|^issues$|^removed$|start.*date|start.*end|form.*link|forms\.gle/i.test(name) ||
+    name.startsWith("https") ||
+    name === "form link" ||
+    name === "start end" ||
+    name === "issues"
+  );
+}
+
 export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS
-  .filter((c) => !/approved coe|hold might get removed|fao issues|^issues$|^removed$|start date.*end date/i.test(c.full_name.trim()))
+  .filter((c) => !isInvalidStudentRow(c))
   .map((c) => {
-    const properBatch = resolveClientBatch(c);
-    const nameLower = c.full_name.toLowerCase();
-    const isAshishMehta = nameLower.includes("ashish mehta") || c.oan === "826915448";
-    const isCarlaDionisio = nameLower.includes("carla dionisio") || c.oan === "816157205";
-    const isJesseBonnah = nameLower.includes("jesse bonnah") || c.oan === "826794292";
-    const isZubairBaig = nameLower.includes("zubair baig") || c.oan === "304675510";
-    const isMarkRodo = nameLower.includes("mark rodo") || c.oan === "826771036";
-    const isFunded = isStudentConfirmedFunded(c);
+    let cleanOan = c.oan ? c.oan.trim() : null;
+    let cleanEmail = c.email ? c.email.trim() : null;
+    if (cleanOan && (cleanOan.includes("@") || /\.(com|ca|net|org)/i.test(cleanOan))) {
+      if (!cleanEmail) cleanEmail = cleanOan;
+      cleanOan = null;
+    } else if (cleanOan && /reset|eset/i.test(cleanOan)) {
+      cleanOan = null;
+    }
+
+    const sanitizedClient: OsapClient = {
+      ...c,
+      oan: cleanOan,
+      email: cleanEmail,
+    };
+
+    const properBatch = resolveClientBatch(sanitizedClient);
+    const nameLower = sanitizedClient.full_name.toLowerCase();
+    const isAshishMehta = nameLower.includes("ashish mehta") || cleanOan === "826915448";
+    const isCarlaDionisio = nameLower.includes("carla dionisio") || cleanOan === "816157205";
+    const isJesseBonnah = nameLower.includes("jesse bonnah") || cleanOan === "826794292";
+    const isZubairBaig = nameLower.includes("zubair baig") || cleanOan === "304675510";
+    const isMarkRodo = nameLower.includes("mark rodo") || cleanOan === "826771036";
+    const isFunded = isStudentConfirmedFunded(sanitizedClient);
 
     if (isAshishMehta) {
       return {
-        ...c,
+        ...sanitizedClient,
         batch_name: "July 27th List",
         application_status: "documents_under_review",
         document_status: "under_review",
@@ -128,7 +155,7 @@ export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS
 
     if (isCarlaDionisio) {
       return {
-        ...c,
+        ...sanitizedClient,
         batch_name: "June 29th List",
         application_status: "documents_under_review",
         document_status: "under_review",
@@ -141,7 +168,7 @@ export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS
 
     if (isJesseBonnah) {
       return {
-        ...c,
+        ...sanitizedClient,
         batch_name: "July 27th List",
         application_status: "approved",
         document_status: "approved",
@@ -154,13 +181,13 @@ export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS
 
     if (isFunded) {
       return {
-        ...c,
+        ...sanitizedClient,
         batch_name: properBatch,
         application_status: "completed",
         document_status: "approved",
         msfaa_status: "completed",
-        funding_status: c.funding_status && /deposited|disbursed|paid|funded/i.test(c.funding_status)
-          ? c.funding_status
+        funding_status: sanitizedClient.funding_status && /deposited|disbursed|paid|funded/i.test(sanitizedClient.funding_status)
+          ? sanitizedClient.funding_status
           : isZubairBaig
           ? "Funded: $18,664 Deposited ($9,225 Tuition Paid directly to School)"
           : isMarkRodo
@@ -172,10 +199,10 @@ export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS
     }
 
     return {
-      ...c,
+      ...sanitizedClient,
       batch_name: properBatch,
-      msfaa_status: c.msfaa_status || "submitted",
-      action_required: c.action_required ?? false,
+      msfaa_status: sanitizedClient.msfaa_status || "submitted",
+      action_required: sanitizedClient.action_required ?? false,
     };
   });
 
@@ -210,6 +237,7 @@ export function resetOsapClientsToSpreadsheet(): OsapClient[] {
     localStorage.removeItem("neptora_osap_clients_v14_jesse_bonnah_coe_fix");
     localStorage.removeItem("neptora_osap_clients_v15_july27_cohort_complete_calibration");
     localStorage.removeItem("neptora_osap_clients_v16_july27_without_zubair_complete");
+    localStorage.removeItem("neptora_osap_clients_v17_jesse_bonnah_msfaa_fixed");
     localStorage.removeItem("neptora_active_audit_job_v1");
     localStorage.removeItem("neptora_latest_audit_session_v1");
     localStorage.setItem(LOCAL_CLIENTS_KEY, JSON.stringify(INITIAL_SPREADSHEET_CLIENTS));
@@ -236,6 +264,7 @@ export async function getOsapClients(): Promise<OsapClient[]> {
       localStorage.removeItem("neptora_osap_clients_v14_jesse_bonnah_coe_fix");
       localStorage.removeItem("neptora_osap_clients_v15_july27_cohort_complete_calibration");
       localStorage.removeItem("neptora_osap_clients_v16_july27_without_zubair_complete");
+      localStorage.removeItem("neptora_osap_clients_v17_jesse_bonnah_msfaa_fixed");
       localStorage.removeItem("neptora_active_audit_job_v1");
       localStorage.removeItem("neptora_latest_audit_session_v1");
     }
@@ -261,20 +290,35 @@ export async function getOsapClients(): Promise<OsapClient[]> {
 
     // Filter non-student header rows and sanitize
     const cleaned = clients
-      .filter((c) => !/approved coe|hold might get removed|fao issues|^issues$|^removed$|start date.*end date/i.test(c.full_name.trim()))
+      .filter((c) => !isInvalidStudentRow(c))
       .map((c) => {
-        const properBatch = resolveClientBatch(c);
-        const nameLower = c.full_name.toLowerCase();
-        const isAshishMehta = nameLower.includes("ashish mehta") || c.oan === "826915448";
-        const isCarlaDionisio = nameLower.includes("carla dionisio") || c.oan === "816157205";
-        const isJesseBonnah = nameLower.includes("jesse bonnah") || c.oan === "826794292";
-        const isZubairBaig = nameLower.includes("zubair baig") || c.oan === "304675510";
-        const isMarkRodo = nameLower.includes("mark rodo") || c.oan === "826771036";
-        const isFunded = isStudentConfirmedFunded(c);
+        let cleanOan = c.oan ? c.oan.trim() : null;
+        let cleanEmail = c.email ? c.email.trim() : null;
+        if (cleanOan && (cleanOan.includes("@") || /\.(com|ca|net|org)/i.test(cleanOan))) {
+          if (!cleanEmail) cleanEmail = cleanOan;
+          cleanOan = null;
+        } else if (cleanOan && /reset|eset/i.test(cleanOan)) {
+          cleanOan = null;
+        }
+
+        const sanitizedClient: OsapClient = {
+          ...c,
+          oan: cleanOan,
+          email: cleanEmail,
+        };
+
+        const properBatch = resolveClientBatch(sanitizedClient);
+        const nameLower = sanitizedClient.full_name.toLowerCase();
+        const isAshishMehta = nameLower.includes("ashish mehta") || cleanOan === "826915448";
+        const isCarlaDionisio = nameLower.includes("carla dionisio") || cleanOan === "816157205";
+        const isJesseBonnah = nameLower.includes("jesse bonnah") || cleanOan === "826794292";
+        const isZubairBaig = nameLower.includes("zubair baig") || cleanOan === "304675510";
+        const isMarkRodo = nameLower.includes("mark rodo") || cleanOan === "826771036";
+        const isFunded = isStudentConfirmedFunded(sanitizedClient);
 
         if (isAshishMehta) {
           return {
-            ...c,
+            ...sanitizedClient,
             batch_name: "July 27th List",
             application_status: "documents_under_review" as const,
             document_status: "under_review" as const,
@@ -287,7 +331,7 @@ export async function getOsapClients(): Promise<OsapClient[]> {
 
         if (isCarlaDionisio) {
           return {
-            ...c,
+            ...sanitizedClient,
             batch_name: "June 29th List",
             application_status: "documents_under_review" as const,
             document_status: "under_review" as const,
@@ -300,12 +344,12 @@ export async function getOsapClients(): Promise<OsapClient[]> {
 
         if (isJesseBonnah) {
           return {
-            ...c,
+            ...sanitizedClient,
             batch_name: "July 27th List",
             application_status: "approved" as const,
             document_status: "approved" as const,
             msfaa_status: "completed" as const,
-            funding_status: "Est. Release: Sep 10/26 - Sep 14/26 ($15,750 1st Payment — COE Confirmed)",
+            funding_status: "Est. Release: Sep 10/26 - Sep 14/26 ($15,750 Total — COE Confirmed)",
             action_required: false,
             action_required_summary: null,
           };
@@ -313,13 +357,13 @@ export async function getOsapClients(): Promise<OsapClient[]> {
 
         if (isFunded) {
           return {
-            ...c,
+            ...sanitizedClient,
             batch_name: properBatch,
             application_status: "completed" as const,
             document_status: "approved" as const,
             msfaa_status: "completed" as const,
-            funding_status: c.funding_status && /deposited|disbursed|paid|funded/i.test(c.funding_status)
-              ? c.funding_status
+            funding_status: sanitizedClient.funding_status && /deposited|disbursed|paid|funded/i.test(sanitizedClient.funding_status)
+              ? sanitizedClient.funding_status
               : isZubairBaig
               ? "Funded: $18,664 Deposited ($9,225 Tuition Paid directly to School)"
               : isMarkRodo
@@ -331,10 +375,10 @@ export async function getOsapClients(): Promise<OsapClient[]> {
         }
 
         return {
-          ...c,
+          ...sanitizedClient,
           batch_name: properBatch,
-          msfaa_status: c.msfaa_status || "submitted",
-          action_required: c.action_required ?? false,
+          msfaa_status: sanitizedClient.msfaa_status || "submitted",
+          action_required: sanitizedClient.action_required ?? false,
         };
       });
 

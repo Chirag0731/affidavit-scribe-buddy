@@ -77,15 +77,18 @@ export async function decryptCredential(
 }
 
 /**
- * Masks an OAN (Ontario Access Number) for safe UI display (e.g. "••••••1234")
+ * Masks an OAN (Ontario Access Number) for safe UI display (e.g. "•••••1234")
  */
 export function maskOan(oan?: string | null): string {
   if (!oan) return "—";
   const cleaned = oan.trim();
+  if (cleaned.includes("@") || /\.(com|ca|net|org)/i.test(cleaned) || /reset|eset/i.test(cleaned)) {
+    return "—";
+  }
+  if (cleaned.toUpperCase() === "FAO") return "FAO";
   if (cleaned.length <= 4) return cleaned;
   const lastFour = cleaned.slice(-4);
-  const maskedPrefix = "•".repeat(Math.max(4, cleaned.length - 4));
-  return `${maskedPrefix}${lastFour}`;
+  return `•••••${lastFour}`;
 }
 
 /**

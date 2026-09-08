@@ -467,20 +467,21 @@ export function runClientAudit(
   } else if (isHoldOrDiscrepancy) {
     // Hold / Discrepancy files
     newAppStatus = "action_required";
-    newFundingStatus = "On Hold (SIN / Personal Information Discrepancy)";
+    const cleanNote = (client.notes || "").trim();
+    newFundingStatus = cleanNote ? `On Hold (${cleanNote.slice(0, 30)})` : "On Hold (Verification Required)";
     newDocStatus = "rejected";
     newMsfaaStatus = client.msfaa_status === "completed" ? "completed" : "required";
     actionRequired = true;
-    actionSummary = client.notes ? client.notes.split("\n")[0] : "SIN Registry personal information mismatch — requires document verification with ESDC.";
+    actionSummary = cleanNote || "Administrative Hold / Personal Information Verification Required with Ministry.";
 
     snapshot.sinHoldOrDiscrepancy = true;
     snapshot.allDocsApproved = false;
-    snapshot.unapprovedDocs = ["SIN Registry Personal Verification (ESDC Hold)"];
+    snapshot.unapprovedDocs = [actionSummary];
     snapshot.uploadedDocuments = [
       {
-        name: "Social Insurance Number Verification",
+        name: "Ministry Hold Verification",
         status: "Denied",
-        rejectionReason: "Personal information mismatch on SIN registry",
+        rejectionReason: actionSummary,
       },
     ];
 

@@ -181,12 +181,30 @@ export async function generateBatchAuditSessionPdf(report: OsapBatchSessionRepor
     });
 
     const boxW = CONTENT_W / 5;
+    const submittedMsfaa = report.items.filter(
+      (i) => i.client.msfaa_status === "submitted" || i.client.msfaa_status === "completed"
+    ).length;
+    const pendingMsfaa = report.items.filter(
+      (i) => i.client.msfaa_status !== "submitted" && i.client.msfaa_status !== "completed"
+    ).length;
+    const actionRequiredCount = report.items.filter(
+      (i) =>
+        i.client.application_status !== "completed" &&
+        i.client.application_status !== "funded" &&
+        (i.client.action_required ||
+          i.client.application_status === "action_required" ||
+          i.client.credential_status === "requires_verification")
+    ).length;
+    const paymentReleasedCount = report.items.filter(
+      (i) => i.client.application_status === "completed" || i.client.application_status === "funded"
+    ).length;
+
     const stats = [
-      { label: "TOTAL AUDITED", val: String(report.totalAudited), color: rgb(0.1, 0.15, 0.2) },
-      { label: "MSFAA SUBMITTED", val: String(report.items.filter(i => i.client.msfaa_status === "submitted" || i.client.msfaa_status === "completed").length), color: rgb(0.08, 0.45, 0.18) },
-      { label: "MSFAA PENDING", val: String(report.pendingMsfaaCount), color: rgb(0.75, 0.4, 0.05) },
-      { label: "ACTION REQUIRED", val: String(report.items.filter(i => i.client.action_required || i.client.application_status === "action_required").length), color: rgb(0.75, 0.15, 0.15) },
-      { label: "PAYMENT RELEASED", val: String(report.fundedCount), color: rgb(0.08, 0.45, 0.18) },
+      { label: "TOTAL AUDITED", val: String(report.items.length), color: rgb(0.1, 0.15, 0.2) },
+      { label: "MSFAA SUBMITTED", val: String(submittedMsfaa), color: rgb(0.08, 0.45, 0.18) },
+      { label: "MSFAA PENDING", val: String(pendingMsfaa), color: rgb(0.75, 0.4, 0.05) },
+      { label: "ACTION REQUIRED", val: String(actionRequiredCount), color: rgb(0.75, 0.15, 0.15) },
+      { label: "PAYMENT RELEASED", val: String(paymentReleasedCount), color: rgb(0.08, 0.45, 0.18) },
     ];
 
     stats.forEach((s, idx) => {
@@ -279,10 +297,25 @@ export async function generateBatchAuditSessionPdf(report: OsapBatchSessionRepor
     const numStr = String(index + 1);
     const nameStr = sanitizeText(c.full_name).slice(0, 22);
     const oanStr = maskOan(c.oan);
-    const appLabel = (APPLICATION_STATUS_LABELS[c.application_status]?.label || c.application_status.replace(/_/g, " ")).slice(0, 25);
+    let appLabel = APPLICATION_STATUS_LABELS[c.application_status]?.label || c.application_status.replace(/_/g, " ");
+    if (appLabel === "Approved (Enrolment Required)") {
+      appLabel = "Approved (COE Confirmed)";
+    } else if (appLabel.includes("FAO Review")) {
+      appLabel = "Docs Under FAO Review";
+    }
+
     const isMsfaaDone = c.msfaa_status === "submitted" || c.msfaa_status === "completed";
     const msfaaStr = isMsfaaDone ? "Completed" : "Pending";
-    const fundingStr = sanitizeText(c.funding_status || "Under Assessment").slice(0, 30);
+
+    let rawFunding = c.funding_status || "Under Assessment";
+    if (rawFunding.includes("Disbursement Blocked (MSFAA")) {
+      rawFunding = "Blocked: Pending MSFAA";
+    } else if (rawFunding.includes("Estimated Release: Next Enrolment")) {
+      rawFunding = "Est. Release: Next Cycle";
+    } else if (rawFunding.includes("On Hold (SIN / Personal Information")) {
+      rawFunding = "On Hold: Registry Check";
+    }
+    const fundingStr = sanitizeText(rawFunding).slice(0, 36);
 
     // Correct status color mapping
     let appStatusColor = rgb(0.25, 0.25, 0.25);
@@ -303,7 +336,7 @@ export async function generateBatchAuditSessionPdf(report: OsapBatchSessionRepor
     currentPage.drawText(appLabel, {
       x: COL_X.status,
       y: y - 11,
-      size: 6.5,
+      size: 6.2,
       font: bold,
       color: appStatusColor,
     });
@@ -319,7 +352,7 @@ export async function generateBatchAuditSessionPdf(report: OsapBatchSessionRepor
     currentPage.drawText(fundingStr, {
       x: COL_X.funding,
       y: y - 11,
-      size: 6.5,
+      size: 6.2,
       font: font,
       color: /released|funded|disbursed|deposited/i.test(fundingStr) ? rgb(0.08, 0.45, 0.18) : rgb(0.35, 0.35, 0.35),
     });
@@ -327,12 +360,15 @@ export async function generateBatchAuditSessionPdf(report: OsapBatchSessionRepor
     y -= 17;
   });
 
-  // Action Required Follow-Up Section
+  // Action Required Follow-Up Section (EXCLUDE FULLY FUNDED STUDENTS)
   const pendingBlockers = report.items.filter(
     (i) =>
-      i.client.action_required ||
-      (i.client.msfaa_status !== "submitted" && i.client.msfaa_status !== "completed") ||
-      i.client.notes?.toLowerCase().includes("discrepancy")
+      i.client.application_status !== "completed" &&
+      i.client.application_status !== "funded" &&
+      (i.client.action_required ||
+        i.client.application_status === "action_required" ||
+        (i.client.msfaa_status !== "submitted" && i.client.msfaa_status !== "completed") ||
+        i.client.notes?.toLowerCase().includes("discrepancy"))
   );
 
   if (pendingBlockers.length > 0) {
@@ -347,11 +383,16 @@ export async function generateBatchAuditSessionPdf(report: OsapBatchSessionRepor
     });
     y -= 13;
 
-    pendingBlockers.slice(0, 20).forEach((b) => {
+    pendingBlockers.slice(0, 25).forEach((b) => {
       checkPageBreak(15);
       const isMsfaaPending = b.client.msfaa_status !== "submitted" && b.client.msfaa_status !== "completed";
-      const blockerReason = b.client.action_required_summary || b.client.notes || (isMsfaaPending ? "Pending MSFAA Agreement with NSLSC" : "Action Required");
-      const cleanReason = sanitizeText(blockerReason).slice(0, 80);
+      let blockerReason = b.client.action_required_summary || b.client.notes;
+      if (!blockerReason && isMsfaaPending) {
+        blockerReason = "MSFAA online registration pending student action with NSLSC";
+      } else if (!blockerReason) {
+        blockerReason = "Action Required";
+      }
+      const cleanReason = sanitizeText(blockerReason).slice(0, 75);
 
       currentPage.drawText(`• ${b.client.full_name}: `, {
         x: MARGIN + 8,
