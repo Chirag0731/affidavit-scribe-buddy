@@ -164,40 +164,63 @@ class OsapBackgroundAuditManager {
       this.notify();
 
       // Safe pace delay
-      await new Promise((resolve) => setTimeout(resolve, 200));
+      await new Promise((resolve) => setTimeout(resolve, 150));
 
-      const res = runClientAudit(client, scenario);
+      try {
+        const res = runClientAudit(client, scenario);
 
-      // Save audit and updates to DB
-      await recordOsapAudit(res.audit);
-      await saveOsapClient(res.client, client.user_id);
-      for (const act of res.newActions) {
-        await saveOsapAction(act);
-      }
-      for (const doc of res.updatedDocuments) {
-        await saveOsapDocument(doc);
-      }
+        // Save audit and updates to DB
+        await recordOsapAudit(res.audit);
+        await saveOsapClient(res.client, client.user_id);
+        for (const act of res.newActions) {
+          await saveOsapAction(act);
+        }
+        for (const doc of res.updatedDocuments) {
+          await saveOsapDocument(doc);
+        }
 
-      const itemSummary: BatchAuditItemSummary = {
-        client: res.client,
-        status: res.status,
-        message: res.message,
-        msfaaStatus: res.client.msfaa_status,
-        notes: res.client.notes || res.client.action_required_summary || "",
-      };
-
-      sessionItems.push(itemSummary);
-      job.sessionItems = sessionItems;
-
-      job.logs = [
-        {
-          name: client.full_name,
-          batch: client.batch_name,
+        const itemSummary: BatchAuditItemSummary = {
+          client: res.client,
           status: res.status,
           message: res.message,
-        },
-        ...job.logs,
-      ];
+          msfaaStatus: res.client.msfaa_status,
+          notes: res.client.notes || res.client.action_required_summary || "",
+        };
+
+        sessionItems.push(itemSummary);
+        job.sessionItems = sessionItems;
+
+        job.logs = [
+          {
+            name: client.full_name,
+            batch: client.batch_name,
+            status: res.status,
+            message: res.message,
+          },
+          ...job.logs,
+        ];
+      } catch (err: unknown) {
+        const errMsg = err instanceof Error ? err.message : String(err);
+        console.error(`Audit error for ${client.full_name}:`, err);
+        const itemSummary: BatchAuditItemSummary = {
+          client,
+          status: "failed",
+          message: `Audit failed: ${errMsg}`,
+          msfaaStatus: client.msfaa_status,
+          notes: errMsg,
+        };
+        sessionItems.push(itemSummary);
+        job.sessionItems = sessionItems;
+        job.logs = [
+          {
+            name: client.full_name,
+            batch: client.batch_name,
+            status: "failed",
+            message: `Audit error: ${errMsg}`,
+          },
+          ...job.logs,
+        ];
+      }
 
       this.notify();
     }
