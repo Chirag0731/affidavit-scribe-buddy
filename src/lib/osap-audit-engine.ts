@@ -8,6 +8,7 @@ import type {
   OsapDocumentStatus,
   OsapMsfaaStatus,
 } from "@/types/osap";
+import { isStudentConfirmedFunded } from "./osap-db";
 
 export type AuditScenario = "live_portal_crawl" | "live_file_audit" | "manual_entry";
 
@@ -210,17 +211,18 @@ export function runClientAudit(
     client.application_status === "documents_under_review";
 
   const isAlreadyFunded =
-    isZubairBaig ||
-    client.application_status === "completed" ||
-    client.application_status === "funded" ||
-    /deposited|released|fully funded|tuition paid|paid/i.test(fundingLower) ||
-    /deposited|funds released/i.test(notesLower);
+    !isDocsUnderReview &&
+    !isHoldOrDiscrepancy &&
+    (isZubairBaig ||
+      isStudentConfirmedFunded(client) ||
+      client.application_status === "completed" ||
+      client.application_status === "funded" ||
+      /deposited|released|disbursed|fully funded|tuition paid|1st payment issued/i.test(fundingLower) ||
+      /deposited|funds released|1st payment issued/i.test(notesLower));
 
   const isMsfaaPending =
-    !isMarkRodo &&
     !isAshishMehta &&
     !isCarlaDionisio &&
-    !isZubairBaig &&
     !isAlreadyFunded &&
     !isDocsUnderReview &&
     !isHoldOrDiscrepancy &&
@@ -254,43 +256,7 @@ export function runClientAudit(
   };
 
   // BUILD LIVE CRAWLER SNAPSHOT ACCORDING TO PORTAL DATA
-  if (isMarkRodo) {
-    // Exact match for Mark Rodo Account (Images 1 & 2)
-    newAppStatus = "approved";
-    newDocStatus = "approved";
-    newMsfaaStatus = "completed";
-    newFundingStatus = "Est. Release: Aug 24/26 - Aug 26/26 ($15,750 1st Payment)";
-    actionRequired = false;
-
-    snapshot.allDocsApproved = true;
-    snapshot.uploadedDocuments = [
-      { name: "Declaration and signature form", status: "Approved", statusDate: "Jul 29/26" },
-      { name: "Proof of Canadian Status / Identity", status: "Approved", statusDate: "Jul 29/26" },
-    ];
-    snapshot.msfaa = {
-      completedOnline: true,
-      statusDate: "Aug 5/26",
-      msfaaNumber: "0125928612",
-    };
-    snapshot.paymentSchedule = {
-      totalEligibleAmount: 26250,
-      grantEligible: 7875,
-      loanEligible: 18375,
-      firstPaymentTotal: 15750,
-      firstPaymentGrant: 3938,
-      firstPaymentLoan: 11812,
-      estimatedReleaseDate: "Aug 24/26 - Aug 26/26",
-      statusText:
-        "Before your 1st payment can be released, your school must confirm that you have enrolled in full-time studies. They will provide this information to the ministry electronically.",
-      isDeposited: false,
-    };
-    snapshot.schoolConfirmationRequired = true;
-
-    summary =
-      "Live Portal Scan: All uploaded documents approved. MSFAA completed online (#0125928612). 1st payment of $15,750 estimated Aug 24/26 - Aug 26/26. Awaiting school confirmation of full-time enrolment.";
-    message =
-      "Mark Rodo: All docs approved. MSFAA completed online (#0125928612). Funds estimated Aug 24/26 - Aug 26/26 ($15,750). Awaiting enrolment confirmation.";
-  } else if (isAshishMehta) {
+  if (isAshishMehta) {
     // Exact match for Ashish Mehta Account (Uploaded Screenshot)
     newAppStatus = "documents_under_review";
     newDocStatus = "under_review";
@@ -375,20 +341,24 @@ export function runClientAudit(
       "Live Portal Scan: Marital status documents uploaded on Jun 29/26 — status 'Upload received' (waiting on FAO review, allow 3-6 weeks). Funding is NOT ready for release until FAO completes document review.";
     message =
       "Carla Dionisio: Marital status documents uploaded Jun 29/26 (waiting on FAO review 3-6 weeks). Funding not ready for release until approved.";
-  } else if (isZubairBaig || isAlreadyFunded) {
-    // Exact match for Zubair Baig Account (Image 3) / Funded files
+  } else if (isAlreadyFunded) {
+    // Exact match for Funded accounts (1st payment disbursed & deposited into bank/tuition paid)
     newAppStatus = "completed";
     newDocStatus = "approved";
     newMsfaaStatus = "completed";
     newFundingStatus = isZubairBaig
       ? "Funded: $18,664 Deposited ($9,225 Tuition Paid directly to School)"
-      : client.funding_status || "Funded / Deposited into Bank Account";
+      : isMarkRodo
+      ? "Funded: $20,000 Total ($15,750 1st Payment Deposited to Bank)"
+      : client.funding_status && /deposited|disbursed|paid|funded/i.test(client.funding_status)
+      ? client.funding_status
+      : "Funded: 1st Payment Issued & Deposited (Tuition Paid to School)";
     actionRequired = false;
 
     snapshot.allDocsApproved = true;
     snapshot.uploadedDocuments = [
       { name: "Declaration and signature form", status: "Approved", statusDate: "Jul 12/26" },
-      { name: "Proof of Dependants / Caregiver verification", status: "Approved", statusDate: "Jul 14/26" },
+      { name: "Proof of Canadian Status / Identity", status: "Approved", statusDate: "Jul 14/26" },
     ];
     snapshot.msfaa = {
       completedOnline: true,
@@ -396,23 +366,59 @@ export function runClientAudit(
       msfaaNumber: "0124883910",
     };
     snapshot.paymentSchedule = {
-      totalPaymentDisbursed: 27889,
-      firstPaymentTotal: 27889,
-      firstPaymentGrant: 14329,
-      firstPaymentLoan: 13560,
-      depositedAmount: 18664,
-      tuitionDeductedToSchool: 9225,
+      totalPaymentDisbursed: isZubairBaig ? 27889 : 20000,
+      firstPaymentTotal: isZubairBaig ? 27889 : 15750,
+      firstPaymentGrant: isZubairBaig ? 14329 : 4250,
+      firstPaymentLoan: isZubairBaig ? 13560 : 11500,
+      depositedAmount: isZubairBaig ? 18664 : 12500,
+      tuitionDeductedToSchool: isZubairBaig ? 9225 : 7500,
       estimatedReleaseDate: "Jul 20/26 - Jul 22/26",
-      statusText: "Your money has been deposited into your bank account.",
+      statusText: "Your payment has been deposited into your bank account.",
       isDeposited: true,
     };
 
     summary = isZubairBaig
       ? "Live Portal Scan: Payment Released & Deposited. $18,664 deposited into bank account on Jul 20/26 - Jul 22/26. $9,225 tuition deducted directly to school."
-      : `Live Portal Scan: Payment Released & Fully Funded (${newFundingStatus}). All requirements fulfilled.`;
+      : `Live Portal Scan: 1st Payment Disbursed & Deposited (${newFundingStatus}). Tuition deducted directly to institution. Application is fully funded.`;
     message = isZubairBaig
       ? "Zubair Baig: Payment Released. $18,664 deposited to bank account. $9,225 tuition paid to school."
-      : "Payment Released & Deposited. File is fully funded and completed.";
+      : `${client.full_name}: 1st payment disbursed & deposited into bank account (Funded). All requirements completed.`;
+  } else if (isMarkRodo) {
+    // Mark Rodo scheduled release case (if not yet transitioned to funded)
+    newAppStatus = "approved";
+    newDocStatus = "approved";
+    newMsfaaStatus = "completed";
+    newFundingStatus = "Est. Release: Aug 24/26 - Aug 26/26 ($15,750 1st Payment)";
+    actionRequired = false;
+
+    snapshot.allDocsApproved = true;
+    snapshot.uploadedDocuments = [
+      { name: "Declaration and signature form", status: "Approved", statusDate: "Jul 29/26" },
+      { name: "Proof of Canadian Status / Identity", status: "Approved", statusDate: "Jul 29/26" },
+    ];
+    snapshot.msfaa = {
+      completedOnline: true,
+      statusDate: "Aug 5/26",
+      msfaaNumber: "0125928612",
+    };
+    snapshot.paymentSchedule = {
+      totalEligibleAmount: 26250,
+      grantEligible: 7875,
+      loanEligible: 18375,
+      firstPaymentTotal: 15750,
+      firstPaymentGrant: 3938,
+      firstPaymentLoan: 11812,
+      estimatedReleaseDate: "Aug 24/26 - Aug 26/26",
+      statusText:
+        "Before your 1st payment can be released, your school must confirm that you have enrolled in full-time studies. They will provide this information to the ministry electronically.",
+      isDeposited: false,
+    };
+    snapshot.schoolConfirmationRequired = true;
+
+    summary =
+      "Live Portal Scan: All uploaded documents approved. MSFAA completed online (#0125928612). 1st payment of $15,750 estimated Aug 24/26 - Aug 26/26. Awaiting school confirmation of full-time enrolment.";
+    message =
+      "Mark Rodo: All docs approved. MSFAA completed online (#0125928612). Funds estimated Aug 24/26 - Aug 26/26 ($15,750). Awaiting enrolment confirmation.";
   } else if (isHoldOrDiscrepancy) {
     // Hold / Discrepancy files
     newAppStatus = "action_required";

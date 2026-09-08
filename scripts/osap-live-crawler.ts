@@ -303,8 +303,13 @@ async function crawlSingleClient(browser: Browser, client: OsapClient): Promise<
       pageContent.includes("payment has been released") ||
       pageContent.includes("first payment released") ||
       pageContent.includes("first instalment issued") ||
+      pageContent.includes("first instalment disbursed") ||
+      pageContent.includes("first payment issued") ||
       pageContent.includes("funds disbursed") ||
       pageContent.includes("funds deposited to bank") ||
+      pageContent.includes("deposited into your bank account") ||
+      pageContent.includes("deposited into your account") ||
+      pageContent.includes("payment issued to") ||
       pageContent.includes("disbursement released") ||
       pageContent.includes("payment issued on");
 

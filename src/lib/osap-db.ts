@@ -12,12 +12,63 @@ import type {
 import { encryptCredential } from "./osap-crypto";
 import { ALL_OSAP_CLIENTS } from "./osap-seed-data";
 
-const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v12_clean_crawler_carla_dionisio_fix";
-const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v12";
-const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v12";
-const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v12";
-const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v12";
-const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v12";
+const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v13_crm_funded_cohorts_fix";
+const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v13";
+const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v13";
+const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v13";
+const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v13";
+const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v13";
+
+export const CONFIRMED_CRM_FUNDED_STUDENTS: string[] = [
+  "fadamo abdullahi",
+  "robert bende",
+  "fawad hyder",
+  "khawaza ahmed",
+  "raheel mushtaq",
+  "husnain riaz",
+  "saif ali shaikh",
+  "faiza sikander",
+  "mehak mir",
+  "mark rodo",
+  "camar grant",
+  "ayooluwa ajayi",
+  "richard chaput",
+  "jaiden hackett-mignon",
+  "jaiden hackett mignon",
+  "zubair baig",
+  "khalil joseph",
+  "chaltu jirata",
+  "andrew lee",
+  "emmanuil daphnis",
+  "bwakila, basila antipas",
+  "basila antipas bwakila",
+  "basila bwakila",
+  "zaniyar mohamad",
+  "zaniyar mohammad",
+  "kevon whyte",
+  "suraj singh",
+  "mubarak nazeer",
+  "philip wisdom",
+  "devon brady",
+  "jinto paul",
+  "syavash chalabi",
+  "peterson mungai, nyakundi",
+  "nyakundi peterson mungai",
+  "peterson mungai",
+  "darren davis",
+];
+
+export function isStudentConfirmedFunded(client: { full_name?: string; oan?: string | null; application_status?: string; funding_status?: string | null; notes?: string | null }): boolean {
+  if (client.application_status === "completed" || client.application_status === "funded") return true;
+  const name = (client.full_name || "").toLowerCase().trim();
+  if (CONFIRMED_CRM_FUNDED_STUDENTS.some((n) => name === n || name.includes(n) || n.includes(name))) return true;
+  const funding = (client.funding_status || "").toLowerCase();
+  const notes = (client.notes || "").toLowerCase();
+  if (/deposited|disbursed|funds released|1st payment issued|fully funded|tuition paid/i.test(funding) || /deposited|funds released|1st payment issued/i.test(notes)) {
+    return true;
+  }
+  return false;
+}
 
 // Build a seed map from ALL_OSAP_CLIENTS so each student's official cohort batch is permanently mapped
 const SEED_BATCH_MAP = new Map<string, string>();
@@ -51,8 +102,9 @@ export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS
     const nameLower = c.full_name.toLowerCase();
     const isAshishMehta = nameLower.includes("ashish mehta") || c.oan === "826915448";
     const isCarlaDionisio = nameLower.includes("carla dionisio") || c.oan === "816157205";
-    const isMarkRodo = nameLower.includes("mark rodo") || c.oan === "826771036";
     const isZubairBaig = nameLower.includes("zubair baig") || c.oan === "304675510";
+    const isMarkRodo = nameLower.includes("mark rodo") || c.oan === "826771036";
+    const isFunded = isStudentConfirmedFunded(c);
 
     if (isAshishMehta) {
       return {
@@ -80,27 +132,20 @@ export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS
       };
     }
 
-    if (isMarkRodo) {
+    if (isFunded) {
       return {
         ...c,
-        batch_name: "July 27th List",
-        application_status: "approved",
-        document_status: "approved",
-        msfaa_status: "completed",
-        funding_status: "Est. Release: Aug 24/26 - Aug 26/26 ($15,750 1st Payment)",
-        action_required: false,
-        action_required_summary: null,
-      };
-    }
-
-    if (isZubairBaig) {
-      return {
-        ...c,
-        batch_name: "July 27th List",
+        batch_name: properBatch,
         application_status: "completed",
         document_status: "approved",
         msfaa_status: "completed",
-        funding_status: "Funded: $18,664 Deposited ($9,225 Tuition Paid directly to School)",
+        funding_status: c.funding_status && /deposited|disbursed|paid|funded/i.test(c.funding_status)
+          ? c.funding_status
+          : isZubairBaig
+          ? "Funded: $18,664 Deposited ($9,225 Tuition Paid directly to School)"
+          : isMarkRodo
+          ? "Funded: $20,000 Total ($15,750 1st Payment Deposited to Bank)"
+          : "Funded: 1st Payment Issued & Deposited (Tuition Paid to School)",
         action_required: false,
         action_required_summary: null,
       };
@@ -140,6 +185,7 @@ export function resetOsapClientsToSpreadsheet(): OsapClient[] {
     localStorage.removeItem("neptora_osap_clients_v9_clean_college_roster");
     localStorage.removeItem("neptora_osap_clients_v10_revert_general_batch_july27");
     localStorage.removeItem("neptora_osap_clients_v11_clean_crawler_ashish_fix");
+    localStorage.removeItem("neptora_osap_clients_v12_clean_crawler_carla_dionisio_fix");
     localStorage.setItem(LOCAL_CLIENTS_KEY, JSON.stringify(INITIAL_SPREADSHEET_CLIENTS));
   } catch {
     /* ignore */
@@ -159,6 +205,7 @@ export async function getOsapClients(): Promise<OsapClient[]> {
       localStorage.removeItem("neptora_osap_clients_v9_clean_college_roster");
       localStorage.removeItem("neptora_osap_clients_v10_revert_general_batch_july27");
       localStorage.removeItem("neptora_osap_clients_v11_clean_crawler_ashish_fix");
+      localStorage.removeItem("neptora_osap_clients_v12_clean_crawler_carla_dionisio_fix");
     }
 
     let clients: OsapClient[] = [];
@@ -188,8 +235,9 @@ export async function getOsapClients(): Promise<OsapClient[]> {
         const nameLower = c.full_name.toLowerCase();
         const isAshishMehta = nameLower.includes("ashish mehta") || c.oan === "826915448";
         const isCarlaDionisio = nameLower.includes("carla dionisio") || c.oan === "816157205";
-        const isMarkRodo = nameLower.includes("mark rodo") || c.oan === "826771036";
         const isZubairBaig = nameLower.includes("zubair baig") || c.oan === "304675510";
+        const isMarkRodo = nameLower.includes("mark rodo") || c.oan === "826771036";
+        const isFunded = isStudentConfirmedFunded(c);
 
         if (isAshishMehta) {
           return {
@@ -217,27 +265,20 @@ export async function getOsapClients(): Promise<OsapClient[]> {
           };
         }
 
-        if (isMarkRodo) {
+        if (isFunded) {
           return {
             ...c,
-            batch_name: "July 27th List",
-            application_status: "approved" as const,
-            document_status: "approved" as const,
-            msfaa_status: "completed" as const,
-            funding_status: "Est. Release: Aug 24/26 - Aug 26/26 ($15,750 1st Payment)",
-            action_required: false,
-            action_required_summary: null,
-          };
-        }
-
-        if (isZubairBaig) {
-          return {
-            ...c,
-            batch_name: "July 27th List",
+            batch_name: properBatch,
             application_status: "completed" as const,
             document_status: "approved" as const,
             msfaa_status: "completed" as const,
-            funding_status: "Funded: $18,664 Deposited ($9,225 Tuition Paid directly to School)",
+            funding_status: c.funding_status && /deposited|disbursed|paid|funded/i.test(c.funding_status)
+              ? c.funding_status
+              : isZubairBaig
+              ? "Funded: $18,664 Deposited ($9,225 Tuition Paid directly to School)"
+              : isMarkRodo
+              ? "Funded: $20,000 Total ($15,750 1st Payment Deposited to Bank)"
+              : "Funded: 1st Payment Issued & Deposited (Tuition Paid to School)",
             action_required: false,
             action_required_summary: null,
           };
