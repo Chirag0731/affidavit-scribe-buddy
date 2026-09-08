@@ -2,6 +2,7 @@ import { PDFDocument, StandardFonts, rgb, PDFPage } from "pdf-lib";
 import type { OsapAudit, OsapClient } from "@/types/osap";
 import { maskOan } from "./osap-crypto";
 import { APPLICATION_STATUS_LABELS } from "@/types/osap";
+import { isStudentConfirmedFunded } from "./osap-db";
 
 export interface BatchAuditItemSummary {
   client: OsapClient;
@@ -51,6 +52,29 @@ function sanitizeText(text: string | null | undefined): string {
     .replace(/[^\x20-\x7E\xA0-\xFF]/g, " ")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+/**
+ * Helper to wrap text into multiple lines within a maximum pixel width
+ */
+function wrapText(text: string, maxWidth: number, font: any, fontSize: number): string[] {
+  if (!text) return [];
+  const words = text.split(" ");
+  const lines: string[] = [];
+  let currentLine = "";
+
+  for (const word of words) {
+    const testLine = currentLine ? `${currentLine} ${word}` : word;
+    const width = font.widthOfTextAtSize(testLine, fontSize);
+    if (width <= maxWidth) {
+      currentLine = testLine;
+    } else {
+      if (currentLine) lines.push(currentLine);
+      currentLine = word;
+    }
+  }
+  if (currentLine) lines.push(currentLine);
+  return lines;
 }
 
 /**
@@ -365,6 +389,7 @@ export async function generateBatchAuditSessionPdf(report: OsapBatchSessionRepor
     (i) =>
       i.client.application_status !== "completed" &&
       i.client.application_status !== "funded" &&
+      !isStudentConfirmedFunded(i.client) &&
       (i.client.action_required ||
         i.client.application_status === "action_required" ||
         (i.client.msfaa_status !== "submitted" && i.client.msfaa_status !== "completed") ||
@@ -373,58 +398,91 @@ export async function generateBatchAuditSessionPdf(report: OsapBatchSessionRepor
 
   if (pendingBlockers.length > 0) {
     checkPageBreak(50);
-    y -= 10;
-    currentPage.drawText("ACTION REQUIRED & PENDING ITEMS SUMMARY", {
+    y -= 14;
+    currentPage.drawRectangle({
       x: MARGIN,
-      y,
-      size: 9,
-      font: bold,
-      color: rgb(0.75, 0.12, 0.12),
+      y: y - 18,
+      width: CONTENT_W,
+      height: 18,
+      color: rgb(0.82, 0.15, 0.15),
     });
-    y -= 13;
+    currentPage.drawText(
+      `ACTION REQUIRED & PENDING COMPLIANCE BREAKDOWN (${pendingBlockers.length} STUDENTS REQUIRING ATTENTION)`,
+      {
+        x: MARGIN + 8,
+        y: y - 12,
+        size: 7.5,
+        font: bold,
+        color: rgb(1, 1, 1),
+      }
+    );
+    y -= 26;
 
-    pendingBlockers.slice(0, 25).forEach((b) => {
-      checkPageBreak(15);
+    pendingBlockers.forEach((b, idx) => {
       const isMsfaaPending = b.client.msfaa_status !== "submitted" && b.client.msfaa_status !== "completed";
       let blockerReason = b.client.action_required_summary || b.client.notes;
       if (!blockerReason && isMsfaaPending) {
-        blockerReason = "MSFAA online registration pending student action with NSLSC";
+        blockerReason = "MSFAA online submission pending student action on NSLSC portal.";
       } else if (!blockerReason) {
-        blockerReason = "Action Required";
+        blockerReason = "Action required: Ministry verification or documentation review required.";
       }
-      const cleanReason = sanitizeText(blockerReason).slice(0, 75);
 
-      currentPage.drawText(`• ${b.client.full_name}: `, {
-        x: MARGIN + 8,
-        y,
+      // Determine category tag
+      let categoryTag = "Action Required";
+      if (isMsfaaPending) {
+        categoryTag = "MSFAA Pending Online Signature";
+      } else if (!b.client.oan || b.client.oan.length < 9) {
+        categoryTag = "Missing / Invalid OAN";
+      } else if (b.client.document_status === "additional_information_required" || b.client.document_status === "rejected") {
+        categoryTag = "Document Required";
+      } else if (b.client.batch_name === "Hold" || b.client.notes?.toLowerCase().includes("hold")) {
+        categoryTag = "Administrative Hold";
+      }
+
+      const numPrefix = `${idx + 1}.`;
+      const nameText = sanitizeText(b.client.full_name);
+      const oanText = `OAN: ${maskOan(b.client.oan)}`;
+      const headerLine = `${numPrefix} ${nameText}   •   ${oanText}   •   ${categoryTag}`;
+
+      const reasonPrefix = "Missing / Action Needed: ";
+      const fullReasonText = `${reasonPrefix}${sanitizeText(blockerReason)}`;
+      const reasonLines = wrapText(fullReasonText, CONTENT_W - 24, font, 6.8);
+
+      const itemHeight = 13 + reasonLines.length * 9;
+      checkPageBreak(itemHeight + 4);
+
+      if (idx % 2 === 0) {
+        currentPage.drawRectangle({
+          x: MARGIN,
+          y: y - itemHeight + 2,
+          width: CONTENT_W,
+          height: itemHeight,
+          color: rgb(0.98, 0.965, 0.965),
+        });
+      }
+
+      currentPage.drawText(headerLine, {
+        x: MARGIN + 6,
+        y: y - 9,
         size: 7,
         font: bold,
-        color: rgb(0.2, 0.2, 0.2),
+        color: rgb(0.18, 0.18, 0.22),
       });
 
-      const nameWidth = font.widthOfTextAtSize(`• ${b.client.full_name}: `, 7);
-      currentPage.drawText(cleanReason, {
-        x: MARGIN + 8 + nameWidth,
-        y,
-        size: 7,
-        font: font,
-        color: rgb(0.4, 0.4, 0.4),
+      let lineY = y - 18;
+      reasonLines.forEach((rLine) => {
+        currentPage.drawText(rLine, {
+          x: MARGIN + 14,
+          y: lineY,
+          size: 6.8,
+          font: font,
+          color: rgb(0.7, 0.12, 0.12),
+        });
+        lineY -= 9;
       });
 
-      y -= 12;
+      y -= itemHeight + 2;
     });
-
-    if (pendingBlockers.length > 20) {
-      checkPageBreak(15);
-      currentPage.drawText(`... and ${pendingBlockers.length - 20} additional pending action items.`, {
-        x: MARGIN + 8,
-        y,
-        size: 7,
-        font: font,
-        color: rgb(0.5, 0.5, 0.5),
-      });
-      y -= 12;
-    }
   }
 
   // Draw footer on the last page
