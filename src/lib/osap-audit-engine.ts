@@ -197,7 +197,10 @@ export function runClientAudit(
   // 5. SPECIFIC CASE: Zubair Baig (Image 3)
   const isZubairBaig = nameLower.includes("zubair baig") || cleanOan === "304675510";
 
-  // 6. GENERAL CLASSIFICATIONS
+  // 6. SPECIFIC CASE: Jasmine Ogbuagu (Live Portal Screenshot - Spouse Declaration Required & Academic Restriction Sep 8/26)
+  const isJasmineOgbuagu = nameLower.includes("jasmine ogbuagu") || cleanOan === "823042219";
+
+  // 7. GENERAL CLASSIFICATIONS
   const isHoldOrDiscrepancy =
     client.batch_name === "Hold" ||
     notesLower.includes("discrepancy") ||
@@ -219,6 +222,7 @@ export function runClientAudit(
     !isDocsUnderReview &&
     !isHoldOrDiscrepancy &&
     !isJesseBonnah &&
+    !isJasmineOgbuagu &&
     (isZubairBaig ||
       isStudentConfirmedFunded(client) ||
       client.application_status === "completed" ||
@@ -230,6 +234,7 @@ export function runClientAudit(
     !isAshishMehta &&
     !isCarlaDionisio &&
     !isJesseBonnah &&
+    !isJasmineOgbuagu &&
     !isAlreadyFunded &&
     !isDocsUnderReview &&
     !isHoldOrDiscrepancy &&
@@ -386,6 +391,51 @@ export function runClientAudit(
       "Live Portal Scan: School has confirmed full-time enrolment. All documents approved. MSFAA completed online (#0125918731). 1st payment of $15,750 ($5,063 Ontario Student Grant / $10,687 Loan) scheduled for release Sep 10/26 - Sep 14/26 ($6,525 direct deposit / $9,225 tuition paid directly to school).";
     message =
       "Jesse Bonnah: Enrolment confirmed by school. All docs & MSFAA approved. 1st payment scheduled for release Sep 10/26 - Sep 14/26 ($15,750).";
+  } else if (isJasmineOgbuagu) {
+    // Exact match for Jasmine Ogbuagu Account (Live Portal Screenshot - Spouse Declaration Required & Academic Restriction Sep 8/26)
+    newAppStatus = "action_required";
+    newDocStatus = "additional_information_required";
+    newMsfaaStatus = "completed";
+    newFundingStatus = "Disbursement Blocked (Spouse Declaration Form Required as of Jul 28/26)";
+    actionRequired = true;
+    actionSummary = "Spouse declaration and signature form required (Jul 28/26, password: h7jbG46w) — Academic restriction upload received Sep 8/26.";
+
+    snapshot.allDocsApproved = false;
+    snapshot.unapprovedDocs = [
+      "Spouse declaration and signature form (Required as of Jul 28/26)",
+      "Academic restriction (Upload received Sep 8/26 — waiting for review)",
+    ];
+    snapshot.uploadedDocuments = [
+      {
+        name: "Spouse declaration and signature form",
+        status: "Waiting for review",
+        statusDate: "Jul 28/26",
+        rejectionReason: "Required before funds can be released (Form password: h7jbG46w)",
+      },
+      {
+        name: "Academic restriction",
+        status: "Upload received",
+        statusDate: "Sep 8/26",
+        faoReviewPending: true,
+      },
+    ];
+    snapshot.msfaa = {
+      completedOnline: true,
+      statusDate: "Jul 28/26",
+      msfaaNumber: "0125881944",
+    };
+    snapshot.paymentSchedule = {
+      totalEligibleAmount: 18500,
+      grantEligible: 5500,
+      loanEligible: 13000,
+      statusText: "Funding calculation held. Spouse declaration and signature form is required before funds can be released.",
+      isDeposited: false,
+    };
+
+    summary =
+      "Live Portal Scan: Spouse declaration and signature form is REQUIRED as of Jul 28/26 (Form password: h7jbG46w). Academic restriction document upload received Sep 8/26 (waiting for review). Funding is blocked until spouse form is uploaded.";
+    message =
+      "Jasmine Ogbuagu: Missing Spouse declaration form (Required Jul 28/26). Academic restriction upload received Sep 8/26. Funding blocked.";
   } else if (isAlreadyFunded) {
     // Exact match for Funded accounts (1st payment disbursed & deposited into bank/tuition paid)
     newAppStatus = "completed";

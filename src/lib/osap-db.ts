@@ -12,12 +12,12 @@ import type {
 import { encryptCredential } from "./osap-crypto";
 import { ALL_OSAP_CLIENTS } from "./osap-seed-data";
 
-const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v18_complete_portfolio_accuracy_cleanup";
-const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v18";
-const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v18";
-const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v18";
-const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v18";
-const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v18";
+const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v19_jasmine_ogbuagu_live_scan_calibration";
+const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v19";
+const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v19";
+const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v19";
+const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v19";
+const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v19";
 
 export const CONFIRMED_CRM_FUNDED_STUDENTS: string[] = [
   "fadamo abdullahi",
@@ -138,6 +138,7 @@ export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS
     const isJesseBonnah = nameLower.includes("jesse bonnah") || cleanOan === "826794292";
     const isZubairBaig = nameLower.includes("zubair baig") || cleanOan === "304675510";
     const isMarkRodo = nameLower.includes("mark rodo") || cleanOan === "826771036";
+    const isJasmineOgbuagu = nameLower.includes("jasmine ogbuagu") || cleanOan === "823042219";
     const isFunded = isStudentConfirmedFunded(sanitizedClient);
 
     if (isAshishMehta) {
@@ -176,6 +177,19 @@ export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS
         funding_status: "Est. Release: Sep 10/26 - Sep 14/26 ($15,750 1st Payment — COE Confirmed)",
         action_required: false,
         action_required_summary: null,
+      };
+    }
+
+    if (isJasmineOgbuagu) {
+      return {
+        ...sanitizedClient,
+        batch_name: properBatch,
+        application_status: "action_required",
+        document_status: "additional_information_required",
+        msfaa_status: "completed",
+        funding_status: "Disbursement Blocked (Spouse Declaration Form Required as of Jul 28/26)",
+        action_required: true,
+        action_required_summary: "Spouse declaration and signature form required (Jul 28/26, password: h7jbG46w) — Academic restriction upload received Sep 8/26",
       };
     }
 
@@ -238,6 +252,7 @@ export function resetOsapClientsToSpreadsheet(): OsapClient[] {
     localStorage.removeItem("neptora_osap_clients_v15_july27_cohort_complete_calibration");
     localStorage.removeItem("neptora_osap_clients_v16_july27_without_zubair_complete");
     localStorage.removeItem("neptora_osap_clients_v17_jesse_bonnah_msfaa_fixed");
+    localStorage.removeItem("neptora_osap_clients_v18_complete_portfolio_accuracy_cleanup");
     localStorage.removeItem("neptora_active_audit_job_v1");
     localStorage.removeItem("neptora_latest_audit_session_v1");
     localStorage.setItem(LOCAL_CLIENTS_KEY, JSON.stringify(INITIAL_SPREADSHEET_CLIENTS));
@@ -265,6 +280,7 @@ export async function getOsapClients(): Promise<OsapClient[]> {
       localStorage.removeItem("neptora_osap_clients_v15_july27_cohort_complete_calibration");
       localStorage.removeItem("neptora_osap_clients_v16_july27_without_zubair_complete");
       localStorage.removeItem("neptora_osap_clients_v17_jesse_bonnah_msfaa_fixed");
+      localStorage.removeItem("neptora_osap_clients_v18_complete_portfolio_accuracy_cleanup");
       localStorage.removeItem("neptora_active_audit_job_v1");
       localStorage.removeItem("neptora_latest_audit_session_v1");
     }
@@ -314,6 +330,7 @@ export async function getOsapClients(): Promise<OsapClient[]> {
         const isJesseBonnah = nameLower.includes("jesse bonnah") || cleanOan === "826794292";
         const isZubairBaig = nameLower.includes("zubair baig") || cleanOan === "304675510";
         const isMarkRodo = nameLower.includes("mark rodo") || cleanOan === "826771036";
+        const isJasmineOgbuagu = nameLower.includes("jasmine ogbuagu") || cleanOan === "823042219";
         const isFunded = isStudentConfirmedFunded(sanitizedClient);
 
         if (isAshishMehta) {
@@ -352,6 +369,19 @@ export async function getOsapClients(): Promise<OsapClient[]> {
             funding_status: "Est. Release: Sep 10/26 - Sep 14/26 ($15,750 Total — COE Confirmed)",
             action_required: false,
             action_required_summary: null,
+          };
+        }
+
+        if (isJasmineOgbuagu) {
+          return {
+            ...sanitizedClient,
+            batch_name: properBatch,
+            application_status: "action_required" as const,
+            document_status: "additional_information_required" as const,
+            msfaa_status: "completed" as const,
+            funding_status: "Disbursement Blocked (Spouse Declaration Form Required as of Jul 28/26)",
+            action_required: true,
+            action_required_summary: "Spouse declaration and signature form required (Jul 28/26, password: h7jbG46w) — Academic restriction upload received Sep 8/26",
           };
         }
 
