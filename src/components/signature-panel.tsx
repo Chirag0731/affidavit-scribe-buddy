@@ -87,7 +87,7 @@ export function SignaturePanel({ deponents, layout, signatures, onChange }: Prop
     }
   };
 
-  const useSaved = async (index: number, id: string) => {
+  const applySavedSignature = async (index: number, id: string) => {
     const row = saved.find((s) => s.id === id);
     if (!row) return;
     setBusy(index);
@@ -194,7 +194,7 @@ export function SignaturePanel({ deponents, layout, signatures, onChange }: Prop
                 <select
                   className="input-base max-w-[220px] text-xs py-1.5"
                   value=""
-                  onChange={(e) => e.target.value && useSaved(i, e.target.value)}
+                  onChange={(e) => e.target.value && applySavedSignature(i, e.target.value)}
                 >
                   <option value="">Use saved signature…</option>
                   {saved.map((s) => (

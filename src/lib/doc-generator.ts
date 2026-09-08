@@ -84,6 +84,7 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
     // Replace non-breaking spaces with normal spaces
     s = s.replace(/\u00A0/g, " ");
     // Strip control characters except newline (0x00-0x09, 0x0B, 0x0C, 0x0E-0x1F, 0x7F)
+    // eslint-disable-next-line no-control-regex
     s = s.replace(/[\x00-\x09\x0B\x0C\x0E-\x1F\x7F]/g, "");
     return s;
   };

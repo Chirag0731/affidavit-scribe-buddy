@@ -117,7 +117,7 @@ export function extractMergeKeys(body: string): string[] {
 
 /** Sanitize a string for use in a filename. */
 export function safeFilename(name: string): string {
-  return name.replace(/[^\w\-]+/g, "_").replace(/^_+|_+$/g, "") || "affidavit";
+  return name.replace(/[^\w-]+/g, "_").replace(/^_+|_+$/g, "") || "affidavit";
 }
 
 // ----- Date helpers (used by the renderer and the PDF generator) -----

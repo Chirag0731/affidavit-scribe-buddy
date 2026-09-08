@@ -11,8 +11,8 @@ function testExtraction() {
 
     let msfaaSubmitted = 0;
     let msfaaPending = 0;
-    let sampleSub: string[] = [];
-    let samplePend: string[] = [];
+    const sampleSub: string[] = [];
+    const samplePend: string[] = [];
 
     for (const row of rows) {
       const getField = (aliases: string[]): string => {

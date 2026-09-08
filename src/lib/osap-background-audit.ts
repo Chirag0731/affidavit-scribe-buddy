@@ -54,7 +54,9 @@ class OsapBackgroundAuditManager {
       } else {
         localStorage.removeItem(ACTIVE_JOB_KEY);
       }
-    } catch {}
+    } catch {
+      /* ignore */
+    }
   }
 
   private notify() {

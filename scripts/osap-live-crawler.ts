@@ -1,7 +1,7 @@
 import { chromium, type Browser, type Page } from "playwright";
 import * as fs from "fs";
 import * as path from "path";
-import { ALL_OSAP_CLIENTS } from "../src/lib/osap-seed-data";
+import { INITIAL_SPREADSHEET_CLIENTS } from "../src/lib/osap-db";
 import { generateBatchAuditSessionPdf, type OsapBatchSessionReport, type BatchAuditItemSummary } from "../src/lib/osap-pdf-generator";
 import type { OsapClient, OsapApplicationStatus, OsapDocumentStatus, OsapMsfaaStatus } from "../src/types/osap";
 
@@ -40,10 +40,10 @@ export interface LiveAuditResult {
 export async function runOsapLiveCrawler(options: LiveCrawlerOptions = {}): Promise<OsapBatchSessionReport> {
   const { batchName, oan, limit, headless = true, onProgress } = options;
 
-  let targetClients: OsapClient[] = ALL_OSAP_CLIENTS;
+  let targetClients: OsapClient[] = INITIAL_SPREADSHEET_CLIENTS;
 
   if (batchName && batchName !== "all") {
-    targetClients = targetClients.filter((c) => (c.batch_name || "General Batch") === batchName);
+    targetClients = targetClients.filter((c) => (c.batch_name || "July 27th List") === batchName);
   }
   if (oan) {
     targetClients = targetClients.filter((c) => c.oan === oan);
@@ -109,7 +109,7 @@ export async function runOsapLiveCrawler(options: LiveCrawlerOptions = {}): Prom
     createdAt: new Date().toISOString(),
     totalAudited: targetClients.length,
     updatedCount: sessionItems.filter((s) => s.status === "success").length,
-    pendingMsfaaCount: sessionItems.filter((s) => s.client.msfaa_status !== "submitted").length,
+    pendingMsfaaCount: sessionItems.filter((s) => s.client.msfaa_status !== "completed" && s.client.msfaa_status !== "submitted").length,
     holdCount: sessionItems.filter((s) => s.client.batch_name === "Hold" || s.client.action_required).length,
     fundedCount: sessionItems.filter((s) => s.client.application_status === "completed" || s.client.application_status === "funded").length,
     items: sessionItems,
@@ -281,7 +281,7 @@ async function crawlSingleClient(browser: Browser, client: OsapClient): Promise<
     const moneyMatches = pageContent.match(/\$\s*([0-9]{1,3}(,[0-9]{3})*(\.[0-9]{2})?)/g);
     if (moneyMatches && moneyMatches.length > 0) {
       const numericVals = moneyMatches
-        .map((m) => parseFloat(m.replace(/[\$,\s]/g, "")))
+        .map((m) => parseFloat(m.replace(/[$,\s]/g, "")))
         .filter((v) => v > 500 && v < 40000);
       if (numericVals.length > 0) {
         const maxVal = Math.max(...numericVals);
