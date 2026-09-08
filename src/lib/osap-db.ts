@@ -12,12 +12,12 @@ import type {
 import { encryptCredential } from "./osap-crypto";
 import { ALL_OSAP_CLIENTS } from "./osap-seed-data";
 
-const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v15_july27_cohort_complete_calibration";
-const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v15";
-const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v15";
-const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v15";
-const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v15";
-const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v15";
+const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v16_july27_without_zubair_complete";
+const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v16";
+const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v16";
+const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v16";
+const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v16";
+const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v16";
 
 export const CONFIRMED_CRM_FUNDED_STUDENTS: string[] = [
   "fadamo abdullahi",
@@ -207,6 +207,9 @@ export function resetOsapClientsToSpreadsheet(): OsapClient[] {
     localStorage.removeItem("neptora_osap_clients_v12_clean_crawler_carla_dionisio_fix");
     localStorage.removeItem("neptora_osap_clients_v13_crm_funded_cohorts_fix");
     localStorage.removeItem("neptora_osap_clients_v14_jesse_bonnah_coe_fix");
+    localStorage.removeItem("neptora_osap_clients_v15_july27_cohort_complete_calibration");
+    localStorage.removeItem("neptora_active_audit_job_v1");
+    localStorage.removeItem("neptora_latest_audit_session_v1");
     localStorage.setItem(LOCAL_CLIENTS_KEY, JSON.stringify(INITIAL_SPREADSHEET_CLIENTS));
   } catch {
     /* ignore */
@@ -229,6 +232,9 @@ export async function getOsapClients(): Promise<OsapClient[]> {
       localStorage.removeItem("neptora_osap_clients_v12_clean_crawler_carla_dionisio_fix");
       localStorage.removeItem("neptora_osap_clients_v13_crm_funded_cohorts_fix");
       localStorage.removeItem("neptora_osap_clients_v14_jesse_bonnah_coe_fix");
+      localStorage.removeItem("neptora_osap_clients_v15_july27_cohort_complete_calibration");
+      localStorage.removeItem("neptora_active_audit_job_v1");
+      localStorage.removeItem("neptora_latest_audit_session_v1");
     }
 
     let clients: OsapClient[] = [];

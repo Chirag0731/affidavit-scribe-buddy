@@ -89,6 +89,8 @@ export function runClientAudit(
   const fundingLower = (client.funding_status || "").toLowerCase();
   const cleanOan = (client.oan || "").trim();
 
+  const isConfirmedFunded = isStudentConfirmedFunded(client);
+
   // 0. STRICT CHECK: OAN & Password Credential Validation (Must be exactly 9 numerical digits)
   const isValid9DigitOan = /^\d{9}$/.test(cleanOan);
   const isCredentialMissing =
@@ -97,7 +99,7 @@ export function runClientAudit(
     cleanOan.toUpperCase() === "ACT" ||
     client.credential_status === "missing";
 
-  if (!isValid9DigitOan || isCredentialMissing) {
+  if (!isConfirmedFunded && (!isValid9DigitOan || isCredentialMissing)) {
     const reason = !cleanOan
       ? "Missing OSAP Access Number (OAN). A valid 9-digit OAN and password are required to access government records."
       : cleanOan.toUpperCase() === "FAO"
