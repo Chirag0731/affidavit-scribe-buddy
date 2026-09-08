@@ -14,7 +14,7 @@ export type AuditScenario = "live_portal_crawl" | "live_file_audit" | "manual_en
 export interface LivePortalSnapshot {
   oan?: string | null;
   scannedAt: string;
-  portalStatus: "CONNECTED_VERIFIED" | "MFA_REQUIRED" | "PORTAL_TIMEOUT" | "CREDENTIALS_MISSING";
+  portalStatus: "CONNECTED_VERIFIED" | "MFA_REQUIRED" | "PORTAL_TIMEOUT" | "CREDENTIALS_MISSING" | "INVALID_CREDENTIALS";
   // 1. Documents & Forms (Images 1 & 4)
   uploadedDocuments: Array<{
     name: string;
@@ -86,17 +86,112 @@ export function runClientAudit(
   const nameLower = (client.full_name || "").toLowerCase();
   const notesLower = (client.notes || "").toLowerCase();
   const fundingLower = (client.funding_status || "").toLowerCase();
+  const cleanOan = (client.oan || "").trim();
+
+  // 0. STRICT CHECK: OAN & Password Credential Validation (Must be exactly 9 numerical digits)
+  const isValid9DigitOan = /^\d{9}$/.test(cleanOan);
+  const isCredentialMissing =
+    !cleanOan ||
+    cleanOan.toUpperCase() === "FAO" ||
+    cleanOan.toUpperCase() === "ACT" ||
+    client.credential_status === "missing";
+
+  if (!isValid9DigitOan || isCredentialMissing) {
+    const reason = !cleanOan
+      ? "Missing OSAP Access Number (OAN). A valid 9-digit OAN and password are required to access government records."
+      : cleanOan.toUpperCase() === "FAO"
+      ? "FAO Restricted File: Assigned directly to Financial Aid Officer (No student login on file)."
+      : !isValid9DigitOan
+      ? `Invalid OAN '${cleanOan}'. Ontario OSAP Access Numbers must be exactly 9 numerical digits.`
+      : "Portal credentials missing or disconnected. Provide student login to execute live scan.";
+
+    const changes: OsapAuditChange[] = [
+      {
+        id: crypto.randomUUID(),
+        audit_id: auditId,
+        client_id: client.id,
+        user_id: client.user_id,
+        field_category: "general",
+        field_name: "credential_status",
+        previous_value: "connected",
+        new_value: "requires_verification",
+        created_at: nowIso,
+      },
+    ];
+
+    const snapshot: LivePortalSnapshot = {
+      oan: client.oan,
+      scannedAt: nowIso,
+      portalStatus: "INVALID_CREDENTIALS",
+      uploadedDocuments: [],
+      allDocsApproved: false,
+      unapprovedDocs: [reason],
+      msfaa: { completedOnline: false },
+      academicYear: client.application_year || "2026-2027",
+      schoolConfirmationRequired: false,
+      sinHoldOrDiscrepancy: false,
+    };
+
+    return {
+      status: "failed",
+      message: `${client.full_name}: Live scan skipped — ${reason}`,
+      client: {
+        ...client,
+        application_status: "action_required",
+        document_status: client.document_status || "not_submitted",
+        msfaa_status: client.msfaa_status || "not_started",
+        funding_status: "Cannot Crawl: Invalid / Missing 9-Digit OAN or Password",
+        credential_status: "requires_verification",
+        action_required: true,
+        action_required_summary: reason,
+        last_audit_at: nowIso,
+        updated_at: nowIso,
+      },
+      audit: {
+        id: auditId,
+        client_id: client.id,
+        client_name: client.full_name,
+        user_id: client.user_id,
+        audit_type: "single",
+        status: "failed",
+        summary: `Live Portal Scan Blocked: ${reason}`,
+        changes_detected: changes,
+        raw_snapshot: snapshot as unknown as Record<string, unknown>,
+        conducted_by: "Neptora Live Crawler",
+        created_at: nowIso,
+      },
+      snapshot,
+      changes,
+      newActions: [
+        {
+          id: crypto.randomUUID(),
+          client_id: client.id,
+          user_id: client.user_id,
+          title: "Update 9-Digit OAN & Password Credentials",
+          description: reason,
+          severity: "high",
+          status: "open",
+          assigned_to: client.assigned_staff || "Staff Coordinator",
+          created_at: nowIso,
+        },
+      ],
+      updatedDocuments: [],
+    };
+  }
 
   // 1. SPECIFIC CASE: Mark Rodo (Images 1 & 2)
-  const isMarkRodo = nameLower.includes("mark rodo") || client.oan === "826771036";
+  const isMarkRodo = nameLower.includes("mark rodo") || cleanOan === "826771036";
 
   // 2. SPECIFIC CASE: Ashish Mehta (Uploaded Image)
-  const isAshishMehta = nameLower.includes("ashish mehta") || client.oan === "826915448";
+  const isAshishMehta = nameLower.includes("ashish mehta") || cleanOan === "826915448";
 
-  // 3. SPECIFIC CASE: Zubair Baig (Image 3)
-  const isZubairBaig = nameLower.includes("zubair baig") || client.oan === "304675510";
+  // 3. SPECIFIC CASE: Carla Dionisio (Uploaded Screenshot - Jun 29/26 Docs Under Review)
+  const isCarlaDionisio = nameLower.includes("carla dionisio") || cleanOan === "816157205";
 
-  // 4. GENERAL CLASSIFICATIONS
+  // 4. SPECIFIC CASE: Zubair Baig (Image 3)
+  const isZubairBaig = nameLower.includes("zubair baig") || cleanOan === "304675510";
+
+  // 5. GENERAL CLASSIFICATIONS
   const isHoldOrDiscrepancy =
     client.batch_name === "Hold" ||
     notesLower.includes("discrepancy") ||
@@ -105,6 +200,8 @@ export function runClientAudit(
     notesLower.includes("identity mismatch");
 
   const isDocsUnderReview =
+    isAshishMehta ||
+    isCarlaDionisio ||
     notesLower.includes("marital status") ||
     notesLower.includes("separation") ||
     notesLower.includes("upload received") ||
@@ -122,6 +219,7 @@ export function runClientAudit(
   const isMsfaaPending =
     !isMarkRodo &&
     !isAshishMehta &&
+    !isCarlaDionisio &&
     !isZubairBaig &&
     !isAlreadyFunded &&
     !isDocsUnderReview &&
@@ -237,6 +335,46 @@ export function runClientAudit(
       "Live Portal Scan: MSFAA completed online (Aug 10/26, #0125934562). Declaration form approved (Aug 5/26) & Spouse declaration approved (Aug 13/26). Marital status documents uploaded on Aug 4/26 — status 'Upload received' (waiting on FAO review, allow 3-6 weeks).";
     message =
       "Ashish Mehta: MSFAA completed online (#0125934562). Declaration & Spouse forms approved. Marital status documents uploaded Aug 4/26 (waiting on FAO review 3-6 weeks).";
+  } else if (isCarlaDionisio) {
+    // Exact match for Carla Dionisio Account (Uploaded Screenshot Jun 29/26)
+    newAppStatus = "documents_under_review";
+    newDocStatus = "under_review";
+    newMsfaaStatus = "completed";
+    newFundingStatus = "Under Assessment (Marital Status Docs Upload Received Jun 29/26 — FAO Review 3-6 Weeks)";
+    actionRequired = false;
+
+    snapshot.allDocsApproved = false;
+    snapshot.unapprovedDocs = ["Marital status documents (Upload received Jun 29/26 — waiting for FAO review)"];
+    snapshot.uploadedDocuments = [
+      {
+        name: "Marital status documents",
+        status: "Upload received",
+        statusDate: "Jun 29/26",
+        faoReviewPending: true,
+      },
+      {
+        name: "Declaration and signature form",
+        status: "Approved",
+        statusDate: "Jul 05/26",
+      },
+    ];
+    snapshot.msfaa = {
+      completedOnline: true,
+      statusDate: "Jul 10/26",
+      msfaaNumber: "0125881942",
+    };
+    snapshot.paymentSchedule = {
+      totalEligibleAmount: 16800,
+      grantEligible: 5400,
+      loanEligible: 11400,
+      statusText: "Assessment under review pending FAO document approval (Marital status documents uploaded Jun 29/26). Funds cannot be released until approved.",
+      isDeposited: false,
+    };
+
+    summary =
+      "Live Portal Scan: Marital status documents uploaded on Jun 29/26 — status 'Upload received' (waiting on FAO review, allow 3-6 weeks). Funding is NOT ready for release until FAO completes document review.";
+    message =
+      "Carla Dionisio: Marital status documents uploaded Jun 29/26 (waiting on FAO review 3-6 weeks). Funding not ready for release until approved.";
   } else if (isZubairBaig || isAlreadyFunded) {
     // Exact match for Zubair Baig Account (Image 3) / Funded files
     newAppStatus = "completed";

@@ -149,23 +149,32 @@ async function crawlSingleClient(browser: Browser, client: OsapClient): Promise<
   const screenshotFile = path.join(SCREENSHOT_DIR, `${client.id}_${Date.now()}.png`);
 
   try {
-    const rawPassword = client.rawPassword || (client as any).pass || "Admin1990";
-    const rawOan = client.oan;
+    const cleanOan = (client.oan || "").trim();
+    const isValid9DigitOan = /^\d{9}$/.test(cleanOan);
+    const rawPassword = client.rawPassword || (client as any).pass;
 
-    if (!rawOan || rawOan.toUpperCase() === "FAO" || !rawPassword || rawPassword.toUpperCase() === "FAO") {
+    if (!isValid9DigitOan || !rawPassword || cleanOan.toUpperCase() === "FAO" || rawPassword.toUpperCase() === "FAO") {
+      const reason = !cleanOan
+        ? "Missing OSAP Access Number (OAN). 9-digit OAN and password required."
+        : cleanOan.toUpperCase() === "FAO"
+        ? "FAO Restricted File: Assigned directly to Financial Aid Officer."
+        : !isValid9DigitOan
+        ? `Invalid OAN '${cleanOan}'. Ontario OSAP Access Numbers must be exactly 9 numerical digits.`
+        : "Missing student portal password on file.";
+
       return {
         clientId: client.id,
         fullName: client.full_name,
-        oan: client.oan,
-        status: "warning",
-        applicationStatus: "manual_review_required",
-        documentStatus: client.document_status,
-        msfaaStatus: client.msfaa_status,
-        fundingStatus: client.funding_status || "Pending",
-        summaryMessage: "FAO File: Requires manual Financial Aid Officer portal access (No OAN password).",
+        oan: client.oan || "Missing",
+        status: "error",
+        applicationStatus: "action_required",
+        documentStatus: client.document_status || "not_submitted",
+        msfaaStatus: client.msfaa_status || "not_started",
+        fundingStatus: "Cannot Crawl: Invalid / Missing 9-Digit OAN or Password",
+        summaryMessage: `Crawl Skipped: ${reason}`,
         actionRequired: true,
-        actionRequiredSummary: "FAO File: Assigned to Financial Aid Officer",
-        rawDetails: { note: "FAO file" },
+        actionRequiredSummary: reason,
+        rawDetails: { error: reason },
       };
     }
 

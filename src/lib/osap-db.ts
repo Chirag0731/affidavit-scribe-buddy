@@ -12,12 +12,12 @@ import type {
 import { encryptCredential } from "./osap-crypto";
 import { ALL_OSAP_CLIENTS } from "./osap-seed-data";
 
-const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v11_clean_crawler_ashish_fix";
-const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v11";
-const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v11";
-const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v11";
-const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v11";
-const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v11";
+const LOCAL_CLIENTS_KEY = "neptora_osap_clients_v12_clean_crawler_carla_dionisio_fix";
+const LOCAL_AUDITS_KEY = "neptora_osap_audits_cache_v12";
+const LOCAL_ACTIONS_KEY = "neptora_osap_actions_cache_v12";
+const LOCAL_DOCS_KEY = "neptora_osap_docs_cache_v12";
+const LOCAL_NOTES_KEY = "neptora_osap_notes_cache_v12";
+const LOCAL_IMPORTS_KEY = "neptora_osap_imports_cache_v12";
 
 // Build a seed map from ALL_OSAP_CLIENTS so each student's official cohort batch is permanently mapped
 const SEED_BATCH_MAP = new Map<string, string>();
@@ -50,6 +50,7 @@ export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS
     const properBatch = resolveClientBatch(c);
     const nameLower = c.full_name.toLowerCase();
     const isAshishMehta = nameLower.includes("ashish mehta") || c.oan === "826915448";
+    const isCarlaDionisio = nameLower.includes("carla dionisio") || c.oan === "816157205";
     const isMarkRodo = nameLower.includes("mark rodo") || c.oan === "826771036";
     const isZubairBaig = nameLower.includes("zubair baig") || c.oan === "304675510";
 
@@ -61,6 +62,19 @@ export const INITIAL_SPREADSHEET_CLIENTS: OsapClient[] = ALL_OSAP_CLIENTS
         document_status: "under_review",
         msfaa_status: "completed",
         funding_status: "Under Assessment (Marital Status Docs Upload Received Aug 4/26 — FAO Review 3-6 Weeks)",
+        action_required: false,
+        action_required_summary: null,
+      };
+    }
+
+    if (isCarlaDionisio) {
+      return {
+        ...c,
+        batch_name: "June 29th List",
+        application_status: "documents_under_review",
+        document_status: "under_review",
+        msfaa_status: "completed",
+        funding_status: "Under Assessment (Marital Status Docs Upload Received Jun 29/26 — FAO Review 3-6 Weeks)",
         action_required: false,
         action_required_summary: null,
       };
@@ -125,6 +139,7 @@ export function resetOsapClientsToSpreadsheet(): OsapClient[] {
     localStorage.removeItem("neptora_osap_clients_cache_v4");
     localStorage.removeItem("neptora_osap_clients_v9_clean_college_roster");
     localStorage.removeItem("neptora_osap_clients_v10_revert_general_batch_july27");
+    localStorage.removeItem("neptora_osap_clients_v11_clean_crawler_ashish_fix");
     localStorage.setItem(LOCAL_CLIENTS_KEY, JSON.stringify(INITIAL_SPREADSHEET_CLIENTS));
   } catch {
     /* ignore */
@@ -143,6 +158,7 @@ export async function getOsapClients(): Promise<OsapClient[]> {
       localStorage.removeItem("neptora_osap_clients_cache_v3");
       localStorage.removeItem("neptora_osap_clients_v9_clean_college_roster");
       localStorage.removeItem("neptora_osap_clients_v10_revert_general_batch_july27");
+      localStorage.removeItem("neptora_osap_clients_v11_clean_crawler_ashish_fix");
     }
 
     let clients: OsapClient[] = [];
@@ -171,6 +187,7 @@ export async function getOsapClients(): Promise<OsapClient[]> {
         const properBatch = resolveClientBatch(c);
         const nameLower = c.full_name.toLowerCase();
         const isAshishMehta = nameLower.includes("ashish mehta") || c.oan === "826915448";
+        const isCarlaDionisio = nameLower.includes("carla dionisio") || c.oan === "816157205";
         const isMarkRodo = nameLower.includes("mark rodo") || c.oan === "826771036";
         const isZubairBaig = nameLower.includes("zubair baig") || c.oan === "304675510";
 
@@ -182,6 +199,19 @@ export async function getOsapClients(): Promise<OsapClient[]> {
             document_status: "under_review" as const,
             msfaa_status: "completed" as const,
             funding_status: "Under Assessment (Marital Status Docs Upload Received Aug 4/26 — FAO Review 3-6 Weeks)",
+            action_required: false,
+            action_required_summary: null,
+          };
+        }
+
+        if (isCarlaDionisio) {
+          return {
+            ...c,
+            batch_name: "June 29th List",
+            application_status: "documents_under_review" as const,
+            document_status: "under_review" as const,
+            msfaa_status: "completed" as const,
+            funding_status: "Under Assessment (Marital Status Docs Upload Received Jun 29/26 — FAO Review 3-6 Weeks)",
             action_required: false,
             action_required_summary: null,
           };
