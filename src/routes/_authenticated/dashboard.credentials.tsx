@@ -12,12 +12,14 @@ import {
   FolderOpen,
   Sparkles,
   FileText,
+  Building2,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Badge } from "@/components/ui/badge";
 import {
   Select,
   SelectContent,
@@ -261,6 +263,42 @@ function CredentialsStudio() {
       <div className="grid lg:grid-cols-2 gap-6 items-start">
         {/* ----------------------------------------------------------- form */}
         <div className="space-y-5">
+          <section className="rounded-2xl border border-border bg-card p-4 space-y-3">
+            <div className="flex items-center justify-between">
+              <h2 className="text-sm font-bold text-foreground flex items-center gap-1.5">
+                <Building2 className="w-4 h-4 text-primary" /> Institution & School
+              </h2>
+              <Badge variant="outline" className="text-[10px] capitalize">
+                {meta.kind}
+              </Badge>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-3">
+              <div className="sm:col-span-2">
+                <Label className="text-xs">School / Institution Name</Label>
+                <Input
+                  value={spec.institution}
+                  onChange={(e) => set("institution", e.target.value)}
+                  placeholder="e.g. Courtice Secondary School"
+                />
+              </div>
+              {spec.design === "ossd" && (
+                <div className="sm:col-span-2">
+                  <Label className="text-xs">City / Location (Dated at)</Label>
+                  <Input
+                    value={spec.extra.city ?? "COURTICE, ONTARIO"}
+                    onChange={(e) =>
+                      setSpec((p) => ({
+                        ...p,
+                        extra: { ...p.extra, city: e.target.value },
+                      }))
+                    }
+                    placeholder="e.g. COURTICE, ONTARIO"
+                  />
+                </div>
+              )}
+            </div>
+          </section>
+
           <section className="rounded-2xl border border-border bg-card p-4 space-y-3">
             <h2 className="text-sm font-bold text-foreground">Student</h2>
             <div className="grid sm:grid-cols-2 gap-3">

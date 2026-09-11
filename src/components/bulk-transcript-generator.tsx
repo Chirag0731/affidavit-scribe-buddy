@@ -65,6 +65,7 @@ export function BulkTranscriptGenerator() {
   const [strategy, setStrategy] = useState<UniversitySelectionStrategy>("random_all");
   const [selectedDesigns, setSelectedDesigns] = useState<DesignKey[]>(TRANSCRIPT_DESIGNS);
   const [singleDesign, setSingleDesign] = useState<DesignKey>("york");
+  const [customInstitution, setCustomInstitution] = useState<string>("");
 
   // Advanced options
   const [randomizeGrades, setRandomizeGrades] = useState(true);
@@ -145,6 +146,7 @@ export function BulkTranscriptGenerator() {
       strategy,
       selectedDesigns,
       singleDesign,
+      customInstitution: customInstitution.trim() || undefined,
       gradeOptions: {
         ...DEFAULT_GRADE_OPTIONS,
         min: minGrade,
@@ -452,6 +454,37 @@ export function BulkTranscriptGenerator() {
                   </div>
                 </div>
               )}
+
+              {/* School / Institution Name Override */}
+              <div className="space-y-1.5 pt-2 border-t">
+                <div className="flex items-center justify-between">
+                  <Label className="text-[11px] text-muted-foreground flex items-center gap-1.5 font-medium">
+                    <Building2 className="w-3.5 h-3.5 text-primary" /> School / Institution Name Override
+                  </Label>
+                  {customInstitution && (
+                    <button
+                      type="button"
+                      onClick={() => setCustomInstitution("")}
+                      className="text-[10px] text-primary hover:underline"
+                    >
+                      Reset to default
+                    </button>
+                  )}
+                </div>
+                <Input
+                  value={customInstitution}
+                  onChange={(e) => setCustomInstitution(e.target.value)}
+                  placeholder={
+                    strategy === "single" && singleDesign === "ossd"
+                      ? "e.g. Courtice Secondary School (or any high school name)"
+                      : "Leave blank to use default institution name"
+                  }
+                  className="h-8 text-xs"
+                />
+                <p className="text-[10px] text-muted-foreground">
+                  Overrides the school name across generated documents (you can also set per student in the roster using <code className="bg-muted px-1 rounded">School: Name</code>).
+                </p>
+              </div>
             </div>
 
             {/* Advanced Academic Settings */}

@@ -23,6 +23,7 @@ export interface StudentRosterItem {
   dob?: string;
   gender: Gender;
   preferredDesign?: DesignKey;
+  customInstitution?: string;
 }
 
 export type UniversitySelectionStrategy = "random_all" | "random_selected" | "single";
@@ -31,6 +32,7 @@ export interface BulkTranscriptOptions {
   strategy: UniversitySelectionStrategy;
   selectedDesigns: DesignKey[];
   singleDesign?: DesignKey;
+  customInstitution?: string;
   gradeOptions: GradeRandomOptions;
   dateOptions: DateRandomOptions;
   randomizeGrades: boolean;
@@ -159,15 +161,31 @@ export function parseRosterText(rawText: string): StudentRosterItem[] {
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
 
-    // Check for University / Design override
+    // Check for University / Design override (template key)
     let preferredDesign: DesignKey | undefined;
-    const uniMatch = line.match(/(?:university|design|school|institution)\s*[:=]\s*([a-zA-Z0-9_-]+)/i);
+    const uniMatch = line.match(/(?:university|design|template)\s*[:=]\s*([^,;\t\n]+)/i);
     if (uniMatch) {
-      const parsedKey = uniMatch[1].toLowerCase();
+      const parsedKey = uniMatch[1].trim().toLowerCase();
       const matched = DESIGNS.find(
         (d) => d.key === parsedKey || d.institution.toLowerCase().includes(parsedKey)
       );
       if (matched) preferredDesign = matched.key;
+    }
+
+    // Check for School / Institution override (custom name or known school)
+    let customInstitution: string | undefined;
+    const schoolMatch = line.match(/(?:school|institution|college)\s*[:=]\s*([^,;\t\n]+)/i);
+    if (schoolMatch) {
+      const rawInst = schoolMatch[1].trim();
+      const parsedKey = rawInst.toLowerCase();
+      const matched = DESIGNS.find(
+        (d) => d.key === parsedKey || d.institution.toLowerCase().includes(parsedKey)
+      );
+      if (matched && !preferredDesign) {
+        preferredDesign = matched.key;
+      } else {
+        customInstitution = rawInst;
+      }
     }
 
     // Check for tagged DOB (e.g. DOB: 2007-08-31, birth: 1999-10-14)
@@ -189,7 +207,8 @@ export function parseRosterText(rawText: string): StudentRosterItem[] {
 
     // Remove tags to extract name cleanly
     let cleanNameLine = line
-      .replace(/(?:university|design|school|institution)\s*[:=]\s*([a-zA-Z0-9_-]+)/gi, "")
+      .replace(/(?:university|design|template)\s*[:=]\s*([^,;\t\n]+)/gi, "")
+      .replace(/(?:school|institution|college)\s*[:=]\s*([^,;\t\n]+)/gi, "")
       .replace(/(?:dob|date of birth|birthdate|born)\s*[:=]\s*([0-9]{4}[-/][0-9]{1,2}[-/][0-9]{1,2}|[0-9]{1,2}[-/][0-9]{1,2}[-/][0-9]{4})/gi, "")
       .replace(/(?:gender|sex)\s*[:=]\s*([a-zA-Z]+)/gi, "")
       .trim();
@@ -255,6 +274,7 @@ export function parseRosterText(rawText: string): StudentRosterItem[] {
       dob,
       gender,
       preferredDesign,
+      customInstitution,
     });
   }
 
@@ -390,8 +410,15 @@ export async function generateBulkTranscripts(
       // DOB formatting
       const dobFormatted = student.dob ? formatDobForUniversity(student.dob, design) : undefined;
 
+      // School / Institution name override
+      const institutionName =
+        student.customInstitution ||
+        options.customInstitution?.trim() ||
+        meta.institution;
+
       const spec: CredentialSpec = {
         ...baseSpec,
+        institution: institutionName,
         studentName,
         gender: student.gender,
         studentId,
@@ -424,14 +451,14 @@ export async function generateBulkTranscripts(
 
       // Format clean filename: "LastName_FirstName_Institution_StudentID.pdf"
       const nameClean = student.fullName.replace(/[^a-zA-Z0-9]/g, "_");
-      const instClean = meta.institution.replace(/[^a-zA-Z0-9]/g, "_");
+      const instClean = institutionName.replace(/[^a-zA-Z0-9]/g, "_");
       const filename = `${nameClean}_${instClean}_${studentId}.pdf`;
 
       return {
         id: `gen-${student.id}-${Date.now()}-${idx}`,
         student,
         design,
-        institution: meta.institution,
+        institution: institutionName,
         spec: finalizedSpec,
         blob,
         pdfUrl,

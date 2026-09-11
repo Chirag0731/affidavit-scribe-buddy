@@ -1218,27 +1218,29 @@ async function ossd(
   line(ctx, leftX + 230, dateTop + 18, leftX + 256, 0.6, "#777777");
 
   // 9. Lower Right Section: Signatures
-  const sigRightX = 400;
-  const sigLineW = 320;
+  const sigRightX = 410;
+  const sigLineW = 310;
 
   // Minister Signature
   const minSigData = await bytes(OSSD_ASSETS.sigMinister);
   if (minSigData) {
     try {
       const minSigImg = await pdf.embedPng(minSigData);
+      const minW = 110;
+      const minH = (minW * minSigImg.height) / minSigImg.width;
       ctx.page.drawImage(minSigImg, {
-        x: sigRightX + 60,
-        y: H - 380 - 46,
-        width: 105,
-        height: 46,
+        x: sigRightX + (sigLineW - minW) / 2,
+        y: H - 424 - minH + 6,
+        width: minW,
+        height: minH,
       });
     } catch {
       /* ignore */
     }
   }
-  line(ctx, sigRightX, 428, sigRightX + sigLineW, 0.5, "#444444");
-  const ministerTitle = s.officialTitle || "Minister of Education and Training/Ministre de l'Éducation et de la Formation";
-  text(ctx, ministerTitle, sigRightX, 432, {
+  line(ctx, sigRightX, 424, sigRightX + sigLineW, 0.5, "#444444");
+  const ministerTitle = s.officialTitle || "Minister of Education and Training / Ministre de l'Éducation et de la Formation";
+  text(ctx, ministerTitle, sigRightX, 428, {
     size: 7.2,
     font: times,
     align: "center",
@@ -1251,19 +1253,21 @@ async function ossd(
   if (prinSigData) {
     try {
       const prinSigImg = await pdf.embedPng(prinSigData);
+      const prinW = 135;
+      const prinH = (prinW * prinSigImg.height) / prinSigImg.width;
       ctx.page.drawImage(prinSigImg, {
-        x: sigRightX + 45,
-        y: H - 450 - 45,
-        width: 145,
-        height: 44,
+        x: sigRightX + (sigLineW - prinW) / 2,
+        y: H - 492 - prinH + 6,
+        width: prinW,
+        height: prinH,
       });
     } catch {
       /* ignore */
     }
   }
-  line(ctx, sigRightX, 496, sigRightX + sigLineW, 0.5, "#444444");
-  const principalTitle = s.secondOfficialTitle || "Principal of School/Directeur ou directrice de l'école";
-  text(ctx, principalTitle, sigRightX, 500, {
+  line(ctx, sigRightX, 492, sigRightX + sigLineW, 0.5, "#444444");
+  const principalTitle = s.secondOfficialTitle || "Principal of School / Directeur ou directrice de l'école";
+  text(ctx, principalTitle, sigRightX, 496, {
     size: 7.2,
     font: times,
     align: "center",
