@@ -21,6 +21,7 @@ import queensSig from "@/assets/credentials/queens-sig.png.asset.json";
 import lseLogo from "@/assets/credentials/lse-logo.png.asset.json";
 import lseSeal from "@/assets/credentials/lse-seal.png.asset.json";
 import lseSig from "@/assets/credentials/lse-sig.png.asset.json";
+import { OSSD_ASSETS } from "@/assets/credentials/ossd-assets";
 
 // ------------------------------------------------------------------ helpers
 
@@ -29,6 +30,24 @@ const cache = new Map<string, Uint8Array | null>();
 async function bytes(url: string): Promise<Uint8Array | null> {
   if (cache.has(url)) return cache.get(url) ?? null;
   try {
+    if (url.startsWith("data:")) {
+      const comma = url.indexOf(",");
+      const b64 = comma >= 0 ? url.slice(comma + 1) : url;
+      let bin: string;
+      if (typeof atob === "function") {
+        bin = atob(b64);
+      } else if (typeof Buffer !== "undefined") {
+        bin = Buffer.from(b64, "base64").toString("binary");
+      } else {
+        throw new Error("No base64 decoder available");
+      }
+      const arr = new Uint8Array(bin.length);
+      for (let i = 0; i < bin.length; i++) {
+        arr[i] = bin.charCodeAt(i);
+      }
+      cache.set(url, arr);
+      return arr;
+    }
     const res = await fetch(url);
     if (!res.ok) throw new Error(String(res.status));
     const arr = new Uint8Array(await res.arrayBuffer());
@@ -57,7 +76,7 @@ const clean = (t: string) =>
     .replace(/[\u201c\u201d]/g, '"')
     .replace(/\u2013/g, "-")
     .replace(/\u2014/g, "-")
-    .replace(/[^\x20-\x7E]/g, "");
+    .replace(/[^\x20-\xFF]/g, "");
 
 interface Ctx {
   page: PDFPage;
@@ -212,6 +231,9 @@ export async function generateCredentialPdf(spec: CredentialSpec): Promise<Blob>
       break;
     case "fleming":
       await fleming(ctx, pdf, spec);
+      break;
+    case "ossd":
+      await ossd(ctx, pdf, spec, times, timesBold);
       break;
   }
 
@@ -1019,5 +1041,233 @@ async function fleming(ctx: Ctx, pdf: PDFDocument, s: CredentialSpec) {
     font: ctx.bold,
     align: "center",
     width: W,
+  });
+}
+
+// ------------------------------------------------------------------ OSSD
+async function ossd(
+  ctx: Ctx,
+  pdf: PDFDocument,
+  s: CredentialSpec,
+  times: PDFFont,
+  timesBold: PDFFont,
+) {
+  const W = 792;
+  const H = 612;
+
+  // 1. Green Ontario Crest & Banner
+  const crestData = await bytes(OSSD_ASSETS.crest);
+  if (crestData) {
+    try {
+      const crestImg = await pdf.embedPng(crestData);
+      const crestW = 68;
+      const crestH = (crestW * crestImg.height) / crestImg.width;
+      ctx.page.drawImage(crestImg, {
+        x: (W - crestW) / 2,
+        y: H - 45 - crestH,
+        width: crestW,
+        height: crestH,
+      });
+    } catch {
+      /* ignore */
+    }
+  }
+
+  // 2. Bilingual Diploma Titles
+  text(ctx, "Ontario Secondary School Diploma", 0, 126, {
+    size: 26,
+    font: timesBold,
+    align: "center",
+    width: W,
+    color: "#1c1c1c",
+  });
+  text(ctx, "Diplôme d'études secondaires de l'Ontario", 0, 156, {
+    size: 23,
+    font: timesBold,
+    align: "center",
+    width: W,
+    color: "#1c1c1c",
+  });
+
+  // 3. Subtitle (Granted to / Décerné à)
+  text(ctx, "This Diploma is granted to", 0, 192, {
+    size: 11,
+    font: times,
+    align: "center",
+    width: W,
+    color: "#2a2a2a",
+  });
+  text(ctx, "Ce diplôme est décerné à", 0, 206, {
+    size: 11,
+    font: times,
+    align: "center",
+    width: W,
+    color: "#2a2a2a",
+  });
+
+  // 4. Student Name
+  text(ctx, (s.studentName || "CHRISTINE LOUISE SAWYER").toUpperCase(), 0, 226, {
+    size: 18.5,
+    font: ctx.boldItalic,
+    align: "center",
+    width: W,
+  });
+
+  // 5. a student of / élève de
+  text(ctx, "a student of", 0, 252, {
+    size: 11,
+    font: times,
+    align: "center",
+    width: W,
+    color: "#2a2a2a",
+  });
+  text(ctx, "élève de", 0, 265, {
+    size: 11,
+    font: times,
+    align: "center",
+    width: W,
+    color: "#2a2a2a",
+  });
+
+  // 6. Secondary School Name
+  text(ctx, (s.institution || "COURTICE SECONDARY SCHOOL").toUpperCase(), 0, 284, {
+    size: 16.5,
+    font: ctx.boldItalic,
+    align: "center",
+    width: W,
+  });
+
+  // 7. Requirements & Ministry Provisions (Bilingual)
+  text(ctx, "who has fulfilled the requirements for the Ontario Secondary School Diploma", 0, 318, {
+    size: 9.5,
+    font: times,
+    align: "center",
+    width: W,
+    color: "#222222",
+  });
+  text(ctx, "in accordance with the provisions of the Ministry of Education and Training, Ontario", 0, 332, {
+    size: 9.5,
+    font: times,
+    align: "center",
+    width: W,
+    color: "#222222",
+  });
+  text(ctx, "qui a rempli les exigences prescrites pour l'obtention du diplôme d'études secondaires de l'Ontario,", 0, 350, {
+    size: 9.5,
+    font: times,
+    align: "center",
+    width: W,
+    color: "#222222",
+  });
+  text(ctx, "en vertu des dispositions du ministère de l'Éducation et de la Formation de l'Ontario", 0, 364, {
+    size: 9.5,
+    font: times,
+    align: "center",
+    width: W,
+    color: "#222222",
+  });
+
+  // 8. Lower Left Section: Location & Date
+  const leftX = 64;
+  text(ctx, "Dated at", leftX, 400, { size: 8, font: times, color: "#333333" });
+  text(ctx, "Délivré à", leftX, 410, { size: 8, font: times, color: "#333333" });
+
+  const city = s.extra.city || (s.addressLines && s.addressLines[0]) || "COURTICE, ONTARIO";
+  text(ctx, city.toUpperCase(), leftX + 68, 404, { size: 10.5, font: ctx.boldItalic });
+
+  // Date line: "the" / "ce" [day] "day of" / "jour de" [month] [yearPrefix] [yearSuffix]
+  let day = s.extra.day || "";
+  let month = s.extra.month || "";
+  let yearPrefix = s.extra.yearPrefix || "";
+  let yearSuffix = s.extra.yearSuffix || "";
+
+  if ((!day || !month || !yearSuffix) && s.issueDate) {
+    const MONTH_NAMES = [
+      "JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE",
+      "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER",
+    ];
+    const parsed = new Date(s.issueDate);
+    if (!isNaN(parsed.getTime())) {
+      day = day || String(parsed.getDate());
+      month = month || MONTH_NAMES[parsed.getMonth()];
+      const yStr = String(parsed.getFullYear());
+      yearPrefix = yearPrefix || yStr.slice(0, 2);
+      yearSuffix = yearSuffix || yStr.slice(2);
+    }
+  }
+  day = day || "26";
+  month = (month || "JUNE").toUpperCase();
+  yearPrefix = yearPrefix || "19";
+  yearSuffix = yearSuffix || "98";
+
+  const dateTop = 445;
+  text(ctx, "the", leftX, dateTop, { size: 8, font: times, color: "#333333" });
+  text(ctx, "ce", leftX, dateTop + 10, { size: 8, font: times, color: "#333333" });
+
+  text(ctx, day, leftX + 42, dateTop + 2, { size: 11, font: ctx.boldItalic, align: "center", width: 24 });
+  line(ctx, leftX + 38, dateTop + 18, leftX + 68, 0.6, "#777777");
+
+  text(ctx, "day of", leftX + 78, dateTop, { size: 8, font: times, color: "#333333" });
+  text(ctx, "jour de", leftX + 78, dateTop + 10, { size: 8, font: times, color: "#333333" });
+
+  text(ctx, month, leftX + 130, dateTop + 2, { size: 11, font: ctx.boldItalic, align: "center", width: 60 });
+  line(ctx, leftX + 120, dateTop + 18, leftX + 200, 0.6, "#777777");
+
+  text(ctx, yearPrefix, leftX + 215, dateTop + 2, { size: 10, font: ctx.boldItalic });
+  text(ctx, yearSuffix, leftX + 234, dateTop + 2, { size: 11, font: ctx.boldItalic });
+  line(ctx, leftX + 230, dateTop + 18, leftX + 256, 0.6, "#777777");
+
+  // 9. Lower Right Section: Signatures
+  const sigRightX = 400;
+  const sigLineW = 320;
+
+  // Minister Signature
+  const minSigData = await bytes(OSSD_ASSETS.sigMinister);
+  if (minSigData) {
+    try {
+      const minSigImg = await pdf.embedPng(minSigData);
+      ctx.page.drawImage(minSigImg, {
+        x: sigRightX + 60,
+        y: H - 380 - 46,
+        width: 105,
+        height: 46,
+      });
+    } catch {
+      /* ignore */
+    }
+  }
+  line(ctx, sigRightX, 428, sigRightX + sigLineW, 0.5, "#444444");
+  const ministerTitle = s.officialTitle || "Minister of Education and Training/Ministre de l'Éducation et de la Formation";
+  text(ctx, ministerTitle, sigRightX, 432, {
+    size: 7.2,
+    font: times,
+    align: "center",
+    width: sigLineW,
+    color: "#222222",
+  });
+
+  // Principal Signature
+  const prinSigData = await bytes(OSSD_ASSETS.sigPrincipal);
+  if (prinSigData) {
+    try {
+      const prinSigImg = await pdf.embedPng(prinSigData);
+      ctx.page.drawImage(prinSigImg, {
+        x: sigRightX + 45,
+        y: H - 450 - 45,
+        width: 145,
+        height: 44,
+      });
+    } catch {
+      /* ignore */
+    }
+  }
+  line(ctx, sigRightX, 496, sigRightX + sigLineW, 0.5, "#444444");
+  const principalTitle = s.secondOfficialTitle || "Principal of School/Directeur ou directrice de l'école";
+  text(ctx, principalTitle, sigRightX, 500, {
+    size: 7.2,
+    font: times,
+    align: "center",
+    width: sigLineW,
+    color: "#222222",
   });
 }

@@ -12,7 +12,8 @@ export type DesignKey =
   | "phoenix"
   | "queens"
   | "lse"
-  | "fleming";
+  | "fleming"
+  | "ossd";
 
 /** Rows whose `code` equals one of these act as section markers, not courses. */
 export const TERM_ROW = "#TERM";
@@ -202,6 +203,15 @@ export const DESIGNS: DesignMeta[] = [
     pageW: 612,
     pageH: 792,
     accent: "#1f5c45",
+  },
+  {
+    key: "ossd",
+    label: "Ontario Ministry of Education — Secondary School Diploma (OSSD)",
+    institution: "Courtice Secondary School",
+    kind: "diploma",
+    pageW: 792,
+    pageH: 612,
+    accent: "#1b5e20",
   },
 ];
 
@@ -620,6 +630,29 @@ export function defaultSpec(design: DesignKey): CredentialSpec {
         },
       };
 
+    case "ossd":
+      return {
+        ...s,
+        design: "ossd",
+        kind: "diploma",
+        institution: "COURTICE SECONDARY SCHOOL",
+        studentName: "CHRISTINE LOUISE SAWYER",
+        gender: "female",
+        gradeMode: "none",
+        issueDate: "June 26, 1998",
+        officialName: "Dave Johnson",
+        officialTitle: "Minister of Education and Training / Ministre de l'Éducation et de la Formation",
+        secondOfficialName: "R. W. E. Zeck",
+        secondOfficialTitle: "Principal of School / Directeur ou directrice de l'école",
+        extra: {
+          city: "COURTICE, ONTARIO",
+          day: "26",
+          month: "JUNE",
+          yearPrefix: "19",
+          yearSuffix: "98",
+        },
+      };
+
     case "fernourt":
     default:
       return {
@@ -676,7 +709,7 @@ export function randomGrade(spec: CredentialSpec, current: string, opts: GradeRa
 
 export const isMarkerRow = (c: { code: string }) => c.code === TERM_ROW || c.code === GPA_ROW;
 
-export function randomizeGrades(spec: CredentialSpec, opts: GradeRandomOptions): CredentialSpec {
+export function randomizeGrades(spec: CredentialSpec, opts: GradeRandomOptions = DEFAULT_GRADE_OPTIONS): CredentialSpec {
   const courses = spec.courses.map((c) =>
     isMarkerRow(c) ? c : { ...c, grade: randomGrade(spec, c.grade, opts) },
   );
@@ -741,7 +774,7 @@ export const DEFAULT_DATE_OPTIONS: DateRandomOptions = {
   months: 10,
 };
 
-export function randomizeDates(spec: CredentialSpec, opts: DateRandomOptions): CredentialSpec {
+export function randomizeDates(spec: CredentialSpec, opts: DateRandomOptions = DEFAULT_DATE_OPTIONS): CredentialSpec {
   const year = Math.floor(rnd(opts.yearFrom, opts.yearTo + 1));
   const start = new Date(year, Math.floor(rnd(0, 12)), Math.floor(rnd(1, 28)));
   const end = new Date(start);
@@ -755,6 +788,23 @@ export function randomizeDates(spec: CredentialSpec, opts: DateRandomOptions): C
     value ? formatDate(d, detectDateStyle(value)) : value;
 
   const termSeason = pick(["Winter", "Spring", "Summer", "Fall"]);
+
+  if (spec.design === "ossd") {
+    const d = issued;
+    const yearStr = String(d.getFullYear());
+    return {
+      ...spec,
+      issueDate: keep(spec.issueDate, issued),
+      printDate: keep(spec.printDate, printed),
+      extra: {
+        ...spec.extra,
+        day: String(d.getDate()),
+        month: MONTHS[d.getMonth()].toUpperCase(),
+        yearPrefix: yearStr.slice(0, 2),
+        yearSuffix: yearStr.slice(2),
+      },
+    };
+  }
 
   return {
     ...spec,

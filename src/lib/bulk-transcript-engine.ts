@@ -15,6 +15,8 @@ import {
 } from "@/types/credentials";
 import { generateCredentialPdf } from "./credential-generator";
 
+export { DEFAULT_GRADE_OPTIONS, DEFAULT_DATE_OPTIONS };
+
 export interface StudentRosterItem {
   id: string;
   fullName: string;
@@ -59,6 +61,7 @@ export const TRANSCRIPT_DESIGNS: DesignKey[] = [
   "niit",
   "marca",
   "cdi",
+  "ossd",
 ];
 
 const MALE_FIRST_NAMES = [
@@ -126,6 +129,9 @@ export function generateInstitutionStudentId(design: DesignKey): string {
       return `CDI-${randNum(6)}`;
     case "fernourt":
       return `FHS-${randNum(5)}`;
+    case "ossd":
+      // Ontario Education Number (OEN): 9 digits
+      return randNum(9);
     default:
       return randNum(9);
   }
@@ -372,9 +378,9 @@ export async function generateBulkTranscripts(
       const baseSpec = defaultSpec(design);
 
       // Student name capitalization:
-      // Queens and CDI traditionally use uppercase names
+      // Queens, CDI, and OSSD traditionally use uppercase names
       const studentName =
-        design === "queens" || design === "cdi"
+        design === "queens" || design === "cdi" || design === "ossd"
           ? student.fullName.toUpperCase()
           : student.fullName;
 
@@ -399,15 +405,22 @@ export async function generateBulkTranscripts(
       // Apply grade and date randomization
       let finalizedSpec = spec;
       if (options.randomizeGrades) {
-        finalizedSpec = randomizeGrades(finalizedSpec, options.gradeOptions);
+        finalizedSpec = randomizeGrades(finalizedSpec, options.gradeOptions ?? DEFAULT_GRADE_OPTIONS);
       }
       if (options.randomizeDates) {
-        finalizedSpec = randomizeDates(finalizedSpec, options.dateOptions);
+        finalizedSpec = randomizeDates(finalizedSpec, options.dateOptions ?? DEFAULT_DATE_OPTIONS);
       }
 
       // Generate the PDF binary Blob
       const blob = await generateCredentialPdf(finalizedSpec);
-      const pdfUrl = URL.createObjectURL(blob);
+      let pdfUrl: string | undefined;
+      try {
+        if (typeof URL !== "undefined" && typeof URL.createObjectURL === "function") {
+          pdfUrl = URL.createObjectURL(blob);
+        }
+      } catch {
+        /* ignore non-browser environment */
+      }
 
       // Format clean filename: "LastName_FirstName_Institution_StudentID.pdf"
       const nameClean = student.fullName.replace(/[^a-zA-Z0-9]/g, "_");
