@@ -10,6 +10,8 @@ import {
   Plus,
   RefreshCw,
   FolderOpen,
+  Sparkles,
+  FileText,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -23,8 +25,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { generateCredentialPdf } from "@/lib/credential-generator";
 import { PdfBlobPreview } from "@/components/pdf-blob-preview";
+import { BulkTranscriptGenerator } from "@/components/bulk-transcript-generator";
 import {
   DESIGNS,
   DEFAULT_DATE_OPTIONS,
@@ -75,6 +79,7 @@ interface SavedTemplate {
 }
 
 function CredentialsStudio() {
+  const [activeTab, setActiveTab] = useState<"bulk" | "single">("bulk");
   const [design, setDesign] = useState<DesignKey>("sheridan");
   const [spec, setSpec] = useState<CredentialSpec>(() => defaultSpec("sheridan"));
   const [gradeOpts, setGradeOpts] = useState<GradeRandomOptions>(DEFAULT_GRADE_OPTIONS);
@@ -206,18 +211,36 @@ function CredentialsStudio() {
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          <Button variant="outline" onClick={() => setSpec(defaultSpec(design))}>
-            <RefreshCw className="w-4 h-4 mr-2" /> Reset
-          </Button>
-          <Button onClick={download}>
-            <Download className="w-4 h-4 mr-2" /> Download PDF
-          </Button>
-        </div>
+        {activeTab === "single" && (
+          <div className="flex items-center gap-2">
+            <Button variant="outline" onClick={() => setSpec(defaultSpec(design))}>
+              <RefreshCw className="w-4 h-4 mr-2" /> Reset
+            </Button>
+            <Button onClick={download}>
+              <Download className="w-4 h-4 mr-2" /> Download PDF
+            </Button>
+          </div>
+        )}
       </header>
 
-      {/* Design picker */}
-      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2">
+      {/* Mode Switcher Tabs */}
+      <Tabs value={activeTab} onValueChange={(val) => setActiveTab(val as "bulk" | "single")} className="space-y-6">
+        <TabsList className="grid w-full max-w-md grid-cols-2 p-1 bg-muted/60 rounded-xl">
+          <TabsTrigger value="bulk" className="flex items-center gap-2 text-xs font-semibold">
+            <Sparkles className="w-3.5 h-3.5 text-primary" /> Bulk Generator (100+ Docs)
+          </TabsTrigger>
+          <TabsTrigger value="single" className="flex items-center gap-2 text-xs font-semibold">
+            <FileText className="w-3.5 h-3.5" /> Single Document Studio
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="bulk" className="space-y-6">
+          <BulkTranscriptGenerator />
+        </TabsContent>
+
+        <TabsContent value="single" className="space-y-6">
+          {/* Design picker */}
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-2">
         {DESIGNS.map((d) => (
           <button
             key={d.key}
@@ -597,6 +620,8 @@ function CredentialsStudio() {
           </div>
         </div>
       </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
