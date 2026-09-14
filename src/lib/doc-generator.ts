@@ -16,10 +16,21 @@ import {
 } from "docx";
 import { PDFDocument, StandardFonts, rgb } from "pdf-lib";
 import notaryBlockAsset from "@/assets/notary-block.png.asset.json";
+import { NOTARY_BLOCK_PNG_BASE64 } from "@/assets/notary-asset";
 import type { AffidavitDoc } from "@/types/neptora";
 import { buildIntroSentence, buildNotarySentence } from "@/types/neptora";
 
 async function loadNotaryImageBytes(): Promise<Uint8Array | null> {
+  try {
+    if (NOTARY_BLOCK_PNG_BASE64) {
+      const arr = dataUrlToBytes(NOTARY_BLOCK_PNG_BASE64);
+      if (arr.length > 8 && arr[0] === 0x89 && arr[1] === 0x50 && arr[2] === 0x4e && arr[3] === 0x47) {
+        return arr;
+      }
+    }
+  } catch (e) {
+    console.warn("Could not decode bundled notary block:", e);
+  }
   try {
     if (notaryBlockAsset?.url) {
       const res = await fetch(notaryBlockAsset.url);
@@ -317,9 +328,10 @@ export async function generatePdf(doc: AffidavitDoc): Promise<Blob> {
       { text: "MARYANA IVANIVN DUBANOVYCH", bold: true, size: 8.5 },
       { text: "A Notary Public / Commissioner for Oaths", bold: false, size: 7.5 },
       { text: "in and for the Province of Ontario", bold: false, size: 7.5 },
-      { text: "Commission Expiry: September 8, 2026", bold: false, size: 7.5 },
+      { text: "Expiry Date: September 8, 2027", bold: false, size: 7.5 },
       { text: "LSO Licence No. P14522", bold: true, size: 7.5 },
       { text: "Reliance Notary Public • Etobicoke, ON", bold: false, size: 7 },
+      { text: "NO LEGAL ADVICE SOUGHT OR GIVEN", bold: false, size: 6.5 },
     ];
 
     let st = boxTop + 12;
@@ -557,13 +569,13 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
   });
 
   const blockW = 240;
-  const blockH = Math.round((blockW * 202) / 361);
+  const blockH = Math.round((blockW * 361) / 726);
 
   let rightCellChildren: Paragraph[] = [];
   if (notaryBlockBytes) {
     try {
       const blockW = 240;
-      const blockH = Math.round((blockW * 202) / 361);
+      const blockH = Math.round((blockW * 361) / 726);
       rightCellChildren = [
         new Paragraph({
           alignment: AlignmentType.CENTER,
@@ -602,7 +614,7 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
         alignment: AlignmentType.CENTER,
         spacing: { after: 30 },
         children: [
-          new TextRun({ text: "Commission Expiry: September 8, 2026 • LSO Licence No. P14522", size: 16, font: "Calibri" }),
+          new TextRun({ text: "Expiry Date: September 8, 2027 • LSO Licence No. P14522", size: 16, font: "Calibri" }),
         ],
       }),
       new Paragraph({
@@ -610,6 +622,13 @@ export async function generateDocx(doc: AffidavitDoc): Promise<Blob> {
         spacing: { after: 30 },
         children: [
           new TextRun({ text: "Reliance Notary Public — Toronto, ON", italics: true, size: 15, font: "Calibri" }),
+        ],
+      }),
+      new Paragraph({
+        alignment: AlignmentType.CENTER,
+        spacing: { after: 30 },
+        children: [
+          new TextRun({ text: "NO LEGAL ADVICE SOUGHT OR GIVEN", size: 14, font: "Calibri" }),
         ],
       }),
     ];

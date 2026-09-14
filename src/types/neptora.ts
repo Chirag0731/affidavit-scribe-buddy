@@ -302,9 +302,10 @@ export function renderAffidavitText(doc: AffidavitDoc): string {
   lines.push("");
   lines.push("NOTARY PUBLIC — MARYANA IVANIVN DUBANOVYCH");
   lines.push("A Notary Public/Commissioner for Oaths in and for the Province of Ontario");
-  lines.push("Expiry Date: September 8, 2026 — LSO Licence No. P14522");
+  lines.push("Expiry Date: September 8, 2027 — LSO Licence No. P14522");
   lines.push("");
   lines.push("Reliance Notary Public — 2711-25 Mabelle Avenue, Etobicoke, Ontario M9A 4Y1 Canada — 437-263-4264");
+  lines.push("NO LEGAL ADVICE SOUGHT OR GIVEN");
 
   return lines.join("\n");
 }

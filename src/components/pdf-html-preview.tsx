@@ -7,6 +7,7 @@ import {
   buildNotarySentence,
   signatureLinePositions,
 } from "@/types/neptora";
+import notaryBlockUrl from "@/assets/notary-block.png";
 
 interface PdfHtmlPreviewProps {
   doc: AffidavitDoc;
@@ -280,7 +281,7 @@ export function PdfHtmlPreview({ doc, className = "", onSignaturesChange }: PdfH
             }}
           >
             <img
-              src="/notary-block.png"
+              src={notaryBlockUrl || "/notary-block.png"}
               alt="Notary signature block"
               className="w-full h-auto"
               onError={(e) => {
