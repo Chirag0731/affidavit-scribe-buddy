@@ -28,7 +28,6 @@ import { toast } from "sonner";
 import type { BusinessFinancingApplication } from "@/types/financing";
 import { financingStore } from "@/lib/financing-db";
 import {
-  parseQuickFloPdf,
   generateCanaCapPdf,
   generateWhiteLabelPdf,
   generatePrintableQuickFloPdf,
@@ -37,6 +36,14 @@ import {
   formatCurrency,
   formatDate,
 } from "@/lib/lender-pdf-engine";
+import { parseLenderPdf, type LenderFormKind } from "@/lib/lender-pdf-parser";
+
+const FORM_LABELS: Record<LenderFormKind, string> = {
+  quickflo: "QuickFlo Master Application",
+  journey: "Journey Capital / White-Label Application",
+  canacap: "CanaCap Business Application",
+  unknown: "Financing Application",
+};
 
 interface UploadQuickFloPdfModalProps {
   open: boolean;
