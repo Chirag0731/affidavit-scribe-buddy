@@ -1248,7 +1248,7 @@ export async function generatePrintableQuickFloPdf(
   cursorY1 = drawSectionHeader(page1, "5. Commercial Premises & Facility Lease Information", cursorY1);
 
   // Row 1: Occupancy, Rent, Landlord, Account #
-  page1.drawText("Occupancy (Own / Rent / Lease):", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  page1.drawText("Occupancy (Own/Rent):", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
   addEditableField(page1, "qf_prop_occupancy", (app.property.occupancyType || "RENT").toUpperCase(), margin, cursorY1 - 16, 110);
 
   page1.drawText("Monthly Rent / Mortgage ($):", { x: margin + 118, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
@@ -1358,35 +1358,35 @@ export async function generatePrintableQuickFloPdf(
   cursorY2 = drawSectionHeader(page2, "7. Existing Liabilities, Financing & Prior Advance History", cursorY2);
 
   // Row 1: Existing Debt?, Lender Name, Current Balance, Daily/Wkly Payment, Position
-  page2.drawText("Existing Debt (Yes/No):", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
-  addEditableField(page2, "qf_debt_hasDebt", app.existingFinancing.hasFinancing || app.existingFinancing.facilities.length > 0 ? "YES" : "NO", margin, cursorY2 - 16, 76);
+  page2.drawText("Existing Debt (Y/N):", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_debt_hasDebt", app.existingFinancing.hasFinancing || app.existingFinancing.facilities.length > 0 ? "YES" : "NO", margin, cursorY2 - 16, 88);
 
-  page2.drawText("Primary Lender / Facility Name:", { x: margin + 84, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  page2.drawText("Primary Lender Name:", { x: margin + 96, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
   const primDebt = app.existingFinancing.facilities[0] || {};
   const debtLender = primDebt.lenderName || app.existingFinancing.lenderName || "None";
-  addEditableField(page2, "qf_debt_lender", debtLender, margin + 84, cursorY2 - 16, 160);
+  addEditableField(page2, "qf_debt_lender", debtLender, margin + 96, cursorY2 - 16, 154);
 
-  page2.drawText("Current Balance ($):", { x: margin + 252, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  page2.drawText("Current Balance ($):", { x: margin + 258, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
   const debtBal = primDebt.currentBalance || app.existingFinancing.approximateBalance || 0;
-  addEditableField(page2, "qf_debt_balance", formatCurrency(debtBal), margin + 252, cursorY2 - 16, 108);
+  addEditableField(page2, "qf_debt_balance", formatCurrency(debtBal), margin + 258, cursorY2 - 16, 106);
 
-  page2.drawText("Daily/Weekly Payment ($):", { x: margin + 368, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  page2.drawText("Daily / Wkly Payment ($):", { x: margin + 372, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
   const debtPmt = primDebt.paymentAmount || app.existingFinancing.dailyOrWeeklyPayment || 0;
-  addEditableField(page2, "qf_debt_payment", formatCurrency(debtPmt), margin + 368, cursorY2 - 16, 108);
+  addEditableField(page2, "qf_debt_payment", formatCurrency(debtPmt), margin + 372, cursorY2 - 16, 108);
 
-  page2.drawText("Position:", { x: margin + 484, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
-  addEditableField(page2, "qf_debt_position", app.existingFinancing.position || "1st", margin + 484, cursorY2 - 16, 64);
+  page2.drawText("Position:", { x: margin + 488, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_debt_position", app.existingFinancing.position || "1st", margin + 488, cursorY2 - 16, 60);
   cursorY2 -= 27;
 
   // Row 2: Prior Cash Advance / MCA History
-  page2.drawText("Prior Cash Advance / Working Capital (Yes/No):", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
-  addEditableField(page2, "qf_mca_receivedBefore", app.existingFinancing.hasCashAdvanceBefore ? "YES" : "NO", margin, cursorY2 - 16, 86);
+  page2.drawText("Prior Cash Advance (Y/N):", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_mca_receivedBefore", app.existingFinancing.hasCashAdvanceBefore ? "YES" : "NO", margin, cursorY2 - 16, 110);
 
-  page2.drawText("Prior Provider / Funding Company:", { x: margin + 94, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
-  addEditableField(page2, "qf_mca_provider", app.existingFinancing.cashAdvanceProvider || "N/A", margin + 94, cursorY2 - 16, 214);
+  page2.drawText("Prior Funder / Provider Company:", { x: margin + 118, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_mca_provider", app.existingFinancing.cashAdvanceProvider || "N/A", margin + 118, cursorY2 - 16, 210);
 
-  page2.drawText("Date Received / History Details:", { x: margin + 316, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
-  addEditableField(page2, "qf_mca_when", formatDate(app.existingFinancing.cashAdvanceWhen) || "N/A", margin + 316, cursorY2 - 16, 232);
+  page2.drawText("Date Received / Advance Details:", { x: margin + 336, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_mca_when", formatDate(app.existingFinancing.cashAdvanceWhen) || "N/A", margin + 336, cursorY2 - 16, 212);
   cursorY2 -= 30;
 
   // SECTION 8: COMMERCIAL TRADE REFERENCES
