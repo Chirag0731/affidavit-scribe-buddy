@@ -1,11 +1,11 @@
 import { createFileRoute, Link, useNavigate, redirect } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { Mail, Lock, AlertCircle, Loader2, User, KeyRound } from "lucide-react";
+import { Mail, Lock, AlertCircle, Loader2, User } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { BrandLogo } from "@/components/brand-logo";
 import { getStaffProfiles, type StaffProfile } from "@/lib/osap-staff-profiles";
-import { Button } from "@/components/ui/button";
+import { purgeStorageBloat } from "@/lib/storage-quota";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -34,6 +34,7 @@ function AuthPage() {
   const [staffList, setStaffList] = useState<StaffProfile[]>([]);
 
   useEffect(() => {
+    purgeStorageBloat();
     loadStaff();
   }, []);
 
@@ -46,38 +47,11 @@ function AuthPage() {
     }
   };
 
-  const handleQuickLogin = async (quickEmail: string, quickPass: string) => {
-    setEmail(quickEmail);
-    setPassword(quickPass);
-    setError("");
-    setLoading(true);
-
-    try {
-      const { data, error: err } = await supabase.auth.signInWithPassword({
-        email: quickEmail,
-        password: quickPass,
-      });
-
-      if (!err && data?.session) {
-        toast.success("Signed in successfully");
-        window.location.href = "/dashboard";
-        return;
-      }
-
-      if (err) {
-        setError(err.message);
-      }
-    } catch (e: any) {
-      setError(e?.message || "Authentication failed");
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
     setLoading(true);
+    purgeStorageBloat();
 
     const cleanEmail = email.trim().toLowerCase();
 
@@ -129,11 +103,9 @@ function AuthPage() {
           return;
         }
 
-        // 2. Check if matching staff profile (like Kav Hussain or Administrator)
+        // 2. Check if matching staff profile (like Administrator)
         const staffMatch = staffList.find(
-          (s) =>
-            s.email.toLowerCase() === cleanEmail ||
-            (cleanEmail.includes("kav") && s.email.includes("kav"))
+          (s) => s.email.toLowerCase() === cleanEmail
         );
 
         if (staffMatch) {
@@ -171,8 +143,8 @@ function AuthPage() {
 
         setError(err?.message || "Invalid login credentials. Please check your email and password.");
       }
-    } catch {
-      setError("An unexpected error occurred during sign in.");
+    } catch (e: any) {
+      setError(e?.message || "An unexpected error occurred during sign in.");
     } finally {
       setLoading(false);
     }
@@ -204,41 +176,6 @@ function AuthPage() {
                   : "Register your legal or institutional credentials."}
               </p>
             </div>
-
-            {/* Quick 1-Click Login for Staff & Admin */}
-            {mode === "signin" && (
-              <div className="p-3.5 bg-muted/40 border border-border/80 rounded-xl space-y-2">
-                <div className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center justify-between">
-                  <span className="flex items-center gap-1.5">
-                    <KeyRound className="w-3.5 h-3.5 text-cyan-600" />
-                    <span>Quick 1-Click Access</span>
-                  </span>
-                  <span className="text-[10px] text-cyan-600 font-mono">Staff & Admin</span>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleQuickLogin("admin@college.ca", "Admin#2026!Master")}
-                    disabled={loading}
-                    className="h-8 text-[11px] font-semibold border-border hover:bg-background"
-                  >
-                    Primary Admin
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleQuickLogin("kav.hussain@gmail.com", "Kav#8319!Staff")}
-                    disabled={loading}
-                    className="h-8 text-[11px] font-semibold border-border hover:bg-background"
-                  >
-                    Kav Hussain
-                  </Button>
-                </div>
-              </div>
-            )}
 
             {error && (
               <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg flex items-start gap-2.5 text-xs text-destructive">

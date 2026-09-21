@@ -255,7 +255,7 @@ export function resetOsapClientsToSpreadsheet(): OsapClient[] {
     localStorage.removeItem("neptora_osap_clients_v18_complete_portfolio_accuracy_cleanup");
     localStorage.removeItem("neptora_active_audit_job_v1");
     localStorage.removeItem("neptora_latest_audit_session_v1");
-    localStorage.setItem(LOCAL_CLIENTS_KEY, JSON.stringify(INITIAL_SPREADSHEET_CLIENTS));
+    localStorage.removeItem(LOCAL_CLIENTS_KEY);
   } catch {
     /* ignore */
   }

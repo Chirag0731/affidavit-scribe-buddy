@@ -134,21 +134,6 @@ export const INITIAL_STAFF_PROFILES: StaffProfile[] = [
     last_login_at: new Date().toISOString(),
   },
   {
-    id: "staff-kav-hussain",
-    full_name: "Kav Hussain",
-    email: "kav.hussain@gmail.com",
-    role: "staff",
-    department: "Financial Aid & Student Accounts",
-    phone: null,
-    status: "active",
-    temporary_password: "Kav#8319!Staff",
-    notes: "Staff account with full access to see all 419 students, batches, audits, MSFAA, and funding.",
-    permissions: ROLE_CONFIG.staff.defaultPermissions,
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-    last_login_at: new Date().toISOString(),
-  },
-  {
     id: "staff-firas-sales",
     full_name: "Firas",
     email: "firas@college.ca",
@@ -215,7 +200,13 @@ export async function getStaffProfiles(): Promise<StaffProfile[]> {
     const raw = localStorage.getItem(LOCAL_STAFF_KEY);
     if (raw) {
       const parsed = JSON.parse(raw);
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed.filter(
+          (p: StaffProfile) =>
+            p.id !== "staff-kav-hussain" &&
+            !p.email?.toLowerCase().includes("kav.hussain")
+        );
+      }
     }
   } catch {
     /* fallback */
