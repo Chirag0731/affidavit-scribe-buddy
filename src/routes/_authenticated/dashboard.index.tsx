@@ -12,9 +12,11 @@ import {
   SlidersHorizontal,
   Pencil,
   Shield,
+  Building2,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { financingStore } from "@/lib/financing-db";
 import {
   type Template,
   type MergeField,
@@ -124,7 +126,26 @@ function NewAffidavitPage() {
   const [showEditor, setShowEditor] = useState(false);
   const [signatures, setSignatures] = useState<SignaturePlacement[]>([]);
   const [savingLayout, setSavingLayout] = useState(false);
+  const [recentFinancingCount, setRecentFinancingCount] = useState(0);
   const previewTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const checkFinancing = () => {
+      financingStore
+        .getApplications()
+        .then((apps) => setRecentFinancingCount(apps.length))
+        .catch(() => {});
+    };
+    checkFinancing();
+
+    window.addEventListener("financing_storage_updated", checkFinancing);
+    window.addEventListener("storage", checkFinancing);
+
+    return () => {
+      window.removeEventListener("financing_storage_updated", checkFinancing);
+      window.removeEventListener("storage", checkFinancing);
+    };
+  }, []);
 
   useEffect(() => {
     if (editId) {
@@ -565,6 +586,42 @@ function NewAffidavitPage() {
             <Shield className="w-4 h-4" /> Switch to OSAP Management
           </Link>
         </div>
+
+        {recentFinancingCount > 0 && (
+          <div className="p-4 rounded-xl bg-cyan-950/20 border border-cyan-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fade-in">
+            <div className="flex items-center gap-3">
+              <div className="w-9 h-9 rounded-lg bg-cyan-600/20 border border-cyan-500/30 flex items-center justify-center text-cyan-400 shrink-0">
+                <Building2 className="w-5 h-5" />
+              </div>
+              <div>
+                <div className="text-xs font-bold text-foreground flex items-center gap-2">
+                  <span>Business Financing Applications</span>
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-cyan-600 text-white font-bold">
+                    {recentFinancingCount} Active
+                  </span>
+                </div>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  Recent applicant submissions are available in Saved Documents and the Financing Pipeline.
+                </p>
+              </div>
+            </div>
+            <div className="flex items-center gap-2 self-end sm:self-auto">
+              <Link
+                to="/dashboard/saved"
+                search={{ tab: "financing" }}
+                className="text-xs font-semibold px-3 py-1.5 rounded-lg border border-cyan-400/40 text-cyan-300 hover:bg-cyan-950/40 transition-smooth"
+              >
+                View in Saved Documents
+              </Link>
+              <Link
+                to="/dashboard/financing"
+                className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-cyan-600 hover:bg-cyan-700 text-white transition-smooth shadow-xs"
+              >
+                Financing Overview
+              </Link>
+            </div>
+          </div>
+        )}
 
         {error && (
           <div className="p-4 bg-destructive/10 border border-destructive/20 rounded-lg flex items-start gap-3">

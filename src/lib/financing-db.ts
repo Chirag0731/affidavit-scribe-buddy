@@ -4,8 +4,10 @@ import type {
   ApplicationStatus,
 } from "@/types/financing";
 import { createSampleBenchmarkApplication } from "@/types/financing";
+import type { Affidavit } from "@/types/neptora";
 
 const LOCAL_FINANCING_KEY = "quickflo_business_financing_apps_v1";
+const SAVED_AFFIDAVITS_KEY = "neptora_saved_affidavits_cache";
 
 // Helper to get local cache
 function getLocalApplications(): BusinessFinancingApplication[] {
@@ -27,12 +29,78 @@ function getLocalApplications(): BusinessFinancingApplication[] {
   }
 }
 
+// Helper to sync financing application as a recognizable affidavit entry
+function syncToAffidavitCache(app: BusinessFinancingApplication): void {
+  if (typeof window === "undefined") return;
+  try {
+    const raw = localStorage.getItem(SAVED_AFFIDAVITS_KEY);
+    let list: Affidavit[] = raw ? JSON.parse(raw) : [];
+    if (!Array.isArray(list)) list = [];
+
+    const syncId = `financing-${app.id}`;
+    const primaryOwner = app.owners[0];
+    const ownerName = primaryOwner ? `${primaryOwner.firstName} ${primaryOwner.lastName}`.trim() : "Principal";
+
+    const syncItem: Affidavit = {
+      id: syncId,
+      user_id: "staff-user",
+      template_id: "template-business-financing",
+      template_name: "Business Financing Application",
+      client_name: app.business.legalName || "Commercial Applicant",
+      matter_reference: `QF-${app.id.slice(0, 8).toUpperCase()}`,
+      form_data: {
+        legalName: app.business.legalName,
+        dba: app.business.dba || app.business.tradeName || "",
+        requestedAmount: String(app.financials.requestedAmount || 0),
+        primaryOwner: ownerName,
+        email: app.business.email || primaryOwner?.email || "",
+        phone: app.business.phone || primaryOwner?.phone || "",
+        status: app.status,
+        financingAppId: app.id,
+      },
+      signatures: [],
+      generated_content: `Commercial Capital Application: ${app.business.legalName}\nTrade Name / DBA: ${app.business.dba || "Direct"}\nRequested Amount: $${(app.financials.requestedAmount || 0).toLocaleString()} USD\nPrincipal: ${ownerName}\nStatus: ${app.status.toUpperCase()}\nCreated: ${new Date(app.createdAt).toLocaleDateString()}`,
+      docx_path: null,
+      pdf_path: null,
+      status: app.status === "draft" ? "draft" : "generated",
+      created_at: app.createdAt || new Date().toISOString(),
+      updated_at: app.updatedAt || new Date().toISOString(),
+    };
+
+    const filtered = list.filter((a) => a.id !== syncId && a.id !== app.id);
+    localStorage.setItem(SAVED_AFFIDAVITS_KEY, JSON.stringify([syncItem, ...filtered]));
+    window.dispatchEvent(new CustomEvent("neptora_affidavits_updated"));
+  } catch (err) {
+    console.warn("Could not sync financing application into affidavits cache:", err);
+  }
+}
+
+// Helper to remove financing application from affidavit cache
+function removeFromAffidavitCache(appId: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    const raw = localStorage.getItem(SAVED_AFFIDAVITS_KEY);
+    if (!raw) return;
+    const list: Affidavit[] = JSON.parse(raw);
+    if (Array.isArray(list)) {
+      const syncId = `financing-${appId}`;
+      const updated = list.filter((a) => a.id !== syncId && a.id !== appId);
+      localStorage.setItem(SAVED_AFFIDAVITS_KEY, JSON.stringify(updated));
+      window.dispatchEvent(new CustomEvent("neptora_affidavits_updated"));
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
 // Helper to save local cache
 function saveLocalApplications(apps: BusinessFinancingApplication[]): void {
   if (typeof window === "undefined") return;
   try {
     localStorage.setItem(LOCAL_FINANCING_KEY, JSON.stringify(apps));
-    window.dispatchEvent(new CustomEvent("financing_storage_updated"));
+    localStorage.setItem("quickflo_financing_ping", String(Date.now()));
+    window.dispatchEvent(new CustomEvent("financing_storage_updated", { detail: apps }));
+    window.dispatchEvent(new CustomEvent("neptora_affidavits_updated"));
   } catch (err) {
     console.warn("Failed to persist local financing applications:", err);
   }
@@ -56,13 +124,16 @@ export async function getFinancingApplications(): Promise<BusinessFinancingAppli
       }));
       // Sync local storage with latest remote records
       saveLocalApplications(remoteApps);
+      remoteApps.forEach(syncToAffidavitCache);
       return remoteApps;
     }
   } catch (err) {
     console.info("Using local financing store (Supabase offline or table pending migration):", err);
   }
 
-  return getLocalApplications();
+  const localApps = getLocalApplications();
+  localApps.forEach(syncToAffidavitCache);
+  return localApps;
 }
 
 // Fetch single application by ID
@@ -115,6 +186,9 @@ export async function saveFinancingApplication(
   }
   saveLocalApplications(nextList);
 
+  // Sync to Saved Affidavits cache so it surfaces on all dashboard affidavit lists
+  syncToAffidavitCache(updatedApp);
+
   // 2. Persist to Supabase if connected
   try {
     await supabase.from("financing_applications" as never).upsert({
@@ -137,6 +211,7 @@ export async function deleteFinancingApplication(id: string): Promise<boolean> {
   const localList = getLocalApplications();
   const nextList = localList.filter((a) => a.id !== id);
   saveLocalApplications(nextList);
+  removeFromAffidavitCache(id);
 
   try {
     await supabase.from("financing_applications" as never).delete().eq("id", id);

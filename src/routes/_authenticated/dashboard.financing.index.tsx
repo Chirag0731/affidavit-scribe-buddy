@@ -59,6 +59,18 @@ function FinancingOverviewPage() {
 
   useEffect(() => {
     loadApplications();
+
+    const handleUpdate = () => {
+      loadApplications();
+    };
+
+    window.addEventListener("financing_storage_updated", handleUpdate);
+    window.addEventListener("storage", handleUpdate);
+
+    return () => {
+      window.removeEventListener("financing_storage_updated", handleUpdate);
+      window.removeEventListener("storage", handleUpdate);
+    };
   }, []);
 
   const loadApplications = async () => {

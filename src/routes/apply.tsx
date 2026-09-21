@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
 import { BusinessFinancingApplication } from "@/types/financing";
 import { financingStore } from "@/lib/financing-db";
@@ -25,6 +25,7 @@ import {
   RefreshCw,
   Loader2,
   Printer,
+  LayoutDashboard,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -253,19 +254,30 @@ function PublicApplyPage() {
                   </div>
                 </div>
 
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  onClick={() => {
-                    setSubmittedApp(null);
-                    setInitialApp(null);
-                  }}
-                  className="mt-6 text-xs text-muted-foreground hover:text-foreground"
-                >
-                  <RefreshCw className="w-3.5 h-3.5 mr-1.5" />
-                  Submit Another Application
-                </Button>
+                <div className="flex items-center justify-center gap-3 mt-6 flex-wrap">
+                  <Link
+                    to="/dashboard/saved"
+                    search={{ tab: "financing" }}
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-cyan-700 hover:bg-cyan-800 text-white transition-smooth shadow-sm"
+                  >
+                    <LayoutDashboard className="w-3.5 h-3.5" />
+                    <span>Return to Advisor Dashboard</span>
+                  </Link>
+
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => {
+                      setSubmittedApp(null);
+                      setInitialApp(null);
+                    }}
+                    className="text-xs text-muted-foreground hover:text-foreground"
+                  >
+                    <RefreshCw className="w-3.5 h-3.5 mr-1.5" />
+                    Submit Another Application
+                  </Button>
+                </div>
               </div>
             </Card>
           </div>

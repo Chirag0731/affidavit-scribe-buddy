@@ -150,6 +150,16 @@ export async function generateWhiteLabelPdf(
     });
   };
 
+  const drawMask = (x: number, y: number, width: number, height: number) => {
+    page.drawRectangle({
+      x,
+      y,
+      width,
+      height,
+      color: rgb(1, 1, 1),
+    });
+  };
+
   const { business, financials, owners, property, existingFinancing, authorization } = app;
   const owner1 = owners[0];
   const owner2 = owners[1];
@@ -193,7 +203,10 @@ export async function generateWhiteLabelPdf(
   drawText(business.provinceOfIncorporation || "ON", 450, 529, 8.5);
   drawText(String(business.numberOfLocations || 1), 565, 529, 8.5);
 
-  drawText(formatDate(business.dateStarted), 30, 502, 8.5);
+  if (business.dateStarted) {
+    drawMask(28, 499, 70, 12);
+    drawText(formatDate(business.dateStarted), 30, 502, 8.5);
+  }
   const ownershipLen =
     business.lengthOfOwnershipYears > 0
       ? `${business.lengthOfOwnershipYears} yrs ${business.lengthOfOwnershipMonths || 0} mos`
@@ -211,26 +224,32 @@ export async function generateWhiteLabelPdf(
     8.5
   );
 
-  // Lease Dates
-  if (property.leaseStartDate) drawText(formatDate(property.leaseStartDate), 55, 458, 8);
-  if (property.leaseEndDate) drawText(formatDate(property.leaseEndDate), 165, 458, 8);
+  // Lease Dates (Mask pre-printed mm/dd/yyy placeholders)
+  if (property.leaseStartDate) {
+    drawMask(50, 455, 72, 16);
+    drawText(formatDate(property.leaseStartDate), 53, 458, 8.5, true);
+  }
+  if (property.leaseEndDate) {
+    drawMask(160, 455, 72, 16);
+    drawText(formatDate(property.leaseEndDate), 163, 458, 8.5, true);
+  }
 
-  // Seasonal Business: Yes/No
+  // Seasonal Business: Yes/No (Align checkmark precisely before text)
   if (financials.isSeasonal) {
-    drawCheckbox(page, 260, 452, true);
+    drawCheckbox(page, 248, 452, true);
     if (financials.peakSalesStartMonth) drawText(financials.peakSalesStartMonth, 355, 447, 8);
     if (financials.peakSalesEndMonth) drawText(financials.peakSalesEndMonth, 445, 447, 8);
   } else {
-    drawCheckbox(page, 287, 452, true);
+    drawCheckbox(page, 275, 452, true);
   }
 
-  // Franchise: Yes/No
+  // Franchise: Yes/No (Align checkmark on preceding underscore)
   if (financials.isFranchise) {
-    drawCheckbox(page, 542, 452, true);
+    drawCheckbox(page, 532, 452, true);
     drawText(financials.franchisorName, 130, 362, 8);
     drawText(financials.franchisorPhone, 455, 362, 8);
   } else {
-    drawCheckbox(page, 569, 452, true);
+    drawCheckbox(page, 558, 452, true);
   }
 
   // Sales
@@ -241,7 +260,10 @@ export async function generateWhiteLabelPdf(
   if (existingFinancing.hasCashAdvanceBefore) {
     drawCheckbox(page, 155, 407, true);
     drawText(existingFinancing.cashAdvanceProvider, 245, 407, 8);
-    drawText(formatDate(existingFinancing.cashAdvanceWhen), 85, 402, 8);
+    if (existingFinancing.cashAdvanceWhen) {
+      drawMask(82, 399, 68, 12);
+      drawText(formatDate(existingFinancing.cashAdvanceWhen), 85, 402, 8);
+    }
   } else {
     drawCheckbox(page, 182, 407, true);
   }
@@ -264,7 +286,11 @@ export async function generateWhiteLabelPdf(
     drawText(owner1.title, 445, 320, 8.5);
 
     drawText(owner1.sin, 125, 303, 8.5);
-    drawText(formatDate(owner1.dob), 280, 303, 8.5);
+    // Mask out the pre-printed mm/dd/yyy placeholder on the template
+    if (owner1.dob) {
+      drawMask(268, 300, 82, 13);
+      drawText(formatDate(owner1.dob), 272, 303, 8.5);
+    }
     drawText(owner1.dlNumber || "N/A", 450, 303, 8.5);
 
     drawText(`${owner1.ownershipPercentage}%`, 95, 285, 8.5, true);
@@ -291,7 +317,11 @@ export async function generateWhiteLabelPdf(
     drawText(owner2.title, 445, 221, 8.5);
 
     drawText(owner2.sin, 125, 203, 8.5);
-    drawText(formatDate(owner2.dob), 280, 203, 8.5);
+    // Mask out the pre-printed mm/dd/yyy placeholder on the template
+    if (owner2.dob) {
+      drawMask(268, 200, 82, 13);
+      drawText(formatDate(owner2.dob), 272, 203, 8.5);
+    }
     drawText(owner2.dlNumber || "N/A", 450, 203, 8.5);
 
     drawText(`${owner2.ownershipPercentage}%`, 95, 186, 8.5, true);
@@ -320,7 +350,9 @@ export async function generateWhiteLabelPdf(
   }
   drawText(authorization.applicantTitle || owner1?.title || "Owner", 220, 73, 8.5);
   drawText(authorization.applicantName || `${owner1?.firstName} ${owner1?.lastName}`, 405, 73, 8.5);
-  drawText(formatDate(authorization.signatureDate), 545, 73, 8.5);
+  // Mask mm/dd/yyy underneath signature date line
+  drawMask(535, 60, 68, 22);
+  drawText(formatDate(authorization.signatureDate), 540, 73, 8.5);
 
   // Signer 2
   if (authorization.secondSignatureDataUrl) {
@@ -331,7 +363,9 @@ export async function generateWhiteLabelPdf(
   if (authorization.secondApplicantName || owner2) {
     drawText(authorization.secondApplicantTitle || owner2?.title || "Partner", 220, 36, 8.5);
     drawText(authorization.secondApplicantName || `${owner2?.firstName} ${owner2?.lastName}`, 405, 36, 8.5);
-    drawText(formatDate(authorization.secondSignatureDate || authorization.signatureDate), 545, 36, 8.5);
+    // Mask mm/dd/yyy underneath second signature date line
+    drawMask(535, 24, 68, 22);
+    drawText(formatDate(authorization.secondSignatureDate || authorization.signatureDate), 540, 36, 8.5);
   }
 
   const pdfBytes = await pdfDoc.save();
@@ -458,7 +492,10 @@ export async function generateCanaCapPdf(
     drawText(owner1.address.postalCode, 505, 529, 8.5);
 
     drawText(owner1.sin, 70, 513, 8.5);
-    drawText(formatDate(owner1.dob), 195, 513, 8.5);
+    if (owner1.dob) {
+      page.drawRectangle({ x: 190, y: 510, width: 75, height: 13, color: rgb(1, 1, 1) });
+      drawText(formatDate(owner1.dob), 195, 513, 8.5);
+    }
     drawText(owner1.phone, 310, 513, 8.5);
     drawText(owner1.mobile || owner1.phone, 400, 513, 8.5);
   }
@@ -475,7 +512,10 @@ export async function generateCanaCapPdf(
     drawText(owner2.address.postalCode, 505, 466, 8.5);
 
     drawText(owner2.sin, 70, 451, 8.5);
-    drawText(formatDate(owner2.dob), 195, 451, 8.5);
+    if (owner2.dob) {
+      page.drawRectangle({ x: 190, y: 448, width: 75, height: 13, color: rgb(1, 1, 1) });
+      drawText(formatDate(owner2.dob), 195, 451, 8.5);
+    }
     drawText(owner2.phone, 310, 451, 8.5);
     drawText(owner2.mobile || owner2.phone, 400, 451, 8.5);
   }
@@ -532,7 +572,10 @@ export async function generateCanaCapPdf(
     await embedSignature(pdfDoc, page, authorization.signatureDataUrl, 60, 120, 160, 28);
   }
   drawText(authorization.applicantName || `${owner1?.firstName} ${owner1?.lastName}`, 60, 96, 9);
-  drawText(formatDate(authorization.signatureDate), 60, 65, 8.5);
+  if (authorization.signatureDate) {
+    page.drawRectangle({ x: 55, y: 62, width: 75, height: 13, color: rgb(1, 1, 1) });
+    drawText(formatDate(authorization.signatureDate), 60, 65, 8.5);
+  }
 
   // Signer 2
   if (authorization.secondSignatureDataUrl) {
@@ -540,6 +583,7 @@ export async function generateCanaCapPdf(
   }
   if (authorization.secondApplicantName || owner2) {
     drawText(authorization.secondApplicantName || `${owner2?.firstName} ${owner2?.lastName}`, 350, 96, 9);
+    page.drawRectangle({ x: 345, y: 62, width: 75, height: 13, color: rgb(1, 1, 1) });
     drawText(formatDate(authorization.secondSignatureDate || authorization.signatureDate), 350, 65, 8.5);
   }
 
