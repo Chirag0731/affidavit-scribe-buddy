@@ -64,11 +64,13 @@ export function UploadQuickFloPdfModal({
   const [parsedApp, setParsedApp] = useState<BusinessFinancingApplication | null>(null);
   const [downloadingLender, setDownloadingLender] = useState<string | null>(null);
   const [fileName, setFileName] = useState("");
+  const [detectedKind, setDetectedKind] = useState<LenderFormKind>("quickflo");
 
   const resetState = () => {
     setParsedApp(null);
     setFileName("");
     setDownloadingLender(null);
+    setDetectedKind("quickflo");
   };
 
   const handleModalOpenChange = (isOpen: boolean) => {
