@@ -90,6 +90,25 @@ export function UploadQuickFloPdfModal({
       setParsing(true);
       setFileName(file.name);
       const arrayBuffer = await file.arrayBuffer();
+
+      // Scanned / photographed forms carry no readable text — read them with OCR.
+      if (await isScannedPdf(arrayBuffer)) {
+        setScanning(true);
+        toast.info("Scanned form detected — reading the handwriting…");
+        const fileBase64 = arrayBufferToBase64(arrayBuffer);
+        const { fields } = await ocrLenderScan({ data: { fileBase64, fileName: file.name } });
+        if (!fields || Object.keys(fields).length === 0) {
+          throw new Error("No readable information was found on this scan.");
+        }
+        const scannedApp = await buildApplicationFromFields(fields);
+        setDetectedKind("journey");
+        setParsedApp(scannedApp);
+        toast.success("Scanned application read successfully", {
+          description: `Extracted data for ${scannedApp.business.legalName || "Commercial Applicant"}`,
+        });
+        return;
+      }
+
       const { app: extractedApp, kind } = await parseLenderPdf(arrayBuffer);
 
       setDetectedKind(kind);
@@ -99,11 +118,18 @@ export function UploadQuickFloPdfModal({
       });
     } catch (err) {
       console.error("Failed to parse lender PDF:", err);
-      toast.error("Unable to read this PDF. Upload a filled QuickFlo, Journey Capital, or CanaCap application.");
+      const message = err instanceof Error ? err.message : "";
+      toast.error(
+        message && message.length < 140
+          ? message
+          : "Unable to read this PDF. Upload a filled QuickFlo, Journey Capital, or CanaCap application."
+      );
     } finally {
+      setScanning(false);
       setParsing(false);
     }
   };
+
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
