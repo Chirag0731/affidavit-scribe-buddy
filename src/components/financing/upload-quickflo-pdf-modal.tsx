@@ -107,12 +107,13 @@ export function UploadQuickFloPdfModal({
       setParsing(true);
       setFileName(file.name);
       const arrayBuffer = await file.arrayBuffer();
+      // Keep a base64 copy up front: PDF readers can detach the raw buffer.
+      const fileBase64 = arrayBufferToBase64(arrayBuffer);
 
       // Scanned / photographed forms carry no readable text — read them with OCR.
       if (await isScannedPdf(arrayBuffer)) {
         setScanning(true);
         toast.info("Scanned form detected — reading the handwriting…");
-        const fileBase64 = arrayBufferToBase64(arrayBuffer);
         const { fields } = await ocrLenderScan({ data: { fileBase64, fileName: file.name } });
         if (!fields || Object.keys(fields).length === 0) {
           throw new Error("No readable information was found on this scan.");
