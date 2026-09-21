@@ -29,9 +29,8 @@ const KNOWN_LEGACY_KEYS = [
   "neptora_osap_docs_cache_v19",
   "neptora_osap_notes_cache_v19",
   "neptora_osap_imports_cache_v19",
-  "quickflo_business_financing_apps_v1",
-  "quickflo_financing_draft",
-  "neptora_saved_affidavits_cache",
+  // Note: quickflo_business_financing_apps_v1 and neptora_saved_affidavits_cache
+  // are ACTIVE data stores — do NOT purge them here
 ];
 
 export function purgeStorageBloat(aggressive = false): void {
@@ -46,33 +45,34 @@ export function purgeStorageBloat(aggressive = false): void {
       }
     }
 
-    const totalKeys = localStorage.length;
-    const keysToRemove: string[] = [];
+    // Active data stores that must NEVER be purged
+    const PROTECTED_KEYS = new Set([
+      "quickflo_business_financing_apps_v1",
+      "neptora_saved_affidavits_cache",
+      "neptora_osap_staff_profiles_v1",
+    ]);
 
-    for (let i = 0; i < totalKeys; i++) {
-      const key = localStorage.key(i);
-      if (!key) continue;
+    if (aggressive) {
+      const totalKeys = localStorage.length;
+      const keysToRemove: string[] = [];
 
-      // Never remove Supabase auth tokens
-      if (key.startsWith("sb-")) continue;
+      for (let i = 0; i < totalKeys; i++) {
+        const key = localStorage.key(i);
+        if (!key) continue;
 
-      if (aggressive) {
-        keysToRemove.push(key);
-      } else if (
-        key.startsWith("neptora_") ||
-        key.startsWith("quickflo_") ||
-        key.includes("draft") ||
-        key.includes("cache")
-      ) {
+        // Never remove Supabase auth tokens or active data
+        if (key.startsWith("sb-")) continue;
+        if (PROTECTED_KEYS.has(key)) continue;
+
         keysToRemove.push(key);
       }
-    }
 
-    for (const key of keysToRemove) {
-      try {
-        localStorage.removeItem(key);
-      } catch {
-        /* ignore */
+      for (const key of keysToRemove) {
+        try {
+          localStorage.removeItem(key);
+        } catch {
+          /* ignore */
+        }
       }
     }
   } catch {

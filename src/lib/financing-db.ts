@@ -3,29 +3,22 @@ import type {
   BusinessFinancingApplication,
   ApplicationStatus,
 } from "@/types/financing";
-import { createSampleBenchmarkApplication } from "@/types/financing";
 import type { Affidavit } from "@/types/neptora";
 
 const LOCAL_FINANCING_KEY = "quickflo_business_financing_apps_v1";
 const SAVED_AFFIDAVITS_KEY = "neptora_saved_affidavits_cache";
 
-// Helper to get local cache
+// Helper to get local cache — returns empty array when nothing cached (Supabase is source of truth)
 function getLocalApplications(): BusinessFinancingApplication[] {
-  if (typeof window === "undefined") return [createSampleBenchmarkApplication()];
+  if (typeof window === "undefined") return [];
   try {
     const raw = localStorage.getItem(LOCAL_FINANCING_KEY);
-    if (!raw) {
-      const initial = [createSampleBenchmarkApplication()];
-      localStorage.setItem(LOCAL_FINANCING_KEY, JSON.stringify(initial));
-      return initial;
-    }
+    if (!raw) return [];
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) && parsed.length > 0
-      ? parsed
-      : [createSampleBenchmarkApplication()];
+    return Array.isArray(parsed) ? parsed : [];
   } catch (err) {
     console.warn("Failed to read local financing applications:", err);
-    return [createSampleBenchmarkApplication()];
+    return [];
   }
 }
 
@@ -93,7 +86,7 @@ function removeFromAffidavitCache(appId: string): void {
   }
 }
 
-// Helper to save local cache
+// Helper to save local cache — silent on quota errors (Supabase is primary)
 function saveLocalApplications(apps: BusinessFinancingApplication[]): void {
   if (typeof window === "undefined") return;
   try {
@@ -102,7 +95,9 @@ function saveLocalApplications(apps: BusinessFinancingApplication[]): void {
     window.dispatchEvent(new CustomEvent("financing_storage_updated", { detail: apps }));
     window.dispatchEvent(new CustomEvent("neptora_affidavits_updated"));
   } catch (err) {
-    console.warn("Failed to persist local financing applications:", err);
+    // Quota exceeded — just dispatch the event; Supabase has the data
+    console.warn("Failed to persist local financing applications (quota), Supabase is authoritative:", err);
+    window.dispatchEvent(new CustomEvent("financing_storage_updated", { detail: apps }));
   }
 }
 
@@ -254,17 +249,28 @@ export async function saveFinancingApplication(
   return updatedApp;
 }
 
-// Delete an application
+// Delete an application — Supabase is authoritative
 export async function deleteFinancingApplication(id: string): Promise<boolean> {
+  // Remove from local cache immediately for instant UI feedback
   const localList = getLocalApplications();
   const nextList = localList.filter((a) => a.id !== id);
   saveLocalApplications(nextList);
   removeFromAffidavitCache(id);
 
+  // Delete from Supabase
   try {
-    await supabase.from("financing_applications" as never).delete().eq("id", id);
+    const { error } = await supabase
+      .from("financing_applications" as never)
+      .delete()
+      .eq("id", id);
+
+    if (error) {
+      console.error("Supabase delete error:", error);
+      throw new Error(error.message || "Failed to delete from server");
+    }
   } catch (err) {
     console.warn("Failed to delete from Supabase financing_applications:", err);
+    throw err;
   }
 
   return true;
@@ -284,10 +290,9 @@ export async function updateFinancingApplicationStatus(
 
 export const updateFinancingStatus = updateFinancingApplicationStatus;
 
-// Reset storage to sample application (benchmark reset)
+// Reset local storage cache
 export async function resetFinancingStorageToSample(): Promise<void> {
-  const sample = createSampleBenchmarkApplication();
-  saveLocalApplications([sample]);
+  saveLocalApplications([]);
 }
 
 // Subscribe to real-time changes across clients and devices
