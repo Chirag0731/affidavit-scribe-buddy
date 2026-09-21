@@ -3,6 +3,57 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { PenTool, Type, RotateCcw, Check, Trash2 } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export type SignatureStyleId =
+  | "font-signature-1"
+  | "font-signature-2"
+  | "font-signature-3"
+  | "font-signature-4";
+
+interface SignatureStyleConfig {
+  id: SignatureStyleId;
+  label: string;
+  sublabel: string;
+  fontFamily: string;
+  fontClass: string;
+  canvasFontSize: number;
+}
+
+const SIGNATURE_STYLES: SignatureStyleConfig[] = [
+  {
+    id: "font-signature-1",
+    label: "Executive Script",
+    sublabel: "Great Vibes",
+    fontFamily: "'Great Vibes', 'Brush Script MT', cursive",
+    fontClass: "font-signature-1",
+    canvasFontSize: 46,
+  },
+  {
+    id: "font-signature-2",
+    label: "Flowing Cursive",
+    sublabel: "Dancing Script",
+    fontFamily: "'Dancing Script', 'Segoe Script', cursive",
+    fontClass: "font-signature-2",
+    canvasFontSize: 40,
+  },
+  {
+    id: "font-signature-3",
+    label: "Modern Pen",
+    sublabel: "Caveat",
+    fontFamily: "'Caveat', 'Lucida Handwriting', cursive",
+    fontClass: "font-signature-3",
+    canvasFontSize: 44,
+  },
+  {
+    id: "font-signature-4",
+    label: "Fine Flourish",
+    sublabel: "Alex Brush",
+    fontFamily: "'Alex Brush', 'Apple Chancery', cursive",
+    fontClass: "font-signature-4",
+    canvasFontSize: 48,
+  },
+];
 
 interface FinancingSignaturePadProps {
   value?: string;
@@ -20,11 +71,11 @@ export function FinancingSignaturePad({
   const [isDrawing, setIsDrawing] = useState(false);
   const [hasDrawn, setHasDrawn] = useState(!!value);
   const [typedName, setTypedName] = useState(signerName);
-  const [selectedFont, setSelectedFont] = useState<"font-signature-1" | "font-signature-2" | "font-signature-3">("font-signature-1");
+  const [selectedFont, setSelectedFont] = useState<SignatureStyleId>("font-signature-1");
   const [activeTab, setActiveTab] = useState<"draw" | "type">("draw");
   const [history, setHistory] = useState<ImageData[]>([]);
 
-  // Update typedName if signerName changes
+  // Update typedName if signerName changes and local typedName is blank
   useEffect(() => {
     if (signerName && !typedName) {
       setTypedName(signerName);
@@ -61,7 +112,9 @@ export function FinancingSignaturePad({
     }
   }, []);
 
-  const getCanvasCoordinates = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+  const getCanvasCoordinates = (
+    e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
+  ) => {
     const canvas = canvasRef.current;
     if (!canvas) return { x: 0, y: 0 };
     const rect = canvas.getBoundingClientRect();
@@ -93,7 +146,9 @@ export function FinancingSignaturePad({
     }
   };
 
-  const startDrawing = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+  const startDrawing = (
+    e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
+  ) => {
     e.preventDefault();
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -107,7 +162,9 @@ export function FinancingSignaturePad({
     ctx.moveTo(x, y);
   };
 
-  const draw = (e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>) => {
+  const draw = (
+    e: React.MouseEvent<HTMLCanvasElement> | React.TouchEvent<HTMLCanvasElement>
+  ) => {
     if (!isDrawing) return;
     e.preventDefault();
     const canvas = canvasRef.current;
@@ -164,31 +221,43 @@ export function FinancingSignaturePad({
     }
   };
 
-  const handleAdoptTypedSignature = () => {
-    if (!typedName.trim()) return;
+  const handleAdoptTypedSignature = async (styleOverride?: SignatureStyleId) => {
+    const styleId = styleOverride || selectedFont;
+    const text = typedName.trim();
+    if (!text) return;
+
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const rect = canvas.getBoundingClientRect();
 
-    // Clear
-    ctx.clearRect(0, 0, rect.width, rect.height);
-
-    // Render cursive style
-    ctx.save();
-    let fontStr = "italic 38px 'Brush Script MT', 'Great Vibes', cursive, 'Dancing Script', sans-serif";
-    if (selectedFont === "font-signature-2") {
-      fontStr = "italic bold 32px 'Segoe Script', 'Lucida Handwriting', cursive, sans-serif";
-    } else if (selectedFont === "font-signature-3") {
-      fontStr = "italic 34px 'Bradley Hand', 'Caveat', cursive, sans-serif";
+    // Ensure web fonts are completely ready before rasterizing
+    if (typeof document !== "undefined" && document.fonts) {
+      try {
+        await document.fonts.ready;
+      } catch {
+        // proceed
+      }
     }
 
-    ctx.font = fontStr;
+    const rect = canvas.getBoundingClientRect();
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = rect.width * dpr;
+    canvas.height = rect.height * dpr;
+    ctx.scale(dpr, dpr);
+
+    // Clear canvas
+    ctx.clearRect(0, 0, rect.width, rect.height);
+
+    const activeStyle =
+      SIGNATURE_STYLES.find((s) => s.id === styleId) || SIGNATURE_STYLES[0];
+
+    ctx.save();
+    ctx.font = `italic ${activeStyle.canvasFontSize}px ${activeStyle.fontFamily}`;
     ctx.fillStyle = "#0f172a";
     ctx.textBaseline = "middle";
     ctx.textAlign = "center";
-    ctx.fillText(typedName.trim(), rect.width / 2, rect.height / 2);
+    ctx.fillText(text, rect.width / 2, rect.height / 2);
     ctx.restore();
 
     setHasDrawn(true);
@@ -197,7 +266,16 @@ export function FinancingSignaturePad({
 
   return (
     <div className="w-full space-y-3">
-      <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as "draw" | "type")}>
+      <Tabs
+        value={activeTab}
+        onValueChange={(v) => {
+          const tab = v as "draw" | "type";
+          setActiveTab(tab);
+          if (tab === "type" && typedName.trim() && !hasDrawn) {
+            setTimeout(() => handleAdoptTypedSignature(), 50);
+          }
+        }}
+      >
         <div className="flex items-center justify-between">
           <TabsList className="grid grid-cols-2 w-48 h-8">
             <TabsTrigger value="draw" className="text-xs flex items-center gap-1.5">
@@ -211,7 +289,7 @@ export function FinancingSignaturePad({
           </TabsList>
 
           <div className="flex items-center gap-1.5">
-            {history.length > 0 && (
+            {history.length > 0 && activeTab === "draw" && (
               <Button
                 type="button"
                 variant="outline"
@@ -236,8 +314,9 @@ export function FinancingSignaturePad({
           </div>
         </div>
 
+        {/* DRAW TAB */}
         <TabsContent value="draw" className="mt-2 space-y-2">
-          <div className="relative border-2 border-dashed border-border rounded-xl bg-white dark:bg-slate-50 overflow-hidden shadow-inner group focus-within:border-cyan-600 transition-colors">
+          <div className="relative border-2 border-dashed border-border rounded-xl bg-white overflow-hidden shadow-inner group focus-within:border-cyan-600 transition-colors">
             <canvas
               ref={canvasRef}
               className="w-full h-36 cursor-crosshair touch-none select-none block"
@@ -253,7 +332,9 @@ export function FinancingSignaturePad({
             {!hasDrawn && (
               <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center text-slate-400 gap-1">
                 <PenTool className="w-6 h-6 stroke-1" />
-                <span className="text-xs font-medium">Draw your signature here with finger or mouse</span>
+                <span className="text-xs font-medium">
+                  Draw your signature here with finger or mouse
+                </span>
               </div>
             )}
 
@@ -264,6 +345,7 @@ export function FinancingSignaturePad({
           </div>
         </TabsContent>
 
+        {/* TYPE TAB */}
         <TabsContent value="type" className="mt-2 space-y-3">
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <Input
@@ -271,46 +353,74 @@ export function FinancingSignaturePad({
               placeholder="Type your legal full name"
               value={typedName}
               onChange={(e) => setTypedName(e.target.value)}
+              autoComplete="off"
+              autoCorrect="off"
+              spellCheck={false}
               className="sm:col-span-2 text-sm bg-background"
             />
             <Button
               type="button"
-              onClick={handleAdoptTypedSignature}
-              className="bg-cyan-700 hover:bg-cyan-800 text-white font-semibold text-xs"
+              onClick={() => handleAdoptTypedSignature()}
+              className="bg-cyan-700 hover:bg-cyan-800 text-white font-semibold text-xs h-9"
               disabled={!typedName.trim()}
             >
-              <Check className="w-3.5 h-3.5 mr-1" />
+              <Check className="w-3.5 h-3.5 mr-1.5" />
               Adopt Signature
             </Button>
           </div>
 
-          <div className="grid grid-cols-3 gap-2">
-            {[
-              { id: "font-signature-1" as const, label: "Style 1 (Script)", sample: "Brush Cursive" },
-              { id: "font-signature-2" as const, label: "Style 2 (Handwritten)", sample: "Hand Script" },
-              { id: "font-signature-3" as const, label: "Style 3 (Modern)", sample: "Modern Flow" },
-            ].map((style) => (
-              <button
-                key={style.id}
-                type="button"
-                onClick={() => {
-                  setSelectedFont(style.id);
-                  if (typedName.trim()) {
-                    setTimeout(() => handleAdoptTypedSignature(), 50);
-                  }
-                }}
-                className={`p-2.5 rounded-lg border text-left text-xs transition-all ${
-                  selectedFont === style.id
-                    ? "border-cyan-600 bg-cyan-50 dark:bg-cyan-950/30 text-cyan-900 dark:text-cyan-200 font-semibold shadow-xs"
-                    : "border-border hover:bg-muted text-muted-foreground"
-                }`}
-              >
-                <div className="text-[10px] text-muted-foreground">{style.label}</div>
-                <div className="italic text-base font-serif mt-0.5 truncate text-foreground">
-                  {typedName || style.sample}
-                </div>
-              </button>
-            ))}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+            {SIGNATURE_STYLES.map((style) => {
+              const isSelected = selectedFont === style.id;
+              return (
+                <button
+                  key={style.id}
+                  type="button"
+                  onClick={() => {
+                    setSelectedFont(style.id);
+                    if (typedName.trim()) {
+                      handleAdoptTypedSignature(style.id);
+                    }
+                  }}
+                  className={cn(
+                    "p-3 rounded-xl border text-left transition-all duration-150 relative overflow-hidden group cursor-pointer",
+                    isSelected
+                      ? "border-cyan-500 bg-cyan-950/40 ring-1 ring-cyan-500/50 shadow-sm"
+                      : "border-border/80 bg-muted/20 hover:bg-muted/40 hover:border-border text-muted-foreground"
+                  )}
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] font-semibold tracking-tight text-muted-foreground">
+                      {style.label}
+                    </span>
+                    {isSelected && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
+                    )}
+                  </div>
+                  <div
+                    className={cn(
+                      "text-xl sm:text-2xl mt-1.5 leading-none truncate select-none",
+                      style.fontClass,
+                      isSelected ? "text-cyan-200" : "text-foreground"
+                    )}
+                  >
+                    {typedName.trim() || style.label}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Canvas preview below typing */}
+          <div className="relative border-2 border-dashed border-border rounded-xl bg-white overflow-hidden shadow-inner">
+            <canvas
+              ref={canvasRef}
+              className="w-full h-28 block pointer-events-none select-none"
+            />
+            <div className="absolute bottom-2 left-3 text-[10px] text-slate-400 select-none flex items-center gap-1 font-serif">
+              <span>X</span>
+              <div className="w-24 border-b border-slate-300" />
+            </div>
           </div>
         </TabsContent>
       </Tabs>
@@ -322,10 +432,14 @@ export function FinancingSignaturePad({
               <Check className="w-3.5 h-3.5" /> Signature captured
             </span>
           ) : (
-            <span className="text-amber-600 dark:text-amber-400">Signature required to authorize credit pull</span>
+            <span className="text-amber-600 dark:text-amber-400">
+              Signature required to authorize credit pull
+            </span>
           )}
         </span>
-        <span className="text-[10px] text-muted-foreground/80">Secured with 256-bit encryption</span>
+        <span className="text-[10px] text-muted-foreground/80">
+          Secured with 256-bit encryption
+        </span>
       </div>
     </div>
   );

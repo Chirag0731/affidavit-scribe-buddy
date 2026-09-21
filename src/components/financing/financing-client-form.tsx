@@ -1573,21 +1573,21 @@ export function FinancingClientForm({
                   </p>
                 </div>
 
-                <div className="flex items-start space-x-3 p-3 rounded-xl bg-cyan-50 dark:bg-cyan-950/30 border border-cyan-200 dark:border-cyan-800">
+                <div className="flex items-start space-x-3.5 p-4 rounded-xl bg-cyan-950/25 border border-cyan-800/60 text-foreground">
                   <Checkbox
                     id="credit-consent"
                     checked={app.authorization.creditCheckConsent}
                     onCheckedChange={(checked) => updateAuthorization("creditCheckConsent", !!checked)}
-                    className="mt-0.5"
+                    className="mt-0.5 border-cyan-600 data-[state=checked]:bg-cyan-600 data-[state=checked]:text-white"
                   />
                   <div className="space-y-1">
                     <label
                       htmlFor="credit-consent"
-                      className="text-xs font-bold text-foreground cursor-pointer block"
+                      className="text-xs font-bold text-foreground cursor-pointer block leading-snug"
                     >
                       I agree and authorize QuickFlo Financial & underwriting partners to perform credit and banking verifications <span className="text-destructive">*</span>
                     </label>
-                    <p className="text-[11px] text-muted-foreground">
+                    <p className="text-[11px] text-muted-foreground leading-normal">
                       I confirm I am authorized to bind the business and consent to soft and/or hard credit inquiries for financing evaluation.
                     </p>
                     {errors.creditCheckConsent && (

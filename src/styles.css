@@ -1,6 +1,7 @@
 @import "tailwindcss" source(none);
 @source "../src";
 @import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Caveat:wght@600;700&family=Dancing+Script:wght@600;700&family=Great+Vibes&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -203,3 +204,18 @@
 }
 .animate-fade-in-up { animation: fade-in-up 0.5s ease-out; }
 .animate-fade-in { animation: fade-in 0.4s ease-out; }
+
+/* Dedicated Digital Signature Cursive & Calligraphy Typography */
+.font-signature-1 {
+  font-family: 'Great Vibes', 'Brush Script MT', 'Lucida Calligraphy', cursive;
+}
+.font-signature-2 {
+  font-family: 'Dancing Script', 'Segoe Script', cursive;
+}
+.font-signature-3 {
+  font-family: 'Caveat', 'Lucida Handwriting', cursive;
+}
+.font-signature-4 {
+  font-family: 'Alex Brush', 'Apple Chancery', cursive;
+}
+

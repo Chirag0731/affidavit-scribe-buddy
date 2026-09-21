@@ -115,7 +115,7 @@ function PublicApplyPage() {
 
   if (loadingApp) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
+      <div className="min-h-screen flex items-center justify-center bg-background text-foreground">
         <div className="flex flex-col items-center gap-3">
           <Loader2 className="w-8 h-8 text-cyan-600 animate-spin" />
           <span className="text-xs text-muted-foreground font-medium">
@@ -127,9 +127,9 @@ function PublicApplyPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 via-slate-100/60 to-slate-200/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex flex-col justify-between">
+    <div className="min-h-screen bg-background text-foreground flex flex-col justify-between">
       {/* Top Header Bar */}
-      <header className="sticky top-0 z-40 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-b border-border shadow-xs">
+      <header className="sticky top-0 z-40 bg-card/95 backdrop-blur-md border-b border-border/80 shadow-xs">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <FinancingLogo height={44} />
@@ -281,7 +281,7 @@ function PublicApplyPage() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-border bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm py-6 px-4">
+      <footer className="border-t border-border/80 bg-card/60 backdrop-blur-sm py-6 px-4">
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-muted-foreground">
           <div className="flex items-center gap-2">
             <FinancingLogo height={28} />
