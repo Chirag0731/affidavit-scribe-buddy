@@ -311,6 +311,9 @@ export async function saveFinancingApplication(
 
 // Delete an application — Supabase is authoritative
 export async function deleteFinancingApplication(id: string): Promise<boolean> {
+  // Remember the deletion so nothing re-uploads this application later
+  addDeletedId(id);
+
   // Remove from local cache immediately for instant UI feedback
   const localList = getLocalApplications();
   const nextList = localList.filter((a) => a.id !== id);
