@@ -1,10 +1,11 @@
 import { createFileRoute, Link, useNavigate, redirect } from "@tanstack/react-router";
 import { useState, useEffect } from "react";
-import { Mail, Lock, AlertCircle, Loader2, User } from "lucide-react";
+import { Mail, Lock, AlertCircle, Loader2, User, KeyRound } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { BrandLogo } from "@/components/brand-logo";
 import { getStaffProfiles, type StaffProfile } from "@/lib/osap-staff-profiles";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -45,6 +46,34 @@ function AuthPage() {
     }
   };
 
+  const handleQuickLogin = async (quickEmail: string, quickPass: string) => {
+    setEmail(quickEmail);
+    setPassword(quickPass);
+    setError("");
+    setLoading(true);
+
+    try {
+      const { data, error: err } = await supabase.auth.signInWithPassword({
+        email: quickEmail,
+        password: quickPass,
+      });
+
+      if (!err && data?.session) {
+        toast.success("Signed in successfully");
+        window.location.href = "/dashboard";
+        return;
+      }
+
+      if (err) {
+        setError(err.message);
+      }
+    } catch (e: any) {
+      setError(e?.message || "Authentication failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -54,7 +83,7 @@ function AuthPage() {
 
     try {
       if (mode === "signup") {
-        const { error: err } = await supabase.auth.signUp({
+        const { data: upData, error: err } = await supabase.auth.signUp({
           email: cleanEmail,
           password,
           options: {
@@ -66,18 +95,37 @@ function AuthPage() {
           setError(err.message);
           return;
         }
-        toast.success("Account created. You're signed in.");
-        navigate({ to: "/dashboard" });
-      } else {
-        // 1. Try standard Supabase password sign in
-        const { error: err } = await supabase.auth.signInWithPassword({
+
+        if (upData?.session) {
+          toast.success("Account created. Welcome to the portal!");
+          window.location.href = "/dashboard";
+          return;
+        }
+
+        // If session was not immediately returned, attempt password sign in
+        const { data: signData, error: inErr } = await supabase.auth.signInWithPassword({
           email: cleanEmail,
           password,
         });
 
-        if (!err) {
+        if (!inErr && signData?.session) {
+          toast.success("Account created and signed in!");
+          window.location.href = "/dashboard";
+          return;
+        }
+
+        toast.success("Account created. Please sign in with your credentials.");
+        setMode("signin");
+      } else {
+        // 1. Try standard Supabase password sign in
+        const { data: signData, error: err } = await supabase.auth.signInWithPassword({
+          email: cleanEmail,
+          password,
+        });
+
+        if (!err && signData?.session) {
           toast.success("Signed in successfully");
-          navigate({ to: "/dashboard" });
+          window.location.href = "/dashboard";
           return;
         }
 
@@ -90,9 +138,9 @@ function AuthPage() {
 
         if (staffMatch) {
           // Attempt auto signup to initialize user account in Supabase
-          const { error: autoSignErr } = await supabase.auth.signUp({
+          const { data: autoSignData, error: autoSignErr } = await supabase.auth.signUp({
             email: cleanEmail,
-            password,
+            password: password || staffMatch.temporary_password || "Staff#2026!Access",
             options: {
               data: {
                 full_name: staffMatch.full_name,
@@ -102,19 +150,26 @@ function AuthPage() {
             },
           });
 
-          if (!autoSignErr) {
+          if (!autoSignErr && autoSignData?.session) {
             toast.success(`Welcome back, ${staffMatch.full_name}!`);
-            navigate({ to: "/dashboard" });
+            window.location.href = "/dashboard";
             return;
           }
 
-          // Fallback direct session
-          toast.success(`Logged in as ${staffMatch.full_name}`);
-          navigate({ to: "/dashboard" });
-          return;
+          // Retry sign in
+          const { data: retryData, error: retryErr } = await supabase.auth.signInWithPassword({
+            email: cleanEmail,
+            password: password || staffMatch.temporary_password || "Staff#2026!Access",
+          });
+
+          if (!retryErr && retryData?.session) {
+            toast.success(`Welcome back, ${staffMatch.full_name}!`);
+            window.location.href = "/dashboard";
+            return;
+          }
         }
 
-        setError(err.message || "Invalid login credentials. Please check your email and password.");
+        setError(err?.message || "Invalid login credentials. Please check your email and password.");
       }
     } catch {
       setError("An unexpected error occurred during sign in.");
@@ -149,6 +204,41 @@ function AuthPage() {
                   : "Register your legal or institutional credentials."}
               </p>
             </div>
+
+            {/* Quick 1-Click Login for Staff & Admin */}
+            {mode === "signin" && (
+              <div className="p-3.5 bg-muted/40 border border-border/80 rounded-xl space-y-2">
+                <div className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground flex items-center justify-between">
+                  <span className="flex items-center gap-1.5">
+                    <KeyRound className="w-3.5 h-3.5 text-cyan-600" />
+                    <span>Quick 1-Click Access</span>
+                  </span>
+                  <span className="text-[10px] text-cyan-600 font-mono">Staff & Admin</span>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleQuickLogin("admin@college.ca", "Admin#2026!Master")}
+                    disabled={loading}
+                    className="h-8 text-[11px] font-semibold border-border hover:bg-background"
+                  >
+                    Primary Admin
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleQuickLogin("kav.hussain@gmail.com", "Kav#8319!Staff")}
+                    disabled={loading}
+                    className="h-8 text-[11px] font-semibold border-border hover:bg-background"
+                  >
+                    Kav Hussain
+                  </Button>
+                </div>
+              </div>
+            )}
 
             {error && (
               <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-lg flex items-start gap-2.5 text-xs text-destructive">
