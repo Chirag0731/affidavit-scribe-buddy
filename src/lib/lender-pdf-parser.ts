@@ -209,7 +209,7 @@ function canacapFieldMap(items: PositionedItem[]): Map<string, string> {
   put("qf_prop_account", at(485, 410, 100));
   put("qf_prop_contact", at(105, 394, 220));
   put("qf_prop_phone", at(345, 394, 200));
-  put("qf_prop_occupancy", at(105, 379, 200));
+  put("qf_prop_occupancy", valueAt(items, 105, 379, 120, true));
   put("qf_prop_rent", stripMoney(at(365, 379, 150)));
 
   put("qf_ref1_name", at(105, 344, 200));
