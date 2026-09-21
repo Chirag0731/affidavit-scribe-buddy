@@ -3,6 +3,7 @@ import type {
   BusinessFinancingApplication,
   ApplicationStatus,
 } from "@/types/financing";
+import { normalizeApplicationData } from "@/types/financing";
 import type { Affidavit } from "@/types/neptora";
 
 const LOCAL_FINANCING_KEY = "quickflo_business_financing_apps_v1";
@@ -15,11 +16,23 @@ function getLocalApplications(): BusinessFinancingApplication[] {
     const raw = localStorage.getItem(LOCAL_FINANCING_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed : [];
+    return Array.isArray(parsed) ? parsed.map(hydrateApplication) : [];
   } catch (err) {
     console.warn("Failed to read local financing applications:", err);
     return [];
   }
+}
+
+// Ensure every application has the full nested shape (business/financials/owners/etc.)
+function hydrateApplication(raw: any): BusinessFinancingApplication {
+  const normalized = normalizeApplicationData(raw || {}) as BusinessFinancingApplication;
+  return {
+    ...normalized,
+    id: raw?.id ?? normalized.id,
+    status: raw?.status ?? normalized.status,
+    createdAt: raw?.createdAt ?? normalized.createdAt,
+    updatedAt: raw?.updatedAt ?? normalized.updatedAt,
+  };
 }
 
 // Helper to sync financing application as a recognizable affidavit entry
@@ -149,13 +162,15 @@ export async function getFinancingApplications(): Promise<BusinessFinancingAppli
     if (!error && Array.isArray(data) && data.length > 0) {
       const remoteApps: BusinessFinancingApplication[] = (data as any[])
         .filter((row) => !deleted.includes(row.id))
-        .map((row) => ({
-          ...row.payload,
-          id: row.id,
-          status: row.status || row.payload?.status || "submitted",
-          createdAt: row.created_at || row.payload?.createdAt,
-          updatedAt: row.updated_at || row.payload?.updatedAt,
-        }));
+        .map((row) =>
+          hydrateApplication({
+            ...(row.payload || {}),
+            id: row.id,
+            status: row.status || row.payload?.status || "submitted",
+            createdAt: row.created_at || row.payload?.createdAt,
+            updatedAt: row.updated_at || row.payload?.updatedAt,
+          })
+        );
 
       // Merge with any unsynced local applications if present
       const localApps = getLocalApplications();
@@ -211,13 +226,13 @@ export async function getFinancingApplicationById(
 
     if (!error && data) {
       const row = data as any;
-      const app: BusinessFinancingApplication = {
-        ...row.payload,
+      const app: BusinessFinancingApplication = hydrateApplication({
+        ...(row.payload || {}),
         id: row.id,
         status: row.status || row.payload?.status || "submitted",
         createdAt: row.created_at || row.payload?.createdAt,
         updatedAt: row.updated_at || row.payload?.updatedAt,
-      };
+      });
 
       // Keep local store in sync
       const localList = getLocalApplications();
