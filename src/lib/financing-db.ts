@@ -101,6 +101,41 @@ function saveLocalApplications(apps: BusinessFinancingApplication[]): void {
   }
 }
 
+// --- Deleted-application tombstones -----------------------------------
+// Deleting must stick: without this, a locally cached copy gets re-uploaded
+// on the next refresh and the application reappears.
+const DELETED_IDS_KEY = "quickflo_financing_deleted_ids_v1";
+
+function getDeletedIds(): string[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(DELETED_IDS_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function addDeletedId(id: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    const next = Array.from(new Set([...getDeletedIds(), id])).slice(-500);
+    localStorage.setItem(DELETED_IDS_KEY, JSON.stringify(next));
+  } catch {
+    /* ignore */
+  }
+}
+
+function clearDeletedId(id: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(DELETED_IDS_KEY, JSON.stringify(getDeletedIds().filter((d) => d !== id)));
+  } catch {
+    /* ignore */
+  }
+}
+
 // Fetch all applications
 export async function getFinancingApplications(): Promise<BusinessFinancingApplication[]> {
   try {
@@ -109,19 +144,26 @@ export async function getFinancingApplications(): Promise<BusinessFinancingAppli
       .select("*")
       .order("created_at", { ascending: false });
 
+    const deleted = getDeletedIds();
+
     if (!error && Array.isArray(data) && data.length > 0) {
-      const remoteApps: BusinessFinancingApplication[] = (data as any[]).map((row) => ({
-        ...row.payload,
-        id: row.id,
-        status: row.status || row.payload?.status || "submitted",
-        createdAt: row.created_at || row.payload?.createdAt,
-        updatedAt: row.updated_at || row.payload?.updatedAt,
-      }));
+      const remoteApps: BusinessFinancingApplication[] = (data as any[])
+        .filter((row) => !deleted.includes(row.id))
+        .map((row) => ({
+          ...row.payload,
+          id: row.id,
+          status: row.status || row.payload?.status || "submitted",
+          createdAt: row.created_at || row.payload?.createdAt,
+          updatedAt: row.updated_at || row.payload?.updatedAt,
+        }));
 
       // Merge with any unsynced local applications if present
       const localApps = getLocalApplications();
       const nonSampleLocal = localApps.filter(
-        (local) => !remoteApps.some((remote) => remote.id === local.id) && local.id !== "benchmark-sample-001"
+        (local) =>
+          !remoteApps.some((remote) => remote.id === local.id) &&
+          local.id !== "benchmark-sample-001" &&
+          !deleted.includes(local.id)
       );
 
       const merged = [...remoteApps, ...nonSampleLocal];
@@ -131,36 +173,30 @@ export async function getFinancingApplications(): Promise<BusinessFinancingAppli
     }
 
     if (!error && Array.isArray(data) && data.length === 0) {
-      // Remote is empty: check if local has user-submitted applications and push them
-      const localApps = getLocalApplications();
-      const userApps = localApps.filter((a) => a.id !== "benchmark-sample-001");
-      if (userApps.length > 0) {
-        for (const uApp of userApps) {
-          try {
-            await supabase.from("financing_applications" as never).upsert({
-              id: uApp.id,
-              business_name: uApp.business.legalName || "Commercial Applicant",
-              status: uApp.status,
-              requested_amount: uApp.financials.amountRequested || uApp.financials.requestedAmount || 0,
-              payload: uApp,
-              created_at: uApp.createdAt || new Date().toISOString(),
-              updated_at: uApp.updatedAt || new Date().toISOString(),
-            } as never);
-          } catch {
-            /* ignore individual sync error */
-          }
+      // Remote is empty: push up any local applications that were never deleted
+      const localApps = getLocalApplications().filter(
+        (a) => a.id !== "benchmark-sample-001" && !deleted.includes(a.id)
+      );
+      for (const uApp of localApps) {
+        try {
+          await persistApplicationRow(uApp);
+        } catch {
+          /* ignore individual sync error */
         }
       }
+      saveLocalApplications(localApps);
       return localApps;
     }
   } catch (err) {
     console.info("Using local financing store (Supabase fallback):", err);
   }
 
-  const localApps = getLocalApplications();
+  const deletedFallback = getDeletedIds();
+  const localApps = getLocalApplications().filter((a) => !deletedFallback.includes(a.id));
   localApps.forEach(syncToAffidavitCache);
   return localApps;
 }
+
 
 // Fetch single application by ID
 export async function getFinancingApplicationById(
@@ -203,6 +239,38 @@ export async function getFinancingApplicationById(
   return localList.find((a) => a.id === id) || null;
 }
 
+// Write one application row to the server.
+// Public (not signed-in) visitors cannot run an upsert, because the server
+// blocks them from reading existing rows. So: try insert first, and if the row
+// already exists, update it instead.
+async function persistApplicationRow(app: BusinessFinancingApplication): Promise<void> {
+  const row = {
+    id: app.id,
+    business_name: app.business?.legalName || "Commercial Applicant",
+    status: app.status,
+    requested_amount: app.financials?.amountRequested || app.financials?.requestedAmount || 0,
+    payload: app,
+    created_at: app.createdAt || new Date().toISOString(),
+    updated_at: app.updatedAt || new Date().toISOString(),
+  };
+
+  const { error: insertError } = await supabase
+    .from("financing_applications" as never)
+    .insert(row as never);
+
+  if (!insertError) return;
+
+  const { id: _omit, created_at: _omitCreated, ...updateRow } = row;
+  const { error: updateError } = await supabase
+    .from("financing_applications" as never)
+    .update(updateRow as never)
+    .eq("id", app.id);
+
+  if (updateError) {
+    throw new Error(updateError.message || insertError.message || "Failed to save application");
+  }
+}
+
 // Save or update an application
 export async function saveFinancingApplication(
   app: BusinessFinancingApplication
@@ -211,6 +279,9 @@ export async function saveFinancingApplication(
     ...app,
     updatedAt: new Date().toISOString(),
   };
+
+  // Saving again un-deletes a previously removed application
+  clearDeletedId(updatedApp.id);
 
   // 1. Update local storage immediately for zero-latency UX
   const localList = getLocalApplications();
@@ -227,30 +298,22 @@ export async function saveFinancingApplication(
   // Sync to Saved Affidavits cache so it surfaces on all dashboard affidavit lists
   syncToAffidavitCache(updatedApp);
 
-  // 2. Persist to Supabase
+  // 2. Persist to the server
   try {
-    const { error } = await supabase.from("financing_applications" as never).upsert({
-      id: updatedApp.id,
-      business_name: updatedApp.business.legalName || "Commercial Applicant",
-      status: updatedApp.status,
-      requested_amount: updatedApp.financials.amountRequested || updatedApp.financials.requestedAmount || 0,
-      payload: updatedApp,
-      created_at: updatedApp.createdAt || new Date().toISOString(),
-      updated_at: updatedApp.updatedAt,
-    } as never);
-
-    if (error) {
-      console.warn("Supabase upsert returned error:", error);
-    }
+    await persistApplicationRow(updatedApp);
   } catch (err) {
-    console.warn("Could not upsert to Supabase financing_applications:", err);
+    console.warn("Could not save application to the server:", err);
   }
 
   return updatedApp;
 }
 
+
 // Delete an application — Supabase is authoritative
 export async function deleteFinancingApplication(id: string): Promise<boolean> {
+  // Remember the deletion so nothing re-uploads this application later
+  addDeletedId(id);
+
   // Remove from local cache immediately for instant UI feedback
   const localList = getLocalApplications();
   const nextList = localList.filter((a) => a.id !== id);

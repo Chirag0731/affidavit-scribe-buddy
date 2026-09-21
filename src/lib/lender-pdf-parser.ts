@@ -277,3 +277,28 @@ export async function parseLenderPdf(
   const app = await buildApplicationFromFieldMap(map);
   return { app, kind: kind === "unknown" ? "journey" : kind };
 }
+
+/**
+ * True when a PDF page carries no machine-readable text (a scan / photo).
+ * Such uploads need OCR instead of positional extraction.
+ */
+export async function isScannedPdf(fileBytes: ArrayBuffer | Uint8Array): Promise<boolean> {
+  const bytes = fileBytes instanceof Uint8Array ? fileBytes : new Uint8Array(fileBytes);
+  try {
+    const { text } = await extractItems(bytes);
+    return text.replace(/\s/g, "").length < 40;
+  } catch {
+    return true;
+  }
+}
+
+/** Build an application from a flat qf_* field map (used by the OCR path). */
+export async function buildApplicationFromFields(
+  fields: Record<string, string>
+): Promise<BusinessFinancingApplication> {
+  const map = new Map<string, string>();
+  for (const [k, v] of Object.entries(fields)) {
+    if (v) map.set(k, v);
+  }
+  return buildApplicationFromFieldMap(map);
+}
