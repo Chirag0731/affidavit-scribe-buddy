@@ -36,7 +36,23 @@ import {
   formatCurrency,
   formatDate,
 } from "@/lib/lender-pdf-engine";
-import { parseLenderPdf, type LenderFormKind } from "@/lib/lender-pdf-parser";
+import {
+  parseLenderPdf,
+  isScannedPdf,
+  buildApplicationFromFields,
+  type LenderFormKind,
+} from "@/lib/lender-pdf-parser";
+import { ocrLenderScan } from "@/lib/ocr-lender-scan.functions";
+
+function arrayBufferToBase64(buffer: ArrayBuffer): string {
+  const bytes = new Uint8Array(buffer);
+  let binary = "";
+  const chunk = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + chunk));
+  }
+  return btoa(binary);
+}
 
 const FORM_LABELS: Record<LenderFormKind, string> = {
   quickflo: "QuickFlo Master Application",
