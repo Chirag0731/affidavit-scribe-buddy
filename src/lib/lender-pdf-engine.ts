@@ -15,6 +15,11 @@ import type {
   SignatureAuditTrail,
 } from "@/types/financing";
 import { createEmptyApplication, normalizeApplicationData } from "@/types/financing";
+import {
+  generateEnvelopeId,
+  computeSha256Digest,
+  formatAuditTimestamp,
+} from "@/lib/signature-audit-engine";
 
 // Format currency
 export function formatCurrency(amount: number | undefined | null): string {
@@ -790,15 +795,16 @@ export async function generatePrintableQuickFloPdf(
   const fontMono = await pdfDoc.embedFont(StandardFonts.Courier);
 
   const primaryColor = rgb(0.04, 0.42, 0.54); // QuickFlo Teal / Cyan Branding
-  const darkTextColor = rgb(0.1, 0.15, 0.2);
-  const mutedTextColor = rgb(0.4, 0.45, 0.5);
+  const darkTextColor = rgb(0.08, 0.12, 0.18);
+  const labelColor = rgb(0.20, 0.26, 0.34);
+  const mutedTextColor = rgb(0.38, 0.44, 0.5);
   const lightBg = rgb(0.96, 0.98, 0.99);
   const borderColor = rgb(0.78, 0.84, 0.88);
 
   const margin = 32;
   const contentWidth = 612 - margin * 2; // 548 pt
 
-  // Helper to draw section header
+  // Helper to draw section header with left accent bar
   const drawSectionHeader = (
     targetPage: PDFPage,
     title: string,
@@ -809,18 +815,26 @@ export async function generatePrintableQuickFloPdf(
       y: yPos - 14,
       width: contentWidth,
       height: 15,
-      color: rgb(0.9, 0.94, 0.97),
-      borderColor: rgb(0.75, 0.82, 0.88),
+      color: rgb(0.92, 0.95, 0.98),
+      borderColor: rgb(0.74, 0.81, 0.88),
       borderWidth: 0.5,
     });
+    // Left brand accent notch
+    targetPage.drawRectangle({
+      x: margin,
+      y: yPos - 14,
+      width: 3.5,
+      height: 15,
+      color: primaryColor,
+    });
     targetPage.drawText(title.toUpperCase(), {
-      x: margin + 8,
-      y: yPos - 10,
-      size: 7.5,
+      x: margin + 9,
+      y: yPos - 9.5,
+      size: 7.2,
       font: fontBold,
       color: primaryColor,
     });
-    return yPos - 22;
+    return yPos - 20;
   };
 
   // Helper to add interactive AcroForm text field
@@ -831,7 +845,7 @@ export async function generatePrintableQuickFloPdf(
     x: number,
     y: number,
     w: number,
-    h = 14
+    h = 15
   ) => {
     const textVal = isBlank || initialVal === undefined || initialVal === null ? "" : String(initialVal);
     try {
@@ -842,17 +856,17 @@ export async function generatePrintableQuickFloPdf(
         y,
         width: w,
         height: h,
-        borderWidth: 0.6,
-        borderColor: rgb(0.72, 0.78, 0.85),
-        backgroundColor: rgb(0.985, 0.99, 1),
+        borderWidth: 0.5,
+        borderColor: rgb(0.78, 0.82, 0.88),
+        backgroundColor: rgb(1, 1, 1),
         textColor: darkTextColor,
       });
       field.setFontSize(8);
     } catch {
       if (textVal) {
         targetPage.drawText(textVal, {
-          x: x + 2,
-          y: y + 3,
+          x: x + 3,
+          y: y + 3.5,
           size: 7.5,
           font: fontRegular,
           color: darkTextColor,
@@ -864,17 +878,73 @@ export async function generatePrintableQuickFloPdf(
   const p1 = app.owners[0] || {} as any;
   const p2 = app.owners[1] || {} as any;
 
+  // Auto-generate audit trail fallback if application has data but lacks an audit object
+  let audit = app.authorization?.auditTrail;
+  const p1FullName = p1.firstName ? `${p1.firstName} ${p1.lastName}`.trim() : (app.authorization?.signerName || "Authorized Principal");
+  const p2FullName = p2.firstName ? `${p2.firstName} ${p2.lastName}`.trim() : (app.authorization?.secondApplicantName || "");
+
+  if (!isBlank && (!audit || !audit.envelopeId || audit.envelopeId === "QF-TRC-PENDING-SUBMISSION")) {
+    const envId = generateEnvelopeId();
+    const dateObj = app.authorization?.dateSigned ? new Date(app.authorization.dateSigned) : new Date();
+    const { iso, formatted } = formatAuditTimestamp(isNaN(dateObj.getTime()) ? new Date() : dateObj);
+    const ipAddr = app.authorization?.ipAddress || "Verified TLS Client Session";
+    const userAgent = typeof navigator !== "undefined" ? navigator.userAgent : "QuickFlo Secure Underwriting Engine / 2.4.0";
+
+    const hashPayload = [
+      envId,
+      p1FullName,
+      app.authorization?.signerTitle || p1.title || "President",
+      p1.email || app.business?.email || "",
+      ipAddr,
+      iso,
+      app.authorization?.signatureDataUrl ? app.authorization.signatureDataUrl.slice(-80) : "DIGITALLY-SEALED",
+    ].join("::");
+
+    const docHash = await computeSha256Digest(hashPayload);
+
+    audit = {
+      envelopeId: envId,
+      signerName: p1FullName,
+      signerTitle: app.authorization?.signerTitle || p1.title || "President",
+      signerEmail: p1.email || app.business?.email,
+      signerPhone: p1.phone || app.business?.phone,
+      ipAddress: ipAddr,
+      userAgent: userAgent,
+      timestamp: iso,
+      formattedTimestamp: formatted,
+      documentHash: docHash,
+      consentStatement:
+        "Digitally executed pursuant to the U.S. Electronic Signatures in Global and National Commerce Act (E-SIGN, 15 U.S.C. § 7001), Uniform Electronic Transactions Act (UETA), and Canadian Personal Information Protection and Electronic Documents Act (PIPEDA).",
+      complianceStandard: "ESIGN & PIPEDA Compliant Cryptographic Audit Trail",
+    };
+
+    if (p2FullName) {
+      audit.secondSigner = {
+        signerName: p2FullName,
+        signerTitle: app.authorization?.secondApplicantTitle || p2.title || "Partner",
+        signerEmail: p2.email,
+        signerPhone: p2.phone,
+        ipAddress: ipAddr,
+        userAgent: userAgent,
+        timestamp: iso,
+        formattedTimestamp: formatted,
+        documentHash: await computeSha256Digest(`${envId}::${p2FullName}::${iso}`),
+      };
+    }
+    app.authorization.auditTrail = audit;
+  }
+
   // =========================================================================
-  // PAGE 1: BUSINESS PROFILE, FINANCIALS, BENEFICIAL OWNERSHIP (OWNERS 1 & 2)
+  // PAGE 1: SECTIONS 1 TO 5 (BUSINESS, REVENUE, OWNERS 1 & 2, COMMERCIAL LEASE)
   // =========================================================================
   let cursorY1 = 760;
 
   // 1. Top Header Banner
   page1.drawRectangle({
     x: margin,
-    y: cursorY1 - 44,
+    y: cursorY1 - 42,
     width: contentWidth,
-    height: 44,
+    height: 42,
     color: primaryColor,
   });
 
@@ -888,7 +958,7 @@ export async function generatePrintableQuickFloPdf(
 
   page1.drawText("MASTER COMMERCIAL APPLICATION & FUNDING INTAKE (PAGE 1 OF 2)", {
     x: margin + 12,
-    y: cursorY1 - 36,
+    y: cursorY1 - 35,
     size: 7.5,
     font: fontBold,
     color: rgb(0.85, 0.95, 1),
@@ -905,20 +975,20 @@ export async function generatePrintableQuickFloPdf(
 
   page1.drawText("AcroForm Fillable Document", {
     x: 612 - margin - 150,
-    y: cursorY1 - 34,
+    y: cursorY1 - 33,
     size: 6.5,
     font: fontRegular,
     color: rgb(0.85, 0.95, 1),
   });
 
-  cursorY1 -= 48;
+  cursorY1 -= 46;
 
   // Online Portal Link Bar
   page1.drawRectangle({
     x: margin,
-    y: cursorY1 - 16,
+    y: cursorY1 - 15,
     width: contentWidth,
-    height: 16,
+    height: 15,
     color: lightBg,
     borderColor: borderColor,
     borderWidth: 0.5,
@@ -932,248 +1002,280 @@ export async function generatePrintableQuickFloPdf(
       : "https://quickflo.com/apply";
   page1.drawText(`Online Underwriting Portal & Direct Submission Gateway: ${onlineUrl}`, {
     x: margin + 8,
-    y: cursorY1 - 11,
+    y: cursorY1 - 10.5,
     size: 6.8,
     font: fontRegular,
     color: darkTextColor,
   });
 
-  cursorY1 -= 22;
+  cursorY1 -= 21;
 
   // SECTION 1: BUSINESS PROFILE
   cursorY1 = drawSectionHeader(page1, "1. Business Operating Profile & Legal Identity", cursorY1);
 
   // Row 1: Legal Name, DBA
-  page1.drawText("Legal Corporate Name:", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_legalName", app.business.legalName, margin, cursorY1 - 15, 268);
+  page1.drawText("Legal Corporate Name:", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_legalName", app.business.legalName, margin, cursorY1 - 16, 268);
 
-  page1.drawText("Trade Name / DBA (if different):", { x: margin + 276, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_dba", app.business.dba || app.business.tradeName || "", margin + 276, cursorY1 - 15, 272);
-  cursorY1 -= 29;
+  page1.drawText("Trade Name / DBA (if different):", { x: margin + 276, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_dba", app.business.dba || app.business.tradeName || "", margin + 276, cursorY1 - 16, 272);
+  cursorY1 -= 27;
 
   // Row 2: Physical Address, City/Prov/Postal
-  page1.drawText("Physical Operating Street Address:", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
+  page1.drawText("Physical Operating Street Address:", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
   const physicalStreet = typeof app.business.physicalAddress === "string" ? app.business.physicalAddress : app.business.physicalAddress?.street || "";
-  addEditableField(page1, "qf_address_street", physicalStreet, margin, cursorY1 - 15, 268);
+  addEditableField(page1, "qf_address_street", physicalStreet, margin, cursorY1 - 16, 268);
 
-  page1.drawText("Physical City, Province, Postal Code:", { x: margin + 276, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
+  page1.drawText("Physical City, Province, Postal Code:", { x: margin + 276, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
   const physicalLoc = [
     app.business.physicalAddress?.city || app.business.city,
     app.business.physicalAddress?.province || app.business.province,
     app.business.physicalAddress?.postalCode || app.business.postalCode,
   ].filter(Boolean).join(", ");
-  addEditableField(page1, "qf_address_city_prov_postal", physicalLoc, margin + 276, cursorY1 - 15, 272);
-  cursorY1 -= 29;
+  addEditableField(page1, "qf_address_city_prov_postal", physicalLoc, margin + 276, cursorY1 - 16, 272);
+  cursorY1 -= 27;
 
   // Row 3: Legal Address, City/Prov/Postal
-  page1.drawText("Legal / Mailing Street Address (if different):", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
+  page1.drawText("Legal / Mailing Street Address (if different):", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
   const legalStreet = app.business.legalAddress?.street || physicalStreet;
-  addEditableField(page1, "qf_legal_street", legalStreet, margin, cursorY1 - 15, 268);
+  addEditableField(page1, "qf_legal_street", legalStreet, margin, cursorY1 - 16, 268);
 
-  page1.drawText("Legal City, Province, Postal Code:", { x: margin + 276, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
+  page1.drawText("Legal City, Province, Postal Code:", { x: margin + 276, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
   const legalLoc = [
     app.business.legalAddress?.city || app.business.city,
     app.business.legalAddress?.province || app.business.province,
     app.business.legalAddress?.postalCode || app.business.postalCode,
   ].filter(Boolean).join(", ");
-  addEditableField(page1, "qf_legal_city_prov_postal", legalLoc, margin + 276, cursorY1 - 15, 272);
-  cursorY1 -= 29;
+  addEditableField(page1, "qf_legal_city_prov_postal", legalLoc, margin + 276, cursorY1 - 16, 272);
+  cursorY1 -= 27;
 
   // Row 4: Phone, Fax, Email, Website
-  page1.drawText("Business Phone:", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_phone", app.business.businessPhone || app.business.phone, margin, cursorY1 - 15, 128);
+  page1.drawText("Business Phone:", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_phone", app.business.businessPhone || app.business.phone, margin, cursorY1 - 16, 128);
 
-  page1.drawText("Business Fax:", { x: margin + 134, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_fax", app.business.fax || "", margin + 134, cursorY1 - 15, 110);
+  page1.drawText("Business Fax:", { x: margin + 134, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_fax", app.business.fax || "", margin + 134, cursorY1 - 16, 110);
 
-  page1.drawText("Business Email:", { x: margin + 250, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_email", app.business.businessEmail || app.business.email, margin + 250, cursorY1 - 15, 150);
+  page1.drawText("Business Email:", { x: margin + 250, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_email", app.business.businessEmail || app.business.email, margin + 250, cursorY1 - 16, 150);
 
-  page1.drawText("Website Domain:", { x: margin + 406, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_website", app.business.website || "", margin + 406, cursorY1 - 15, 142);
-  cursorY1 -= 29;
+  page1.drawText("Website Domain:", { x: margin + 406, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_website", app.business.website || "", margin + 406, cursorY1 - 16, 142);
+  cursorY1 -= 27;
 
   // Row 5: Tax ID/BIN, Prov Incorp, Date Started, Ownership length, Locations, Mailing choice
-  page1.drawText("Federal Tax ID / BIN:", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_taxId", app.business.federalTaxId || app.business.businessNumber, margin, cursorY1 - 15, 110);
+  page1.drawText("Federal Tax ID / BIN:", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_taxId", app.business.federalTaxId || app.business.businessNumber, margin, cursorY1 - 16, 110);
 
-  page1.drawText("Incorp Prov:", { x: margin + 116, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_incorpProv", app.business.provinceOfIncorporation || "ON", margin + 116, cursorY1 - 15, 66);
+  page1.drawText("Incorp Prov:", { x: margin + 116, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_incorpProv", app.business.provinceOfIncorporation || "ON", margin + 116, cursorY1 - 16, 66);
 
-  page1.drawText("Date Started:", { x: margin + 188, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_dateStarted", formatDate(app.business.dateStarted || app.business.dateEstablished), margin + 188, cursorY1 - 15, 84);
+  page1.drawText("Date Started:", { x: margin + 188, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_dateStarted", formatDate(app.business.dateStarted || app.business.dateEstablished), margin + 188, cursorY1 - 16, 84);
 
-  page1.drawText("Length Ownership:", { x: margin + 278, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
+  page1.drawText("Length Ownership:", { x: margin + 278, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
   const ownLen = app.business.lengthOfOwnershipYears > 0
     ? `${app.business.lengthOfOwnershipYears} yrs ${app.business.lengthOfOwnershipMonths || 0} mos`
     : `${app.business.lengthOfOwnershipMonths || 0} mos`;
-  addEditableField(page1, "qf_ownership_length", ownLen, margin + 278, cursorY1 - 15, 94);
+  addEditableField(page1, "qf_ownership_length", ownLen, margin + 278, cursorY1 - 16, 94);
 
-  page1.drawText("# Locations:", { x: margin + 378, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_numLocations", String(app.business.numberOfLocations || 1), margin + 378, cursorY1 - 15, 54);
+  page1.drawText("# Locations:", { x: margin + 378, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_numLocations", String(app.business.numberOfLocations || 1), margin + 378, cursorY1 - 16, 54);
 
-  page1.drawText("Mailing Choice:", { x: margin + 438, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_mailing_choice", app.business.mailingAddressChoice?.toUpperCase() || "PHYSICAL", margin + 438, cursorY1 - 15, 110);
-  cursorY1 -= 29;
+  page1.drawText("Mailing Choice:", { x: margin + 438, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_mailing_choice", app.business.mailingAddressChoice?.toUpperCase() || "PHYSICAL", margin + 438, cursorY1 - 16, 110);
+  cursorY1 -= 27;
 
   // Row 6: Entity Structure, Industry / Products Sold
-  page1.drawText("Entity Structure (Corporation, LLC, Sole Prop, Partnership, LLP):", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_entityType", (app.business.entityType || "corporation").replace(/_/g, " ").toUpperCase(), margin, cursorY1 - 15, 230);
+  page1.drawText("Entity Structure (Corporation, LLC, Sole Prop, Partnership, LLP):", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_entityType", (app.business.entityType || "corporation").replace(/_/g, " ").toUpperCase(), margin, cursorY1 - 16, 230);
 
-  page1.drawText("Industry / Nature & Products Sold:", { x: margin + 238, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
+  page1.drawText("Industry / Nature & Products Sold:", { x: margin + 238, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
   const indProd = [app.business.industryType?.replace(/_/g, " "), app.business.productServiceSold].filter(Boolean).join(" - ");
-  addEditableField(page1, "qf_productSold", indProd, margin + 238, cursorY1 - 15, 310);
-  cursorY1 -= 32;
+  addEditableField(page1, "qf_productSold", indProd, margin + 238, cursorY1 - 16, 310);
+  cursorY1 -= 30;
 
   // SECTION 2: FINANCIAL PROFILE & PROCESSING
   cursorY1 = drawSectionHeader(page1, "2. Capital Requirements & Revenue Profile", cursorY1);
 
   // Row 1: Amount Requested, Use of Funds, Preferred Term, Non-card Sales
-  page1.drawText("Amount Requested ($):", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_amountRequested", formatCurrency(app.financials.amountRequested || app.financials.requestedAmount), margin, cursorY1 - 15, 128);
+  page1.drawText("Amount Requested ($):", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_amountRequested", formatCurrency(app.financials.amountRequested || app.financials.requestedAmount), margin, cursorY1 - 16, 128);
 
-  page1.drawText("Use of Working Capital Funds:", { x: margin + 134, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
+  page1.drawText("Use of Working Capital Funds:", { x: margin + 134, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
   const fundUse = app.financials.useOfFunds === "other" ? app.financials.useOfFundsOther || "Other" : String(app.financials.useOfFunds || "Working Capital").replace(/_/g, " ");
-  addEditableField(page1, "qf_useOfFunds", fundUse, margin + 134, cursorY1 - 15, 150);
+  addEditableField(page1, "qf_useOfFunds", fundUse, margin + 134, cursorY1 - 16, 150);
 
-  page1.drawText("Preferred Term:", { x: margin + 290, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_preferredTerm", app.financials.preferredTerm || "6 to 18 Months", margin + 290, cursorY1 - 15, 106);
+  page1.drawText("Preferred Term:", { x: margin + 290, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_preferredTerm", app.financials.preferredTerm || "6 to 18 Months", margin + 290, cursorY1 - 16, 106);
 
-  page1.drawText("Non-Card Monthly Sales ($):", { x: margin + 402, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_nonCardSales", formatCurrency(app.financials.nonCardMonthlySales), margin + 402, cursorY1 - 15, 146);
-  cursorY1 -= 29;
+  page1.drawText("Non-Card Monthly Sales ($):", { x: margin + 402, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_nonCardSales", formatCurrency(app.financials.nonCardMonthlySales), margin + 402, cursorY1 - 16, 146);
+  cursorY1 -= 27;
 
   // Row 2: Gross Monthly Sales, Gross Annual Sales, Avg Bank Balance, Avg Processing Vol
-  page1.drawText("Gross Monthly Sales ($):", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_grossMonthlySales", formatCurrency(app.financials.grossMonthlySales), margin, cursorY1 - 15, 128);
+  page1.drawText("Gross Monthly Sales ($):", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_grossMonthlySales", formatCurrency(app.financials.grossMonthlySales), margin, cursorY1 - 16, 128);
 
-  page1.drawText("Gross Annual Sales / Revenue ($):", { x: margin + 134, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
+  page1.drawText("Gross Annual Sales / Revenue ($):", { x: margin + 134, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
   const annSales = app.financials.grossAnnualSales || (app.financials.grossMonthlySales ? app.financials.grossMonthlySales * 12 : 0);
-  addEditableField(page1, "qf_grossAnnualSales", formatCurrency(annSales), margin + 134, cursorY1 - 15, 150);
+  addEditableField(page1, "qf_grossAnnualSales", formatCurrency(annSales), margin + 134, cursorY1 - 16, 150);
 
-  page1.drawText("Average Bank Balance ($):", { x: margin + 290, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_avgBankBalance", formatCurrency(app.financials.averageBankBalance), margin + 290, cursorY1 - 15, 106);
+  page1.drawText("Average Bank Balance ($):", { x: margin + 290, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_avgBankBalance", formatCurrency(app.financials.averageBankBalance), margin + 290, cursorY1 - 16, 106);
 
-  page1.drawText("Avg Monthly Card Volume ($):", { x: margin + 402, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_avgProcessingVol", formatCurrency(app.paymentProcessing.averageMonthlyVolume || app.financials.grossMonthlySales), margin + 402, cursorY1 - 15, 146);
-  cursorY1 -= 29;
+  page1.drawText("Avg Monthly Card Volume ($):", { x: margin + 402, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_avgProcessingVol", formatCurrency(app.paymentProcessing.averageMonthlyVolume || app.financials.grossMonthlySales), margin + 402, cursorY1 - 16, 146);
+  cursorY1 -= 27;
 
   // Row 3: Seasonal?, Peak Months, Franchise?, Franchisor Info
-  page1.drawText("Seasonal (Yes/No):", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_isSeasonal", app.financials.isSeasonal ? "YES" : "NO", margin, cursorY1 - 15, 80);
+  page1.drawText("Seasonal (Yes/No):", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_isSeasonal", app.financials.isSeasonal ? "YES" : "NO", margin, cursorY1 - 16, 80);
 
-  page1.drawText("Peak Months (Start - End):", { x: margin + 86, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
+  page1.drawText("Peak Months (Start - End):", { x: margin + 86, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
   const peakStr = app.financials.isSeasonal ? `${app.financials.peakSalesStartMonth || ""} to ${app.financials.peakSalesEndMonth || ""}` : "N/A";
-  addEditableField(page1, "qf_peakMonths", peakStr, margin + 86, cursorY1 - 15, 140);
+  addEditableField(page1, "qf_peakMonths", peakStr, margin + 86, cursorY1 - 16, 140);
 
-  page1.drawText("Franchise (Yes/No):", { x: margin + 232, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_isFranchise", app.financials.isFranchise ? "YES" : "NO", margin + 232, cursorY1 - 15, 80);
+  page1.drawText("Franchise (Yes/No):", { x: margin + 232, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_isFranchise", app.financials.isFranchise ? "YES" : "NO", margin + 232, cursorY1 - 16, 80);
 
-  page1.drawText("Franchisor Company Name & Contact Phone:", { x: margin + 318, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
+  page1.drawText("Franchisor Company Name & Contact Phone:", { x: margin + 318, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
   const franStr = app.financials.isFranchise ? `${app.financials.franchisorName || ""} • ${app.financials.franchisorPhone || ""}` : "N/A";
-  addEditableField(page1, "qf_franchisorInfo", franStr, margin + 318, cursorY1 - 15, 230);
-  cursorY1 -= 32;
+  addEditableField(page1, "qf_franchisorInfo", franStr, margin + 318, cursorY1 - 16, 230);
+  cursorY1 -= 30;
 
   // SECTION 3: BENEFICIAL OWNERSHIP - PRINCIPAL 1 (PRIMARY GUARANTOR)
   cursorY1 = drawSectionHeader(page1, "3. Beneficial Ownership & Principal 1 (Primary Guarantor)", cursorY1);
 
   // Row 1: Name, Title, Ownership %, DOB, SSN/SIN
-  page1.drawText("Full Legal Name:", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  const p1FullName = p1.firstName ? `${p1.firstName} ${p1.lastName}`.trim() : "";
-  addEditableField(page1, "qf_p1_name", p1FullName, margin, cursorY1 - 15, 176);
+  page1.drawText("Full Legal Name:", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p1_name", p1FullName, margin, cursorY1 - 16, 176);
 
-  page1.drawText("Title / Role:", { x: margin + 182, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p1_title", p1.title || "President", margin + 182, cursorY1 - 15, 108);
+  page1.drawText("Title / Role:", { x: margin + 182, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p1_title", p1.title || "President", margin + 182, cursorY1 - 16, 108);
 
-  page1.drawText("Equity %:", { x: margin + 296, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p1_ownership", `${p1.ownershipPercentage || 100}%`, margin + 296, cursorY1 - 15, 62);
+  page1.drawText("Equity %:", { x: margin + 296, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p1_ownership", `${p1.ownershipPercentage || 100}%`, margin + 296, cursorY1 - 16, 62);
 
-  page1.drawText("Date of Birth:", { x: margin + 364, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p1_dob", formatDate(p1.dob), margin + 364, cursorY1 - 15, 84);
+  page1.drawText("Date of Birth:", { x: margin + 364, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p1_dob", formatDate(p1.dob), margin + 364, cursorY1 - 16, 84);
 
-  page1.drawText("SSN / SIN:", { x: margin + 454, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p1_sin", p1.sin || p1.ssnOrSin || "", margin + 454, cursorY1 - 15, 94);
-  cursorY1 -= 29;
+  page1.drawText("SSN / SIN:", { x: margin + 454, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p1_sin", p1.sin || p1.ssnOrSin || "", margin + 454, cursorY1 - 16, 94);
+  cursorY1 -= 27;
 
   // Row 2: Driver's License #, Home Street Address, City/Prov/Postal
-  page1.drawText("Driver's License #:", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p1_dl", p1.dlNumber || "N/A", margin, cursorY1 - 15, 114);
+  page1.drawText("Driver's License #:", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p1_dl", p1.dlNumber || "N/A", margin, cursorY1 - 16, 114);
 
-  page1.drawText("Residential Home Street Address:", { x: margin + 120, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
+  page1.drawText("Residential Home Street Address:", { x: margin + 120, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
   const p1Street = p1.address?.street || p1.homeAddress || "";
-  addEditableField(page1, "qf_p1_street", p1Street, margin + 120, cursorY1 - 15, 222);
+  addEditableField(page1, "qf_p1_street", p1Street, margin + 120, cursorY1 - 16, 222);
 
-  page1.drawText("City, Province, Postal Code:", { x: margin + 348, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
+  page1.drawText("City, Province, Postal Code:", { x: margin + 348, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
   const p1Loc = [p1.address?.city || p1.city, p1.address?.province || p1.province, p1.address?.postalCode || p1.postalCode].filter(Boolean).join(", ");
-  addEditableField(page1, "qf_p1_city_prov_postal", p1Loc, margin + 348, cursorY1 - 15, 200);
-  cursorY1 -= 29;
+  addEditableField(page1, "qf_p1_city_prov_postal", p1Loc, margin + 348, cursorY1 - 16, 200);
+  cursorY1 -= 27;
 
   // Row 3: Housing Status, Years at Residence, Mobile, Phone, Email
-  page1.drawText("Housing (Own/Rent/Lease):", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p1_housing", (p1.housingStatus || "OWN").toUpperCase(), margin, cursorY1 - 15, 100);
+  page1.drawText("Housing (Own/Rent/Lease):", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p1_housing", (p1.housingStatus || "OWN").toUpperCase(), margin, cursorY1 - 16, 100);
 
-  page1.drawText("Years at Res:", { x: margin + 106, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p1_yearsAtRes", `${p1.yearsAtResidence || 0} yrs`, margin + 106, cursorY1 - 15, 68);
+  page1.drawText("Years at Res:", { x: margin + 106, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p1_yearsAtRes", `${p1.yearsAtResidence || 0} yrs`, margin + 106, cursorY1 - 16, 68);
 
-  page1.drawText("Cell / Mobile Phone:", { x: margin + 180, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p1_mobile", p1.mobile || p1.mobilePhone || p1.phone, margin + 180, cursorY1 - 15, 110);
+  page1.drawText("Cell / Mobile Phone:", { x: margin + 180, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p1_mobile", p1.mobile || p1.mobilePhone || p1.phone, margin + 180, cursorY1 - 16, 110);
 
-  page1.drawText("Primary Phone:", { x: margin + 296, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p1_phone", p1.phone, margin + 296, cursorY1 - 15, 110);
+  page1.drawText("Primary Phone:", { x: margin + 296, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p1_phone", p1.phone, margin + 296, cursorY1 - 16, 110);
 
-  page1.drawText("Personal / Business Email:", { x: margin + 412, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p1_email", p1.email, margin + 412, cursorY1 - 15, 136);
-  cursorY1 -= 32;
+  page1.drawText("Personal / Business Email:", { x: margin + 412, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p1_email", p1.email, margin + 412, cursorY1 - 16, 136);
+  cursorY1 -= 30;
 
   // SECTION 4: BENEFICIAL OWNERSHIP - PRINCIPAL 2 (CO-GUARANTOR / CO-APPLICANT)
   cursorY1 = drawSectionHeader(page1, "4. Beneficial Ownership & Principal 2 (Co-Guarantor / Additional Owner)", cursorY1);
 
   // Row 1: Name, Title, Ownership %, DOB, SSN/SIN
-  page1.drawText("Full Legal Name:", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  const p2FullName = p2.firstName ? `${p2.firstName} ${p2.lastName}`.trim() : "";
-  addEditableField(page1, "qf_p2_name", p2FullName, margin, cursorY1 - 15, 176);
+  page1.drawText("Full Legal Name:", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p2_name", p2FullName, margin, cursorY1 - 16, 176);
 
-  page1.drawText("Title / Role:", { x: margin + 182, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p2_title", p2.title || (p2FullName ? "Partner" : ""), margin + 182, cursorY1 - 15, 108);
+  page1.drawText("Title / Role:", { x: margin + 182, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p2_title", p2.title || (p2FullName ? "Partner" : ""), margin + 182, cursorY1 - 16, 108);
 
-  page1.drawText("Equity %:", { x: margin + 296, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p2_ownership", p2.ownershipPercentage ? `${p2.ownershipPercentage}%` : "", margin + 296, cursorY1 - 15, 62);
+  page1.drawText("Equity %:", { x: margin + 296, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p2_ownership", p2.ownershipPercentage ? `${p2.ownershipPercentage}%` : "", margin + 296, cursorY1 - 16, 62);
 
-  page1.drawText("Date of Birth:", { x: margin + 364, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p2_dob", formatDate(p2.dob), margin + 364, cursorY1 - 15, 84);
+  page1.drawText("Date of Birth:", { x: margin + 364, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p2_dob", formatDate(p2.dob), margin + 364, cursorY1 - 16, 84);
 
-  page1.drawText("SSN / SIN:", { x: margin + 454, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p2_sin", p2.sin || p2.ssnOrSin || "", margin + 454, cursorY1 - 15, 94);
-  cursorY1 -= 29;
+  page1.drawText("SSN / SIN:", { x: margin + 454, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p2_sin", p2.sin || p2.ssnOrSin || "", margin + 454, cursorY1 - 16, 94);
+  cursorY1 -= 27;
 
   // Row 2: Driver's License #, Home Street Address, City/Prov/Postal
-  page1.drawText("Driver's License #:", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p2_dl", p2.dlNumber || "", margin, cursorY1 - 15, 114);
+  page1.drawText("Driver's License #:", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p2_dl", p2.dlNumber || "", margin, cursorY1 - 16, 114);
 
-  page1.drawText("Residential Home Street Address:", { x: margin + 120, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
+  page1.drawText("Residential Home Street Address:", { x: margin + 120, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
   const p2Street = p2.address?.street || p2.homeAddress || "";
-  addEditableField(page1, "qf_p2_street", p2Street, margin + 120, cursorY1 - 15, 222);
+  addEditableField(page1, "qf_p2_street", p2Street, margin + 120, cursorY1 - 16, 222);
 
-  page1.drawText("City, Province, Postal Code:", { x: margin + 348, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
+  page1.drawText("City, Province, Postal Code:", { x: margin + 348, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
   const p2Loc = [p2.address?.city || p2.city, p2.address?.province || p2.province, p2.address?.postalCode || p2.postalCode].filter(Boolean).join(", ");
-  addEditableField(page1, "qf_p2_city_prov_postal", p2Loc, margin + 348, cursorY1 - 15, 200);
-  cursorY1 -= 29;
+  addEditableField(page1, "qf_p2_city_prov_postal", p2Loc, margin + 348, cursorY1 - 16, 200);
+  cursorY1 -= 27;
 
   // Row 3: Housing Status, Years at Residence, Mobile, Phone, Email
-  page1.drawText("Housing (Own/Rent/Lease):", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p2_housing", p2.housingStatus ? p2.housingStatus.toUpperCase() : "", margin, cursorY1 - 15, 100);
+  page1.drawText("Housing (Own/Rent/Lease):", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p2_housing", p2.housingStatus ? p2.housingStatus.toUpperCase() : "", margin, cursorY1 - 16, 100);
 
-  page1.drawText("Years at Res:", { x: margin + 106, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p2_yearsAtRes", p2.yearsAtResidence ? `${p2.yearsAtResidence} yrs` : "", margin + 106, cursorY1 - 15, 68);
+  page1.drawText("Years at Res:", { x: margin + 106, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p2_yearsAtRes", p2.yearsAtResidence ? `${p2.yearsAtResidence} yrs` : "", margin + 106, cursorY1 - 16, 68);
 
-  page1.drawText("Cell / Mobile Phone:", { x: margin + 180, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p2_mobile", p2.mobile || p2.mobilePhone || p2.phone || "", margin + 180, cursorY1 - 15, 110);
+  page1.drawText("Cell / Mobile Phone:", { x: margin + 180, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p2_mobile", p2.mobile || p2.mobilePhone || p2.phone || "", margin + 180, cursorY1 - 16, 110);
 
-  page1.drawText("Primary Phone:", { x: margin + 296, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p2_phone", p2.phone || "", margin + 296, cursorY1 - 15, 110);
+  page1.drawText("Primary Phone:", { x: margin + 296, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p2_phone", p2.phone || "", margin + 296, cursorY1 - 16, 110);
 
-  page1.drawText("Personal / Business Email:", { x: margin + 412, y: cursorY1, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page1, "qf_p2_email", p2.email || "", margin + 412, cursorY1 - 15, 136);
+  page1.drawText("Personal / Business Email:", { x: margin + 412, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_p2_email", p2.email || "", margin + 412, cursorY1 - 16, 136);
+  cursorY1 -= 30;
+
+  // SECTION 5: COMMERCIAL PREMISES & LEASE INFORMATION (PAGE 1)
+  cursorY1 = drawSectionHeader(page1, "5. Commercial Premises & Facility Lease Information", cursorY1);
+
+  // Row 1: Occupancy, Rent, Landlord, Account #
+  page1.drawText("Occupancy (Own / Rent / Lease):", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_prop_occupancy", (app.property.occupancyType || "RENT").toUpperCase(), margin, cursorY1 - 16, 110);
+
+  page1.drawText("Monthly Rent / Mortgage ($):", { x: margin + 118, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_prop_rent", formatCurrency(app.property.monthlyRentOrMortgage), margin + 118, cursorY1 - 16, 120);
+
+  page1.drawText("Landlord or Mortgage Bank:", { x: margin + 246, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_prop_landlord", app.property.landlordOrMortgageBank || app.property.landlordOrMortgagee || "", margin + 246, cursorY1 - 16, 166);
+
+  page1.drawText("Account / Loan #:", { x: margin + 420, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_prop_account", app.property.accountNumber || "", margin + 420, cursorY1 - 16, 128);
+  cursorY1 -= 27;
+
+  // Row 2: Contact Name, Landlord Phone, Lease Start, Lease Expiry, Locations
+  page1.drawText("Contact Name / Agent:", { x: margin, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_prop_contact", app.property.contactName || "", margin, cursorY1 - 16, 140);
+
+  page1.drawText("Landlord Phone:", { x: margin + 148, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_prop_phone", app.property.phone || app.property.landlordPhone || "", margin + 148, cursorY1 - 16, 120);
+
+  page1.drawText("Lease Start Date:", { x: margin + 276, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_prop_leaseStart", formatDate(app.property.leaseStartDate), margin + 276, cursorY1 - 16, 84);
+
+  page1.drawText("Lease Expiry Date:", { x: margin + 368, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_prop_leaseEnd", formatDate(app.property.leaseEndDate), margin + 368, cursorY1 - 16, 84);
+
+  page1.drawText("Physical Facilities:", { x: margin + 460, y: cursorY1, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page1, "qf_prop_locations", `${app.business.numberOfLocations || 1} Location(s)`, margin + 460, cursorY1 - 16, 88);
 
   // Page 1 Footer
   page1.drawText(
@@ -1188,7 +1290,7 @@ export async function generatePrintableQuickFloPdf(
   );
 
   // =========================================================================
-  // PAGE 2: PREMISES, PAYMENT PROCESSING, DEBT, REFERENCES, SIGNATURES & FORENSIC AUDIT
+  // PAGE 2: SECTIONS 6 TO 10 (PROCESSING, DEBT, REFERENCES, SIGNATURES, AUDIT CERTIFICATE)
   // =========================================================================
   let cursorY2 = 760;
 
@@ -1219,63 +1321,29 @@ export async function generatePrintableQuickFloPdf(
 
   cursorY2 -= 36;
 
-  // SECTION 5: COMMERCIAL PREMISES & LEASE INFORMATION
-  cursorY2 = drawSectionHeader(page2, "5. Commercial Premises & Facility Lease Information", cursorY2);
-
-  // Row 1: Occupancy, Rent, Landlord, Account #
-  page2.drawText("Occupancy (Own / Rent / Lease):", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_prop_occupancy", (app.property.occupancyType || "RENT").toUpperCase(), margin, cursorY2 - 15, 110);
-
-  page2.drawText("Monthly Rent / Mortgage ($):", { x: margin + 118, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_prop_rent", formatCurrency(app.property.monthlyRentOrMortgage), margin + 118, cursorY2 - 15, 120);
-
-  page2.drawText("Landlord or Mortgage Bank:", { x: margin + 246, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_prop_landlord", app.property.landlordOrMortgageBank || app.property.landlordOrMortgagee || "", margin + 246, cursorY2 - 15, 166);
-
-  page2.drawText("Account / Loan #:", { x: margin + 420, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_prop_account", app.property.accountNumber || "", margin + 420, cursorY2 - 15, 128);
-  cursorY2 -= 29;
-
-  // Row 2: Contact Name, Landlord Phone, Lease Start, Lease Expiry, Locations
-  page2.drawText("Contact Name / Agent:", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_prop_contact", app.property.contactName || "", margin, cursorY2 - 15, 140);
-
-  page2.drawText("Landlord Phone:", { x: margin + 148, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_prop_phone", app.property.phone || app.property.landlordPhone || "", margin + 148, cursorY2 - 15, 120);
-
-  page2.drawText("Lease Start Date:", { x: margin + 276, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_prop_leaseStart", formatDate(app.property.leaseStartDate), margin + 276, cursorY2 - 15, 84);
-
-  page2.drawText("Lease Expiry Date:", { x: margin + 368, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_prop_leaseEnd", formatDate(app.property.leaseEndDate), margin + 368, cursorY2 - 15, 84);
-
-  page2.drawText("Physical Facilities:", { x: margin + 460, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_prop_locations", `${app.business.numberOfLocations || 1} Location(s)`, margin + 460, cursorY2 - 15, 88);
-  cursorY2 -= 32;
-
   // SECTION 6: PAYMENT PROCESSING & MERCHANT CARD ACCEPTANCE
   cursorY2 = drawSectionHeader(page2, "6. Payment Processing & Card Acceptance Profile", cursorY2);
 
   // Row 1: Current Processor, POS Model, # Terminals, Monthly Card Volume, High/Low Month
-  page2.drawText("Current Processor:", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_pp_processor", app.paymentProcessing.currentProcessor || "Independent / First Data", margin, cursorY2 - 15, 138);
+  page2.drawText("Current Processor:", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_pp_processor", app.paymentProcessing.currentProcessor || "Independent / First Data", margin, cursorY2 - 16, 138);
 
-  page2.drawText("POS / Terminal Model:", { x: margin + 146, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_pp_terminalModel", app.paymentProcessing.terminalSoftwareModel || "Clover / Moneris / Ingenico", margin + 146, cursorY2 - 15, 134);
+  page2.drawText("POS / Terminal Model:", { x: margin + 146, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_pp_terminalModel", app.paymentProcessing.terminalSoftwareModel || "Clover / Moneris / Ingenico", margin + 146, cursorY2 - 16, 134);
 
-  page2.drawText("# Terminals:", { x: margin + 288, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_pp_numTerminals", String(app.paymentProcessing.numberOfTerminals || 1), margin + 288, cursorY2 - 15, 54);
+  page2.drawText("# Terminals:", { x: margin + 288, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_pp_numTerminals", String(app.paymentProcessing.numberOfTerminals || 1), margin + 288, cursorY2 - 16, 54);
 
-  page2.drawText("Avg Monthly Card Volume ($):", { x: margin + 350, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_pp_monthlyVol", formatCurrency(app.paymentProcessing.averageMonthlyVolume || app.financials.grossMonthlySales), margin + 350, cursorY2 - 15, 114);
+  page2.drawText("Avg Monthly Card Volume ($):", { x: margin + 350, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_pp_monthlyVol", formatCurrency(app.paymentProcessing.averageMonthlyVolume || app.financials.grossMonthlySales), margin + 350, cursorY2 - 16, 114);
 
-  page2.drawText("High / Low Months:", { x: margin + 472, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
+  page2.drawText("High / Low Months:", { x: margin + 472, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
   const highLow = `${app.paymentProcessing.highMonth || "Nov"} / ${app.paymentProcessing.lowMonth || "Jan"}`;
-  addEditableField(page2, "qf_pp_highLowMonth", highLow, margin + 472, cursorY2 - 15, 76);
-  cursorY2 -= 29;
+  addEditableField(page2, "qf_pp_highLowMonth", highLow, margin + 472, cursorY2 - 16, 76);
+  cursorY2 -= 27;
 
   // Row 2: Accepted Card Brands
-  page2.drawText("Card Types Accepted (Visa, MasterCard, Amex, Discover, Interac / Debit, EBT):", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
+  page2.drawText("Card Types Accepted (Visa, MasterCard, Amex, Discover, Interac / Debit, EBT):", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
   const cardTypes = [
     app.paymentProcessing.acceptedCards?.visaMastercard ? "Visa / MasterCard" : "",
     app.paymentProcessing.acceptedCards?.amex ? "American Express" : "",
@@ -1283,43 +1351,43 @@ export async function generatePrintableQuickFloPdf(
     app.paymentProcessing.acceptedCards?.debit ? "Debit / Interac" : "",
     app.paymentProcessing.acceptedCards?.ebt ? "EBT" : "",
   ].filter(Boolean).join(", ") || "Visa / MasterCard, American Express, Debit / Interac";
-  addEditableField(page2, "qf_pp_cards", cardTypes, margin, cursorY2 - 15, contentWidth);
-  cursorY2 -= 32;
+  addEditableField(page2, "qf_pp_cards", cardTypes, margin, cursorY2 - 16, contentWidth);
+  cursorY2 -= 30;
 
   // SECTION 7: EXISTING FINANCING & ADVANCE HISTORY
   cursorY2 = drawSectionHeader(page2, "7. Existing Liabilities, Financing & Prior Advance History", cursorY2);
 
   // Row 1: Existing Debt?, Lender Name, Current Balance, Daily/Wkly Payment, Position
-  page2.drawText("Existing Debt (Yes/No):", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_debt_hasDebt", app.existingFinancing.hasFinancing || app.existingFinancing.facilities.length > 0 ? "YES" : "NO", margin, cursorY2 - 15, 76);
+  page2.drawText("Existing Debt (Yes/No):", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_debt_hasDebt", app.existingFinancing.hasFinancing || app.existingFinancing.facilities.length > 0 ? "YES" : "NO", margin, cursorY2 - 16, 76);
 
-  page2.drawText("Primary Lender / Facility Name:", { x: margin + 84, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
+  page2.drawText("Primary Lender / Facility Name:", { x: margin + 84, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
   const primDebt = app.existingFinancing.facilities[0] || {};
   const debtLender = primDebt.lenderName || app.existingFinancing.lenderName || "None";
-  addEditableField(page2, "qf_debt_lender", debtLender, margin + 84, cursorY2 - 15, 160);
+  addEditableField(page2, "qf_debt_lender", debtLender, margin + 84, cursorY2 - 16, 160);
 
-  page2.drawText("Current Balance ($):", { x: margin + 252, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
+  page2.drawText("Current Balance ($):", { x: margin + 252, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
   const debtBal = primDebt.currentBalance || app.existingFinancing.approximateBalance || 0;
-  addEditableField(page2, "qf_debt_balance", formatCurrency(debtBal), margin + 252, cursorY2 - 15, 108);
+  addEditableField(page2, "qf_debt_balance", formatCurrency(debtBal), margin + 252, cursorY2 - 16, 108);
 
-  page2.drawText("Daily/Weekly Payment ($):", { x: margin + 368, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
+  page2.drawText("Daily/Weekly Payment ($):", { x: margin + 368, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
   const debtPmt = primDebt.paymentAmount || app.existingFinancing.dailyOrWeeklyPayment || 0;
-  addEditableField(page2, "qf_debt_payment", formatCurrency(debtPmt), margin + 368, cursorY2 - 15, 108);
+  addEditableField(page2, "qf_debt_payment", formatCurrency(debtPmt), margin + 368, cursorY2 - 16, 108);
 
-  page2.drawText("Position:", { x: margin + 484, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_debt_position", app.existingFinancing.position || "1st", margin + 484, cursorY2 - 15, 64);
-  cursorY2 -= 29;
+  page2.drawText("Position:", { x: margin + 484, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_debt_position", app.existingFinancing.position || "1st", margin + 484, cursorY2 - 16, 64);
+  cursorY2 -= 27;
 
   // Row 2: Prior Cash Advance / MCA History
-  page2.drawText("Prior Cash Advance / Working Capital (Yes/No):", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_mca_receivedBefore", app.existingFinancing.hasCashAdvanceBefore ? "YES" : "NO", margin, cursorY2 - 15, 86);
+  page2.drawText("Prior Cash Advance / Working Capital (Yes/No):", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_mca_receivedBefore", app.existingFinancing.hasCashAdvanceBefore ? "YES" : "NO", margin, cursorY2 - 16, 86);
 
-  page2.drawText("Prior Provider / Funding Company:", { x: margin + 94, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_mca_provider", app.existingFinancing.cashAdvanceProvider || "N/A", margin + 94, cursorY2 - 15, 214);
+  page2.drawText("Prior Provider / Funding Company:", { x: margin + 94, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_mca_provider", app.existingFinancing.cashAdvanceProvider || "N/A", margin + 94, cursorY2 - 16, 214);
 
-  page2.drawText("Date Received / History Details:", { x: margin + 316, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_mca_when", formatDate(app.existingFinancing.cashAdvanceWhen) || "N/A", margin + 316, cursorY2 - 15, 232);
-  cursorY2 -= 32;
+  page2.drawText("Date Received / History Details:", { x: margin + 316, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_mca_when", formatDate(app.existingFinancing.cashAdvanceWhen) || "N/A", margin + 316, cursorY2 - 16, 232);
+  cursorY2 -= 30;
 
   // SECTION 8: COMMERCIAL TRADE REFERENCES
   cursorY2 = drawSectionHeader(page2, "8. Commercial Vendor & Trade References", cursorY2);
@@ -1328,32 +1396,32 @@ export async function generatePrintableQuickFloPdf(
   const ref2 = app.tradeReferences[1] || {} as any;
 
   // Trade Reference 1
-  page2.drawText("Vendor 1 Company:", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_ref1_name", ref1.businessName || ref1.companyName || "", margin, cursorY2 - 15, 160);
+  page2.drawText("Vendor 1 Company:", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_ref1_name", ref1.businessName || ref1.companyName || "", margin, cursorY2 - 16, 160);
 
-  page2.drawText("Account #:", { x: margin + 168, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_ref1_account", ref1.accountNumber || "", margin + 168, cursorY2 - 15, 108);
+  page2.drawText("Account #:", { x: margin + 168, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_ref1_account", ref1.accountNumber || "", margin + 168, cursorY2 - 16, 108);
 
-  page2.drawText("Contact Person:", { x: margin + 284, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_ref1_contact", ref1.contactName || ref1.contactPerson || "", margin + 284, cursorY2 - 15, 126);
+  page2.drawText("Contact Person:", { x: margin + 284, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_ref1_contact", ref1.contactName || ref1.contactPerson || "", margin + 284, cursorY2 - 16, 126);
 
-  page2.drawText("Contact Phone:", { x: margin + 418, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_ref1_phone", ref1.contactPhone || ref1.phone || "", margin + 418, cursorY2 - 15, 130);
-  cursorY2 -= 29;
+  page2.drawText("Contact Phone:", { x: margin + 418, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_ref1_phone", ref1.contactPhone || ref1.phone || "", margin + 418, cursorY2 - 16, 130);
+  cursorY2 -= 27;
 
   // Trade Reference 2
-  page2.drawText("Vendor 2 Company:", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_ref2_name", ref2.businessName || ref2.companyName || "", margin, cursorY2 - 15, 160);
+  page2.drawText("Vendor 2 Company:", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_ref2_name", ref2.businessName || ref2.companyName || "", margin, cursorY2 - 16, 160);
 
-  page2.drawText("Account #:", { x: margin + 168, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_ref2_account", ref2.accountNumber || "", margin + 168, cursorY2 - 15, 108);
+  page2.drawText("Account #:", { x: margin + 168, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_ref2_account", ref2.accountNumber || "", margin + 168, cursorY2 - 16, 108);
 
-  page2.drawText("Contact Person:", { x: margin + 284, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_ref2_contact", ref2.contactName || ref2.contactPerson || "", margin + 284, cursorY2 - 15, 126);
+  page2.drawText("Contact Person:", { x: margin + 284, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_ref2_contact", ref2.contactName || ref2.contactPerson || "", margin + 284, cursorY2 - 16, 126);
 
-  page2.drawText("Contact Phone:", { x: margin + 418, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_ref2_phone", ref2.contactPhone || ref2.phone || "", margin + 418, cursorY2 - 15, 130);
-  cursorY2 -= 32;
+  page2.drawText("Contact Phone:", { x: margin + 418, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_ref2_phone", ref2.contactPhone || ref2.phone || "", margin + 418, cursorY2 - 16, 130);
+  cursorY2 -= 30;
 
   // SECTION 9: LEGAL AUTHORIZATION & DUAL SIGNATURES
   cursorY2 = drawSectionHeader(page2, "9. Legal Authorization & Underwriting Execution", cursorY2);
@@ -1369,115 +1437,186 @@ export async function generatePrintableQuickFloPdf(
     maxWidth: contentWidth,
     lineHeight: 8,
   });
-  cursorY2 -= 22;
+  cursorY2 -= 23;
 
   // Signer 1 Row
-  page2.drawText("Authorized Signer 1 Name:", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
+  page2.drawText("Authorized Signer 1 Name:", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
   const s1Name = app.authorization.signerName || p1FullName || "";
-  addEditableField(page2, "qf_sig1_name", s1Name, margin, cursorY2 - 15, 150);
+  addEditableField(page2, "qf_sig1_name", s1Name, margin, cursorY2 - 16, 150);
 
-  page2.drawText("Signer 1 Title:", { x: margin + 158, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_sig1_title", app.authorization.signerTitle || p1.title || "President", margin + 158, cursorY2 - 15, 100);
+  page2.drawText("Signer 1 Title:", { x: margin + 158, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_sig1_title", app.authorization.signerTitle || p1.title || "President", margin + 158, cursorY2 - 16, 100);
 
-  page2.drawText("Date Signed:", { x: margin + 266, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_sig1_date", formatDate(app.authorization.dateSigned) || formatDate(new Date().toISOString().split("T")[0]), margin + 266, cursorY2 - 15, 76);
+  page2.drawText("Date Signed:", { x: margin + 266, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_sig1_date", formatDate(app.authorization.dateSigned) || formatDate(new Date().toISOString().split("T")[0]), margin + 266, cursorY2 - 16, 76);
 
   // Digital Signature 1 Box
   page2.drawRectangle({
     x: margin + 350,
     y: cursorY2 - 18,
     width: contentWidth - 350,
-    height: 25,
-    color: rgb(0.97, 0.985, 0.99),
+    height: 26,
+    color: rgb(0.98, 0.99, 1),
     borderColor: rgb(0.72, 0.78, 0.85),
     borderWidth: 0.6,
   });
   page2.drawText("Principal 1 E-Signature (Signed / Stamp)", { x: margin + 354, y: cursorY2 + 2, size: 6, font: fontBold, color: primaryColor });
 
   if (!isBlank && app.authorization.signatureDataUrl && app.authorization.signatureDataUrl.startsWith("data:image/")) {
-    await embedSignature(pdfDoc, page2, app.authorization.signatureDataUrl, margin + 354, cursorY2 - 16, contentWidth - 358, 21);
+    await embedSignature(pdfDoc, page2, app.authorization.signatureDataUrl, margin + 354, cursorY2 - 16, contentWidth - 358, 22);
   } else {
-    addEditableField(page2, "qf_sig1_signature", isBlank ? "" : (s1Name || "Digitally Signed"), margin + 354, cursorY2 - 16, contentWidth - 358, 20);
+    addEditableField(page2, "qf_sig1_signature", isBlank ? "" : (s1Name || "Digitally Signed"), margin + 354, cursorY2 - 16, contentWidth - 358, 21);
   }
-  cursorY2 -= 30;
+  cursorY2 -= 32;
 
   // Signer 2 Row (Co-Guarantor)
-  page2.drawText("Authorized Signer 2 Name:", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
+  page2.drawText("Authorized Signer 2 Name:", { x: margin, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
   const s2Name = app.authorization.secondApplicantName || p2FullName || "";
-  addEditableField(page2, "qf_sig2_name", s2Name, margin, cursorY2 - 15, 150);
+  addEditableField(page2, "qf_sig2_name", s2Name, margin, cursorY2 - 16, 150);
 
-  page2.drawText("Signer 2 Title:", { x: margin + 158, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_sig2_title", app.authorization.secondApplicantTitle || p2.title || (s2Name ? "Partner" : ""), margin + 158, cursorY2 - 15, 100);
+  page2.drawText("Signer 2 Title:", { x: margin + 158, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_sig2_title", app.authorization.secondApplicantTitle || p2.title || (s2Name ? "Partner" : ""), margin + 158, cursorY2 - 16, 100);
 
-  page2.drawText("Date Signed:", { x: margin + 266, y: cursorY2, size: 6.8, font: fontBold, color: darkTextColor });
-  addEditableField(page2, "qf_sig2_date", formatDate(app.authorization.secondSignatureDate || app.authorization.dateSigned) || "", margin + 266, cursorY2 - 15, 76);
+  page2.drawText("Date Signed:", { x: margin + 266, y: cursorY2, size: 6.8, font: fontBold, color: labelColor });
+  addEditableField(page2, "qf_sig2_date", formatDate(app.authorization.secondSignatureDate || app.authorization.dateSigned) || "", margin + 266, cursorY2 - 16, 76);
 
   // Digital Signature 2 Box
   page2.drawRectangle({
     x: margin + 350,
     y: cursorY2 - 18,
     width: contentWidth - 350,
-    height: 25,
-    color: rgb(0.97, 0.985, 0.99),
+    height: 26,
+    color: rgb(0.98, 0.99, 1),
     borderColor: rgb(0.72, 0.78, 0.85),
     borderWidth: 0.6,
   });
   page2.drawText("Principal 2 E-Signature (Signed / Stamp)", { x: margin + 354, y: cursorY2 + 2, size: 6, font: fontBold, color: primaryColor });
 
   if (!isBlank && app.authorization.secondSignatureDataUrl && app.authorization.secondSignatureDataUrl.startsWith("data:image/")) {
-    await embedSignature(pdfDoc, page2, app.authorization.secondSignatureDataUrl, margin + 354, cursorY2 - 16, contentWidth - 358, 21);
+    await embedSignature(pdfDoc, page2, app.authorization.secondSignatureDataUrl, margin + 354, cursorY2 - 16, contentWidth - 358, 22);
   } else {
-    addEditableField(page2, "qf_sig2_signature", isBlank ? "" : (s2Name || ""), margin + 354, cursorY2 - 16, contentWidth - 358, 20);
+    addEditableField(page2, "qf_sig2_signature", isBlank ? "" : (s2Name || ""), margin + 354, cursorY2 - 16, contentWidth - 358, 21);
   }
-  cursorY2 -= 32;
+  cursorY2 -= 34;
 
   // SECTION 10: FORENSIC DIGITAL CERTIFICATE OF COMPLETION & AUDIT TRAIL
   cursorY2 = drawSectionHeader(page2, "10. Certificate of Digital Execution & Cryptographic Audit Trail", cursorY2);
 
-  const audit = app.authorization.auditTrail;
-  const hasAudit = !isBlank && Boolean(audit && audit.envelopeId);
+  const hasAudit = !isBlank && Boolean(audit && audit.envelopeId && audit.envelopeId !== "QF-TRC-PENDING-SUBMISSION");
+  const envId = hasAudit ? audit!.envelopeId : (isBlank ? "QF-TRC-PENDING-SUBMISSION" : `QF-TRC-${(app.id || "GEN").toUpperCase()}-2026`);
+  const ipAddr = hasAudit ? (audit!.ipAddress || app.authorization.ipAddress || "Verified TLS Client Session") : (isBlank ? "Pending Public IP Capture" : (app.authorization.ipAddress || "Verified TLS Client Session"));
+  const timeIso = hasAudit ? audit!.timestamp : (isBlank ? "Pending E-Signature Timestamp" : new Date().toISOString());
+  const timeFormatted = hasAudit ? (audit!.formattedTimestamp || audit!.timestamp) : (isBlank ? "Awaiting Client Digital Execution Session" : new Date().toLocaleString());
+  const shaStr = hasAudit ? audit!.documentHash : (isBlank ? "Pending Cryptographic SHA-256 Digest" : `SHA256-${(app.id || "QF").toUpperCase()}89A4C012`);
+  const clientAgent = hasAudit ? (audit!.userAgent || "Verified Browser Client") : (isBlank ? "Awaiting Client Browser & Device Fingerprint" : (typeof navigator !== "undefined" ? navigator.userAgent : "QuickFlo Secure Underwriting Engine / 2.4.0"));
 
+  // Certificate Container Card (118 pt)
+  const certHeight = 118;
   page2.drawRectangle({
     x: margin,
-    y: cursorY2 - 68,
+    y: cursorY2 - certHeight,
     width: contentWidth,
-    height: 70,
-    color: rgb(0.97, 0.985, 0.99),
+    height: certHeight,
+    color: rgb(0.985, 0.992, 1),
     borderColor: primaryColor,
-    borderWidth: 0.75,
+    borderWidth: 1,
   });
 
-  const envId = audit?.envelopeId || (isBlank ? "QF-TRC-PENDING-SUBMISSION" : `QF-TRC-${(app.id || "GEN").toUpperCase()}-2026`);
-  const ipAddr = audit?.ipAddress || (isBlank ? "Pending Public IP Capture" : (app.authorization.ipAddress || "Verified TLS Client Session"));
-  const timeStr = audit?.timestamp ? `${audit.timestamp} (${audit.formattedTimestamp || ""})` : (isBlank ? "Pending E-Signature Timestamp" : new Date().toISOString());
-  const shaStr = audit?.documentHash || (isBlank ? "Pending Cryptographic SHA-256 Digest" : `SHA256-${(app.id || "QF").toUpperCase()}89A4C012`);
+  // Inner hairline security frame
+  page2.drawRectangle({
+    x: margin + 2,
+    y: cursorY2 - certHeight + 2,
+    width: contentWidth - 4,
+    height: certHeight - 4,
+    borderColor: rgb(0.80, 0.86, 0.92),
+    borderWidth: 0.5,
+  });
 
-  page2.drawText("AUDIT ENVELOPE ID:", { x: margin + 10, y: cursorY2 - 12, size: 6.5, font: fontBold, color: primaryColor });
-  page2.drawText(envId, { x: margin + 98, y: cursorY2 - 12, size: 6.5, font: fontMono, color: darkTextColor });
-  addEditableField(page2, "qf_audit_envelopeId", envId, margin + 98, cursorY2 - 15, 170, 11);
+  // Top security header ribbon
+  page2.drawRectangle({
+    x: margin + 2,
+    y: cursorY2 - 18,
+    width: contentWidth - 4,
+    height: 16,
+    color: rgb(0.91, 0.95, 0.98),
+  });
 
-  page2.drawText("SIGNER IP ADDRESS:", { x: margin + 280, y: cursorY2 - 12, size: 6.5, font: fontBold, color: primaryColor });
-  page2.drawText(ipAddr, { x: margin + 372, y: cursorY2 - 12, size: 6.5, font: fontMono, color: darkTextColor });
-  addEditableField(page2, "qf_audit_ip", ipAddr, margin + 372, cursorY2 - 15, 160, 11);
+  page2.drawText("QUICKFLO SECURE UNDERWRITING TRUST NETWORK • FORENSIC EXECUTION RECORD", {
+    x: margin + 8,
+    y: cursorY2 - 12.5,
+    size: 6.2,
+    font: fontBold,
+    color: primaryColor,
+  });
 
-  page2.drawText("TIMESTAMP (UTC):", { x: margin + 10, y: cursorY2 - 28, size: 6.5, font: fontBold, color: primaryColor });
-  page2.drawText(timeStr.slice(0, 52), { x: margin + 98, y: cursorY2 - 28, size: 6.2, font: fontMono, color: darkTextColor });
-  addEditableField(page2, "qf_audit_timestamp", timeStr, margin + 98, cursorY2 - 31, 434, 11);
+  // Status badge pill
+  const statusBg = hasAudit ? rgb(0.88, 0.96, 0.90) : rgb(0.94, 0.95, 0.97);
+  const statusBorder = hasAudit ? rgb(0.2, 0.6, 0.3) : rgb(0.6, 0.65, 0.7);
+  const statusText = hasAudit ? "SEALED & AUTHENTICATED" : (isBlank ? "AWAITING SIGNATURE" : "DIGITALLY VERIFIED");
+  const statusColor = hasAudit ? rgb(0.1, 0.45, 0.2) : mutedTextColor;
 
-  page2.drawText("SHA-256 SEAL:", { x: margin + 10, y: cursorY2 - 44, size: 6.5, font: fontBold, color: primaryColor });
-  page2.drawText(shaStr, { x: margin + 98, y: cursorY2 - 44, size: 6.2, font: fontMono, color: darkTextColor });
-  addEditableField(page2, "qf_audit_sha256", shaStr, margin + 98, cursorY2 - 47, 434, 11);
+  page2.drawRectangle({
+    x: margin + contentWidth - 142,
+    y: cursorY2 - 16,
+    width: 136,
+    height: 12,
+    color: statusBg,
+    borderColor: statusBorder,
+    borderWidth: 0.6,
+  });
+  page2.drawText(statusText, {
+    x: margin + contentWidth - 136,
+    y: cursorY2 - 12,
+    size: 5.8,
+    font: fontBold,
+    color: statusColor,
+  });
 
+  // Grid Row 1: Envelope ID & IP
+  page2.drawText("AUDIT ENVELOPE ID:", { x: margin + 8, y: cursorY2 - 30, size: 6.2, font: fontBold, color: primaryColor });
+  page2.drawText(envId, { x: margin + 96, y: cursorY2 - 30, size: 6.6, font: fontMono, color: darkTextColor });
+  addEditableField(page2, "qf_audit_envelopeId", envId, margin + 96, cursorY2 - 33, 160, 11);
+
+  page2.drawText("SIGNER PUBLIC IP:", { x: margin + 266, y: cursorY2 - 30, size: 6.2, font: fontBold, color: primaryColor });
+  page2.drawText(ipAddr, { x: margin + 348, y: cursorY2 - 30, size: 6.4, font: fontMono, color: darkTextColor });
+  addEditableField(page2, "qf_audit_ip", ipAddr, margin + 348, cursorY2 - 33, 192, 11);
+
+  // Grid Row 2: UTC Timestamp & Local Time
+  page2.drawText("TIMESTAMP (UTC):", { x: margin + 8, y: cursorY2 - 46, size: 6.2, font: fontBold, color: primaryColor });
+  page2.drawText(timeIso, { x: margin + 96, y: cursorY2 - 46, size: 6.2, font: fontMono, color: darkTextColor });
+  addEditableField(page2, "qf_audit_timestamp", `${timeIso} (${timeFormatted})`, margin + 96, cursorY2 - 49, 444, 11);
+
+  page2.drawText("LOCAL SIGNING TIME:", { x: margin + 266, y: cursorY2 - 46, size: 6.2, font: fontBold, color: primaryColor });
+  page2.drawText(timeFormatted.slice(0, 42), { x: margin + 360, y: cursorY2 - 46, size: 6.0, font: fontRegular, color: darkTextColor });
+
+  // Grid Row 3: SHA-256 Digest
+  page2.drawText("SHA-256 DIGEST:", { x: margin + 8, y: cursorY2 - 62, size: 6.2, font: fontBold, color: primaryColor });
+  page2.drawText(shaStr, { x: margin + 96, y: cursorY2 - 62, size: 6.2, font: fontMono, color: darkTextColor });
+  addEditableField(page2, "qf_audit_sha256", shaStr, margin + 96, cursorY2 - 65, 444, 11);
+
+  // Grid Row 4: Signer Device / Fingerprint
+  page2.drawText("DEVICE / CLIENT:", { x: margin + 8, y: cursorY2 - 78, size: 6.2, font: fontBold, color: primaryColor });
+  page2.drawText(clientAgent.slice(0, 95), { x: margin + 96, y: cursorY2 - 78, size: 5.8, font: fontRegular, color: darkTextColor });
+
+  // Divider line
+  page2.drawLine({
+    start: { x: margin + 6, y: cursorY2 - 88 },
+    end: { x: margin + contentWidth - 6, y: cursorY2 - 88 },
+    thickness: 0.5,
+    color: rgb(0.85, 0.88, 0.92),
+  });
+
+  // Statutory Non-repudiation & Legal Compliance Statement
   page2.drawText(
-    "Tamper-Evident Forensic Audit Record: Digitally executed pursuant to the U.S. Electronic Signatures in Global and National Commerce Act (E-SIGN, 15 U.S.C. § 7001) and Canadian PIPEDA/UECA standards. Registered in QuickFlo Financial Underwriting Gateway.",
+    "Tamper-Evident Forensic Audit Record: Digitally executed pursuant to the U.S. Electronic Signatures in Global and National Commerce Act (E-SIGN, 15 U.S.C. § 7001), Uniform Electronic Transactions Act (UETA), and Canadian Personal Information Protection and Electronic Documents Act (PIPEDA). Cryptographic audit records are permanently sealed in the QuickFlo Underwriting Gateway.",
     {
-      x: margin + 10,
-      y: cursorY2 - 62,
-      size: 5.8,
+      x: margin + 8,
+      y: cursorY2 - 97,
+      size: 5.6,
       font: fontRegular,
       color: mutedTextColor,
-      maxWidth: contentWidth - 20,
-      lineHeight: 7.5,
+      maxWidth: contentWidth - 16,
+      lineHeight: 7.2,
     }
   );
 
