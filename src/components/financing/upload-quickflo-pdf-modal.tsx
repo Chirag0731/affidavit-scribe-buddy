@@ -268,10 +268,10 @@ export function UploadQuickFloPdfModal({
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-foreground">
-                    {parsing ? "Parsing AcroForm fields..." : "Click to select or drag & drop filled QuickFlo PDF"}
+                    {parsing ? "Reading application fields..." : "Click to select or drag & drop a filled application PDF"}
                   </p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    Supports 2-page Master QuickFlo applications filled in Acrobat, Chrome, Preview, or Edge
+                    Accepts QuickFlo, Journey Capital / White-Label, and CanaCap applications
                   </p>
                 </div>
               </div>
