@@ -90,15 +90,16 @@ export function UploadQuickFloPdfModal({
       setParsing(true);
       setFileName(file.name);
       const arrayBuffer = await file.arrayBuffer();
-      const extractedApp = await parseQuickFloPdf(arrayBuffer);
+      const { app: extractedApp, kind } = await parseLenderPdf(arrayBuffer);
 
+      setDetectedKind(kind);
       setParsedApp(extractedApp);
-      toast.success("QuickFlo PDF parsed successfully", {
+      toast.success(`${FORM_LABELS[kind]} read successfully`, {
         description: `Extracted data for ${extractedApp.business.legalName || "Commercial Applicant"}`,
       });
     } catch (err) {
-      console.error("Failed to parse QuickFlo PDF:", err);
-      toast.error("Unable to parse PDF. Please ensure this is a fillable QuickFlo application form.");
+      console.error("Failed to parse lender PDF:", err);
+      toast.error("Unable to read this PDF. Upload a filled QuickFlo, Journey Capital, or CanaCap application.");
     } finally {
       setParsing(false);
     }
