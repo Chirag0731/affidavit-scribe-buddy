@@ -311,7 +311,11 @@ export function UploadQuickFloPdfModal({
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-foreground">
-                    {parsing ? "Reading application fields..." : "Click to select or drag & drop a filled application PDF"}
+                    {scanning
+                      ? "Reading the scanned / handwritten form..."
+                      : parsing
+                        ? "Reading application fields..."
+                        : "Click to select, drag & drop, or upload a scanned application PDF"}
                   </p>
                   <p className="text-xs text-muted-foreground mt-1">
                     Accepts QuickFlo, Journey Capital / White-Label, and CanaCap applications
