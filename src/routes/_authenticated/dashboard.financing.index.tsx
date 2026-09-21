@@ -5,6 +5,7 @@ import { financingStore } from "@/lib/financing-db";
 import { FinancingLogo } from "@/components/financing/financing-logo";
 import { FinancingPdfPreviewModal } from "@/components/financing/financing-pdf-preview-modal";
 import { SendApplicationModal } from "@/components/financing/send-application-modal";
+import { UploadQuickFloPdfModal } from "@/components/financing/upload-quickflo-pdf-modal";
 import { generateAllLenderPdfsZip, downloadBlankQuickFloPdf } from "@/lib/lender-pdf-engine";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,6 +41,7 @@ import {
   Layers,
   Copy,
   Send,
+  UploadCloud,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -58,6 +60,7 @@ function FinancingOverviewPage() {
   const [selectedAppForSend, setSelectedAppForSend] = useState<BusinessFinancingApplication | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [downloadingBlank, setDownloadingBlank] = useState(false);
+  const [uploadModalOpen, setUploadModalOpen] = useState(false);
 
   useEffect(() => {
     loadApplications();
@@ -213,6 +216,17 @@ function FinancingOverviewPage() {
           >
             <Share2 className="w-3.5 h-3.5 mr-1.5" />
             Share Client App Link
+          </Button>
+
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => setUploadModalOpen(true)}
+            className="text-xs h-9 font-semibold border-cyan-300 dark:border-cyan-800 text-cyan-700 dark:text-cyan-300 hover:bg-cyan-50 dark:hover:bg-cyan-950/40"
+          >
+            <UploadCloud className="w-3.5 h-3.5 mr-1.5 text-cyan-600" />
+            Import Filled PDF
           </Button>
 
           <Button
@@ -515,6 +529,15 @@ function FinancingOverviewPage() {
         application={selectedAppForSend}
         open={Boolean(selectedAppForSend)}
         onOpenChange={(open) => !open && setSelectedAppForSend(null)}
+      />
+
+      {/* Upload QuickFlo PDF & Multi-Lender Converter Modal */}
+      <UploadQuickFloPdfModal
+        open={uploadModalOpen}
+        onOpenChange={setUploadModalOpen}
+        onApplicationImported={() => {
+          loadApplications();
+        }}
       />
     </div>
   );

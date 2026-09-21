@@ -3,10 +3,12 @@ import {
   BusinessFinancingApplication,
   createSampleBenchmarkApplication,
   createEmptyApplication,
+  normalizeApplicationData,
   OwnerInfo,
   TradeReference,
 } from "@/types/financing";
 import { financingStore } from "@/lib/financing-db";
+import { createSignatureAuditTrail } from "@/lib/signature-audit-engine";
 import { FinancingStepper } from "./financing-stepper";
 import { FinancingLogo } from "./financing-logo";
 import { FinancingSignaturePad } from "./financing-signature-pad";
@@ -14,6 +16,7 @@ import { FinancingReviewSummary } from "./financing-review-summary";
 import { FinancingDatePicker } from "./financing-date-picker";
 import { SmartAddressInput } from "./smart-address-input";
 import { SmartIntakeModal } from "./smart-intake-modal";
+import { UploadQuickFloPdfModal } from "./upload-quickflo-pdf-modal";
 import { FormattedNumberInput } from "./formatted-number-input";
 import {
   validateStep0,
@@ -55,6 +58,7 @@ import {
   Globe,
   Calendar,
   AlertCircle,
+  UploadCloud,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -76,6 +80,7 @@ export function FinancingClientForm({
   const [currentStep, setCurrentStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
   const [smartIntakeOpen, setSmartIntakeOpen] = useState(false);
+  const [uploadPdfOpen, setUploadPdfOpen] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [ownerErrors, setOwnerErrors] = useState<Record<number, Record<string, string>>>({});
   const [app, setApp] = useState<BusinessFinancingApplication>(() => {
@@ -341,21 +346,42 @@ export function FinancingClientForm({
     try {
       // Sync signer name with primary owner if empty
       const primaryOwner = app.owners.find((o) => o.isPrimary) || app.owners[0];
-      const signerName = app.authorization.signerName || `${primaryOwner.firstName} ${primaryOwner.lastName}`.trim();
+      const signerName = app.authorization.signerName || (primaryOwner ? `${primaryOwner.firstName} ${primaryOwner.lastName}`.trim() : "Authorized Signer");
+      const signerTitle = app.authorization.signerTitle || primaryOwner?.title || "President / Owner";
       const dateSigned = app.authorization.dateSigned || new Date().toISOString().split("T")[0];
 
-      const finalizedApp: BusinessFinancingApplication = {
+      // Capture Forensic Digital Signature Audit Trail (IP, Timestamp, Envelope ID, SHA-256)
+      const p2 = app.owners[1];
+      const secondSignerName = app.authorization.secondApplicantName || (p2 ? `${p2.firstName} ${p2.lastName}`.trim() : undefined);
+      const auditTrail = await createSignatureAuditTrail({
+        signerName,
+        signerTitle,
+        signerEmail: primaryOwner?.email || app.business.email,
+        signerPhone: primaryOwner?.phone || app.business.phone,
+        signatureDataUrl: app.authorization.signatureDataUrl,
+        secondSigner: secondSignerName ? {
+          signerName: secondSignerName,
+          signerTitle: app.authorization.secondApplicantTitle || p2?.title || "Partner",
+          signerEmail: p2?.email,
+          signerPhone: p2?.phone,
+          signatureDataUrl: app.authorization.secondSignatureDataUrl,
+        } : undefined,
+      });
+
+      const finalizedApp: BusinessFinancingApplication = normalizeApplicationData({
         ...app,
         status: "submitted",
         updatedAt: new Date().toISOString(),
         authorization: {
           ...app.authorization,
           signerName,
-          signerTitle: app.authorization.signerTitle || primaryOwner.title || "President / Owner",
+          signerTitle,
           dateSigned,
-          ipAddress: "Client Browser E-Sign",
+          ipAddress: auditTrail.ipAddress,
+          userAgent: auditTrail.userAgent,
+          auditTrail,
         },
-      };
+      });
 
       const saved = await financingStore.saveApplication(finalizedApp);
 
@@ -394,6 +420,16 @@ export function FinancingClientForm({
           </div>
 
           <div className="flex items-center gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => setUploadPdfOpen(true)}
+              className="text-xs h-8 border-cyan-300 dark:border-cyan-800 text-cyan-700 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-950/40 font-medium"
+            >
+              <UploadCloud className="w-3.5 h-3.5 mr-1 text-cyan-600" />
+              Import Filled PDF
+            </Button>
             <Button
               type="button"
               variant="outline"
@@ -1647,6 +1683,76 @@ export function FinancingClientForm({
                     </p>
                   )}
                 </div>
+
+                {/* Secondary Principal / Co-Guarantor E-Signature (Optional / If multiple owners) */}
+                {(app.owners.length > 1 || app.authorization.secondApplicantName) && (
+                  <div className="pt-4 border-t border-border/60 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <Label className="text-xs font-bold text-foreground block">
+                        Co-Guarantor / Secondary Principal E-Signature (Principal 2)
+                      </Label>
+                      <Badge variant="outline" className="text-[10px]">
+                        Co-Signer
+                      </Badge>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-semibold">Co-Signer Legal Name</Label>
+                        <Input
+                          placeholder="Co-Signer Full Legal Name"
+                          value={
+                            app.authorization.secondApplicantName ||
+                            (app.owners[1] ? `${app.owners[1].firstName} ${app.owners[1].lastName}`.trim() : "")
+                          }
+                          onChange={(e) => updateAuthorization("secondApplicantName", e.target.value)}
+                          autoComplete="off"
+                          autoCorrect="off"
+                          spellCheck={false}
+                          className="text-sm"
+                        />
+                      </div>
+
+                      <div className="space-y-1.5">
+                        <Label className="text-xs font-semibold">Co-Signer Title</Label>
+                        <Input
+                          placeholder="Title / Role (e.g. Partner)"
+                          value={app.authorization.secondApplicantTitle || app.owners[1]?.title || "Partner"}
+                          onChange={(e) => updateAuthorization("secondApplicantTitle", e.target.value)}
+                          autoComplete="off"
+                          autoCorrect="off"
+                          spellCheck={false}
+                          className="text-sm"
+                        />
+                      </div>
+                    </div>
+
+                    <FinancingSignaturePad
+                      value={app.authorization.secondSignatureDataUrl}
+                      signerName={
+                        app.authorization.secondApplicantName ||
+                        (app.owners[1] ? `${app.owners[1].firstName} ${app.owners[1].lastName}` : "")
+                      }
+                      onChange={(dataUrl) => updateAuthorization("secondSignatureDataUrl", dataUrl)}
+                    />
+                  </div>
+                )}
+
+                {/* Forensic Digital Audit Trail Guarantee Notice */}
+                <div className="mt-4 p-3.5 rounded-xl border border-cyan-300 dark:border-cyan-800/60 bg-gradient-to-r from-cyan-950/20 via-background to-background text-xs space-y-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2 text-cyan-700 dark:text-cyan-400 font-bold">
+                      <ShieldCheck className="w-4 h-4" />
+                      <span>Forensic Digital Signature Audit Trail Active</span>
+                    </div>
+                    <Badge className="bg-emerald-600 text-white font-medium text-[10px]">
+                      ESIGN & PIPEDA Compliant
+                    </Badge>
+                  </div>
+                  <p className="text-[11px] text-muted-foreground leading-relaxed">
+                    Upon execution, the underwriting engine cryptographically stamps your verified public IP address, exact UTC timestamp, browser device fingerprint, and SHA-256 seal directly onto Section 10 of your QuickFlo Master application and lender packages.
+                  </p>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -1656,6 +1762,12 @@ export function FinancingClientForm({
       <SmartIntakeModal
         open={smartIntakeOpen}
         onOpenChange={setSmartIntakeOpen}
+        onApplyData={(updater) => setApp(updater)}
+      />
+
+      <UploadQuickFloPdfModal
+        open={uploadPdfOpen}
+        onOpenChange={setUploadPdfOpen}
         onApplyData={(updater) => setApp(updater)}
       />
 

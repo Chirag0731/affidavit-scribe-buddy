@@ -210,6 +210,32 @@ export interface TradeReference {
   phone?: string;
 }
 
+export interface SignatureAuditTrail {
+  envelopeId: string;
+  signerName: string;
+  signerTitle: string;
+  signerEmail?: string;
+  signerPhone?: string;
+  ipAddress: string;
+  userAgent: string;
+  timestamp: string; // ISO 8601
+  formattedTimestamp: string;
+  documentHash: string; // SHA-256 digest
+  consentStatement: string;
+  complianceStandard: string;
+  secondSigner?: {
+    signerName: string;
+    signerTitle: string;
+    signerEmail?: string;
+    signerPhone?: string;
+    ipAddress?: string;
+    userAgent?: string;
+    timestamp?: string;
+    formattedTimestamp?: string;
+    documentHash?: string;
+  };
+}
+
 export interface AuthorizationInfo {
   applicantName: string;
   signerName?: string;
@@ -228,6 +254,7 @@ export interface AuthorizationInfo {
   termsAccepted: boolean;
   ipAddress?: string;
   userAgent?: string;
+  auditTrail?: SignatureAuditTrail;
 }
 
 export interface GeneratedDocumentRecord {
@@ -780,6 +807,341 @@ export function createEmptyApplication(): BusinessFinancingApplication {
       termsAccepted: false,
       signatureDataUrl: "",
     },
+  };
+}
+
+// Bidirectional Normalizer: Ensures 100% of fields and aliases across Journey Capital, CanaCap, and QuickFlo are in sync
+export function normalizeApplicationData(
+  rawApp: BusinessFinancingApplication
+): BusinessFinancingApplication {
+  if (!rawApp) return createEmptyApplication();
+  const base = { ...rawApp };
+
+  // 1. Business
+  const b = { ...(base.business || {}) } as any;
+  const legalName = (b.legalName || "").trim();
+  const dba = (b.dba || b.tradeName || "").trim();
+  const tradeName = (b.tradeName || b.dba || "").trim();
+  const phone = (b.phone || b.businessPhone || "").trim();
+  const businessPhone = (b.businessPhone || b.phone || "").trim();
+  const fax = (b.fax || "").trim();
+  const email = (b.email || b.businessEmail || "").trim();
+  const businessEmail = (b.businessEmail || b.email || "").trim();
+  const website = (b.website || "").trim();
+  const businessNumber = (b.businessNumber || b.federalTaxId || "").trim();
+  const federalTaxId = (b.federalTaxId || b.businessNumber || "").trim();
+  const dateStarted = (b.dateStarted || b.dateEstablished || "").trim();
+  const dateEstablished = (b.dateEstablished || b.dateStarted || "").trim();
+  const provinceOfIncorporation = (b.provinceOfIncorporation || b.province || "ON").trim();
+  const numberOfLocations = Number(b.numberOfLocations) || 1;
+
+  // Address
+  const physStreet = typeof b.physicalAddress === "string" ? b.physicalAddress : (b.physicalAddress?.street || b.street || "");
+  const physCity = (b.city || (typeof b.physicalAddress === "object" ? b.physicalAddress?.city : "") || "").trim();
+  const physProv = (b.province || (typeof b.physicalAddress === "object" ? b.physicalAddress?.province : "") || "ON").trim();
+  const physPostal = (b.postalCode || (typeof b.physicalAddress === "object" ? b.physicalAddress?.postalCode : "") || "").trim();
+
+  const physicalAddress = {
+    street: physStreet,
+    city: physCity,
+    province: physProv,
+    postalCode: physPostal,
+  };
+
+  const legStreet = typeof b.legalAddress === "string" ? b.legalAddress : (b.legalAddress?.street || physStreet);
+  const legCity = (typeof b.legalAddress === "object" && b.legalAddress?.city) || physCity;
+  const legProv = (typeof b.legalAddress === "object" && b.legalAddress?.province) || physProv;
+  const legPostal = (typeof b.legalAddress === "object" && b.legalAddress?.postalCode) || physPostal;
+
+  const legalAddress = {
+    street: legStreet,
+    city: legCity,
+    province: legProv,
+    postalCode: legPostal,
+  };
+
+  let years = Number(b.lengthOfOwnershipYears) || 0;
+  let months = Number(b.lengthOfOwnershipMonths) || 0;
+  if (!years && !months && b.lengthOfOwnership) {
+    const match = String(b.lengthOfOwnership).match(/(\d+)\s*(?:yr|year)/i);
+    if (match) years = parseInt(match[1], 10);
+  }
+  const lengthOfOwnership = years > 0 ? `${years} yrs ${months || 0} mos` : (months > 0 ? `${months} mos` : (b.lengthOfOwnership || "1 yr"));
+
+  let entityType = (b.entityType || b.structureType || "corporation").toLowerCase();
+  if (entityType.includes("sole")) entityType = "sole_proprietorship";
+  else if (entityType.includes("partnership") && !entityType.includes("limited")) entityType = "partnership";
+  else if (entityType.includes("limited") && entityType.includes("partnership")) entityType = "limited_partnership";
+  else if (entityType.includes("llc")) entityType = "llc";
+  else if (entityType.includes("llp")) entityType = "llp";
+  else entityType = "corporation";
+
+  const industryType = (b.industryType || "services").toLowerCase();
+  const productServiceSold = b.productServiceSold || b.industry || b.natureOfBusiness || "Commercial Products & Services";
+
+  const business = {
+    ...b,
+    legalName,
+    dba,
+    tradeName,
+    phone,
+    businessPhone,
+    fax,
+    email,
+    businessEmail,
+    website,
+    businessNumber,
+    federalTaxId,
+    dateStarted,
+    dateEstablished,
+    lengthOfOwnershipYears: years,
+    lengthOfOwnershipMonths: months,
+    lengthOfOwnership,
+    provinceOfIncorporation,
+    numberOfLocations,
+    physicalAddress,
+    legalAddress,
+    city: physCity,
+    province: physProv,
+    postalCode: physPostal,
+    country: b.country || "Canada",
+    physicalSameAsLegal: b.physicalSameAsLegal !== false,
+    mailingAddressChoice: b.mailingAddressChoice || "legal",
+    entityType,
+    structureType: entityType,
+    industryType,
+    industryTypeOther: b.industryTypeOther || "",
+    productServiceSold,
+    industry: b.industry || productServiceSold,
+    natureOfBusiness: b.natureOfBusiness || productServiceSold,
+  };
+
+  // 2. Financials
+  const f = { ...(base.financials || {}) } as any;
+  const requestedAmount = Number(f.requestedAmount) || Number(f.amountRequested) || 0;
+  const grossMonthlySales = Number(f.grossMonthlySales) || Number(f.averageMonthlyRevenue) || 0;
+  const grossAnnualSales = Number(f.grossAnnualSales) || Number(f.annualGrossRevenue) || (grossMonthlySales ? grossMonthlySales * 12 : 0);
+  const averageBankBalance = Number(f.averageBankBalance) || Number(f.averageBankBalanceLast3Mos) || 0;
+  const nonCardMonthlySales = Number(f.nonCardMonthlySales) || (grossMonthlySales > 0 ? Math.round(grossMonthlySales * 0.4) : 0);
+
+  const financials = {
+    ...f,
+    requestedAmount,
+    amountRequested: requestedAmount,
+    grossMonthlySales,
+    averageMonthlyRevenue: grossMonthlySales,
+    grossAnnualSales,
+    annualGrossRevenue: grossAnnualSales,
+    averageBankBalance,
+    averageBankBalanceLast3Mos: averageBankBalance,
+    nonCardMonthlySales,
+    useOfFunds: f.useOfFunds || "working_capital",
+    useOfFundsOther: f.useOfFundsOther || "",
+    preferredTerm: f.preferredTerm || "12 months",
+    isSeasonal: Boolean(f.isSeasonal),
+    peakSalesStartMonth: f.peakSalesStartMonth || "",
+    peakSalesEndMonth: f.peakSalesEndMonth || "",
+    isFranchise: Boolean(f.isFranchise),
+    franchisorName: f.franchisorName || "",
+    franchisorPhone: f.franchisorPhone || "",
+  };
+
+  // 3. Owners
+  const rawOwners = Array.isArray(base.owners) && base.owners.length > 0 ? base.owners : [createEmptyApplication().owners[0]];
+  const owners = rawOwners.map((o: any, idx: number) => {
+    const firstName = (o.firstName || "").trim();
+    const lastName = (o.lastName || "").trim();
+    const title = (o.title || (idx === 0 ? "President / Owner" : "Vice President / Partner")).trim();
+    const sin = (o.sin || o.ssnOrSin || "").trim();
+    const ssnOrSin = (o.ssnOrSin || o.sin || "").trim();
+    const dlNumber = (o.dlNumber || "").trim();
+    const dob = (o.dob || "1985-01-01").trim();
+    const housingStatus = (o.housingStatus || "rent").toLowerCase();
+    const yearsAtResidence = Number(o.yearsAtResidence) || 1;
+    const phone = (o.phone || o.homePhone || o.mobile || o.mobilePhone || "").trim();
+    const homePhone = (o.homePhone || o.phone || "").trim();
+    const mobile = (o.mobile || o.mobilePhone || o.phone || "").trim();
+    const mobilePhone = (o.mobilePhone || o.mobile || o.phone || "").trim();
+    const email = (o.email || "").trim();
+
+    const homeStreet = o.homeAddress || (typeof o.address === "object" ? o.address?.street : "") || "";
+    const homeCity = o.city || (typeof o.address === "object" ? o.address?.city : "") || "";
+    const homeProv = o.province || (typeof o.address === "object" ? o.address?.province : "") || "ON";
+    const homePostal = o.postalCode || (typeof o.address === "object" ? o.address?.postalCode : "") || "";
+
+    const address = {
+      street: homeStreet,
+      city: homeCity,
+      province: homeProv,
+      postalCode: homePostal,
+    };
+
+    return {
+      ...o,
+      id: o.id || `owner-${idx + 1}`,
+      isPrimary: idx === 0,
+      firstName,
+      lastName,
+      title,
+      ownershipPercentage: Number(o.ownershipPercentage) || (idx === 0 ? 100 : 0),
+      dob,
+      sin,
+      ssnOrSin,
+      dlNumber,
+      housingStatus,
+      yearsAtResidence,
+      address,
+      homeAddress: homeStreet,
+      city: homeCity,
+      province: homeProv,
+      postalCode: homePostal,
+      phone,
+      homePhone,
+      mobile,
+      mobilePhone,
+      email,
+    };
+  });
+
+  // 4. Property
+  const p = { ...(base.property || {}) } as any;
+  const landlordOrMortgageBank = (p.landlordOrMortgageBank || p.landlordOrMortgagee || "").trim();
+  const landlordOrMortgagee = (p.landlordOrMortgagee || p.landlordOrMortgageBank || "").trim();
+  const landlordPhone = (p.landlordPhone || p.phone || "").trim();
+  const propertyPhone = (p.phone || p.landlordPhone || "").trim();
+  const accountNumber = (p.accountNumber || "").trim();
+  const contactName = (p.contactName || p.contactPerson || "").trim();
+  const contactPerson = (p.contactPerson || p.contactName || "").trim();
+  const locationType = (p.locationType || (p.occupancyType === "own" ? "owned" : "leased")).toLowerCase();
+  const occupancyType = (p.occupancyType || (locationType === "owned" ? "own" : "rent")).toLowerCase();
+
+  const property = {
+    ...p,
+    landlordOrMortgageBank,
+    landlordOrMortgagee,
+    phone: propertyPhone,
+    landlordPhone,
+    accountNumber,
+    contactName,
+    contactPerson,
+    locationType,
+    occupancyType,
+    monthlyRentOrMortgage: Number(p.monthlyRentOrMortgage) || 0,
+    leaseStartDate: p.leaseStartDate || "",
+    leaseEndDate: p.leaseEndDate || "",
+  };
+
+  // 5. Existing Financing
+  const ef = { ...(base.existingFinancing || {}) } as any;
+  const hasExistingFinancing = Boolean(ef.hasExistingFinancing || ef.hasFinancing);
+  const existingFinancing = {
+    ...ef,
+    hasFinancing: hasExistingFinancing,
+    hasExistingFinancing,
+    hasCashAdvanceBefore: Boolean(ef.hasCashAdvanceBefore),
+    cashAdvanceProvider: ef.cashAdvanceProvider || "",
+    cashAdvanceWhen: ef.cashAdvanceWhen || "",
+    lenderName: ef.lenderName || "",
+    approximateBalance: Number(ef.approximateBalance) || 0,
+    dailyOrWeeklyPayment: Number(ef.dailyOrWeeklyPayment) || 0,
+    position: ef.position || "1st",
+    facilities: Array.isArray(ef.facilities) ? ef.facilities : [],
+  };
+
+  // 6. Payment Processing
+  const pp = { ...(base.paymentProcessing || {}) } as any;
+  const avgVol = Number(pp.averageMonthlyVolume) || Number(pp.averageMonthlyProcessingVolume) || 0;
+  const acceptedCards = pp.acceptedCards || {
+    visaMastercard: Boolean(pp.visa || pp.mastercard || true),
+    amex: Boolean(pp.amex),
+    discover: Boolean(pp.discover),
+    debit: Boolean(pp.debit || true),
+    ebt: Boolean(pp.ebt),
+  };
+
+  const paymentProcessing = {
+    ...pp,
+    currentProcessor: pp.currentProcessor || "",
+    terminalSoftwareModel: pp.terminalSoftwareModel || "",
+    numberOfTerminals: Number(pp.numberOfTerminals) || 1,
+    averageMonthlyVolume: avgVol,
+    averageMonthlyProcessingVolume: avgVol,
+    acceptsCreditCards: pp.acceptsCreditCards !== false,
+    visa: Boolean(pp.visa || acceptedCards.visaMastercard),
+    mastercard: Boolean(pp.mastercard || acceptedCards.visaMastercard),
+    amex: Boolean(pp.amex || acceptedCards.amex),
+    debit: Boolean(pp.debit || acceptedCards.debit),
+    highMonth: pp.highMonth || "",
+    lowMonth: pp.lowMonth || "",
+    acceptedCards,
+  };
+
+  // 7. Trade References (Ensure at least 2)
+  const rawRefs = Array.isArray(base.tradeReferences) ? base.tradeReferences : [];
+  const ref1 = rawRefs[0] || {};
+  const ref2 = rawRefs[1] || {};
+
+  const tradeReferences = [
+    {
+      id: ref1.id || "ref-1",
+      businessName: ref1.businessName || ref1.companyName || "",
+      companyName: ref1.companyName || ref1.businessName || "",
+      accountNumber: ref1.accountNumber || "",
+      contactName: ref1.contactName || ref1.contactPerson || "",
+      contactPerson: ref1.contactPerson || ref1.contactName || "",
+      contactPhone: ref1.contactPhone || ref1.phone || "",
+      phone: ref1.phone || ref1.contactPhone || "",
+    },
+    {
+      id: ref2.id || "ref-2",
+      businessName: ref2.businessName || ref2.companyName || "",
+      companyName: ref2.companyName || ref2.businessName || "",
+      accountNumber: ref2.accountNumber || "",
+      contactName: ref2.contactName || ref2.contactPerson || "",
+      contactPerson: ref2.contactPerson || ref2.contactName || "",
+      contactPhone: ref2.contactPhone || ref2.phone || "",
+      phone: ref2.phone || ref2.contactPhone || "",
+    },
+  ];
+
+  // 8. Authorization & Audit Trail
+  const auth = { ...(base.authorization || {}) } as any;
+  const p1 = owners[0];
+  const p2 = owners[1];
+  const signerName = auth.signerName || auth.applicantName || (p1 ? `${p1.firstName} ${p1.lastName}`.trim() : "");
+  const signerTitle = auth.signerTitle || auth.applicantTitle || (p1?.title || "President");
+  const dateSigned = auth.dateSigned || auth.signatureDate || new Date().toISOString().split("T")[0];
+
+  const authorization = {
+    ...auth,
+    applicantName: signerName,
+    signerName,
+    applicantTitle: signerTitle,
+    signerTitle,
+    dateSigned,
+    signatureDate: dateSigned,
+    signatureDataUrl: auth.signatureDataUrl || "",
+    creditCheckConsent: Boolean(auth.creditCheckConsent),
+    termsAccepted: Boolean(auth.termsAccepted),
+    secondApplicantName: auth.secondApplicantName || (p2 ? `${p2.firstName} ${p2.lastName}`.trim() : ""),
+    secondApplicantTitle: auth.secondApplicantTitle || (p2?.title || "Vice President"),
+    secondSignatureDataUrl: auth.secondSignatureDataUrl || "",
+    secondSignatureDate: auth.secondSignatureDate || (auth.secondApplicantName ? dateSigned : ""),
+    ipAddress: auth.ipAddress || (auth.auditTrail?.ipAddress || ""),
+    userAgent: auth.userAgent || (auth.auditTrail?.userAgent || ""),
+    auditTrail: auth.auditTrail || undefined,
+  };
+
+  return {
+    ...base,
+    business,
+    financials,
+    owners,
+    property,
+    existingFinancing,
+    paymentProcessing,
+    tradeReferences,
+    authorization,
   };
 }
 

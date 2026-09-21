@@ -18,6 +18,7 @@ import {
   Clock,
   Briefcase,
   FileCheck2,
+  UploadCloud,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -32,6 +33,7 @@ import {
   downloadPdfBlob,
 } from "@/lib/lender-pdf-engine";
 import { FinancingPdfPreviewModal } from "@/components/financing/financing-pdf-preview-modal";
+import { UploadQuickFloPdfModal } from "@/components/financing/upload-quickflo-pdf-modal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -68,6 +70,7 @@ function SavedAffidavitsPage() {
   const [downloadingZipId, setDownloadingZipId] = useState<string | null>(null);
   const [downloadingPrintableId, setDownloadingPrintableId] = useState<string | null>(null);
   const [downloadingBlank, setDownloadingBlank] = useState(false);
+  const [uploadModalOpen, setUploadModalOpen] = useState(false);
 
   useEffect(() => {
     fetchAllDocuments();
@@ -365,6 +368,16 @@ function SavedAffidavitsPage() {
           </p>
         </div>
         <div className="flex items-center gap-2 flex-wrap">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => setUploadModalOpen(true)}
+            className="text-xs h-9 font-semibold border-cyan-300 dark:border-cyan-800 text-cyan-700 dark:text-cyan-300 hover:bg-cyan-50 dark:hover:bg-cyan-950/40"
+          >
+            <UploadCloud className="w-3.5 h-3.5 mr-1.5 text-cyan-600" />
+            Import Filled PDF
+          </Button>
           <Button
             type="button"
             variant="outline"
@@ -806,6 +819,15 @@ function SavedAffidavitsPage() {
           onClose={() => setSelectedFinancingApp(null)}
         />
       )}
+
+      {/* Upload QuickFlo PDF & Multi-Lender Converter Modal */}
+      <UploadQuickFloPdfModal
+        open={uploadModalOpen}
+        onOpenChange={setUploadModalOpen}
+        onApplicationImported={() => {
+          fetchAllDocuments();
+        }}
+      />
     </div>
   );
 }
