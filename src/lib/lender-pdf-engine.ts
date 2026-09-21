@@ -811,21 +811,13 @@ export async function generatePrintableQuickFloPdf(
 
   page.drawText(`REF: ${app.id.toUpperCase().slice(0, 16)}`, {
     x: width - margin - 150,
-    y: cursorY - 22,
+    y: cursorY - 26,
     size: 8,
     font: fontMono,
     color: rgb(1, 1, 1),
   });
 
-  page.drawText(`Direct Intake: (800) 518-8092`, {
-    x: width - margin - 150,
-    y: cursorY - 36,
-    size: 7.5,
-    font: fontRegular,
-    color: rgb(0.9, 0.95, 1),
-  });
-
-  cursorY -= 60;
+  cursorY -= 52;
 
   // Submission Notice
   page.drawRectangle({

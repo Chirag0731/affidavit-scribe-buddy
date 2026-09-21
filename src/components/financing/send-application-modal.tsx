@@ -69,7 +69,7 @@ Instructions:
 
 Alternatively, an editable, printable PDF copy is available upon request.
 
-If you have any questions or require assistance during the process, please contact our direct intake desk at (800) 518-8092.
+If you have any questions or require assistance during the process, please reply directly to this message.
 
 Sincerely,
 QuickFlo Financial Underwriting Team

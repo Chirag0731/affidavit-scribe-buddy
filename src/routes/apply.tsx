@@ -16,7 +16,6 @@ import { Badge } from "@/components/ui/badge";
 import {
   ShieldCheck,
   Lock,
-  PhoneCall,
   CheckCircle2,
   Download,
   Eye,
@@ -137,10 +136,6 @@ function PublicApplyPage() {
           </div>
 
           <div className="flex items-center gap-4 sm:gap-6 text-xs">
-            <div className="hidden sm:flex items-center gap-2 text-muted-foreground font-medium">
-              <PhoneCall className="w-4 h-4 text-cyan-600" />
-              <span>Direct Underwriting: (800) 518-8092</span>
-            </div>
             <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400 font-semibold text-[11px]">
               <Lock className="w-3.5 h-3.5" />
               <span>256-Bit SSL Encrypted</span>
