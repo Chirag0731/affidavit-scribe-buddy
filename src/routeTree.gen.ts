@@ -9,38 +9,34 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
-import { Route as ApplyRouteImport } from './routes/apply'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ApplyRouteImport } from './routes/apply'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDashboardIndexRouteImport } from './routes/_authenticated/dashboard.index'
-import { Route as AuthenticatedDashboardCredentialsRouteImport } from './routes/_authenticated/dashboard.credentials'
-import { Route as AuthenticatedDashboardSavedRouteImport } from './routes/_authenticated/dashboard.saved'
 import { Route as AuthenticatedDashboardSettingsRouteImport } from './routes/_authenticated/dashboard.settings'
-import { Route as AuthenticatedDashboardAdminTemplatesRouteImport } from './routes/_authenticated/dashboard.admin.templates'
-import { Route as AuthenticatedDashboardFinancingIndexRouteImport } from './routes/_authenticated/dashboard.financing.index'
-import { Route as AuthenticatedDashboardFinancingIdRouteImport } from './routes/_authenticated/dashboard.financing.$id'
-import { Route as AuthenticatedDashboardFinancingLendersRouteImport } from './routes/_authenticated/dashboard.financing.lenders'
-import { Route as AuthenticatedDashboardFinancingNewRouteImport } from './routes/_authenticated/dashboard.financing.new'
+import { Route as AuthenticatedDashboardSavedRouteImport } from './routes/_authenticated/dashboard.saved'
+import { Route as AuthenticatedDashboardCredentialsRouteImport } from './routes/_authenticated/dashboard.credentials'
 import { Route as AuthenticatedDashboardOsapIndexRouteImport } from './routes/_authenticated/dashboard.osap.index'
-import { Route as AuthenticatedDashboardOsapActionsRouteImport } from './routes/_authenticated/dashboard.osap.actions'
-import { Route as AuthenticatedDashboardOsapApplicationsRouteImport } from './routes/_authenticated/dashboard.osap.applications'
-import { Route as AuthenticatedDashboardOsapAuditCenterRouteImport } from './routes/_authenticated/dashboard.osap.audit-center'
-import { Route as AuthenticatedDashboardOsapAuditHistoryRouteImport } from './routes/_authenticated/dashboard.osap.audit-history'
-import { Route as AuthenticatedDashboardOsapDocumentsRouteImport } from './routes/_authenticated/dashboard.osap.documents'
-import { Route as AuthenticatedDashboardOsapImportExportRouteImport } from './routes/_authenticated/dashboard.osap.import-export'
+import { Route as AuthenticatedDashboardFinancingIndexRouteImport } from './routes/_authenticated/dashboard.financing.index'
 import { Route as AuthenticatedDashboardOsapSettingsRouteImport } from './routes/_authenticated/dashboard.osap.settings'
+import { Route as AuthenticatedDashboardOsapImportExportRouteImport } from './routes/_authenticated/dashboard.osap.import-export'
+import { Route as AuthenticatedDashboardOsapDocumentsRouteImport } from './routes/_authenticated/dashboard.osap.documents'
+import { Route as AuthenticatedDashboardOsapAuditHistoryRouteImport } from './routes/_authenticated/dashboard.osap.audit-history'
+import { Route as AuthenticatedDashboardOsapAuditCenterRouteImport } from './routes/_authenticated/dashboard.osap.audit-center'
+import { Route as AuthenticatedDashboardOsapApplicationsRouteImport } from './routes/_authenticated/dashboard.osap.applications'
+import { Route as AuthenticatedDashboardOsapActionsRouteImport } from './routes/_authenticated/dashboard.osap.actions'
+import { Route as AuthenticatedDashboardFinancingNewRouteImport } from './routes/_authenticated/dashboard.financing.new'
+import { Route as AuthenticatedDashboardFinancingLendersRouteImport } from './routes/_authenticated/dashboard.financing.lenders'
+import { Route as AuthenticatedDashboardFinancingIdRouteImport } from './routes/_authenticated/dashboard.financing.$id'
+import { Route as AuthenticatedDashboardAdminTemplatesRouteImport } from './routes/_authenticated/dashboard.admin.templates'
 import { Route as AuthenticatedDashboardOsapClientsIndexRouteImport } from './routes/_authenticated/dashboard.osap.clients.index'
 import { Route as AuthenticatedDashboardOsapClientsIdRouteImport } from './routes/_authenticated/dashboard.osap.clients.$id'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApplyRoute = ApplyRouteImport.update({
@@ -48,9 +44,13 @@ const ApplyRoute = ApplyRouteImport.update({
   path: '/apply',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
@@ -64,10 +64,10 @@ const AuthenticatedDashboardIndexRoute =
     path: '/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
-const AuthenticatedDashboardCredentialsRoute =
-  AuthenticatedDashboardCredentialsRouteImport.update({
-    id: '/credentials',
-    path: '/credentials',
+const AuthenticatedDashboardSettingsRoute =
+  AuthenticatedDashboardSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardSavedRoute =
@@ -76,40 +76,10 @@ const AuthenticatedDashboardSavedRoute =
     path: '/saved',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
-const AuthenticatedDashboardSettingsRoute =
-  AuthenticatedDashboardSettingsRouteImport.update({
-    id: '/settings',
-    path: '/settings',
-    getParentRoute: () => AuthenticatedDashboardRoute,
-  } as any)
-const AuthenticatedDashboardAdminTemplatesRoute =
-  AuthenticatedDashboardAdminTemplatesRouteImport.update({
-    id: '/admin/templates',
-    path: '/admin/templates',
-    getParentRoute: () => AuthenticatedDashboardRoute,
-  } as any)
-const AuthenticatedDashboardFinancingIndexRoute =
-  AuthenticatedDashboardFinancingIndexRouteImport.update({
-    id: '/financing/',
-    path: '/financing/',
-    getParentRoute: () => AuthenticatedDashboardRoute,
-  } as any)
-const AuthenticatedDashboardFinancingIdRoute =
-  AuthenticatedDashboardFinancingIdRouteImport.update({
-    id: '/financing/$id',
-    path: '/financing/$id',
-    getParentRoute: () => AuthenticatedDashboardRoute,
-  } as any)
-const AuthenticatedDashboardFinancingLendersRoute =
-  AuthenticatedDashboardFinancingLendersRouteImport.update({
-    id: '/financing/lenders',
-    path: '/financing/lenders',
-    getParentRoute: () => AuthenticatedDashboardRoute,
-  } as any)
-const AuthenticatedDashboardFinancingNewRoute =
-  AuthenticatedDashboardFinancingNewRouteImport.update({
-    id: '/financing/new',
-    path: '/financing/new',
+const AuthenticatedDashboardCredentialsRoute =
+  AuthenticatedDashboardCredentialsRouteImport.update({
+    id: '/credentials',
+    path: '/credentials',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardOsapIndexRoute =
@@ -118,34 +88,16 @@ const AuthenticatedDashboardOsapIndexRoute =
     path: '/osap/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
-const AuthenticatedDashboardOsapActionsRoute =
-  AuthenticatedDashboardOsapActionsRouteImport.update({
-    id: '/osap/actions',
-    path: '/osap/actions',
+const AuthenticatedDashboardFinancingIndexRoute =
+  AuthenticatedDashboardFinancingIndexRouteImport.update({
+    id: '/financing/',
+    path: '/financing/',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
-const AuthenticatedDashboardOsapApplicationsRoute =
-  AuthenticatedDashboardOsapApplicationsRouteImport.update({
-    id: '/osap/applications',
-    path: '/osap/applications',
-    getParentRoute: () => AuthenticatedDashboardRoute,
-  } as any)
-const AuthenticatedDashboardOsapAuditCenterRoute =
-  AuthenticatedDashboardOsapAuditCenterRouteImport.update({
-    id: '/osap/audit-center',
-    path: '/osap/audit-center',
-    getParentRoute: () => AuthenticatedDashboardRoute,
-  } as any)
-const AuthenticatedDashboardOsapAuditHistoryRoute =
-  AuthenticatedDashboardOsapAuditHistoryRouteImport.update({
-    id: '/osap/audit-history',
-    path: '/osap/audit-history',
-    getParentRoute: () => AuthenticatedDashboardRoute,
-  } as any)
-const AuthenticatedDashboardOsapDocumentsRoute =
-  AuthenticatedDashboardOsapDocumentsRouteImport.update({
-    id: '/osap/documents',
-    path: '/osap/documents',
+const AuthenticatedDashboardOsapSettingsRoute =
+  AuthenticatedDashboardOsapSettingsRouteImport.update({
+    id: '/osap/settings',
+    path: '/osap/settings',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardOsapImportExportRoute =
@@ -154,10 +106,58 @@ const AuthenticatedDashboardOsapImportExportRoute =
     path: '/osap/import-export',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
-const AuthenticatedDashboardOsapSettingsRoute =
-  AuthenticatedDashboardOsapSettingsRouteImport.update({
-    id: '/osap/settings',
-    path: '/osap/settings',
+const AuthenticatedDashboardOsapDocumentsRoute =
+  AuthenticatedDashboardOsapDocumentsRouteImport.update({
+    id: '/osap/documents',
+    path: '/osap/documents',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardOsapAuditHistoryRoute =
+  AuthenticatedDashboardOsapAuditHistoryRouteImport.update({
+    id: '/osap/audit-history',
+    path: '/osap/audit-history',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardOsapAuditCenterRoute =
+  AuthenticatedDashboardOsapAuditCenterRouteImport.update({
+    id: '/osap/audit-center',
+    path: '/osap/audit-center',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardOsapApplicationsRoute =
+  AuthenticatedDashboardOsapApplicationsRouteImport.update({
+    id: '/osap/applications',
+    path: '/osap/applications',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardOsapActionsRoute =
+  AuthenticatedDashboardOsapActionsRouteImport.update({
+    id: '/osap/actions',
+    path: '/osap/actions',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardFinancingNewRoute =
+  AuthenticatedDashboardFinancingNewRouteImport.update({
+    id: '/financing/new',
+    path: '/financing/new',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardFinancingLendersRoute =
+  AuthenticatedDashboardFinancingLendersRouteImport.update({
+    id: '/financing/lenders',
+    path: '/financing/lenders',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardFinancingIdRoute =
+  AuthenticatedDashboardFinancingIdRouteImport.update({
+    id: '/financing/$id',
+    path: '/financing/$id',
+    getParentRoute: () => AuthenticatedDashboardRoute,
+  } as any)
+const AuthenticatedDashboardAdminTemplatesRoute =
+  AuthenticatedDashboardAdminTemplatesRouteImport.update({
+    id: '/admin/templates',
+    path: '/admin/templates',
     getParentRoute: () => AuthenticatedDashboardRoute,
   } as any)
 const AuthenticatedDashboardOsapClientsIndexRoute =
@@ -336,18 +336,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/apply': {
@@ -357,11 +350,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApplyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/dashboard': {
@@ -378,11 +378,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
-    '/_authenticated/dashboard/credentials': {
-      id: '/_authenticated/dashboard/credentials'
-      path: '/credentials'
-      fullPath: '/dashboard/credentials'
-      preLoaderRoute: typeof AuthenticatedDashboardCredentialsRouteImport
+    '/_authenticated/dashboard/settings': {
+      id: '/_authenticated/dashboard/settings'
+      path: '/settings'
+      fullPath: '/dashboard/settings'
+      preLoaderRoute: typeof AuthenticatedDashboardSettingsRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
     '/_authenticated/dashboard/saved': {
@@ -392,46 +392,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardSavedRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
-    '/_authenticated/dashboard/settings': {
-      id: '/_authenticated/dashboard/settings'
-      path: '/settings'
-      fullPath: '/dashboard/settings'
-      preLoaderRoute: typeof AuthenticatedDashboardSettingsRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
-    }
-    '/_authenticated/dashboard/admin/templates': {
-      id: '/_authenticated/dashboard/admin/templates'
-      path: '/admin/templates'
-      fullPath: '/dashboard/admin/templates'
-      preLoaderRoute: typeof AuthenticatedDashboardAdminTemplatesRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
-    }
-    '/_authenticated/dashboard/financing/': {
-      id: '/_authenticated/dashboard/financing/'
-      path: '/financing'
-      fullPath: '/dashboard/financing/'
-      preLoaderRoute: typeof AuthenticatedDashboardFinancingIndexRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
-    }
-    '/_authenticated/dashboard/financing/$id': {
-      id: '/_authenticated/dashboard/financing/$id'
-      path: '/financing/$id'
-      fullPath: '/dashboard/financing/$id'
-      preLoaderRoute: typeof AuthenticatedDashboardFinancingIdRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
-    }
-    '/_authenticated/dashboard/financing/lenders': {
-      id: '/_authenticated/dashboard/financing/lenders'
-      path: '/financing/lenders'
-      fullPath: '/dashboard/financing/lenders'
-      preLoaderRoute: typeof AuthenticatedDashboardFinancingLendersRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
-    }
-    '/_authenticated/dashboard/financing/new': {
-      id: '/_authenticated/dashboard/financing/new'
-      path: '/financing/new'
-      fullPath: '/dashboard/financing/new'
-      preLoaderRoute: typeof AuthenticatedDashboardFinancingNewRouteImport
+    '/_authenticated/dashboard/credentials': {
+      id: '/_authenticated/dashboard/credentials'
+      path: '/credentials'
+      fullPath: '/dashboard/credentials'
+      preLoaderRoute: typeof AuthenticatedDashboardCredentialsRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
     '/_authenticated/dashboard/osap/': {
@@ -441,39 +406,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardOsapIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
-    '/_authenticated/dashboard/osap/actions': {
-      id: '/_authenticated/dashboard/osap/actions'
-      path: '/osap/actions'
-      fullPath: '/dashboard/osap/actions'
-      preLoaderRoute: typeof AuthenticatedDashboardOsapActionsRouteImport
+    '/_authenticated/dashboard/financing/': {
+      id: '/_authenticated/dashboard/financing/'
+      path: '/financing'
+      fullPath: '/dashboard/financing/'
+      preLoaderRoute: typeof AuthenticatedDashboardFinancingIndexRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
-    '/_authenticated/dashboard/osap/applications': {
-      id: '/_authenticated/dashboard/osap/applications'
-      path: '/osap/applications'
-      fullPath: '/dashboard/osap/applications'
-      preLoaderRoute: typeof AuthenticatedDashboardOsapApplicationsRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
-    }
-    '/_authenticated/dashboard/osap/audit-center': {
-      id: '/_authenticated/dashboard/osap/audit-center'
-      path: '/osap/audit-center'
-      fullPath: '/dashboard/osap/audit-center'
-      preLoaderRoute: typeof AuthenticatedDashboardOsapAuditCenterRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
-    }
-    '/_authenticated/dashboard/osap/audit-history': {
-      id: '/_authenticated/dashboard/osap/audit-history'
-      path: '/osap/audit-history'
-      fullPath: '/dashboard/osap/audit-history'
-      preLoaderRoute: typeof AuthenticatedDashboardOsapAuditHistoryRouteImport
-      parentRoute: typeof AuthenticatedDashboardRoute
-    }
-    '/_authenticated/dashboard/osap/documents': {
-      id: '/_authenticated/dashboard/osap/documents'
-      path: '/osap/documents'
-      fullPath: '/dashboard/osap/documents'
-      preLoaderRoute: typeof AuthenticatedDashboardOsapDocumentsRouteImport
+    '/_authenticated/dashboard/osap/settings': {
+      id: '/_authenticated/dashboard/osap/settings'
+      path: '/osap/settings'
+      fullPath: '/dashboard/osap/settings'
+      preLoaderRoute: typeof AuthenticatedDashboardOsapSettingsRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
     '/_authenticated/dashboard/osap/import-export': {
@@ -483,11 +427,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDashboardOsapImportExportRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
-    '/_authenticated/dashboard/osap/settings': {
-      id: '/_authenticated/dashboard/osap/settings'
-      path: '/osap/settings'
-      fullPath: '/dashboard/osap/settings'
-      preLoaderRoute: typeof AuthenticatedDashboardOsapSettingsRouteImport
+    '/_authenticated/dashboard/osap/documents': {
+      id: '/_authenticated/dashboard/osap/documents'
+      path: '/osap/documents'
+      fullPath: '/dashboard/osap/documents'
+      preLoaderRoute: typeof AuthenticatedDashboardOsapDocumentsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/osap/audit-history': {
+      id: '/_authenticated/dashboard/osap/audit-history'
+      path: '/osap/audit-history'
+      fullPath: '/dashboard/osap/audit-history'
+      preLoaderRoute: typeof AuthenticatedDashboardOsapAuditHistoryRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/osap/audit-center': {
+      id: '/_authenticated/dashboard/osap/audit-center'
+      path: '/osap/audit-center'
+      fullPath: '/dashboard/osap/audit-center'
+      preLoaderRoute: typeof AuthenticatedDashboardOsapAuditCenterRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/osap/applications': {
+      id: '/_authenticated/dashboard/osap/applications'
+      path: '/osap/applications'
+      fullPath: '/dashboard/osap/applications'
+      preLoaderRoute: typeof AuthenticatedDashboardOsapApplicationsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/osap/actions': {
+      id: '/_authenticated/dashboard/osap/actions'
+      path: '/osap/actions'
+      fullPath: '/dashboard/osap/actions'
+      preLoaderRoute: typeof AuthenticatedDashboardOsapActionsRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/financing/new': {
+      id: '/_authenticated/dashboard/financing/new'
+      path: '/financing/new'
+      fullPath: '/dashboard/financing/new'
+      preLoaderRoute: typeof AuthenticatedDashboardFinancingNewRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/financing/lenders': {
+      id: '/_authenticated/dashboard/financing/lenders'
+      path: '/financing/lenders'
+      fullPath: '/dashboard/financing/lenders'
+      preLoaderRoute: typeof AuthenticatedDashboardFinancingLendersRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/financing/$id': {
+      id: '/_authenticated/dashboard/financing/$id'
+      path: '/financing/$id'
+      fullPath: '/dashboard/financing/$id'
+      preLoaderRoute: typeof AuthenticatedDashboardFinancingIdRouteImport
+      parentRoute: typeof AuthenticatedDashboardRoute
+    }
+    '/_authenticated/dashboard/admin/templates': {
+      id: '/_authenticated/dashboard/admin/templates'
+      path: '/admin/templates'
+      fullPath: '/dashboard/admin/templates'
+      preLoaderRoute: typeof AuthenticatedDashboardAdminTemplatesRouteImport
       parentRoute: typeof AuthenticatedDashboardRoute
     }
     '/_authenticated/dashboard/osap/clients/': {
