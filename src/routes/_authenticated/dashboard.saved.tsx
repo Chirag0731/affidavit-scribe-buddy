@@ -28,6 +28,7 @@ import { financingStore } from "@/lib/financing-db";
 import {
   generateAllLenderPdfsZip,
   generatePrintableQuickFloPdf,
+  downloadBlankQuickFloPdf,
   downloadPdfBlob,
 } from "@/lib/lender-pdf-engine";
 import { FinancingPdfPreviewModal } from "@/components/financing/financing-pdf-preview-modal";
@@ -66,6 +67,7 @@ function SavedAffidavitsPage() {
     useState<BusinessFinancingApplication | null>(null);
   const [downloadingZipId, setDownloadingZipId] = useState<string | null>(null);
   const [downloadingPrintableId, setDownloadingPrintableId] = useState<string | null>(null);
+  const [downloadingBlank, setDownloadingBlank] = useState(false);
 
   useEffect(() => {
     fetchAllDocuments();
@@ -255,6 +257,19 @@ function SavedAffidavitsPage() {
     }
   };
 
+  const handleDownloadBlank = async () => {
+    try {
+      setDownloadingBlank(true);
+      await downloadBlankQuickFloPdf();
+      toast.success("Downloaded blank fillable QuickFlo PDF");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to download blank PDF");
+    } finally {
+      setDownloadingBlank(false);
+    }
+  };
+
   const toggleExpanded = (id: string) => {
     setExpandedIds((prev) => {
       const next = new Set(prev);
@@ -349,7 +364,22 @@ function SavedAffidavitsPage() {
             All your generated legal affidavits, notarized records, and submitted business financing applications.
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={handleDownloadBlank}
+            disabled={downloadingBlank}
+            className="text-xs h-9 font-medium border-border shadow-xs"
+          >
+            {downloadingBlank ? (
+              <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
+            ) : (
+              <Download className="w-3.5 h-3.5 mr-1.5 text-cyan-600" />
+            )}
+            Blank Fillable PDF
+          </Button>
           <Link
             to="/dashboard"
             className="btn-primary inline-flex items-center gap-2 text-xs shadow-sm py-2 px-3.5"
@@ -440,7 +470,22 @@ function SavedAffidavitsPage() {
           <p className="text-muted-foreground text-sm mb-6 max-w-md mx-auto">
             Generate your first legal affidavit or fill out a commercial business financing application to see it here.
           </p>
-          <div className="flex items-center justify-center gap-3">
+          <div className="flex items-center justify-center gap-3 flex-wrap">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={handleDownloadBlank}
+              disabled={downloadingBlank}
+              className="inline-flex items-center gap-2 text-xs font-semibold py-2.5 px-4 rounded-xl border border-border"
+            >
+              {downloadingBlank ? (
+                <Loader2 className="w-4 h-4 animate-spin" />
+              ) : (
+                <Download className="w-4 h-4 text-cyan-600" />
+              )}
+              Blank Fillable PDF
+            </Button>
             <Link to="/dashboard" className="btn-primary inline-flex items-center gap-2 text-xs">
               <FileText className="w-4 h-4" /> Create Affidavit
             </Link>

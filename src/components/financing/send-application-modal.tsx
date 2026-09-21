@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { BusinessFinancingApplication } from "@/types/financing";
 import {
   generatePrintableQuickFloPdf,
+  downloadBlankQuickFloPdf,
   downloadPdfBlob,
 } from "@/lib/lender-pdf-engine";
 import {
@@ -44,6 +45,7 @@ export function SendApplicationModal({
   const [copiedLink, setCopiedLink] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [downloadingPdf, setDownloadingPdf] = useState(false);
+  const [downloadingBlank, setDownloadingBlank] = useState(false);
 
   if (!application) return null;
 
@@ -109,6 +111,19 @@ https://quickflo.com`;
       toast.error("Failed to generate PDF");
     } finally {
       setDownloadingPdf(false);
+    }
+  };
+
+  const handleDownloadBlankPdf = async () => {
+    try {
+      setDownloadingBlank(true);
+      await downloadBlankQuickFloPdf();
+      toast.success("Downloaded blank fillable QuickFlo PDF");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to generate blank PDF");
+    } finally {
+      setDownloadingBlank(false);
     }
   };
 
@@ -200,17 +215,32 @@ https://quickflo.com`;
                 </span>
               </div>
             </div>
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={handleDownloadFillablePdf}
-              disabled={downloadingPdf}
-              className="h-8 text-xs font-medium"
-            >
-              <Download className="w-3.5 h-3.5 mr-1 text-cyan-600" />
-              {downloadingPdf ? "Generating..." : "Download PDF"}
-            </Button>
+            <div className="flex items-center gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={handleDownloadBlankPdf}
+                disabled={downloadingBlank}
+                className="h-8 text-xs font-medium border-border"
+                title="Download 100% blank fillable QuickFlo PDF"
+              >
+                <Download className="w-3.5 h-3.5 mr-1" />
+                {downloadingBlank ? "Downloading..." : "Blank Form"}
+              </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={handleDownloadFillablePdf}
+                disabled={downloadingPdf}
+                className="h-8 text-xs font-medium text-cyan-700 dark:text-cyan-400 border-cyan-300 dark:border-cyan-800"
+                title="Download this specific client's pre-filled PDF"
+              >
+                <Download className="w-3.5 h-3.5 mr-1 text-cyan-600" />
+                {downloadingPdf ? "Generating..." : "Prepared PDF"}
+              </Button>
+            </div>
           </div>
 
           {/* 3. Email Invitation Template */}

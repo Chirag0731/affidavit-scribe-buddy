@@ -8,6 +8,7 @@ import { FinancingPdfPreviewModal } from "@/components/financing/financing-pdf-p
 import {
   generateAllLenderPdfsZip,
   generatePrintableQuickFloPdf,
+  downloadBlankQuickFloPdf,
   downloadPdfBlob,
 } from "@/lib/lender-pdf-engine";
 import { Button } from "@/components/ui/button";
@@ -46,6 +47,7 @@ function PublicApplyPage() {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [downloadingZip, setDownloadingZip] = useState(false);
   const [downloadingPrintable, setDownloadingPrintable] = useState(false);
+  const [downloadingBlank, setDownloadingBlank] = useState(false);
 
   useEffect(() => {
     if (!id) {
@@ -113,6 +115,19 @@ function PublicApplyPage() {
     }
   };
 
+  const handleDownloadBlank = async () => {
+    try {
+      setDownloadingBlank(true);
+      await downloadBlankQuickFloPdf();
+      toast.success("Downloaded blank fillable QuickFlo PDF");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to download blank PDF");
+    } finally {
+      setDownloadingBlank(false);
+    }
+  };
+
   if (loadingApp) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background text-foreground">
@@ -135,8 +150,24 @@ function PublicApplyPage() {
             <FinancingLogo height={44} />
           </div>
 
-          <div className="flex items-center gap-4 sm:gap-6 text-xs">
-            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400 font-semibold text-[11px]">
+          <div className="flex items-center gap-3 sm:gap-4 text-xs">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={handleDownloadBlank}
+              disabled={downloadingBlank}
+              className="h-8 text-xs font-medium border-border"
+              title="Download 100% blank fillable QuickFlo application PDF"
+            >
+              {downloadingBlank ? (
+                <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
+              ) : (
+                <Download className="w-3.5 h-3.5 mr-1.5 text-cyan-600" />
+              )}
+              Blank Fillable PDF
+            </Button>
+            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400 font-semibold text-[11px]">
               <Lock className="w-3.5 h-3.5" />
               <span>256-Bit SSL Encrypted</span>
             </div>

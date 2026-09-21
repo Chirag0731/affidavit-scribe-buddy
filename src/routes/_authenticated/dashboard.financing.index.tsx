@@ -5,7 +5,7 @@ import { financingStore } from "@/lib/financing-db";
 import { FinancingLogo } from "@/components/financing/financing-logo";
 import { FinancingPdfPreviewModal } from "@/components/financing/financing-pdf-preview-modal";
 import { SendApplicationModal } from "@/components/financing/send-application-modal";
-import { generateAllLenderPdfsZip } from "@/lib/lender-pdf-engine";
+import { generateAllLenderPdfsZip, downloadBlankQuickFloPdf } from "@/lib/lender-pdf-engine";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -26,6 +26,7 @@ import {
   FileCheck2,
   Eye,
   Download,
+  Loader2,
   Trash2,
   Search,
   SlidersHorizontal,
@@ -56,6 +57,7 @@ function FinancingOverviewPage() {
   const [selectedAppForPreview, setSelectedAppForPreview] = useState<BusinessFinancingApplication | null>(null);
   const [selectedAppForSend, setSelectedAppForSend] = useState<BusinessFinancingApplication | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
+  const [downloadingBlank, setDownloadingBlank] = useState(false);
 
   useEffect(() => {
     loadApplications();
@@ -123,6 +125,19 @@ function FinancingOverviewPage() {
     } catch (err) {
       console.error(err);
       toast.error("Failed to generate zip");
+    }
+  };
+
+  const handleDownloadBlank = async () => {
+    try {
+      setDownloadingBlank(true);
+      await downloadBlankQuickFloPdf();
+      toast.success("Downloaded blank fillable QuickFlo PDF");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to download blank PDF");
+    } finally {
+      setDownloadingBlank(false);
     }
   };
 
@@ -198,6 +213,22 @@ function FinancingOverviewPage() {
           >
             <Share2 className="w-3.5 h-3.5 mr-1.5" />
             Share Client App Link
+          </Button>
+
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={handleDownloadBlank}
+            disabled={downloadingBlank}
+            className="text-xs h-9 font-medium border-border shadow-xs"
+          >
+            {downloadingBlank ? (
+              <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
+            ) : (
+              <Download className="w-3.5 h-3.5 mr-1.5 text-cyan-600" />
+            )}
+            Blank Fillable PDF
           </Button>
 
           <Button

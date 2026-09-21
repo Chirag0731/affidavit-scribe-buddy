@@ -9,6 +9,7 @@ import type {
   LenderValidationReport,
   LenderFieldAudit,
 } from "@/types/financing";
+import { createEmptyApplication } from "@/types/financing";
 
 // Format currency
 export function formatCurrency(amount: number | undefined | null): string {
@@ -763,9 +764,13 @@ export function validateForCanaCap(
 // =========================================================================
 // 4. GENERATE PRINTABLE & FILLABLE QUICKFLO FINANCIAL APPLICATION PDF
 // =========================================================================
+// 4. GENERATE PRINTABLE & FILLABLE QUICKFLO FINANCIAL APPLICATION PDF
+// =========================================================================
 export async function generatePrintableQuickFloPdf(
-  app: BusinessFinancingApplication
+  appInput?: BusinessFinancingApplication | null,
+  isBlank = false
 ): Promise<Blob> {
+  const app = appInput || createEmptyApplication();
   const pdfDoc = await PDFDocument.create();
   const page = pdfDoc.addPage([612, 792]); // Standard US Letter
   const form = pdfDoc.getForm();
@@ -809,7 +814,10 @@ export async function generatePrintableQuickFloPdf(
     color: rgb(0.85, 0.95, 1),
   });
 
-  page.drawText(`REF: ${app.id.toUpperCase().slice(0, 16)}`, {
+  const refText = isBlank
+    ? "REF: QF-BLANK-INTAKE"
+    : `REF: ${(app.id || "APP").toUpperCase().slice(0, 16)}`;
+  page.drawText(refText, {
     x: width - margin - 150,
     y: cursorY - 26,
     size: 8,
@@ -830,8 +838,13 @@ export async function generatePrintableQuickFloPdf(
     borderWidth: 0.5,
   });
 
-  const onlineUrl = typeof window !== "undefined" ? `${window.location.origin}/apply?id=${app.id}` : `https://portal.quickflo.com/apply?id=${app.id}`;
-  page.drawText(`Online Portal & Direct Sync Link: ${onlineUrl}`, {
+  const onlineUrl =
+    typeof window !== "undefined"
+      ? isBlank
+        ? `${window.location.origin}/apply`
+        : `${window.location.origin}/apply?id=${app.id}`
+      : "https://quickflo.com/apply";
+  page.drawText(`Online Portal & Direct Submission Link: ${onlineUrl}`, {
     x: margin + 8,
     y: cursorY - 12,
     size: 7,
@@ -871,21 +884,27 @@ export async function generatePrintableQuickFloPdf(
   ) => {
     try {
       const field = form.createTextField(fieldName);
-      field.setText(initialVal || "");
+      field.setText(isBlank ? "" : (initialVal || ""));
       field.addToPage(page, {
         x,
         y,
         width: w,
         height: h,
-        borderWidth: 0.5,
-        borderColor: rgb(0.75, 0.8, 0.85),
+        borderWidth: 0.75,
+        borderColor: rgb(0.72, 0.78, 0.85),
         backgroundColor: rgb(0.98, 0.99, 1),
         textColor: darkTextColor,
       });
-      field.setFontSize(8);
+      field.setFontSize(8.5);
     } catch {
       // Fallback text drawing if field exists
-      page.drawText(initialVal || "", { x, y: y + 3, size: 8, font: fontRegular, color: darkTextColor });
+      page.drawText(isBlank ? "" : (initialVal || ""), {
+        x,
+        y: y + 3,
+        size: 8,
+        font: fontRegular,
+        color: darkTextColor,
+      });
     }
   };
 
@@ -950,69 +969,72 @@ export async function generatePrintableQuickFloPdf(
   // --- SECTION 3: OWNERSHIP STRUCTURE ---
   cursorY = drawSectionHeader("3. Beneficial Ownership & Principals (20%+ Equity)", cursorY);
 
-  const p1 = app.owners[0] || {};
+  const p1 = isBlank ? ({} as any) : (app.owners[0] || {});
   page.drawText("Principal 1 Name & Title:", { x: margin, y: cursorY, size: 7, font: fontBold, color: darkTextColor });
-  addEditableField("qf_p1_name", `${p1.firstName || ""} ${p1.lastName || ""}`.trim() + (p1.title ? ` (${p1.title})` : ""), margin, cursorY - 16, 175);
+  addEditableField("qf_p1_name", isBlank ? "" : `${p1.firstName || ""} ${p1.lastName || ""}`.trim() + (p1.title ? ` (${p1.title})` : ""), margin, cursorY - 16, 175);
 
   page.drawText("Ownership %:", { x: margin + 185, y: cursorY, size: 7, font: fontBold, color: darkTextColor });
-  addEditableField("qf_p1_equity", p1.ownershipPercentage ? `${p1.ownershipPercentage}%` : "100%", margin + 185, cursorY - 16, 80);
+  addEditableField("qf_p1_equity", isBlank ? "" : (p1.ownershipPercentage ? `${p1.ownershipPercentage}%` : "100%"), margin + 185, cursorY - 16, 80);
 
   page.drawText("SSN / SIN:", { x: margin + 275, y: cursorY, size: 7, font: fontBold, color: darkTextColor });
-  addEditableField("qf_p1_sin", p1.ssnOrSin || p1.sin || "", margin + 275, cursorY - 16, 125);
+  addEditableField("qf_p1_sin", isBlank ? "" : (p1.ssnOrSin || p1.sin || ""), margin + 275, cursorY - 16, 125);
 
   page.drawText("Date of Birth:", { x: margin + 410, y: cursorY, size: 7, font: fontBold, color: darkTextColor });
-  addEditableField("qf_p1_dob", formatDate(p1.dob), margin + 410, cursorY - 16, 130);
+  addEditableField("qf_p1_dob", isBlank ? "" : formatDate(p1.dob), margin + 410, cursorY - 16, 130);
   cursorY -= 32;
 
   page.drawText("Principal 1 Home Address:", { x: margin, y: cursorY, size: 7, font: fontBold, color: darkTextColor });
   const p1Home = p1.homeAddress || (p1.address ? `${p1.address.street}, ${p1.address.city}, ${p1.address.province}` : "");
-  addEditableField("qf_p1_address", p1Home, margin, cursorY - 16, 260);
+  addEditableField("qf_p1_address", isBlank ? "" : p1Home, margin, cursorY - 16, 260);
 
   page.drawText("Cell Phone:", { x: margin + 270, y: cursorY, size: 7, font: fontBold, color: darkTextColor });
-  addEditableField("qf_p1_cell", p1.mobilePhone || p1.phone || "", margin + 270, cursorY - 16, 130);
+  addEditableField("qf_p1_cell", isBlank ? "" : (p1.mobilePhone || p1.phone || ""), margin + 270, cursorY - 16, 130);
 
   page.drawText("Personal Email:", { x: margin + 410, y: cursorY, size: 7, font: fontBold, color: darkTextColor });
-  addEditableField("qf_p1_email", p1.email || "", margin + 410, cursorY - 16, 130);
+  addEditableField("qf_p1_email", isBlank ? "" : (p1.email || ""), margin + 410, cursorY - 16, 130);
   cursorY -= 32;
 
-  // Principal 2 if present
-  const p2 = app.owners[1];
-  if (p2) {
-    page.drawText(`Principal 2: ${p2.firstName || ""} ${p2.lastName || ""} (${p2.ownershipPercentage}% Equity)`, {
-      x: margin,
-      y: cursorY,
-      size: 7,
-      font: fontBold,
-      color: darkTextColor,
-    });
-    addEditableField(
-      "qf_p2_info",
-      `DOB: ${formatDate(p2.dob)} | SIN: ${p2.ssnOrSin || p2.sin || "—"} | Phone: ${p2.mobilePhone || p2.phone || "—"}`,
-      margin,
-      cursorY - 16,
-      width - margin * 2
-    );
-    cursorY -= 30;
-  }
+  // Principal 2 (Rendered for both pre-filled and blank fillable forms)
+  const p2 = isBlank ? null : app.owners[1];
+  page.drawText("Principal 2: Co-Owner / Guarantor (Optional / 20%+ Equity)", {
+    x: margin,
+    y: cursorY,
+    size: 7,
+    font: fontBold,
+    color: darkTextColor,
+  });
+  const p2Text = p2
+    ? `Name: ${p2.firstName || ""} ${p2.lastName || ""} | Title: ${p2.title || "VP"} | Equity: ${p2.ownershipPercentage || 0}% | DOB: ${formatDate(p2.dob)} | Phone: ${p2.mobilePhone || p2.phone || ""}`
+    : "";
+  addEditableField(
+    "qf_p2_info",
+    isBlank ? "" : p2Text,
+    margin,
+    cursorY - 16,
+    width - margin * 2
+  );
+  cursorY -= 30;
 
   // --- SECTION 4: PREMISES & EXISTING FINANCING ---
   cursorY = drawSectionHeader("4. Commercial Property & Current Debt", cursorY);
 
   page.drawText("Property Status:", { x: margin, y: cursorY, size: 7, font: fontBold, color: darkTextColor });
-  addEditableField("qf_propStatus", String(app.property.locationType || "Leased"), margin, cursorY - 16, 125);
+  addEditableField("qf_propStatus", isBlank ? "" : String(app.property.locationType || "Leased"), margin, cursorY - 16, 125);
 
   page.drawText("Landlord / Mortgagee:", { x: margin + 135, y: cursorY, size: 7, font: fontBold, color: darkTextColor });
-  addEditableField("qf_landlord", app.property.landlordOrMortgagee || "", margin + 135, cursorY - 16, 125);
+  addEditableField("qf_landlord", isBlank ? "" : (app.property.landlordOrMortgagee || ""), margin + 135, cursorY - 16, 125);
 
   page.drawText("Monthly Rent / Mortgage ($):", { x: margin + 270, y: cursorY, size: 7, font: fontBold, color: darkTextColor });
-  addEditableField("qf_rent", formatCurrency(app.property.monthlyRentOrMortgage), margin + 270, cursorY - 16, 130);
+  addEditableField("qf_rent", isBlank ? "" : formatCurrency(app.property.monthlyRentOrMortgage), margin + 270, cursorY - 16, 130);
 
   page.drawText("Landlord Phone:", { x: margin + 410, y: cursorY, size: 7, font: fontBold, color: darkTextColor });
-  addEditableField("qf_landlordPhone", app.property.landlordPhone || "", margin + 410, cursorY - 16, 130);
+  addEditableField("qf_landlordPhone", isBlank ? "" : (app.property.landlordPhone || ""), margin + 410, cursorY - 16, 130);
   cursorY -= 32;
 
   page.drawText("Existing MCA / Loan Balances:", { x: margin, y: cursorY, size: 7, font: fontBold, color: darkTextColor });
-  const debtStr = app.existingFinancing.hasExistingFinancing
+  const debtStr = isBlank
+    ? ""
+    : app.existingFinancing.hasExistingFinancing
     ? `Lender: ${app.existingFinancing.lenderName || "—"} | Approx Balance: ${formatCurrency(app.existingFinancing.approximateBalance)} | Payment: ${formatCurrency(app.existingFinancing.dailyOrWeeklyPayment)}`
     : "None reported. No existing balances.";
   addEditableField("qf_debt", debtStr, margin, cursorY - 16, width - margin * 2);
@@ -1035,15 +1057,15 @@ export async function generatePrintableQuickFloPdf(
   cursorY -= 26;
 
   page.drawText("Authorized Signer Name:", { x: margin, y: cursorY, size: 7, font: fontBold, color: darkTextColor });
-  addEditableField("qf_signerName", app.authorization.signerName || `${p1.firstName || ""} ${p1.lastName || ""}`.trim(), margin, cursorY - 16, 175);
+  addEditableField("qf_signerName", isBlank ? "" : (app.authorization.signerName || `${p1.firstName || ""} ${p1.lastName || ""}`.trim()), margin, cursorY - 16, 175);
 
   page.drawText("Signer Title:", { x: margin + 185, y: cursorY, size: 7, font: fontBold, color: darkTextColor });
-  addEditableField("qf_signerTitle", app.authorization.signerTitle || p1.title || "President", margin + 185, cursorY - 16, 125);
+  addEditableField("qf_signerTitle", isBlank ? "" : (app.authorization.signerTitle || p1.title || "President"), margin + 185, cursorY - 16, 125);
 
   page.drawText("Date Signed:", { x: margin + 320, y: cursorY, size: 7, font: fontBold, color: darkTextColor });
-  addEditableField("qf_dateSigned", formatDate(app.authorization.dateSigned) || formatDate(new Date().toISOString().split("T")[0]), margin + 320, cursorY - 16, 90);
+  addEditableField("qf_dateSigned", isBlank ? "" : (formatDate(app.authorization.dateSigned) || formatDate(new Date().toISOString().split("T")[0])), margin + 320, cursorY - 16, 90);
 
-  // Digital Signature Box
+  // Digital Signature Box (Interactive fillable field for e-sign / typed signing)
   page.drawRectangle({
     x: margin + 420,
     y: cursorY - 24,
@@ -1053,9 +1075,9 @@ export async function generatePrintableQuickFloPdf(
     borderColor: rgb(0.7, 0.75, 0.8),
     borderWidth: 0.5,
   });
-  page.drawText("Digital / Ink Signature", { x: margin + 425, y: cursorY + 2, size: 6.5, font: fontBold, color: darkTextColor });
+  page.drawText("Digital / Ink Signature (Type or Sign)", { x: margin + 425, y: cursorY + 2, size: 6.5, font: fontBold, color: darkTextColor });
 
-  if (app.authorization.signatureDataUrl && app.authorization.signatureDataUrl.startsWith("data:image/png")) {
+  if (!isBlank && app.authorization.signatureDataUrl && app.authorization.signatureDataUrl.startsWith("data:image/png")) {
     try {
       const cleanB64 = app.authorization.signatureDataUrl.split(",")[1];
       const sigImgBytes = base64ToUint8Array(cleanB64);
@@ -1067,22 +1089,11 @@ export async function generatePrintableQuickFloPdf(
         height: 28,
       });
     } catch {
-      page.drawText(app.authorization.signerName || "Digitally Signed", {
-        x: margin + 425,
-        y: cursorY - 10,
-        size: 9,
-        font: fontBold,
-        color: rgb(0.1, 0.3, 0.5),
-      });
+      addEditableField("qf_signature", app.authorization.signerName || "Digitally Signed", margin + 425, cursorY - 22, width - margin - 430, 24);
     }
   } else {
-    page.drawText("X _______________________________", {
-      x: margin + 425,
-      y: cursorY - 14,
-      size: 7,
-      font: fontRegular,
-      color: mutedTextColor,
-    });
+    // Fillable text field for signature in PDF readers
+    addEditableField("qf_signature", isBlank ? "" : (app.authorization.signerName || ""), margin + 425, cursorY - 22, width - margin - 430, 24);
   }
 
   // Footer banner
@@ -1094,8 +1105,28 @@ export async function generatePrintableQuickFloPdf(
     color: mutedTextColor,
   });
 
+  try {
+    form.updateFieldAppearances(fontRegular);
+  } catch {
+    /* ignore */
+  }
+
   const pdfBytes = await pdfDoc.save();
   return new Blob([pdfBytes as unknown as BlobPart], { type: "application/pdf" });
+}
+
+// Generate completely blank fillable QuickFlo PDF
+export async function generateBlankQuickFloPdf(): Promise<Blob> {
+  const empty = createEmptyApplication();
+  return generatePrintableQuickFloPdf(empty, true);
+}
+
+// Download completely blank fillable QuickFlo PDF directly
+export async function downloadBlankQuickFloPdf(
+  filename = "QuickFlo_Commercial_Financing_Application_Fillable.pdf"
+): Promise<void> {
+  const blob = await generateBlankQuickFloPdf();
+  downloadPdfBlob(blob, filename);
 }
 
 // =========================================================================

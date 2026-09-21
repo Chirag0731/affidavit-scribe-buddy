@@ -16,7 +16,7 @@ import {
   Sliders,
   Sparkles,
 } from "lucide-react";
-import { downloadPdfBlob } from "@/lib/lender-pdf-engine";
+import { downloadPdfBlob, downloadBlankQuickFloPdf } from "@/lib/lender-pdf-engine";
 import { WHITE_LABEL_PDF_BASE64, CANACAP_PDF_BASE64 } from "@/assets/lenders/lender-templates-asset";
 import { toast } from "sonner";
 
@@ -27,6 +27,19 @@ export const Route = createFileRoute("/_authenticated/dashboard/financing/lender
 
 function FinancingLendersPage() {
   const [downloading, setDownloading] = useState<string | null>(null);
+
+  const downloadQuickFloBlank = async () => {
+    try {
+      setDownloading("quickflo");
+      await downloadBlankQuickFloPdf();
+      toast.success("Downloaded blank fillable QuickFlo Commercial Application");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to download QuickFlo application");
+    } finally {
+      setDownloading(null);
+    }
+  };
 
   const downloadBlankTemplate = (type: "white-label" | "canacap") => {
     try {
@@ -79,12 +92,66 @@ function FinancingLendersPage() {
 
         <Badge variant="outline" className="text-xs text-emerald-600 border-emerald-400 bg-emerald-50 dark:bg-emerald-950/30 font-semibold py-1">
           <CheckCircle2 className="w-3.5 h-3.5 mr-1" />
-          2 Active Integrated Lenders
+          3 Active Integrated Formats
         </Badge>
       </div>
 
       {/* Lender Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Template 0: QuickFlo Master Fillable */}
+        <Card className="rounded-2xl border-cyan-500/50 shadow-xs bg-card overflow-hidden ring-1 ring-cyan-500/20">
+          <CardHeader className="bg-gradient-to-r from-cyan-950/30 via-cyan-900/10 to-transparent pb-4 border-b border-border/60">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2.5 rounded-xl bg-cyan-500/20 text-cyan-600 dark:text-cyan-400">
+                  <FileText className="w-5 h-5" />
+                </div>
+                <div>
+                  <CardTitle className="text-base font-bold">QuickFlo Commercial Application</CardTitle>
+                  <CardDescription className="text-xs">Interactive fillable AcroForm with live sync</CardDescription>
+                </div>
+              </div>
+              <Badge className="bg-cyan-600 text-white text-[10px]">Master Fillable</Badge>
+            </div>
+          </CardHeader>
+          <CardContent className="pt-5 space-y-4 text-xs">
+            <div className="space-y-2">
+              <div className="flex justify-between border-b border-border/40 pb-1.5">
+                <span className="text-muted-foreground">Document Type:</span>
+                <span className="font-semibold text-foreground">AcroForm Letter (612 × 792 pt)</span>
+              </div>
+              <div className="flex justify-between border-b border-border/40 pb-1.5">
+                <span className="text-muted-foreground">Form Engine:</span>
+                <span className="font-semibold text-cyan-600 dark:text-cyan-400">100% Typeable & Fillable</span>
+              </div>
+              <div className="flex justify-between border-b border-border/40 pb-1.5">
+                <span className="text-muted-foreground">Signer Fields:</span>
+                <span className="font-semibold text-foreground">Type or Sign E-Signature Box</span>
+              </div>
+              <div className="flex justify-between border-b border-border/40 pb-1.5">
+                <span className="text-muted-foreground">Sections Included:</span>
+                <span className="font-semibold text-foreground">Business, 2 Principals, Debt</span>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-muted/30 border border-border/60 text-[11px] text-muted-foreground leading-relaxed">
+              Clean, professional application clients can complete in Adobe Acrobat, Chrome, Preview, or print out. Direct reference barcode and URL link back to your dashboard.
+            </div>
+
+            <Button
+              type="button"
+              variant="default"
+              size="sm"
+              onClick={downloadQuickFloBlank}
+              disabled={downloading === "quickflo"}
+              className="w-full h-8 text-xs font-semibold bg-cyan-700 hover:bg-cyan-800 text-white"
+            >
+              <Download className="w-3.5 h-3.5 mr-1.5" />
+              {downloading === "quickflo" ? "Generating..." : "Download Blank Fillable PDF"}
+            </Button>
+          </CardContent>
+        </Card>
+
         {/* Lender 1: Business Financing Application */}
         <Card className="rounded-2xl border-cyan-800/40 shadow-xs bg-card overflow-hidden">
           <CardHeader className="bg-gradient-to-r from-cyan-950/20 to-transparent pb-4 border-b border-border/60">
@@ -94,7 +161,7 @@ function FinancingLendersPage() {
                   <Building2 className="w-5 h-5" />
                 </div>
                 <div>
-                  <CardTitle className="text-base font-bold">1. Business Financing Application</CardTitle>
+                  <CardTitle className="text-base font-bold">1. Business Financing</CardTitle>
                   <CardDescription className="text-xs">Journey Capital standard format (EN)</CardDescription>
                 </div>
               </div>
