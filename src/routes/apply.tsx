@@ -1,12 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BusinessFinancingApplication } from "@/types/financing";
+import { financingStore } from "@/lib/financing-db";
 import { FinancingLogo } from "@/components/financing/financing-logo";
 import { FinancingClientForm } from "@/components/financing/financing-client-form";
 import { FinancingPdfPreviewModal } from "@/components/financing/financing-pdf-preview-modal";
-import { generateAllLenderPdfsZip } from "@/lib/lender-pdf-engine";
+import {
+  generateAllLenderPdfsZip,
+  generatePrintableQuickFloPdf,
+  downloadPdfBlob,
+} from "@/lib/lender-pdf-engine";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   ShieldCheck,
@@ -15,24 +20,58 @@ import {
   CheckCircle2,
   Download,
   Eye,
-  ArrowRight,
   Clock,
-  Sparkles,
   FileCheck2,
   RefreshCw,
   Loader2,
+  Printer,
 } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/apply")({
+  validateSearch: (search: Record<string, unknown>): { id?: string } => {
+    return {
+      id: typeof search.id === "string" ? search.id : undefined,
+    };
+  },
   component: PublicApplyPage,
   ssr: false,
 });
 
 function PublicApplyPage() {
+  const { id } = Route.useSearch();
+  const [initialApp, setInitialApp] = useState<BusinessFinancingApplication | null>(null);
+  const [loadingApp, setLoadingApp] = useState<boolean>(Boolean(id));
   const [submittedApp, setSubmittedApp] = useState<BusinessFinancingApplication | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
   const [downloadingZip, setDownloadingZip] = useState(false);
+  const [downloadingPrintable, setDownloadingPrintable] = useState(false);
+
+  useEffect(() => {
+    if (!id) {
+      setLoadingApp(false);
+      return;
+    }
+    let active = true;
+    financingStore
+      .getApplicationById(id)
+      .then((found: BusinessFinancingApplication | null) => {
+        if (active && found) {
+          setInitialApp(found);
+          toast.success(`Loaded application for ${found.business.legalName || "your business"}`);
+        }
+      })
+      .catch((err: unknown) => {
+        console.error("Failed to load application by id:", err);
+      })
+      .finally(() => {
+        if (active) setLoadingApp(false);
+      });
+
+    return () => {
+      active = false;
+    };
+  }, [id]);
 
   const handleDownloadZip = async () => {
     if (!submittedApp) return;
@@ -57,6 +96,35 @@ function PublicApplyPage() {
       setDownloadingZip(false);
     }
   };
+
+  const handleDownloadPrintable = async () => {
+    if (!submittedApp) return;
+    try {
+      setDownloadingPrintable(true);
+      const blob = await generatePrintableQuickFloPdf(submittedApp);
+      const name = `${submittedApp.business.legalName || "Application"}_QuickFlo_Fillable_Intake.pdf`.replace(/[^a-zA-Z0-9_-]/g, "_");
+      downloadPdfBlob(blob, name);
+      toast.success("Downloaded printable and fillable application PDF");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to generate PDF");
+    } finally {
+      setDownloadingPrintable(false);
+    }
+  };
+
+  if (loadingApp) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 className="w-8 h-8 text-cyan-600 animate-spin" />
+          <span className="text-xs text-muted-foreground font-medium">
+            Loading your secure funding application...
+          </span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 via-slate-100/60 to-slate-200/50 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 flex flex-col justify-between">
@@ -99,13 +167,17 @@ function PublicApplyPage() {
                   Thank You, {submittedApp.owners[0]?.firstName || "Applicant"}!
                 </h1>
                 <p className="text-sm text-muted-foreground mt-2 max-w-md">
-                  Your commercial financing application for <span className="font-semibold text-foreground">{submittedApp.business.legalName}</span> has been securely transmitted to underwriting.
+                  Your commercial financing application for{" "}
+                  <span className="font-semibold text-foreground">{submittedApp.business.legalName}</span>{" "}
+                  has been securely transmitted to underwriting.
                 </p>
 
                 <div className="mt-6 p-4 rounded-2xl bg-muted/30 border border-border/80 w-full text-left space-y-2 text-xs">
                   <div className="flex justify-between items-center">
                     <span className="text-muted-foreground font-medium">Application Reference ID:</span>
-                    <span className="font-mono font-bold text-foreground">QF-{submittedApp.id.slice(0, 8).toUpperCase()}</span>
+                    <span className="font-mono font-bold text-foreground">
+                      QF-{submittedApp.id.slice(0, 8).toUpperCase()}
+                    </span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="text-muted-foreground font-medium">Requested Funding:</span>
@@ -119,9 +191,16 @@ function PublicApplyPage() {
                       Underwriting Review (2-4 hrs)
                     </Badge>
                   </div>
+                  <div className="flex justify-between items-center pt-1 border-t border-border/60">
+                    <span className="text-muted-foreground font-medium">Live Dashboard Sync:</span>
+                    <span className="text-emerald-600 font-semibold flex items-center gap-1">
+                      <CheckCircle2 className="w-3.5 h-3.5" />
+                      Synchronized with Advisor Dashboard
+                    </span>
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full mt-6">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full mt-6">
                   <Button
                     type="button"
                     variant="outline"
@@ -129,7 +208,21 @@ function PublicApplyPage() {
                     className="h-11 text-xs border-cyan-300 dark:border-cyan-800 text-cyan-700 dark:text-cyan-300 hover:bg-cyan-50 dark:hover:bg-cyan-950/40 font-semibold"
                   >
                     <Eye className="w-4 h-4 mr-2" />
-                    Preview Generated PDFs
+                    Preview PDFs
+                  </Button>
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={handleDownloadPrintable}
+                    disabled={downloadingPrintable}
+                    className="h-11 text-xs font-semibold"
+                  >
+                    {downloadingPrintable ? (
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    ) : (
+                      <Printer className="w-4 h-4 mr-2 text-cyan-600" />
+                    )}
+                    Printable PDF
                   </Button>
                   <Button
                     type="button"
@@ -142,7 +235,7 @@ function PublicApplyPage() {
                     ) : (
                       <Download className="w-4 h-4 mr-2" />
                     )}
-                    Download Package (ZIP)
+                    Download ZIP
                   </Button>
                 </div>
 
@@ -164,7 +257,10 @@ function PublicApplyPage() {
                   type="button"
                   variant="ghost"
                   size="sm"
-                  onClick={() => setSubmittedApp(null)}
+                  onClick={() => {
+                    setSubmittedApp(null);
+                    setInitialApp(null);
+                  }}
                   className="mt-6 text-xs text-muted-foreground hover:text-foreground"
                 >
                   <RefreshCw className="w-3.5 h-3.5 mr-1.5" />
@@ -176,6 +272,8 @@ function PublicApplyPage() {
         ) : (
           /* Main 6-Step Application Wizard */
           <FinancingClientForm
+            key={initialApp?.id || "new-app"}
+            initialData={initialApp || undefined}
             isAdminMode={false}
             onSubmitSuccess={(app) => setSubmittedApp(app)}
           />

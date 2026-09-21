@@ -11,6 +11,19 @@ import { FinancingStepper } from "./financing-stepper";
 import { FinancingLogo } from "./financing-logo";
 import { FinancingSignaturePad } from "./financing-signature-pad";
 import { FinancingReviewSummary } from "./financing-review-summary";
+import { FinancingDatePicker } from "./financing-date-picker";
+import { SmartAddressInput } from "./smart-address-input";
+import { SmartIntakeModal } from "./smart-intake-modal";
+import { FormattedNumberInput } from "./formatted-number-input";
+import {
+  validateStep0,
+  validateStep1,
+  validateStep2,
+  validateStep5,
+  formatPhone,
+  formatPostalCode,
+  formatSinOrSsn,
+} from "./financing-validation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -19,6 +32,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { cn } from "@/lib/utils";
 import {
   ArrowLeft,
   ArrowRight,
@@ -35,6 +49,12 @@ import {
   FileCheck2,
   Loader2,
   Save,
+  ClipboardPaste,
+  Phone,
+  Mail,
+  Globe,
+  Calendar,
+  AlertCircle,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -55,6 +75,9 @@ export function FinancingClientForm({
 }: FinancingClientFormProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [submitting, setSubmitting] = useState(false);
+  const [smartIntakeOpen, setSmartIntakeOpen] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [ownerErrors, setOwnerErrors] = useState<Record<number, Record<string, string>>>({});
   const [app, setApp] = useState<BusinessFinancingApplication>(() => {
     if (initialData) return initialData;
     try {
@@ -79,6 +102,12 @@ export function FinancingClientForm({
 
   // Nested state updater helpers
   const updateBusiness = (field: keyof BusinessFinancingApplication["business"], value: any) => {
+    setErrors((prev) => {
+      if (!prev[field as string]) return prev;
+      const copy = { ...prev };
+      delete copy[field as string];
+      return copy;
+    });
     setApp((prev) => ({
       ...prev,
       business: { ...prev.business, [field]: value },
@@ -86,6 +115,12 @@ export function FinancingClientForm({
   };
 
   const updateFinancials = (field: keyof BusinessFinancingApplication["financials"], value: any) => {
+    setErrors((prev) => {
+      if (!prev[field as string]) return prev;
+      const copy = { ...prev };
+      delete copy[field as string];
+      return copy;
+    });
     setApp((prev) => ({
       ...prev,
       financials: { ...prev.financials, [field]: value },
@@ -114,6 +149,12 @@ export function FinancingClientForm({
   };
 
   const updateAuthorization = (field: keyof BusinessFinancingApplication["authorization"], value: any) => {
+    setErrors((prev) => {
+      if (!prev[field as string]) return prev;
+      const copy = { ...prev };
+      delete copy[field as string];
+      return copy;
+    });
     setApp((prev) => ({
       ...prev,
       authorization: { ...prev.authorization, [field]: value },
@@ -122,6 +163,14 @@ export function FinancingClientForm({
 
   // Owners array management
   const updateOwner = (index: number, field: keyof OwnerInfo, value: any) => {
+    setOwnerErrors((prev) => {
+      if (!prev[index]?.[field as string]) return prev;
+      const copy = { ...prev };
+      const row = { ...copy[index] };
+      delete row[field as string];
+      copy[index] = row;
+      return copy;
+    });
     setApp((prev) => {
       const newOwners = [...prev.owners];
       newOwners[index] = { ...newOwners[index], [field]: value };
@@ -225,55 +274,47 @@ export function FinancingClientForm({
   // Step validation
   const validateStep = (step: number): boolean => {
     if (step === 0) {
-      if (!app.business.legalName.trim()) {
-        toast.error("Please enter the Legal Business Name");
-        return false;
-      }
-      const phoneVal = app.business.businessPhone || app.business.phone || "";
-      if (!phoneVal.trim()) {
-        toast.error("Please enter the Business Phone Number");
-        return false;
-      }
-      const physAddrStr = typeof app.business.physicalAddress === "string"
-        ? app.business.physicalAddress
-        : app.business.physicalAddress?.street || "";
-      if (!physAddrStr.trim()) {
-        toast.error("Please enter the Physical Business Address");
+      const errs = validateStep0(app.business);
+      setErrors(errs);
+      const keys = Object.keys(errs);
+      if (keys.length > 0) {
+        toast.error(errs[keys[0]]);
         return false;
       }
     }
 
     if (step === 1) {
-      if (!app.financials.amountRequested) {
-        toast.error("Please specify the requested financing amount");
-        return false;
-      }
-      if (!app.financials.annualGrossRevenue) {
-        toast.error("Please specify your annual gross sales");
+      const errs = validateStep1(app.financials, app.paymentProcessing);
+      setErrors(errs);
+      const keys = Object.keys(errs);
+      if (keys.length > 0) {
+        toast.error(errs[keys[0]]);
         return false;
       }
     }
 
     if (step === 2) {
-      const primary = app.owners[0];
-      if (!primary || !primary.firstName.trim() || !primary.lastName.trim()) {
-        toast.error("Please provide the primary owner's First and Last Name");
+      const { general, fieldErrors } = validateStep2(app.owners);
+      setOwnerErrors(fieldErrors);
+      if (general) {
+        toast.error(general);
         return false;
       }
-      const totalEquity = app.owners.reduce((s, o) => s + (Number(o.ownershipPercentage) || 0), 0);
-      if (totalEquity <= 0) {
-        toast.error("Please specify the ownership percentage for each principal");
+      const ownerKeys = Object.keys(fieldErrors);
+      if (ownerKeys.length > 0) {
+        const firstIdx = Number(ownerKeys[0]);
+        const firstErrKey = Object.keys(fieldErrors[firstIdx])[0];
+        toast.error(`Principal ${firstIdx + 1}: ${fieldErrors[firstIdx][firstErrKey]}`);
         return false;
       }
     }
 
     if (step === 5) {
-      if (!app.authorization.creditCheckConsent) {
-        toast.error("You must authorize credit & financial record verification to proceed");
-        return false;
-      }
-      if (!app.authorization.signatureDataUrl) {
-        toast.error("Please draw or type your signature to authorize the application");
+      const errs = validateStep5(app.authorization);
+      setErrors(errs);
+      const keys = Object.keys(errs);
+      if (keys.length > 0) {
+        toast.error(errs[keys[0]]);
         return false;
       }
     }
@@ -357,6 +398,16 @@ export function FinancingClientForm({
               type="button"
               variant="outline"
               size="sm"
+              onClick={() => setSmartIntakeOpen(true)}
+              className="text-xs h-8 border-cyan-300 dark:border-cyan-800 text-cyan-700 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-950/40"
+            >
+              <ClipboardPaste className="w-3.5 h-3.5 mr-1 text-cyan-600" />
+              Smart Paste Intake
+            </Button>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
               onClick={handleLoadSample}
               className="text-xs h-8 border-cyan-300 dark:border-cyan-800 text-cyan-700 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-950/40"
             >
@@ -405,8 +456,17 @@ export function FinancingClientForm({
                     placeholder="e.g. Apex Precision Engineering Inc."
                     value={app.business.legalName}
                     onChange={(e) => updateBusiness("legalName", e.target.value)}
-                    className="text-sm"
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    className={cn("text-sm", errors.legalName && "border-destructive focus-visible:ring-destructive")}
                   />
+                  {errors.legalName && (
+                    <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      {errors.legalName}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-1.5">
@@ -415,6 +475,9 @@ export function FinancingClientForm({
                     placeholder="e.g. Apex Dynamics"
                     value={app.business.tradeName}
                     onChange={(e) => updateBusiness("tradeName", e.target.value)}
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck={false}
                     className="text-sm"
                   />
                 </div>
@@ -429,8 +492,18 @@ export function FinancingClientForm({
                     placeholder="(555) 000-0000"
                     value={app.business.businessPhone}
                     onChange={(e) => updateBusiness("businessPhone", e.target.value)}
-                    className="text-sm"
+                    onBlur={(e) => updateBusiness("businessPhone", formatPhone(e.target.value))}
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    className={cn("text-sm", errors.businessPhone && "border-destructive focus-visible:ring-destructive")}
                   />
+                  {errors.businessPhone && (
+                    <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      {errors.businessPhone}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-1.5">
@@ -440,8 +513,17 @@ export function FinancingClientForm({
                     placeholder="finance@company.com"
                     value={app.business.businessEmail}
                     onChange={(e) => updateBusiness("businessEmail", e.target.value)}
-                    className="text-sm"
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    className={cn("text-sm", errors.businessEmail && "border-destructive focus-visible:ring-destructive")}
                   />
+                  {errors.businessEmail && (
+                    <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      {errors.businessEmail}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-1.5">
@@ -450,25 +532,42 @@ export function FinancingClientForm({
                     placeholder="www.company.com"
                     value={app.business.website || ""}
                     onChange={(e) => updateBusiness("website", e.target.value)}
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck={false}
                     className="text-sm"
                   />
                 </div>
               </div>
 
               <div className="space-y-1.5">
-                <Label className="text-xs font-semibold">
-                  Physical Operating Street Address <span className="text-destructive">*</span>
-                </Label>
-                <Input
-                  placeholder="Street address (No P.O. Boxes)"
-                  value={typeof app.business.physicalAddress === "string" ? app.business.physicalAddress : app.business.physicalAddress?.street || ""}
-                  onChange={(e) => {
-                    const str = e.target.value;
+                <SmartAddressInput
+                  label="Physical Operating Street Address"
+                  streetValue={typeof app.business.physicalAddress === "string" ? app.business.physicalAddress : app.business.physicalAddress?.street || ""}
+                  onStreetChange={(str) => {
                     const prev = typeof app.business.physicalAddress === "object" ? app.business.physicalAddress : { city: "", province: "ON", postalCode: "" };
                     updateBusiness("physicalAddress", { ...prev, street: str });
                   }}
-                  className="text-sm"
+                  onAddressParsed={(parsed) => {
+                    updateBusiness("physicalAddress", {
+                      street: parsed.street,
+                      city: parsed.city,
+                      province: parsed.province,
+                      postalCode: parsed.postalCode,
+                    });
+                    if (parsed.city) updateBusiness("city", parsed.city);
+                    if (parsed.province) updateBusiness("province", parsed.province);
+                    if (parsed.postalCode) updateBusiness("postalCode", parsed.postalCode);
+                    if (parsed.country) updateBusiness("country", parsed.country);
+                  }}
+                  required
                 />
+                {errors.physicalAddress && (
+                  <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                    <AlertCircle className="w-3 h-3" />
+                    {errors.physicalAddress}
+                  </p>
+                )}
               </div>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -478,6 +577,9 @@ export function FinancingClientForm({
                     placeholder="Toronto / New York"
                     value={app.business.city}
                     onChange={(e) => updateBusiness("city", e.target.value)}
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck={false}
                     className="text-sm"
                   />
                 </div>
@@ -488,6 +590,9 @@ export function FinancingClientForm({
                     placeholder="ON / NY"
                     value={app.business.province}
                     onChange={(e) => updateBusiness("province", e.target.value)}
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck={false}
                     className="text-sm"
                   />
                 </div>
@@ -498,8 +603,18 @@ export function FinancingClientForm({
                     placeholder="M5V 2T6"
                     value={app.business.postalCode}
                     onChange={(e) => updateBusiness("postalCode", e.target.value)}
-                    className="text-sm"
+                    onBlur={(e) => updateBusiness("postalCode", formatPostalCode(e.target.value))}
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    className={cn("text-sm", errors.postalCode && "border-destructive focus-visible:ring-destructive")}
                   />
+                  {errors.postalCode && (
+                    <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      {errors.postalCode}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-1.5">
@@ -526,6 +641,9 @@ export function FinancingClientForm({
                     placeholder="e.g. 123456789 RT0001"
                     value={app.business.federalTaxId}
                     onChange={(e) => updateBusiness("federalTaxId", e.target.value)}
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck={false}
                     className="text-sm"
                   />
                 </div>
@@ -551,12 +669,18 @@ export function FinancingClientForm({
 
                 <div className="space-y-1.5">
                   <Label className="text-xs font-semibold">Date Established / Incorporated</Label>
-                  <Input
-                    type="date"
+                  <FinancingDatePicker
+                    mode="established"
                     value={app.business.dateEstablished}
-                    onChange={(e) => updateBusiness("dateEstablished", e.target.value)}
-                    className="text-sm"
+                    onChange={(val) => updateBusiness("dateEstablished", val)}
+                    placeholder="YYYY-MM-DD"
                   />
+                  {errors.dateEstablished && (
+                    <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      {errors.dateEstablished}
+                    </p>
+                  )}
                 </div>
               </div>
 
@@ -618,13 +742,19 @@ export function FinancingClientForm({
                   <Label className="text-xs font-bold text-cyan-900 dark:text-cyan-200">
                     Amount Requested ($) <span className="text-destructive">*</span>
                   </Label>
-                  <Input
-                    type="number"
-                    placeholder="150000"
+                  <FormattedNumberInput
+                    prefix="$"
+                    placeholder="150,000"
                     value={app.financials.amountRequested || ""}
-                    onChange={(e) => updateFinancials("amountRequested", parseFloat(e.target.value) || 0)}
-                    className="text-lg font-bold bg-background"
+                    onValueChange={(val) => updateFinancials("amountRequested", val || 0)}
+                    className={cn("text-lg font-bold bg-background", errors.amountRequested && "border-destructive focus-visible:ring-destructive")}
                   />
+                  {errors.amountRequested && (
+                    <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      {errors.amountRequested}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-1.5">
@@ -633,6 +763,9 @@ export function FinancingClientForm({
                     placeholder="e.g. Equipment Purchase, Working Capital"
                     value={app.financials.useOfFunds}
                     onChange={(e) => updateFinancials("useOfFunds", e.target.value)}
+                    autoComplete="off"
+                    autoCorrect="off"
+                    spellCheck={false}
                     className="text-sm bg-background"
                   />
                 </div>
@@ -663,33 +796,39 @@ export function FinancingClientForm({
                   <Label className="text-xs font-semibold">
                     Gross Annual Sales ($) <span className="text-destructive">*</span>
                   </Label>
-                  <Input
-                    type="number"
-                    placeholder="2850000"
+                  <FormattedNumberInput
+                    prefix="$"
+                    placeholder="2,850,000"
                     value={app.financials.annualGrossRevenue || ""}
-                    onChange={(e) => updateFinancials("annualGrossRevenue", parseFloat(e.target.value) || 0)}
-                    className="text-sm"
+                    onValueChange={(val) => updateFinancials("annualGrossRevenue", val || 0)}
+                    className={cn("text-sm", errors.annualGrossRevenue && "border-destructive focus-visible:ring-destructive")}
                   />
+                  {errors.annualGrossRevenue && (
+                    <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      {errors.annualGrossRevenue}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-1.5">
                   <Label className="text-xs font-semibold">Average Monthly Sales ($)</Label>
-                  <Input
-                    type="number"
-                    placeholder="237500"
+                  <FormattedNumberInput
+                    prefix="$"
+                    placeholder="237,500"
                     value={app.financials.averageMonthlyRevenue || ""}
-                    onChange={(e) => updateFinancials("averageMonthlyRevenue", parseFloat(e.target.value) || 0)}
+                    onValueChange={(val) => updateFinancials("averageMonthlyRevenue", val || 0)}
                     className="text-sm"
                   />
                 </div>
 
                 <div className="space-y-1.5">
                   <Label className="text-xs font-semibold">Average Bank Balance ($)</Label>
-                  <Input
-                    type="number"
-                    placeholder="45000"
+                  <FormattedNumberInput
+                    prefix="$"
+                    placeholder="45,000"
                     value={app.financials.averageBankBalance || ""}
-                    onChange={(e) => updateFinancials("averageBankBalance", parseFloat(e.target.value) || 0)}
+                    onValueChange={(val) => updateFinancials("averageBankBalance", val || 0)}
                     className="text-sm"
                   />
                 </div>
@@ -757,17 +896,20 @@ export function FinancingClientForm({
                           placeholder="e.g. Moneris, Chase, Stripe"
                           value={app.paymentProcessing.currentProcessor || ""}
                           onChange={(e) => updatePaymentProcessing("currentProcessor", e.target.value)}
+                          autoComplete="off"
+                          autoCorrect="off"
+                          spellCheck={false}
                           className="text-sm"
                         />
                       </div>
 
                       <div className="space-y-1.5">
                         <Label className="text-xs font-semibold">Avg Monthly Card Volume ($)</Label>
-                        <Input
-                          type="number"
-                          placeholder="42000"
+                        <FormattedNumberInput
+                          prefix="$"
+                          placeholder="42,000"
                           value={app.paymentProcessing.averageMonthlyProcessingVolume || ""}
-                          onChange={(e) => updatePaymentProcessing("averageMonthlyProcessingVolume", parseFloat(e.target.value) || 0)}
+                          onValueChange={(val) => updatePaymentProcessing("averageMonthlyProcessingVolume", val || 0)}
                           className="text-sm"
                         />
                       </div>
@@ -778,6 +920,9 @@ export function FinancingClientForm({
                           placeholder="e.g. October ($68,000)"
                           value={app.paymentProcessing.highMonth || ""}
                           onChange={(e) => updatePaymentProcessing("highMonth", e.target.value)}
+                          autoComplete="off"
+                          autoCorrect="off"
+                          spellCheck={false}
                           className="text-sm"
                         />
                       </div>
@@ -788,6 +933,9 @@ export function FinancingClientForm({
                           placeholder="e.g. February ($25,000)"
                           value={app.paymentProcessing.lowMonth || ""}
                           onChange={(e) => updatePaymentProcessing("lowMonth", e.target.value)}
+                          autoComplete="off"
+                          autoCorrect="off"
+                          spellCheck={false}
                           className="text-sm"
                         />
                       </div>
@@ -874,8 +1022,17 @@ export function FinancingClientForm({
                         placeholder="John"
                         value={owner.firstName}
                         onChange={(e) => updateOwner(idx, "firstName", e.target.value)}
-                        className="text-sm"
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck={false}
+                        className={cn("text-sm", ownerErrors[idx]?.firstName && "border-destructive focus-visible:ring-destructive")}
                       />
+                      {ownerErrors[idx]?.firstName && (
+                        <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          {ownerErrors[idx].firstName}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-1.5">
@@ -886,8 +1043,17 @@ export function FinancingClientForm({
                         placeholder="Doe"
                         value={owner.lastName}
                         onChange={(e) => updateOwner(idx, "lastName", e.target.value)}
-                        className="text-sm"
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck={false}
+                        className={cn("text-sm", ownerErrors[idx]?.lastName && "border-destructive focus-visible:ring-destructive")}
                       />
+                      {ownerErrors[idx]?.lastName && (
+                        <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          {ownerErrors[idx].lastName}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-1.5">
@@ -896,6 +1062,9 @@ export function FinancingClientForm({
                         placeholder="President / CEO"
                         value={owner.title}
                         onChange={(e) => updateOwner(idx, "title", e.target.value)}
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck={false}
                         className="text-sm"
                       />
                     </div>
@@ -904,13 +1073,20 @@ export function FinancingClientForm({
                       <Label className="text-xs font-bold text-purple-900 dark:text-purple-200">
                         Ownership % <span className="text-destructive">*</span>
                       </Label>
-                      <Input
-                        type="number"
+                      <FormattedNumberInput
+                        suffix="%"
+                        max={100}
                         placeholder="100"
                         value={owner.ownershipPercentage || ""}
-                        onChange={(e) => updateOwner(idx, "ownershipPercentage", parseFloat(e.target.value) || 0)}
-                        className="text-sm font-bold"
+                        onValueChange={(val) => updateOwner(idx, "ownershipPercentage", val || 0)}
+                        className={cn("text-sm font-bold", ownerErrors[idx]?.ownershipPercentage && "border-destructive focus-visible:ring-destructive")}
                       />
+                      {ownerErrors[idx]?.ownershipPercentage && (
+                        <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          {ownerErrors[idx].ownershipPercentage}
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -921,40 +1097,91 @@ export function FinancingClientForm({
                         placeholder="999-999-999"
                         value={owner.ssnOrSin}
                         onChange={(e) => updateOwner(idx, "ssnOrSin", e.target.value)}
-                        className="text-sm"
+                        onBlur={(e) => updateOwner(idx, "ssnOrSin", formatSinOrSsn(e.target.value))}
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck={false}
+                        className={cn("text-sm", ownerErrors[idx]?.ssnOrSin && "border-destructive focus-visible:ring-destructive")}
                       />
+                      {ownerErrors[idx]?.ssnOrSin && (
+                        <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          {ownerErrors[idx].ssnOrSin}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label className="text-xs font-semibold">Date of Birth</Label>
-                      <Input
-                        type="date"
+                      <Label className="text-xs font-semibold">
+                        Date of Birth <span className="text-destructive">*</span>
+                      </Label>
+                      <FinancingDatePicker
+                        mode="dob"
                         value={owner.dob}
-                        onChange={(e) => updateOwner(idx, "dob", e.target.value)}
-                        className="text-sm"
+                        onChange={(val) => updateOwner(idx, "dob", val)}
+                        placeholder="YYYY-MM-DD"
                       />
+                      {ownerErrors[idx]?.dob && (
+                        <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          {ownerErrors[idx].dob}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-1.5">
-                      <Label className="text-xs font-semibold">Mobile Phone</Label>
+                      <Label className="text-xs font-semibold">
+                        Mobile Phone <span className="text-destructive">*</span>
+                      </Label>
                       <Input
                         placeholder="(555) 000-0000"
                         value={owner.mobilePhone}
                         onChange={(e) => updateOwner(idx, "mobilePhone", e.target.value)}
-                        className="text-sm"
+                        onBlur={(e) => updateOwner(idx, "mobilePhone", formatPhone(e.target.value))}
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck={false}
+                        className={cn("text-sm", ownerErrors[idx]?.mobilePhone && "border-destructive focus-visible:ring-destructive")}
                       />
+                      {ownerErrors[idx]?.mobilePhone && (
+                        <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          {ownerErrors[idx].mobilePhone}
+                        </p>
+                      )}
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div className="sm:col-span-2 space-y-1.5">
-                      <Label className="text-xs font-semibold">Home Street Address</Label>
-                      <Input
-                        placeholder="123 Residential Way"
-                        value={owner.homeAddress}
-                        onChange={(e) => updateOwner(idx, "homeAddress", e.target.value)}
-                        className="text-sm"
+                      <SmartAddressInput
+                        label="Home Street Address"
+                        streetValue={owner.homeAddress || (typeof owner.address === "object" ? owner.address?.street : "") || ""}
+                        onStreetChange={(str) => {
+                          updateOwner(idx, "homeAddress", str);
+                          const prevAddr = typeof owner.address === "object" ? owner.address : { city: "", province: "ON", postalCode: "" };
+                          updateOwner(idx, "address", { ...prevAddr, street: str });
+                        }}
+                        onAddressParsed={(parsed) => {
+                          updateOwner(idx, "homeAddress", parsed.street);
+                          updateOwner(idx, "address", {
+                            street: parsed.street,
+                            city: parsed.city,
+                            province: parsed.province,
+                            postalCode: parsed.postalCode,
+                          });
+                          if (parsed.city) updateOwner(idx, "city", parsed.city);
+                          if (parsed.province) updateOwner(idx, "province", parsed.province);
+                          if (parsed.postalCode) updateOwner(idx, "postalCode", parsed.postalCode);
+                        }}
+                        required
                       />
+                      {ownerErrors[idx]?.homeAddress && (
+                        <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          {ownerErrors[idx].homeAddress}
+                        </p>
+                      )}
                     </div>
 
                     <div className="space-y-1.5">
@@ -964,8 +1191,17 @@ export function FinancingClientForm({
                         placeholder="john.doe@gmail.com"
                         value={owner.email}
                         onChange={(e) => updateOwner(idx, "email", e.target.value)}
-                        className="text-sm"
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck={false}
+                        className={cn("text-sm", ownerErrors[idx]?.email && "border-destructive focus-visible:ring-destructive")}
                       />
+                      {ownerErrors[idx]?.email && (
+                        <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          {ownerErrors[idx].email}
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -976,6 +1212,9 @@ export function FinancingClientForm({
                         placeholder="Toronto"
                         value={owner.city}
                         onChange={(e) => updateOwner(idx, "city", e.target.value)}
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck={false}
                         className="text-sm"
                       />
                     </div>
@@ -986,6 +1225,9 @@ export function FinancingClientForm({
                         placeholder="ON"
                         value={owner.province}
                         onChange={(e) => updateOwner(idx, "province", e.target.value)}
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck={false}
                         className="text-sm"
                       />
                     </div>
@@ -996,8 +1238,18 @@ export function FinancingClientForm({
                         placeholder="M4B 1B3"
                         value={owner.postalCode}
                         onChange={(e) => updateOwner(idx, "postalCode", e.target.value)}
-                        className="text-sm"
+                        onBlur={(e) => updateOwner(idx, "postalCode", formatPostalCode(e.target.value))}
+                        autoComplete="off"
+                        autoCorrect="off"
+                        spellCheck={false}
+                        className={cn("text-sm", ownerErrors[idx]?.postalCode && "border-destructive focus-visible:ring-destructive")}
                       />
+                      {ownerErrors[idx]?.postalCode && (
+                        <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          {ownerErrors[idx].postalCode}
+                        </p>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -1048,28 +1300,31 @@ export function FinancingClientForm({
                       placeholder="e.g. OnDeck, Clearco, Bank of Montreal"
                       value={app.existingFinancing.lenderName || ""}
                       onChange={(e) => updateExistingFinancing("lenderName", e.target.value)}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      spellCheck={false}
                       className="text-sm bg-background"
                     />
                   </div>
 
                   <div className="space-y-1.5">
                     <Label className="text-xs font-semibold">Approximate Balance ($)</Label>
-                    <Input
-                      type="number"
-                      placeholder="28000"
+                    <FormattedNumberInput
+                      prefix="$"
+                      placeholder="28,000"
                       value={app.existingFinancing.approximateBalance || ""}
-                      onChange={(e) => updateExistingFinancing("approximateBalance", parseFloat(e.target.value) || 0)}
+                      onValueChange={(val) => updateExistingFinancing("approximateBalance", val || 0)}
                       className="text-sm bg-background"
                     />
                   </div>
 
                   <div className="space-y-1.5">
                     <Label className="text-xs font-semibold">Daily or Weekly Payment ($)</Label>
-                    <Input
-                      type="number"
-                      placeholder="1200"
+                    <FormattedNumberInput
+                      prefix="$"
+                      placeholder="1,200"
                       value={app.existingFinancing.dailyOrWeeklyPayment || ""}
-                      onChange={(e) => updateExistingFinancing("dailyOrWeeklyPayment", parseFloat(e.target.value) || 0)}
+                      onValueChange={(val) => updateExistingFinancing("dailyOrWeeklyPayment", val || 0)}
                       className="text-sm bg-background"
                     />
                   </div>
@@ -1144,17 +1399,20 @@ export function FinancingClientForm({
                       placeholder="e.g. Skyline Commercial REIT"
                       value={app.property.landlordOrMortgagee || ""}
                       onChange={(e) => updateProperty("landlordOrMortgagee", e.target.value)}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      spellCheck={false}
                       className="text-sm"
                     />
                   </div>
 
                   <div className="space-y-1.5">
                     <Label className="text-xs font-semibold">Monthly Rent / Mortgage ($)</Label>
-                    <Input
-                      type="number"
-                      placeholder="8500"
+                    <FormattedNumberInput
+                      prefix="$"
+                      placeholder="8,500"
                       value={app.property.monthlyRentOrMortgage || ""}
-                      onChange={(e) => updateProperty("monthlyRentOrMortgage", parseFloat(e.target.value) || 0)}
+                      onValueChange={(val) => updateProperty("monthlyRentOrMortgage", val || 0)}
                       className="text-sm"
                     />
                   </div>
@@ -1165,6 +1423,10 @@ export function FinancingClientForm({
                       placeholder="(555) 000-0000"
                       value={app.property.landlordPhone || ""}
                       onChange={(e) => updateProperty("landlordPhone", e.target.value)}
+                      onBlur={(e) => updateProperty("landlordPhone", formatPhone(e.target.value))}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      spellCheck={false}
                       className="text-sm"
                     />
                   </div>
@@ -1219,6 +1481,9 @@ export function FinancingClientForm({
                             placeholder="e.g. AlumaCraft Extrusions"
                             value={tr.companyName}
                             onChange={(e) => updateTradeReference(idx, "companyName", e.target.value)}
+                            autoComplete="off"
+                            autoCorrect="off"
+                            spellCheck={false}
                             className="text-xs"
                           />
                         </div>
@@ -1229,6 +1494,9 @@ export function FinancingClientForm({
                             placeholder="e.g. AC-99214"
                             value={tr.accountNumber || ""}
                             onChange={(e) => updateTradeReference(idx, "accountNumber", e.target.value)}
+                            autoComplete="off"
+                            autoCorrect="off"
+                            spellCheck={false}
                             className="text-xs"
                           />
                         </div>
@@ -1239,6 +1507,9 @@ export function FinancingClientForm({
                             placeholder="e.g. Gary Vance"
                             value={tr.contactPerson || ""}
                             onChange={(e) => updateTradeReference(idx, "contactPerson", e.target.value)}
+                            autoComplete="off"
+                            autoCorrect="off"
+                            spellCheck={false}
                             className="text-xs"
                           />
                         </div>
@@ -1249,6 +1520,10 @@ export function FinancingClientForm({
                             placeholder="(555) 000-0000"
                             value={tr.phone || ""}
                             onChange={(e) => updateTradeReference(idx, "phone", e.target.value)}
+                            onBlur={(e) => updateTradeReference(idx, "phone", formatPhone(e.target.value))}
+                            autoComplete="off"
+                            autoCorrect="off"
+                            spellCheck={false}
                             className="text-xs"
                           />
                         </div>
@@ -1315,6 +1590,40 @@ export function FinancingClientForm({
                     <p className="text-[11px] text-muted-foreground">
                       I confirm I am authorized to bind the business and consent to soft and/or hard credit inquiries for financing evaluation.
                     </p>
+                    {errors.creditCheckConsent && (
+                      <p className="text-[11px] font-medium text-destructive flex items-center gap-1 pt-1">
+                        <AlertCircle className="w-3 h-3" />
+                        {errors.creditCheckConsent}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold">Signer Legal Name</Label>
+                    <Input
+                      placeholder="Full Legal Name"
+                      value={
+                        app.authorization.signerName ||
+                        (app.owners[0] ? `${app.owners[0].firstName} ${app.owners[0].lastName}`.trim() : "")
+                      }
+                      onChange={(e) => updateAuthorization("signerName", e.target.value)}
+                      autoComplete="off"
+                      autoCorrect="off"
+                      spellCheck={false}
+                      className="text-sm"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <Label className="text-xs font-semibold">Date Signed</Label>
+                    <FinancingDatePicker
+                      mode="signed"
+                      value={app.authorization.dateSigned || new Date().toISOString().split("T")[0]}
+                      onChange={(val) => updateAuthorization("dateSigned", val)}
+                      placeholder="YYYY-MM-DD"
+                    />
                   </div>
                 </div>
 
@@ -1331,12 +1640,24 @@ export function FinancingClientForm({
                     }
                     onChange={(dataUrl) => updateAuthorization("signatureDataUrl", dataUrl)}
                   />
+                  {errors.signatureDataUrl && (
+                    <p className="text-[11px] font-medium text-destructive flex items-center gap-1">
+                      <AlertCircle className="w-3 h-3" />
+                      {errors.signatureDataUrl}
+                    </p>
+                  )}
                 </div>
               </CardContent>
             </Card>
           </div>
         )}
       </div>
+
+      <SmartIntakeModal
+        open={smartIntakeOpen}
+        onOpenChange={setSmartIntakeOpen}
+        onApplyData={(updater) => setApp(updater)}
+      />
 
       {/* Navigation Footer */}
       <Card className="rounded-2xl border-border/80 shadow-md p-4 bg-card flex items-center justify-between">

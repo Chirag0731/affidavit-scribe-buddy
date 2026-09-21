@@ -5,6 +5,7 @@ import { financingStore } from "@/lib/financing-db";
 import {
   generateWhiteLabelPdf,
   generateCanaCapPdf,
+  generatePrintableQuickFloPdf,
   generateAllLenderPdfsZip,
   validateForWhiteLabel,
   validateForCanaCap,
@@ -12,6 +13,7 @@ import {
 } from "@/lib/lender-pdf-engine";
 import { FinancingReviewSummary } from "@/components/financing/financing-review-summary";
 import { FinancingPdfPreviewModal } from "@/components/financing/financing-pdf-preview-modal";
+import { SendApplicationModal } from "@/components/financing/send-application-modal";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
@@ -36,6 +38,8 @@ import {
   Save,
   MessageSquare,
   Clock,
+  Send,
+  Copy,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -52,6 +56,8 @@ function FinancingDetailPage() {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewLender, setPreviewLender] = useState<"white-label" | "canacap">("white-label");
   const [downloadingZip, setDownloadingZip] = useState(false);
+  const [downloadingPrintable, setDownloadingPrintable] = useState(false);
+  const [sendModalOpen, setSendModalOpen] = useState(false);
   const [newNote, setNewNote] = useState("");
   const [notes, setNotes] = useState<{ date: string; author: string; text: string }[]>([
     {
@@ -138,6 +144,64 @@ function FinancingDetailPage() {
     }
   };
 
+  const handleDownloadPrintable = async () => {
+    if (!app) return;
+    try {
+      setDownloadingPrintable(true);
+      const blob = await generatePrintableQuickFloPdf(app);
+      const name = `${app.business.legalName || "Application"}_QuickFlo_Fillable_Intake.pdf`.replace(/[^a-zA-Z0-9_-]/g, "_");
+      downloadPdfBlob(blob, name);
+      toast.success("Printable and fillable application PDF downloaded");
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to generate printable PDF");
+    } finally {
+      setDownloadingPrintable(false);
+    }
+  };
+
+  const handleCopyPitch = async () => {
+    if (!app) return;
+    const p1 = app.owners[0] || ({} as any);
+    const street = typeof app.business.physicalAddress === "string" ? app.business.physicalAddress : app.business.physicalAddress?.street || "";
+    const p1Home = p1.homeAddress || (p1.address ? `${p1.address.street}, ${p1.address.city}, ${p1.address.province}` : "");
+    const summaryText = [
+      "COMMERCIAL CAPITAL APPLICATION SUMMARY",
+      `QuickFlo Reference: QF-${app.id.slice(0, 8).toUpperCase()}`,
+      `Company: ${app.business.legalName}${app.business.tradeName ? ` (DBA: ${app.business.tradeName})` : ""}`,
+      `Tax ID / BIN: ${app.business.federalTaxId || app.business.businessNumber || "Pending"}`,
+      `Structure: ${app.business.structureType || app.business.entityType || "Corporation"}`,
+      `Industry: ${app.business.industry || "General Commercial"}`,
+      `Established: ${app.business.dateEstablished || app.business.dateStarted || "N/A"} (${app.business.lengthOfOwnership || "N/A"})`,
+      `Address: ${street}, ${app.business.city || ""}, ${app.business.province || ""} ${app.business.postalCode || ""}`,
+      `Contact: ${app.business.businessPhone || app.business.phone} | ${app.business.businessEmail || app.business.email}`,
+      "",
+      "FINANCIAL PROFILE",
+      `Amount Requested: $${app.financials.amountRequested?.toLocaleString() || "0"} (Use: ${app.financials.useOfFunds || "Working Capital"})`,
+      `Gross Annual Revenue: $${app.financials.annualGrossRevenue?.toLocaleString() || "0"}`,
+      `Average Monthly Revenue: $${app.financials.averageMonthlyRevenue?.toLocaleString() || "0"}`,
+      `Average Bank Balance: $${app.financials.averageBankBalance?.toLocaleString() || "0"}`,
+      `Merchant Processor: ${app.paymentProcessing.currentProcessor || "None"} (Avg Vol: $${app.paymentProcessing.averageMonthlyProcessingVolume?.toLocaleString() || "0"}/mo)`,
+      "",
+      "BENEFICIAL OWNERSHIP",
+      `Principal 1: ${p1.firstName || ""} ${p1.lastName || ""} (${p1.ownershipPercentage || "100"}% Equity) - ${p1.title || "President"}`,
+      `DOB: ${p1.dob || "N/A"} | SSN/SIN: ${p1.ssnOrSin || p1.sin || "On File"}`,
+      `Phone: ${p1.mobilePhone || p1.phone || "N/A"} | Email: ${p1.email || "N/A"}`,
+      `Home Address: ${p1Home || "On File"}`,
+      "",
+      "PREMISES & EXISTING DEBT",
+      `Property Status: ${app.property.locationType || "Leased"} ($${app.property.monthlyRentOrMortgage?.toLocaleString() || "0"}/mo) - ${app.property.landlordOrMortgagee || "N/A"}`,
+      `Existing Balances: ${app.existingFinancing.hasExistingFinancing ? `${app.existingFinancing.lenderName || "Lender"} ($${app.existingFinancing.approximateBalance?.toLocaleString()})` : "None reported"}`,
+    ].join("\n");
+
+    try {
+      await navigator.clipboard.writeText(summaryText);
+      toast.success("Executive underwriting summary copied to clipboard");
+    } catch {
+      toast.error("Failed to copy summary");
+    }
+  };
+
   const handleAddNote = () => {
     if (!newNote.trim()) return;
     setNotes((prev) => [
@@ -197,7 +261,7 @@ function FinancingDetailPage() {
           </div>
         </div>
 
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
           <div className="flex items-center gap-2">
             <span className="text-xs font-semibold text-muted-foreground">Status:</span>
             <Select
@@ -217,6 +281,44 @@ function FinancingDetailPage() {
               </SelectContent>
             </Select>
           </div>
+
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={() => setSendModalOpen(true)}
+            className="h-9 text-xs border-cyan-300 dark:border-cyan-800 text-cyan-700 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-950/40 font-semibold"
+          >
+            <Send className="w-3.5 h-3.5 mr-1.5" />
+            Send to Client
+          </Button>
+
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={handleDownloadPrintable}
+            disabled={downloadingPrintable}
+            className="h-9 text-xs font-semibold"
+          >
+            {downloadingPrintable ? (
+              <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
+            ) : (
+              <Printer className="w-3.5 h-3.5 mr-1.5 text-cyan-600" />
+            )}
+            Printable PDF
+          </Button>
+
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            onClick={handleCopyPitch}
+            className="h-9 text-xs font-semibold"
+          >
+            <Copy className="w-3.5 h-3.5 mr-1.5" />
+            Copy Pitch
+          </Button>
 
           <Button
             type="button"
@@ -511,6 +613,13 @@ function FinancingDetailPage() {
         isOpen={previewOpen}
         onClose={() => setPreviewOpen(false)}
         initialLender={previewLender}
+      />
+
+      {/* Send Application Modal */}
+      <SendApplicationModal
+        application={app}
+        open={sendModalOpen}
+        onOpenChange={setSendModalOpen}
       />
     </div>
   );

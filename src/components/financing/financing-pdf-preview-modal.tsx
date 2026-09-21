@@ -3,6 +3,7 @@ import { BusinessFinancingApplication } from "@/types/financing";
 import {
   generateWhiteLabelPdf,
   generateCanaCapPdf,
+  generatePrintableQuickFloPdf,
   generateAllLenderPdfsZip,
   validateForWhiteLabel,
   validateForCanaCap,
@@ -34,7 +35,7 @@ interface FinancingPdfPreviewModalProps {
   application: BusinessFinancingApplication | null;
   isOpen: boolean;
   onClose: () => void;
-  initialLender?: "white-label" | "canacap";
+  initialLender?: "white-label" | "canacap" | "quickflo-printable";
 }
 
 export function FinancingPdfPreviewModal({
@@ -43,7 +44,7 @@ export function FinancingPdfPreviewModal({
   onClose,
   initialLender = "white-label",
 }: FinancingPdfPreviewModalProps) {
-  const [selectedLender, setSelectedLender] = useState<"white-label" | "canacap">(initialLender);
+  const [selectedLender, setSelectedLender] = useState<"white-label" | "canacap" | "quickflo-printable">(initialLender);
   const [loading, setLoading] = useState(false);
   const [downloadingZip, setDownloadingZip] = useState(false);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
@@ -66,10 +67,14 @@ export function FinancingPdfPreviewModal({
 
     const generate = async () => {
       try {
-        const blob =
-          selectedLender === "white-label"
-            ? await generateWhiteLabelPdf(application)
-            : await generateCanaCapPdf(application);
+        let blob: Blob;
+        if (selectedLender === "white-label") {
+          blob = await generateWhiteLabelPdf(application);
+        } else if (selectedLender === "canacap") {
+          blob = await generateCanaCapPdf(application);
+        } else {
+          blob = await generatePrintableQuickFloPdf(application);
+        }
 
         if (active) {
           const url = URL.createObjectURL(blob);
@@ -97,7 +102,12 @@ export function FinancingPdfPreviewModal({
 
   const whiteLabelAudit = validateForWhiteLabel(application);
   const canacapAudit = validateForCanaCap(application);
-  const currentAudit = selectedLender === "white-label" ? whiteLabelAudit : canacapAudit;
+  const currentAudit =
+    selectedLender === "white-label"
+      ? whiteLabelAudit
+      : selectedLender === "canacap"
+      ? canacapAudit
+      : { isValid: true, completenessPercentage: 100, missingFields: [], missingRequiredFields: [], warnings: [], audits: [] };
 
   const handleDownloadCurrent = async () => {
     try {
@@ -105,9 +115,13 @@ export function FinancingPdfPreviewModal({
         const blob = await generateWhiteLabelPdf(application);
         const name = `${application.business.legalName || "Application"}_Business_Financing.pdf`.replace(/[^a-zA-Z0-9_-]/g, "_");
         downloadPdfBlob(blob, name);
-      } else {
+      } else if (selectedLender === "canacap") {
         const blob = await generateCanaCapPdf(application);
         const name = `${application.business.legalName || "Application"}_CanaCap_Financing.pdf`.replace(/[^a-zA-Z0-9_-]/g, "_");
+        downloadPdfBlob(blob, name);
+      } else {
+        const blob = await generatePrintableQuickFloPdf(application);
+        const name = `${application.business.legalName || "Application"}_QuickFlo_Printable_Intake.pdf`.replace(/[^a-zA-Z0-9_-]/g, "_");
         downloadPdfBlob(blob, name);
       }
       toast.success("PDF downloaded successfully");
@@ -157,7 +171,7 @@ export function FinancingPdfPreviewModal({
           <div className="flex items-center gap-2">
             <Tabs
               value={selectedLender}
-              onValueChange={(val) => setSelectedLender(val as "white-label" | "canacap")}
+              onValueChange={(val) => setSelectedLender(val as any)}
             >
               <TabsList className="h-9">
                 <TabsTrigger value="white-label" className="text-xs flex items-center gap-1.5 px-3">
@@ -176,6 +190,10 @@ export function FinancingPdfPreviewModal({
                     <span className="w-2 h-2 rounded-full bg-amber-500" />
                   )}
                 </TabsTrigger>
+                <TabsTrigger value="quickflo-printable" className="text-xs flex items-center gap-1.5 px-3">
+                  QuickFlo Fillable Form
+                  <span className="w-2 h-2 rounded-full bg-cyan-500" />
+                </TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
@@ -190,7 +208,7 @@ export function FinancingPdfPreviewModal({
               className="h-9 text-xs"
             >
               <Download className="w-3.5 h-3.5 mr-1.5" />
-              Download {selectedLender === "white-label" ? "Form 1" : "Form 2"}
+              Download {selectedLender === "white-label" ? "Form 1" : selectedLender === "canacap" ? "Form 2" : "QuickFlo Form"}
             </Button>
             <Button
               type="button"

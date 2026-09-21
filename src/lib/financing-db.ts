@@ -170,6 +170,7 @@ export async function resetFinancingStorageToSample(): Promise<void> {
 // Unified Store Object
 export const financingStore = {
   getApplications: getFinancingApplications,
+  getApplication: getFinancingApplicationById,
   getApplicationById: getFinancingApplicationById,
   saveApplication: saveFinancingApplication,
   updateStatus: updateFinancingApplicationStatus,

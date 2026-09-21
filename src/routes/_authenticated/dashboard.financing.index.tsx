@@ -4,6 +4,7 @@ import { BusinessFinancingApplication } from "@/types/financing";
 import { financingStore } from "@/lib/financing-db";
 import { FinancingLogo } from "@/components/financing/financing-logo";
 import { FinancingPdfPreviewModal } from "@/components/financing/financing-pdf-preview-modal";
+import { SendApplicationModal } from "@/components/financing/send-application-modal";
 import { generateAllLenderPdfsZip } from "@/lib/lender-pdf-engine";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -37,6 +38,7 @@ import {
   Briefcase,
   Layers,
   Copy,
+  Send,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -52,6 +54,7 @@ function FinancingOverviewPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [selectedAppForPreview, setSelectedAppForPreview] = useState<BusinessFinancingApplication | null>(null);
+  const [selectedAppForSend, setSelectedAppForSend] = useState<BusinessFinancingApplication | null>(null);
   const [previewOpen, setPreviewOpen] = useState(false);
 
   useEffect(() => {
@@ -384,12 +387,24 @@ function FinancingOverviewPage() {
                             type="button"
                             variant="ghost"
                             size="sm"
+                            onClick={() => setSelectedAppForSend(app)}
+                            title="Send Application to Client"
+                            className="h-8 px-2 text-xs text-cyan-700 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-950/40"
+                          >
+                            <Send className="w-3.5 h-3.5 mr-1" />
+                            Send
+                          </Button>
+
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
                             onClick={() => {
                               setSelectedAppForPreview(app);
                               setPreviewOpen(true);
                             }}
                             title="Preview Lender PDFs"
-                            className="h-8 px-2 text-xs text-cyan-700 dark:text-cyan-400 hover:bg-cyan-50 dark:hover:bg-cyan-950/40"
+                            className="h-8 px-2 text-xs text-muted-foreground hover:text-foreground"
                           >
                             <Eye className="w-3.5 h-3.5 mr-1" />
                             Preview
@@ -451,6 +466,13 @@ function FinancingOverviewPage() {
           }}
         />
       )}
+
+      {/* Send Application Modal */}
+      <SendApplicationModal
+        application={selectedAppForSend}
+        open={Boolean(selectedAppForSend)}
+        onOpenChange={(open) => !open && setSelectedAppForSend(null)}
+      />
     </div>
   );
 }

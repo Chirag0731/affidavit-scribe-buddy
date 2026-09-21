@@ -257,8 +257,8 @@ export function FinancingSignaturePad({
               </div>
             )}
 
-            <div className="absolute bottom-2 left-3 text-[10px] text-slate-400 select-none flex items-center gap-1">
-              <span>✕</span>
+            <div className="absolute bottom-2 left-3 text-[10px] text-slate-400 select-none flex items-center gap-1 font-serif">
+              <span>X</span>
               <div className="w-24 border-b border-slate-300" />
             </div>
           </div>
