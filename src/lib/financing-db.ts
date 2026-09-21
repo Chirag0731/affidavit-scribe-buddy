@@ -101,6 +101,41 @@ function saveLocalApplications(apps: BusinessFinancingApplication[]): void {
   }
 }
 
+// --- Deleted-application tombstones -----------------------------------
+// Deleting must stick: without this, a locally cached copy gets re-uploaded
+// on the next refresh and the application reappears.
+const DELETED_IDS_KEY = "quickflo_financing_deleted_ids_v1";
+
+function getDeletedIds(): string[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = localStorage.getItem(DELETED_IDS_KEY);
+    const parsed = raw ? JSON.parse(raw) : [];
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function addDeletedId(id: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    const next = Array.from(new Set([...getDeletedIds(), id])).slice(-500);
+    localStorage.setItem(DELETED_IDS_KEY, JSON.stringify(next));
+  } catch {
+    /* ignore */
+  }
+}
+
+function clearDeletedId(id: string): void {
+  if (typeof window === "undefined") return;
+  try {
+    localStorage.setItem(DELETED_IDS_KEY, JSON.stringify(getDeletedIds().filter((d) => d !== id)));
+  } catch {
+    /* ignore */
+  }
+}
+
 // Fetch all applications
 export async function getFinancingApplications(): Promise<BusinessFinancingApplication[]> {
   try {
