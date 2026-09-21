@@ -286,7 +286,10 @@ export function UploadQuickFloPdfModal({
                 <div className="p-4 bg-muted/40 border-b border-border/60 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <FileText className="w-4 h-4 text-cyan-600" />
-                    <span className="text-xs font-semibold text-foreground">{fileName || "Filled QuickFlo PDF"}</span>
+                    <span className="text-xs font-semibold text-foreground">{fileName || "Filled application PDF"}</span>
+                    <Badge variant="outline" className="text-[9px] px-1.5 py-0 h-4">
+                      {FORM_LABELS[detectedKind]}
+                    </Badge>
                   </div>
                   <Button
                     type="button"
