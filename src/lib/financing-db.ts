@@ -51,7 +51,7 @@ function syncToAffidavitCache(app: BusinessFinancingApplication): void {
       form_data: {
         legalName: app.business.legalName,
         dba: app.business.dba || app.business.tradeName || "",
-        requestedAmount: String(app.financials.requestedAmount || 0),
+        requestedAmount: String(app.financials.amountRequested || app.financials.requestedAmount || 0),
         primaryOwner: ownerName,
         email: app.business.email || primaryOwner?.email || "",
         phone: app.business.phone || primaryOwner?.phone || "",
@@ -59,7 +59,7 @@ function syncToAffidavitCache(app: BusinessFinancingApplication): void {
         financingAppId: app.id,
       },
       signatures: [],
-      generated_content: `Commercial Capital Application: ${app.business.legalName}\nTrade Name / DBA: ${app.business.dba || "Direct"}\nRequested Amount: $${(app.financials.requestedAmount || 0).toLocaleString()} USD\nPrincipal: ${ownerName}\nStatus: ${app.status.toUpperCase()}\nCreated: ${new Date(app.createdAt).toLocaleDateString()}`,
+      generated_content: `Commercial Capital Application: ${app.business.legalName}\nTrade Name / DBA: ${app.business.dba || "Direct"}\nRequested Amount: $${(app.financials.amountRequested || app.financials.requestedAmount || 0).toLocaleString()} USD\nPrincipal: ${ownerName}\nStatus: ${app.status.toUpperCase()}\nCreated: ${new Date(app.createdAt).toLocaleDateString()}`,
       docx_path: null,
       pdf_path: null,
       status: app.status === "draft" ? "draft" : "generated",
@@ -118,17 +118,48 @@ export async function getFinancingApplications(): Promise<BusinessFinancingAppli
       const remoteApps: BusinessFinancingApplication[] = (data as any[]).map((row) => ({
         ...row.payload,
         id: row.id,
-        status: row.status || row.payload.status,
-        createdAt: row.created_at || row.payload.createdAt,
-        updatedAt: row.updated_at || row.payload.updatedAt,
+        status: row.status || row.payload?.status || "submitted",
+        createdAt: row.created_at || row.payload?.createdAt,
+        updatedAt: row.updated_at || row.payload?.updatedAt,
       }));
-      // Sync local storage with latest remote records
-      saveLocalApplications(remoteApps);
-      remoteApps.forEach(syncToAffidavitCache);
-      return remoteApps;
+
+      // Merge with any unsynced local applications if present
+      const localApps = getLocalApplications();
+      const nonSampleLocal = localApps.filter(
+        (local) => !remoteApps.some((remote) => remote.id === local.id) && local.id !== "benchmark-sample-001"
+      );
+
+      const merged = [...remoteApps, ...nonSampleLocal];
+      saveLocalApplications(merged);
+      merged.forEach(syncToAffidavitCache);
+      return merged;
+    }
+
+    if (!error && Array.isArray(data) && data.length === 0) {
+      // Remote is empty: check if local has user-submitted applications and push them
+      const localApps = getLocalApplications();
+      const userApps = localApps.filter((a) => a.id !== "benchmark-sample-001");
+      if (userApps.length > 0) {
+        for (const uApp of userApps) {
+          try {
+            await supabase.from("financing_applications" as never).upsert({
+              id: uApp.id,
+              business_name: uApp.business.legalName || "Commercial Applicant",
+              status: uApp.status,
+              requested_amount: uApp.financials.amountRequested || uApp.financials.requestedAmount || 0,
+              payload: uApp,
+              created_at: uApp.createdAt || new Date().toISOString(),
+              updated_at: uApp.updatedAt || new Date().toISOString(),
+            } as never);
+          } catch {
+            /* ignore individual sync error */
+          }
+        }
+      }
+      return localApps;
     }
   } catch (err) {
-    console.info("Using local financing store (Supabase offline or table pending migration):", err);
+    console.info("Using local financing store (Supabase fallback):", err);
   }
 
   const localApps = getLocalApplications();
@@ -149,16 +180,28 @@ export async function getFinancingApplicationById(
 
     if (!error && data) {
       const row = data as any;
-      return {
+      const app: BusinessFinancingApplication = {
         ...row.payload,
         id: row.id,
-        status: row.status || row.payload.status,
-        createdAt: row.created_at || row.payload.createdAt,
-        updatedAt: row.updated_at || row.payload.updatedAt,
+        status: row.status || row.payload?.status || "submitted",
+        createdAt: row.created_at || row.payload?.createdAt,
+        updatedAt: row.updated_at || row.payload?.updatedAt,
       };
+
+      // Keep local store in sync
+      const localList = getLocalApplications();
+      const idx = localList.findIndex((a) => a.id === app.id);
+      if (idx >= 0) {
+        localList[idx] = app;
+      } else {
+        localList.unshift(app);
+      }
+      saveLocalApplications(localList);
+      syncToAffidavitCache(app);
+      return app;
     }
   } catch (err) {
-    // Fall back to local
+    console.info("Falling back to local application lookup:", err);
   }
 
   const localList = getLocalApplications();
@@ -189,16 +232,21 @@ export async function saveFinancingApplication(
   // Sync to Saved Affidavits cache so it surfaces on all dashboard affidavit lists
   syncToAffidavitCache(updatedApp);
 
-  // 2. Persist to Supabase if connected
+  // 2. Persist to Supabase
   try {
-    await supabase.from("financing_applications" as never).upsert({
+    const { error } = await supabase.from("financing_applications" as never).upsert({
       id: updatedApp.id,
-      business_name: updatedApp.business.legalName || "Untitled Application",
+      business_name: updatedApp.business.legalName || "Commercial Applicant",
       status: updatedApp.status,
-      requested_amount: updatedApp.financials.requestedAmount || 0,
+      requested_amount: updatedApp.financials.amountRequested || updatedApp.financials.requestedAmount || 0,
       payload: updatedApp,
+      created_at: updatedApp.createdAt || new Date().toISOString(),
       updated_at: updatedApp.updatedAt,
     } as never);
+
+    if (error) {
+      console.warn("Supabase upsert returned error:", error);
+    }
   } catch (err) {
     console.warn("Could not upsert to Supabase financing_applications:", err);
   }
@@ -242,6 +290,35 @@ export async function resetFinancingStorageToSample(): Promise<void> {
   saveLocalApplications([sample]);
 }
 
+// Subscribe to real-time changes across clients and devices
+export function subscribeToFinancingApplications(onChange: () => void): () => void {
+  if (typeof window === "undefined") return () => {};
+
+  try {
+    const channel = supabase
+      .channel("financing_applications_realtime")
+      .on(
+        "postgres_changes",
+        {
+          event: "*",
+          schema: "public",
+          table: "financing_applications",
+        },
+        () => {
+          onChange();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  } catch (err) {
+    console.warn("Could not establish Supabase realtime subscription:", err);
+    return () => {};
+  }
+}
+
 // Unified Store Object
 export const financingStore = {
   getApplications: getFinancingApplications,
@@ -251,5 +328,5 @@ export const financingStore = {
   updateStatus: updateFinancingApplicationStatus,
   deleteApplication: deleteFinancingApplication,
   resetToSample: resetFinancingStorageToSample,
+  subscribe: subscribeToFinancingApplications,
 };
-

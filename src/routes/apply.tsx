@@ -4,9 +4,7 @@ import { BusinessFinancingApplication } from "@/types/financing";
 import { financingStore } from "@/lib/financing-db";
 import { FinancingLogo } from "@/components/financing/financing-logo";
 import { FinancingClientForm } from "@/components/financing/financing-client-form";
-import { FinancingPdfPreviewModal } from "@/components/financing/financing-pdf-preview-modal";
 import {
-  generateAllLenderPdfsZip,
   generatePrintableQuickFloPdf,
   downloadBlankQuickFloPdf,
   downloadPdfBlob,
@@ -16,10 +14,8 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   ShieldCheck,
-  Lock,
   CheckCircle2,
   Download,
-  Eye,
   Clock,
   FileCheck2,
   RefreshCw,
@@ -44,9 +40,7 @@ function PublicApplyPage() {
   const [initialApp, setInitialApp] = useState<BusinessFinancingApplication | null>(null);
   const [loadingApp, setLoadingApp] = useState<boolean>(Boolean(id));
   const [submittedApp, setSubmittedApp] = useState<BusinessFinancingApplication | null>(null);
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [downloadingZip, setDownloadingZip] = useState(false);
-  const [downloadingPrintable, setDownloadingPrintable] = useState(false);
+  const [downloadingQuickFlo, setDownloadingQuickFlo] = useState(false);
   const [downloadingBlank, setDownloadingBlank] = useState(false);
 
   useEffect(() => {
@@ -75,43 +69,47 @@ function PublicApplyPage() {
     };
   }, [id]);
 
-  const handleDownloadZip = async () => {
+  const handleDownloadQuickFlo = async () => {
     if (!submittedApp) return;
     try {
-      setDownloadingZip(true);
-      const zipBytes = await generateAllLenderPdfsZip(submittedApp);
-      const blob = new Blob([zipBytes], { type: "application/zip" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      const name = `${submittedApp.business.legalName || "Application"}_QuickFlo_Package.zip`.replace(/[^a-zA-Z0-9_-]/g, "_");
-      a.href = url;
-      a.download = name;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-      toast.success("Downloaded your complete application package");
+      setDownloadingQuickFlo(true);
+      const blob = await generatePrintableQuickFloPdf(submittedApp);
+      const name = `${submittedApp.business.legalName || "Application"}_QuickFlo_Application_Signed.pdf`.replace(/[^a-zA-Z0-9_-]/g, "_");
+      downloadPdfBlob(blob, name);
+      toast.success("Downloaded your signed QuickFlo application PDF");
     } catch (err) {
       console.error(err);
-      toast.error("Failed to package files");
+      toast.error("Failed to generate QuickFlo PDF");
     } finally {
-      setDownloadingZip(false);
+      setDownloadingQuickFlo(false);
     }
   };
 
-  const handleDownloadPrintable = async () => {
+  const handlePrintQuickFlo = async () => {
     if (!submittedApp) return;
     try {
-      setDownloadingPrintable(true);
+      setDownloadingQuickFlo(true);
       const blob = await generatePrintableQuickFloPdf(submittedApp);
-      const name = `${submittedApp.business.legalName || "Application"}_QuickFlo_Fillable_Intake.pdf`.replace(/[^a-zA-Z0-9_-]/g, "_");
-      downloadPdfBlob(blob, name);
-      toast.success("Downloaded printable and fillable application PDF");
+      const url = URL.createObjectURL(blob);
+      const printWindow = window.open(url, "_blank");
+      if (printWindow) {
+        printWindow.addEventListener("load", () => {
+          printWindow.print();
+        });
+      } else {
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${submittedApp.business.legalName || "Application"}_QuickFlo_Application.pdf`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+      toast.success("Opening QuickFlo application for printing");
     } catch (err) {
       console.error(err);
-      toast.error("Failed to generate PDF");
+      toast.error("Failed to prepare application for print");
     } finally {
-      setDownloadingPrintable(false);
+      setDownloadingQuickFlo(false);
     }
   };
 
@@ -158,35 +156,37 @@ function PublicApplyPage() {
               onClick={handleDownloadBlank}
               disabled={downloadingBlank}
               className="h-8 text-xs font-medium border-border"
-              title="Download 100% blank fillable QuickFlo application PDF"
             >
               {downloadingBlank ? (
-                <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
+                <Loader2 className="w-3.5 h-3.5 mr-1 animate-spin" />
               ) : (
-                <Download className="w-3.5 h-3.5 mr-1.5 text-cyan-600" />
+                <Download className="w-3.5 h-3.5 mr-1 text-cyan-600" />
               )}
-              Blank Fillable PDF
+              Download Blank Form
             </Button>
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-400 font-semibold text-[11px]">
-              <Lock className="w-3.5 h-3.5" />
-              <span>256-Bit SSL Encrypted</span>
+
+            <div className="hidden md:flex items-center gap-1.5 text-muted-foreground">
+              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+              <span>256-Bit SSL Encrypted Intake</span>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Main Container */}
-      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-12">
+      {/* Main Content Area */}
+      <main className="flex-1 py-8 px-4 sm:px-6 max-w-5xl mx-auto w-full">
         {submittedApp ? (
-          /* Submission Success State */
-          <div className="max-w-2xl mx-auto space-y-6 animate-fade-in text-center">
-            <Card className="rounded-3xl border-emerald-500/30 shadow-2xl bg-card overflow-hidden">
-              <div className="p-8 sm:p-10 bg-gradient-to-b from-emerald-500/10 via-background to-background flex flex-col items-center">
-                <div className="w-20 h-20 rounded-full bg-emerald-100 dark:bg-emerald-950/70 border-4 border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-5 shadow-lg">
-                  <CheckCircle2 className="w-10 h-10" />
+          /* Submission Success View */
+          <div className="max-w-2xl mx-auto text-center space-y-6 animate-fade-in">
+            <Card className="p-8 sm:p-10 border-border/80 shadow-lg rounded-3xl bg-card relative overflow-hidden">
+              <div className="absolute inset-x-0 top-0 h-2 bg-gradient-to-r from-cyan-600 via-cyan-500 to-emerald-500" />
+
+              <div className="flex flex-col items-center">
+                <div className="w-16 h-16 rounded-full bg-emerald-100 dark:bg-emerald-950/60 border border-emerald-500/30 flex items-center justify-center text-emerald-600 dark:text-emerald-400 mb-5 shadow-inner">
+                  <CheckCircle2 className="w-8 h-8" />
                 </div>
 
-                <Badge className="bg-emerald-600 text-white font-semibold text-xs px-3 py-1 mb-2">
+                <Badge variant="outline" className="border-emerald-300 text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/30 text-xs px-3 py-1 mb-3">
                   Application Received & Underwritten
                 </Badge>
 
@@ -209,7 +209,7 @@ function PublicApplyPage() {
                   <div className="flex justify-between items-center">
                     <span className="text-muted-foreground font-medium">Requested Funding:</span>
                     <span className="font-bold text-cyan-600 dark:text-cyan-400">
-                      ${submittedApp.financials.amountRequested?.toLocaleString() || "0"} USD
+                      ${(submittedApp.financials.amountRequested || submittedApp.financials.requestedAmount || 0).toLocaleString()} USD
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
@@ -227,42 +227,31 @@ function PublicApplyPage() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full mt-6">
+                {/* Client Download Actions: QuickFlo Application ONLY */}
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-3 w-full mt-6">
                   <Button
                     type="button"
-                    variant="outline"
-                    onClick={() => setPreviewOpen(true)}
-                    className="h-11 text-xs border-cyan-300 dark:border-cyan-800 text-cyan-700 dark:text-cyan-300 hover:bg-cyan-50 dark:hover:bg-cyan-950/40 font-semibold"
+                    onClick={handleDownloadQuickFlo}
+                    disabled={downloadingQuickFlo}
+                    className="h-11 w-full sm:w-auto px-6 text-xs sm:text-sm bg-cyan-700 hover:bg-cyan-800 text-white font-bold rounded-xl shadow-xs flex items-center justify-center gap-2 flex-1"
                   >
-                    <Eye className="w-4 h-4 mr-2" />
-                    Preview PDFs
-                  </Button>
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={handleDownloadPrintable}
-                    disabled={downloadingPrintable}
-                    className="h-11 text-xs font-semibold"
-                  >
-                    {downloadingPrintable ? (
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    ) : (
-                      <Printer className="w-4 h-4 mr-2 text-cyan-600" />
-                    )}
-                    Printable PDF
-                  </Button>
-                  <Button
-                    type="button"
-                    onClick={handleDownloadZip}
-                    disabled={downloadingZip}
-                    className="h-11 text-xs bg-cyan-700 hover:bg-cyan-800 text-white font-semibold"
-                  >
-                    {downloadingZip ? (
+                    {downloadingQuickFlo ? (
                       <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                     ) : (
                       <Download className="w-4 h-4 mr-2" />
                     )}
-                    Download ZIP
+                    Download Signed QuickFlo PDF
+                  </Button>
+
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={handlePrintQuickFlo}
+                    disabled={downloadingQuickFlo}
+                    className="h-11 w-full sm:w-auto px-5 text-xs sm:text-sm font-semibold rounded-xl border-border/80 hover:bg-muted flex items-center justify-center gap-2"
+                  >
+                    <Printer className="w-4 h-4 mr-1 text-cyan-600" />
+                    Print Application
                   </Button>
                 </div>
 
@@ -284,9 +273,9 @@ function PublicApplyPage() {
                   <Link
                     to="/dashboard/saved"
                     search={{ tab: "financing" }}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-cyan-700 hover:bg-cyan-800 text-white transition-smooth shadow-sm"
+                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-muted hover:bg-muted/80 text-foreground transition-smooth border border-border"
                   >
-                    <LayoutDashboard className="w-3.5 h-3.5" />
+                    <LayoutDashboard className="w-3.5 h-3.5 text-cyan-600" />
                     <span>Return to Advisor Dashboard</span>
                   </Link>
 
@@ -336,15 +325,6 @@ function PublicApplyPage() {
           </div>
         </div>
       </footer>
-
-      {/* PDF Preview Modal */}
-      {submittedApp && (
-        <FinancingPdfPreviewModal
-          application={submittedApp}
-          isOpen={previewOpen}
-          onClose={() => setPreviewOpen(false)}
-        />
-      )}
     </div>
   );
 }

@@ -19,6 +19,8 @@ import {
   Briefcase,
   FileCheck2,
   UploadCloud,
+  DollarSign,
+  FileSpreadsheet,
 } from "lucide-react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -29,6 +31,8 @@ import { financingStore } from "@/lib/financing-db";
 import {
   generateAllLenderPdfsZip,
   generatePrintableQuickFloPdf,
+  generateWhiteLabelPdf,
+  generateCanaCapPdf,
   downloadBlankQuickFloPdf,
   downloadPdfBlob,
 } from "@/lib/lender-pdf-engine";
@@ -37,6 +41,13 @@ import { UploadQuickFloPdfModal } from "@/components/financing/upload-quickflo-p
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 
 export const Route = createFileRoute("/_authenticated/dashboard/saved")({
   validateSearch: (search: Record<string, unknown>): { tab?: string } => ({
@@ -98,10 +109,15 @@ function SavedAffidavitsPage() {
     window.addEventListener("neptora_affidavits_updated", handleAffidavitsUpdate);
     window.addEventListener("storage", handleStorageEvent);
 
+    const unsubscribe = financingStore.subscribe(() => {
+      fetchFinancingApps();
+    });
+
     return () => {
       window.removeEventListener("financing_storage_updated", handleFinancingUpdate);
       window.removeEventListener("neptora_affidavits_updated", handleAffidavitsUpdate);
       window.removeEventListener("storage", handleStorageEvent);
+      unsubscribe();
     };
   }, []);
 
@@ -257,6 +273,36 @@ function SavedAffidavitsPage() {
       toast.error("Failed to generate PDF");
     } finally {
       setDownloadingPrintableId(null);
+    }
+  };
+
+  const [downloadingSingleKey, setDownloadingSingleKey] = useState<string | null>(null);
+
+  const handleDownloadSinglePdf = async (
+    app: BusinessFinancingApplication,
+    type: "canacap" | "whitelabel" | "quickflo"
+  ) => {
+    try {
+      setDownloadingSingleKey(`${app.id}-${type}`);
+      const safeBiz = (app.business.legalName || "Application").replace(/[^a-zA-Z0-9_-]/g, "_");
+      if (type === "canacap") {
+        const blob = await generateCanaCapPdf(app);
+        downloadPdfBlob(blob, `${safeBiz}_CanaCap_Financing_Application.pdf`);
+        toast.success("CanaCap PDF downloaded");
+      } else if (type === "whitelabel") {
+        const blob = await generateWhiteLabelPdf(app);
+        downloadPdfBlob(blob, `${safeBiz}_Journey_Capital_Application.pdf`);
+        toast.success("Journey Capital PDF downloaded");
+      } else {
+        const blob = await generatePrintableQuickFloPdf(app);
+        downloadPdfBlob(blob, `${safeBiz}_QuickFlo_Master_Application.pdf`);
+        toast.success("QuickFlo Master PDF downloaded");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error(`Failed to generate ${type} PDF`);
+    } finally {
+      setDownloadingSingleKey(null);
     }
   };
 
@@ -586,37 +632,59 @@ function SavedAffidavitsPage() {
                             onClick={() => setSelectedFinancingApp(app)}
                             className="h-9 text-xs border-cyan-300 dark:border-cyan-800 text-cyan-700 dark:text-cyan-300 hover:bg-cyan-50 dark:hover:bg-cyan-950/40 font-semibold"
                           >
-                            <Eye className="w-3.5 h-3.5 mr-1 text-cyan-600" /> Preview PDFs
+                            <Eye className="w-3.5 h-3.5 mr-1 text-cyan-600" /> Preview
                           </Button>
-                          <Button
-                            type="button"
-                            variant="outline"
-                            size="sm"
-                            onClick={() => handleDownloadPrintable(app)}
-                            disabled={downloadingPrintableId === app.id}
-                            className="h-9 text-xs font-semibold"
-                          >
-                            {downloadingPrintableId === app.id ? (
-                              <Loader2 className="w-3.5 h-3.5 mr-1 animate-spin" />
-                            ) : (
-                              <Printer className="w-3.5 h-3.5 mr-1 text-cyan-600" />
-                            )}
-                            Printable PDF
-                          </Button>
-                          <Button
-                            type="button"
-                            size="sm"
-                            onClick={() => handleDownloadZip(app)}
-                            disabled={downloadingZipId === app.id}
-                            className="h-9 text-xs bg-cyan-700 hover:bg-cyan-800 text-white font-semibold"
-                          >
-                            {downloadingZipId === app.id ? (
-                              <Loader2 className="w-3.5 h-3.5 mr-1 animate-spin" />
-                            ) : (
-                              <Download className="w-3.5 h-3.5 mr-1" />
-                            )}
-                            Download ZIP
-                          </Button>
+
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                className="h-9 px-2.5 text-xs font-semibold text-foreground border-border/80 hover:bg-muted"
+                              >
+                                {downloadingSingleKey?.startsWith(app.id) ? (
+                                  <Loader2 className="w-3.5 h-3.5 animate-spin mr-1" />
+                                ) : (
+                                  <Download className="w-3.5 h-3.5 mr-1 text-cyan-600" />
+                                )}
+                                <span>PDFs</span>
+                                <ChevronDown className="w-3 h-3 ml-1 text-muted-foreground" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-56">
+                              <DropdownMenuItem
+                                onClick={() => handleDownloadSinglePdf(app, "canacap")}
+                                className="text-xs cursor-pointer"
+                              >
+                                <DollarSign className="w-3.5 h-3.5 mr-2 text-purple-600" />
+                                <span>Download CanaCap PDF</span>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => handleDownloadSinglePdf(app, "whitelabel")}
+                                className="text-xs cursor-pointer"
+                              >
+                                <Building2 className="w-3.5 h-3.5 mr-2 text-cyan-600" />
+                                <span>Download Journey Capital PDF</span>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => handleDownloadSinglePdf(app, "quickflo")}
+                                className="text-xs cursor-pointer"
+                              >
+                                <FileSpreadsheet className="w-3.5 h-3.5 mr-2 text-emerald-600" />
+                                <span>Download QuickFlo Master PDF</span>
+                              </DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem
+                                onClick={() => handleDownloadZip(app)}
+                                className="text-xs cursor-pointer font-medium text-cyan-700 dark:text-cyan-400"
+                              >
+                                <Download className="w-3.5 h-3.5 mr-2" />
+                                <span>Download All Lenders (ZIP)</span>
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+
                           <Link
                             to="/dashboard/financing/$id"
                             params={{ id: app.id }}

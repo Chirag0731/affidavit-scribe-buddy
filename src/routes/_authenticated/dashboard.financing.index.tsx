@@ -6,11 +6,25 @@ import { FinancingLogo } from "@/components/financing/financing-logo";
 import { FinancingPdfPreviewModal } from "@/components/financing/financing-pdf-preview-modal";
 import { SendApplicationModal } from "@/components/financing/send-application-modal";
 import { UploadQuickFloPdfModal } from "@/components/financing/upload-quickflo-pdf-modal";
-import { generateAllLenderPdfsZip, downloadBlankQuickFloPdf } from "@/lib/lender-pdf-engine";
+import {
+  generateAllLenderPdfsZip,
+  downloadBlankQuickFloPdf,
+  generateWhiteLabelPdf,
+  generateCanaCapPdf,
+  generatePrintableQuickFloPdf,
+  downloadPdfBlob,
+} from "@/lib/lender-pdf-engine";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+} from "@/components/ui/dropdown-menu";
 import {
   Table,
   TableHeader,
@@ -42,6 +56,7 @@ import {
   Copy,
   Send,
   UploadCloud,
+  ChevronDown,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -61,6 +76,7 @@ function FinancingOverviewPage() {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [downloadingBlank, setDownloadingBlank] = useState(false);
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
+  const [activeDownloadKey, setActiveDownloadKey] = useState<string | null>(null);
 
   useEffect(() => {
     loadApplications();
@@ -72,11 +88,45 @@ function FinancingOverviewPage() {
     window.addEventListener("financing_storage_updated", handleUpdate);
     window.addEventListener("storage", handleUpdate);
 
+    // Live real-time Supabase sync across clients and browsers
+    const unsubscribe = financingStore.subscribe(() => {
+      loadApplications();
+    });
+
     return () => {
       window.removeEventListener("financing_storage_updated", handleUpdate);
       window.removeEventListener("storage", handleUpdate);
+      unsubscribe();
     };
   }, []);
+
+  const handleDownloadSinglePdf = async (
+    app: BusinessFinancingApplication,
+    type: "canacap" | "whitelabel" | "quickflo"
+  ) => {
+    try {
+      setActiveDownloadKey(`${app.id}-${type}`);
+      const safeBiz = (app.business.legalName || "Application").replace(/[^a-zA-Z0-9_-]/g, "_");
+      if (type === "canacap") {
+        const blob = await generateCanaCapPdf(app);
+        downloadPdfBlob(blob, `${safeBiz}_CanaCap_Financing_Application.pdf`);
+        toast.success("CanaCap PDF downloaded");
+      } else if (type === "whitelabel") {
+        const blob = await generateWhiteLabelPdf(app);
+        downloadPdfBlob(blob, `${safeBiz}_Journey_Capital_Application.pdf`);
+        toast.success("Journey Capital PDF downloaded");
+      } else {
+        const blob = await generatePrintableQuickFloPdf(app);
+        downloadPdfBlob(blob, `${safeBiz}_QuickFlo_Master_Application.pdf`);
+        toast.success("QuickFlo Master PDF downloaded");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error(`Failed to generate ${type} PDF`);
+    } finally {
+      setActiveDownloadKey(null);
+    }
+  };
 
   const loadApplications = async () => {
     try {
@@ -467,16 +517,55 @@ function FinancingOverviewPage() {
                             Preview
                           </Button>
 
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleDownloadZip(app)}
-                            title="Download ZIP"
-                            className="h-8 px-2 text-xs text-muted-foreground hover:text-foreground"
-                          >
-                            <Download className="w-3.5 h-3.5" />
-                          </Button>
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button
+                                type="button"
+                                variant="outline"
+                                size="sm"
+                                className="h-8 px-2 text-xs font-semibold text-foreground border-border/80 hover:bg-muted"
+                              >
+                                {activeDownloadKey?.startsWith(app.id) ? (
+                                  <Loader2 className="w-3.5 h-3.5 animate-spin mr-1" />
+                                ) : (
+                                  <Download className="w-3.5 h-3.5 mr-1 text-cyan-600" />
+                                )}
+                                <span>PDFs</span>
+                                <ChevronDown className="w-3 h-3 ml-1 text-muted-foreground" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end" className="w-56">
+                              <DropdownMenuItem
+                                onClick={() => handleDownloadSinglePdf(app, "canacap")}
+                                className="text-xs cursor-pointer"
+                              >
+                                <DollarSign className="w-3.5 h-3.5 mr-2 text-purple-600" />
+                                <span>Download CanaCap PDF</span>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => handleDownloadSinglePdf(app, "whitelabel")}
+                                className="text-xs cursor-pointer"
+                              >
+                                <Building2 className="w-3.5 h-3.5 mr-2 text-cyan-600" />
+                                <span>Download Journey Capital PDF</span>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem
+                                onClick={() => handleDownloadSinglePdf(app, "quickflo")}
+                                className="text-xs cursor-pointer"
+                              >
+                                <FileSpreadsheet className="w-3.5 h-3.5 mr-2 text-emerald-600" />
+                                <span>Download QuickFlo Master PDF</span>
+                              </DropdownMenuItem>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem
+                                onClick={() => handleDownloadZip(app)}
+                                className="text-xs cursor-pointer font-medium text-cyan-700 dark:text-cyan-400"
+                              >
+                                <Download className="w-3.5 h-3.5 mr-2" />
+                                <span>Download All Lenders (ZIP)</span>
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
 
                           <Button
                             type="button"

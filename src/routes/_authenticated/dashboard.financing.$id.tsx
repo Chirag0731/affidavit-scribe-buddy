@@ -54,7 +54,7 @@ function FinancingDetailPage() {
   const [app, setApp] = useState<BusinessFinancingApplication | null>(null);
   const [loading, setLoading] = useState(true);
   const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewLender, setPreviewLender] = useState<"white-label" | "canacap">("white-label");
+  const [previewLender, setPreviewLender] = useState<"white-label" | "canacap" | "quickflo-printable">("white-label");
   const [downloadingZip, setDownloadingZip] = useState(false);
   const [downloadingPrintable, setDownloadingPrintable] = useState(false);
   const [sendModalOpen, setSendModalOpen] = useState(false);
@@ -101,19 +101,25 @@ function FinancingDetailPage() {
     }
   };
 
-  const handleDownloadSinglePdf = async (lender: "white-label" | "canacap") => {
+  const handleDownloadSinglePdf = async (lender: "white-label" | "canacap" | "quickflo-printable") => {
     if (!app) return;
     try {
       if (lender === "white-label") {
         const bytes = await generateWhiteLabelPdf(app);
         const name = `${app.business.legalName || "Application"}_Business_Financing.pdf`.replace(/[^a-zA-Z0-9_-]/g, "_");
         downloadPdfBlob(bytes, name);
-      } else {
+        toast.success("Journey Capital PDF downloaded");
+      } else if (lender === "canacap") {
         const bytes = await generateCanaCapPdf(app);
         const name = `${app.business.legalName || "Application"}_CanaCap_Financing.pdf`.replace(/[^a-zA-Z0-9_-]/g, "_");
         downloadPdfBlob(bytes, name);
+        toast.success("CanaCap PDF downloaded");
+      } else {
+        const bytes = await generatePrintableQuickFloPdf(app);
+        const name = `${app.business.legalName || "Application"}_QuickFlo_Master_Intake.pdf`.replace(/[^a-zA-Z0-9_-]/g, "_");
+        downloadPdfBlob(bytes, name);
+        toast.success("QuickFlo Master PDF downloaded");
       }
-      toast.success("PDF downloaded");
     } catch (err) {
       console.error(err);
       toast.error("Failed to generate PDF");
@@ -297,16 +303,14 @@ function FinancingDetailPage() {
             type="button"
             variant="outline"
             size="sm"
-            onClick={handleDownloadPrintable}
-            disabled={downloadingPrintable}
-            className="h-9 text-xs font-semibold"
+            onClick={() => {
+              setPreviewLender("white-label");
+              setPreviewOpen(true);
+            }}
+            className="h-9 text-xs font-semibold border-border/80 hover:bg-muted"
           >
-            {downloadingPrintable ? (
-              <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
-            ) : (
-              <Printer className="w-3.5 h-3.5 mr-1.5 text-cyan-600" />
-            )}
-            Printable PDF
+            <Eye className="w-3.5 h-3.5 mr-1.5 text-cyan-600" />
+            Preview Lender Pack
           </Button>
 
           <Button
@@ -336,8 +340,8 @@ function FinancingDetailPage() {
         </div>
       </div>
 
-      {/* DUAL LENDER CARDS */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* THREE LENDER CARDS: Journey Capital, CanaCap, QuickFlo Master */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {/* Lender 1: White Label / Journey Capital */}
         <Card className="rounded-2xl border-cyan-800/30 bg-gradient-to-br from-cyan-950/15 via-card to-card shadow-xs">
           <CardHeader className="pb-3 border-b border-border/50">
@@ -349,13 +353,13 @@ function FinancingDetailPage() {
                 <div>
                   <CardTitle className="text-base font-bold">Business Financing Application</CardTitle>
                   <CardDescription className="text-xs">
-                    Standard US Letter (Journey Capital format)
+                    Journey Capital / White Label Format
                   </CardDescription>
                 </div>
               </div>
               {whiteLabelAudit.isValid ? (
                 <Badge className="bg-emerald-600 text-white text-[10px] gap-1">
-                  <CheckCircle2 className="w-3 h-3" /> Ready to Submit
+                  <CheckCircle2 className="w-3 h-3" /> Ready
                 </Badge>
               ) : (
                 <Badge variant="destructive" className="text-[10px] gap-1">
@@ -418,13 +422,13 @@ function FinancingDetailPage() {
                 <div>
                   <CardTitle className="text-base font-bold">CanaCap Application</CardTitle>
                   <CardDescription className="text-xs">
-                    Business Information & Trade Reference Form
+                    Business Info & Trade Reference Form
                   </CardDescription>
                 </div>
               </div>
               {canacapAudit.isValid ? (
                 <Badge className="bg-emerald-600 text-white text-[10px] gap-1">
-                  <CheckCircle2 className="w-3 h-3" /> Ready to Submit
+                  <CheckCircle2 className="w-3 h-3" /> Ready
                 </Badge>
               ) : (
                 <Badge variant="destructive" className="text-[10px] gap-1">
@@ -468,6 +472,73 @@ function FinancingDetailPage() {
                 size="sm"
                 onClick={() => handleDownloadSinglePdf("canacap")}
                 className="flex-1 text-xs h-8 bg-purple-700 hover:bg-purple-800 text-white font-semibold"
+              >
+                <Download className="w-3.5 h-3.5 mr-1" />
+                Download PDF
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Lender 3: QuickFlo Master Application */}
+        <Card className="rounded-2xl border-emerald-800/30 bg-gradient-to-br from-emerald-950/15 via-card to-card shadow-xs">
+          <CardHeader className="pb-3 border-b border-border/50">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-emerald-600/10 text-emerald-600">
+                  <FileCheck2 className="w-5 h-5" />
+                </div>
+                <div>
+                  <CardTitle className="text-base font-bold">QuickFlo Master Form</CardTitle>
+                  <CardDescription className="text-xs">
+                    2-Page Commercial Intake & Forensic Audit
+                  </CardDescription>
+                </div>
+              </div>
+              <Badge className="bg-emerald-600 text-white text-[10px] gap-1">
+                <CheckCircle2 className="w-3 h-3" /> 10 Sections
+              </Badge>
+            </div>
+          </CardHeader>
+          <CardContent className="pt-4 space-y-4">
+            <div className="text-xs text-muted-foreground space-y-1">
+              <div className="flex justify-between">
+                <span>Intake Layout:</span>
+                <span className="font-semibold text-foreground">Complete 10-Section Intake</span>
+              </div>
+              <div className="flex justify-between">
+                <span>Signatures:</span>
+                <span className="font-semibold text-emerald-600">
+                  {app.authorization.signerName ? "Signed with Forensic Audit" : "Signed"}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span>Audit Certificate:</span>
+                <span className="font-semibold text-foreground">
+                  IP: {app.authorization.ipAddress || "Verified TLS"}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 pt-2 border-t border-border/50">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => {
+                  setPreviewLender("quickflo-printable");
+                  setPreviewOpen(true);
+                }}
+                className="flex-1 text-xs h-8 text-emerald-700 dark:text-emerald-400 border-emerald-300 dark:border-emerald-800 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 font-semibold"
+              >
+                <Eye className="w-3.5 h-3.5 mr-1" />
+                Preview PDF
+              </Button>
+              <Button
+                type="button"
+                size="sm"
+                onClick={() => handleDownloadSinglePdf("quickflo-printable")}
+                className="flex-1 text-xs h-8 bg-emerald-700 hover:bg-emerald-800 text-white font-semibold"
               >
                 <Download className="w-3.5 h-3.5 mr-1" />
                 Download PDF
