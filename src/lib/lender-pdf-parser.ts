@@ -21,7 +21,9 @@ interface PositionedItem {
 }
 
 async function extractItems(bytes: Uint8Array): Promise<{ items: PositionedItem[]; text: string }> {
-  const pdf = await pdfjs.getDocument({ data: bytes }).promise;
+  // pdf.js transfers (detaches) the buffer it is given — always hand it a copy
+  // so the caller's original bytes stay usable for OCR / other parsers.
+  const pdf = await pdfjs.getDocument({ data: new Uint8Array(bytes) }).promise;
   const page = await pdf.getPage(1);
   const content = await page.getTextContent();
   const items: PositionedItem[] = [];
