@@ -144,19 +144,26 @@ export async function getFinancingApplications(): Promise<BusinessFinancingAppli
       .select("*")
       .order("created_at", { ascending: false });
 
+    const deleted = getDeletedIds();
+
     if (!error && Array.isArray(data) && data.length > 0) {
-      const remoteApps: BusinessFinancingApplication[] = (data as any[]).map((row) => ({
-        ...row.payload,
-        id: row.id,
-        status: row.status || row.payload?.status || "submitted",
-        createdAt: row.created_at || row.payload?.createdAt,
-        updatedAt: row.updated_at || row.payload?.updatedAt,
-      }));
+      const remoteApps: BusinessFinancingApplication[] = (data as any[])
+        .filter((row) => !deleted.includes(row.id))
+        .map((row) => ({
+          ...row.payload,
+          id: row.id,
+          status: row.status || row.payload?.status || "submitted",
+          createdAt: row.created_at || row.payload?.createdAt,
+          updatedAt: row.updated_at || row.payload?.updatedAt,
+        }));
 
       // Merge with any unsynced local applications if present
       const localApps = getLocalApplications();
       const nonSampleLocal = localApps.filter(
-        (local) => !remoteApps.some((remote) => remote.id === local.id) && local.id !== "benchmark-sample-001"
+        (local) =>
+          !remoteApps.some((remote) => remote.id === local.id) &&
+          local.id !== "benchmark-sample-001" &&
+          !deleted.includes(local.id)
       );
 
       const merged = [...remoteApps, ...nonSampleLocal];
@@ -166,36 +173,30 @@ export async function getFinancingApplications(): Promise<BusinessFinancingAppli
     }
 
     if (!error && Array.isArray(data) && data.length === 0) {
-      // Remote is empty: check if local has user-submitted applications and push them
-      const localApps = getLocalApplications();
-      const userApps = localApps.filter((a) => a.id !== "benchmark-sample-001");
-      if (userApps.length > 0) {
-        for (const uApp of userApps) {
-          try {
-            await supabase.from("financing_applications" as never).upsert({
-              id: uApp.id,
-              business_name: uApp.business.legalName || "Commercial Applicant",
-              status: uApp.status,
-              requested_amount: uApp.financials.amountRequested || uApp.financials.requestedAmount || 0,
-              payload: uApp,
-              created_at: uApp.createdAt || new Date().toISOString(),
-              updated_at: uApp.updatedAt || new Date().toISOString(),
-            } as never);
-          } catch {
-            /* ignore individual sync error */
-          }
+      // Remote is empty: push up any local applications that were never deleted
+      const localApps = getLocalApplications().filter(
+        (a) => a.id !== "benchmark-sample-001" && !deleted.includes(a.id)
+      );
+      for (const uApp of localApps) {
+        try {
+          await persistApplicationRow(uApp);
+        } catch {
+          /* ignore individual sync error */
         }
       }
+      saveLocalApplications(localApps);
       return localApps;
     }
   } catch (err) {
     console.info("Using local financing store (Supabase fallback):", err);
   }
 
-  const localApps = getLocalApplications();
+  const deletedFallback = getDeletedIds();
+  const localApps = getLocalApplications().filter((a) => !deletedFallback.includes(a.id));
   localApps.forEach(syncToAffidavitCache);
   return localApps;
 }
+
 
 // Fetch single application by ID
 export async function getFinancingApplicationById(
