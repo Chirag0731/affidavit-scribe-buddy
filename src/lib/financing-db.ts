@@ -239,6 +239,38 @@ export async function getFinancingApplicationById(
   return localList.find((a) => a.id === id) || null;
 }
 
+// Write one application row to the server.
+// Public (not signed-in) visitors cannot run an upsert, because the server
+// blocks them from reading existing rows. So: try insert first, and if the row
+// already exists, update it instead.
+async function persistApplicationRow(app: BusinessFinancingApplication): Promise<void> {
+  const row = {
+    id: app.id,
+    business_name: app.business?.legalName || "Commercial Applicant",
+    status: app.status,
+    requested_amount: app.financials?.amountRequested || app.financials?.requestedAmount || 0,
+    payload: app,
+    created_at: app.createdAt || new Date().toISOString(),
+    updated_at: app.updatedAt || new Date().toISOString(),
+  };
+
+  const { error: insertError } = await supabase
+    .from("financing_applications" as never)
+    .insert(row as never);
+
+  if (!insertError) return;
+
+  const { id: _omit, created_at: _omitCreated, ...updateRow } = row;
+  const { error: updateError } = await supabase
+    .from("financing_applications" as never)
+    .update(updateRow as never)
+    .eq("id", app.id);
+
+  if (updateError) {
+    throw new Error(updateError.message || insertError.message || "Failed to save application");
+  }
+}
+
 // Save or update an application
 export async function saveFinancingApplication(
   app: BusinessFinancingApplication
@@ -247,6 +279,9 @@ export async function saveFinancingApplication(
     ...app,
     updatedAt: new Date().toISOString(),
   };
+
+  // Saving again un-deletes a previously removed application
+  clearDeletedId(updatedApp.id);
 
   // 1. Update local storage immediately for zero-latency UX
   const localList = getLocalApplications();
@@ -263,27 +298,16 @@ export async function saveFinancingApplication(
   // Sync to Saved Affidavits cache so it surfaces on all dashboard affidavit lists
   syncToAffidavitCache(updatedApp);
 
-  // 2. Persist to Supabase
+  // 2. Persist to the server
   try {
-    const { error } = await supabase.from("financing_applications" as never).upsert({
-      id: updatedApp.id,
-      business_name: updatedApp.business.legalName || "Commercial Applicant",
-      status: updatedApp.status,
-      requested_amount: updatedApp.financials.amountRequested || updatedApp.financials.requestedAmount || 0,
-      payload: updatedApp,
-      created_at: updatedApp.createdAt || new Date().toISOString(),
-      updated_at: updatedApp.updatedAt,
-    } as never);
-
-    if (error) {
-      console.warn("Supabase upsert returned error:", error);
-    }
+    await persistApplicationRow(updatedApp);
   } catch (err) {
-    console.warn("Could not upsert to Supabase financing_applications:", err);
+    console.warn("Could not save application to the server:", err);
   }
 
   return updatedApp;
 }
+
 
 // Delete an application — Supabase is authoritative
 export async function deleteFinancingApplication(id: string): Promise<boolean> {
