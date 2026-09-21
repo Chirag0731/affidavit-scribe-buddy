@@ -77,6 +77,7 @@ export function UploadQuickFloPdfModal({
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [dragActive, setDragActive] = useState(false);
   const [parsing, setParsing] = useState(false);
+  const [scanning, setScanning] = useState(false);
   const [parsedApp, setParsedApp] = useState<BusinessFinancingApplication | null>(null);
   const [downloadingLender, setDownloadingLender] = useState<string | null>(null);
   const [fileName, setFileName] = useState("");
