@@ -97,24 +97,22 @@ function FinancingLendersPage() {
       </div>
 
       {/* Lender Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
         {/* Template 0: QuickFlo Master Fillable */}
-        <Card className="rounded-2xl border-cyan-500/50 shadow-xs bg-card overflow-hidden ring-1 ring-cyan-500/20">
-          <CardHeader className="bg-gradient-to-r from-cyan-950/30 via-cyan-900/10 to-transparent pb-4 border-b border-border/60">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <div className="p-2.5 rounded-xl bg-cyan-500/20 text-cyan-600 dark:text-cyan-400">
-                  <FileText className="w-5 h-5" />
-                </div>
-                <div>
-                  <CardTitle className="text-base font-bold">QuickFlo Commercial Application</CardTitle>
-                  <CardDescription className="text-xs">Interactive fillable AcroForm with live sync</CardDescription>
-                </div>
+        <Card className="flex flex-col h-full rounded-2xl border-cyan-500/50 shadow-xs bg-card overflow-hidden ring-1 ring-cyan-500/20">
+          <CardHeader className="bg-gradient-to-r from-cyan-950/30 via-cyan-900/10 to-transparent p-5 min-h-[96px] flex flex-row items-center justify-between border-b border-border/60">
+            <div className="flex items-center gap-3 flex-1 min-w-0 mr-2">
+              <div className="p-2.5 rounded-xl bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 shrink-0">
+                <FileText className="w-5 h-5" />
               </div>
-              <Badge className="bg-cyan-600 text-white text-[10px]">Master Fillable</Badge>
+              <div className="min-w-0 flex-1">
+                <CardTitle className="text-sm sm:text-base font-bold leading-snug">QuickFlo Commercial Application</CardTitle>
+                <CardDescription className="text-xs text-muted-foreground truncate mt-0.5">Interactive fillable AcroForm with live sync</CardDescription>
+              </div>
             </div>
+            <Badge className="bg-cyan-600 text-white text-[10px] shrink-0 whitespace-nowrap">Master Fillable</Badge>
           </CardHeader>
-          <CardContent className="pt-5 space-y-4 text-xs">
+          <CardContent className="p-5 flex-1 flex flex-col justify-between space-y-4 text-xs">
             <div className="space-y-2">
               <div className="flex justify-between border-b border-border/40 pb-1.5">
                 <span className="text-muted-foreground">Document Type:</span>
@@ -134,41 +132,41 @@ function FinancingLendersPage() {
               </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-muted/30 border border-border/60 text-[11px] text-muted-foreground leading-relaxed">
+            <div className="p-3 rounded-xl bg-muted/30 border border-border/60 text-[11px] text-muted-foreground leading-relaxed min-h-[72px] flex items-center">
               Clean, professional application clients can complete in Adobe Acrobat, Chrome, Preview, or print out. Direct reference barcode and URL link back to your dashboard.
             </div>
 
-            <Button
-              type="button"
-              variant="default"
-              size="sm"
-              onClick={downloadQuickFloBlank}
-              disabled={downloading === "quickflo"}
-              className="w-full h-8 text-xs font-semibold bg-cyan-700 hover:bg-cyan-800 text-white"
-            >
-              <Download className="w-3.5 h-3.5 mr-1.5" />
-              {downloading === "quickflo" ? "Generating..." : "Download Blank Fillable PDF"}
-            </Button>
+            <div className="pt-2 mt-auto">
+              <Button
+                type="button"
+                variant="default"
+                size="sm"
+                onClick={downloadQuickFloBlank}
+                disabled={downloading === "quickflo"}
+                className="w-full h-8 text-xs font-semibold bg-cyan-700 hover:bg-cyan-800 text-white"
+              >
+                <Download className="w-3.5 h-3.5 mr-1.5" />
+                {downloading === "quickflo" ? "Generating..." : "Download Blank Fillable PDF"}
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
         {/* Lender 1: Business Financing Application */}
-        <Card className="rounded-2xl border-cyan-800/40 shadow-xs bg-card overflow-hidden">
-          <CardHeader className="bg-gradient-to-r from-cyan-950/20 to-transparent pb-4 border-b border-border/60">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <div className="p-2.5 rounded-xl bg-cyan-600/10 text-cyan-600">
-                  <Building2 className="w-5 h-5" />
-                </div>
-                <div>
-                  <CardTitle className="text-base font-bold">1. Business Financing</CardTitle>
-                  <CardDescription className="text-xs">Journey Capital standard format (EN)</CardDescription>
-                </div>
+        <Card className="flex flex-col h-full rounded-2xl border-cyan-800/40 shadow-xs bg-card overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-cyan-950/20 to-transparent p-5 min-h-[96px] flex flex-row items-center justify-between border-b border-border/60">
+            <div className="flex items-center gap-3 flex-1 min-w-0 mr-2">
+              <div className="p-2.5 rounded-xl bg-cyan-600/10 text-cyan-600 shrink-0">
+                <Building2 className="w-5 h-5" />
               </div>
-              <Badge className="bg-emerald-600 text-[10px]">Active</Badge>
+              <div className="min-w-0 flex-1">
+                <CardTitle className="text-sm sm:text-base font-bold leading-snug">1. Business Financing</CardTitle>
+                <CardDescription className="text-xs text-muted-foreground truncate mt-0.5">Journey Capital standard format (EN)</CardDescription>
+              </div>
             </div>
+            <Badge className="bg-emerald-600 text-[10px] shrink-0 whitespace-nowrap">Active</Badge>
           </CardHeader>
-          <CardContent className="pt-5 space-y-4 text-xs">
+          <CardContent className="p-5 flex-1 flex flex-col justify-between space-y-4 text-xs">
             <div className="space-y-2">
               <div className="flex justify-between border-b border-border/40 pb-1.5">
                 <span className="text-muted-foreground">Document Type:</span>
@@ -188,41 +186,41 @@ function FinancingLendersPage() {
               </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-muted/30 border border-border/60 text-[11px] text-muted-foreground leading-relaxed">
+            <div className="p-3 rounded-xl bg-muted/30 border border-border/60 text-[11px] text-muted-foreground leading-relaxed min-h-[72px] flex items-center">
               Populates corporate identity, monthly and annual turnover, loan request details, 2 principal owners, and embeds legal E-SIGN authorization on line.
             </div>
 
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => downloadBlankTemplate("white-label")}
-              disabled={downloading === "white-label"}
-              className="w-full h-8 text-xs font-semibold"
-            >
-              <Download className="w-3.5 h-3.5 mr-1.5" />
-              Download Blank Original PDF
-            </Button>
+            <div className="pt-2 mt-auto">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => downloadBlankTemplate("white-label")}
+                disabled={downloading === "white-label"}
+                className="w-full h-8 text-xs font-semibold"
+              >
+                <Download className="w-3.5 h-3.5 mr-1.5" />
+                Download Blank Original PDF
+              </Button>
+            </div>
           </CardContent>
         </Card>
 
         {/* Lender 2: CanaCap Business Information */}
-        <Card className="rounded-2xl border-purple-800/40 shadow-xs bg-card overflow-hidden">
-          <CardHeader className="bg-gradient-to-r from-purple-950/20 to-transparent pb-4 border-b border-border/60">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2.5">
-                <div className="p-2.5 rounded-xl bg-purple-600/10 text-purple-600">
-                  <DollarSign className="w-5 h-5" />
-                </div>
-                <div>
-                  <CardTitle className="text-base font-bold">2. CanaCap Business Information</CardTitle>
-                  <CardDescription className="text-xs">Merchant processing & trade reference format</CardDescription>
-                </div>
+        <Card className="flex flex-col h-full rounded-2xl border-purple-800/40 shadow-xs bg-card overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-purple-950/20 to-transparent p-5 min-h-[96px] flex flex-row items-center justify-between border-b border-border/60">
+            <div className="flex items-center gap-3 flex-1 min-w-0 mr-2">
+              <div className="p-2.5 rounded-xl bg-purple-600/10 text-purple-600 shrink-0">
+                <DollarSign className="w-5 h-5" />
               </div>
-              <Badge className="bg-emerald-600 text-[10px]">Active</Badge>
+              <div className="min-w-0 flex-1">
+                <CardTitle className="text-sm sm:text-base font-bold leading-snug">2. CanaCap Business Information</CardTitle>
+                <CardDescription className="text-xs text-muted-foreground truncate mt-0.5">Merchant processing & trade reference format</CardDescription>
+              </div>
             </div>
+            <Badge className="bg-emerald-600 text-[10px] shrink-0 whitespace-nowrap">Active</Badge>
           </CardHeader>
-          <CardContent className="pt-5 space-y-4 text-xs">
+          <CardContent className="p-5 flex-1 flex flex-col justify-between space-y-4 text-xs">
             <div className="space-y-2">
               <div className="flex justify-between border-b border-border/40 pb-1.5">
                 <span className="text-muted-foreground">Document Type:</span>
@@ -242,21 +240,23 @@ function FinancingLendersPage() {
               </div>
             </div>
 
-            <div className="p-3 rounded-xl bg-muted/30 border border-border/60 text-[11px] text-muted-foreground leading-relaxed">
+            <div className="p-3 rounded-xl bg-muted/30 border border-border/60 text-[11px] text-muted-foreground leading-relaxed min-h-[72px] flex items-center">
               Populates corporate identity, payment processor details, card volume, seasonal highs/lows, trade references, and circles entity & card choices with authentic pen-mark styling.
             </div>
 
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={() => downloadBlankTemplate("canacap")}
-              disabled={downloading === "canacap"}
-              className="w-full h-8 text-xs font-semibold"
-            >
-              <Download className="w-3.5 h-3.5 mr-1.5" />
-              Download Blank Original PDF
-            </Button>
+            <div className="pt-2 mt-auto">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={() => downloadBlankTemplate("canacap")}
+                disabled={downloading === "canacap"}
+                className="w-full h-8 text-xs font-semibold"
+              >
+                <Download className="w-3.5 h-3.5 mr-1.5" />
+                Download Blank Original PDF
+              </Button>
+            </div>
           </CardContent>
         </Card>
       </div>
