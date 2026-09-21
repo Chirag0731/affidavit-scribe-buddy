@@ -227,10 +227,10 @@ export function UploadQuickFloPdfModal({
             </div>
             <div>
               <DialogTitle className="text-lg font-bold text-foreground">
-                Upload Pre-Filled QuickFlo PDF
+                Upload Filled Application PDF
               </DialogTitle>
               <DialogDescription className="text-xs text-muted-foreground mt-0.5">
-                Upload a completed QuickFlo application PDF to auto-populate the data model and generate CanaCap & Journey Capital PDFs with 1 click.
+                Upload a completed QuickFlo, Journey Capital, or CanaCap application. We read the data and rebuild every other lender form with one click.
               </DialogDescription>
             </div>
           </div>
