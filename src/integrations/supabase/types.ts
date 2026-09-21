@@ -103,6 +103,36 @@ export type Database = {
         }
         Relationships: []
       }
+      financing_applications: {
+        Row: {
+          business_name: string
+          created_at: string
+          id: string
+          payload: Json
+          requested_amount: number
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          business_name?: string
+          created_at?: string
+          id: string
+          payload?: Json
+          requested_amount?: number
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          business_name?: string
+          created_at?: string
+          id?: string
+          payload?: Json
+          requested_amount?: number
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
