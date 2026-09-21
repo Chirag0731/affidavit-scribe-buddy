@@ -28,7 +28,6 @@ import { toast } from "sonner";
 import type { BusinessFinancingApplication } from "@/types/financing";
 import { financingStore } from "@/lib/financing-db";
 import {
-  parseQuickFloPdf,
   generateCanaCapPdf,
   generateWhiteLabelPdf,
   generatePrintableQuickFloPdf,
@@ -37,6 +36,14 @@ import {
   formatCurrency,
   formatDate,
 } from "@/lib/lender-pdf-engine";
+import { parseLenderPdf, type LenderFormKind } from "@/lib/lender-pdf-parser";
+
+const FORM_LABELS: Record<LenderFormKind, string> = {
+  quickflo: "QuickFlo Master Application",
+  journey: "Journey Capital / White-Label Application",
+  canacap: "CanaCap Business Application",
+  unknown: "Financing Application",
+};
 
 interface UploadQuickFloPdfModalProps {
   open: boolean;
@@ -57,11 +64,13 @@ export function UploadQuickFloPdfModal({
   const [parsedApp, setParsedApp] = useState<BusinessFinancingApplication | null>(null);
   const [downloadingLender, setDownloadingLender] = useState<string | null>(null);
   const [fileName, setFileName] = useState("");
+  const [detectedKind, setDetectedKind] = useState<LenderFormKind>("quickflo");
 
   const resetState = () => {
     setParsedApp(null);
     setFileName("");
     setDownloadingLender(null);
+    setDetectedKind("quickflo");
   };
 
   const handleModalOpenChange = (isOpen: boolean) => {
@@ -81,15 +90,16 @@ export function UploadQuickFloPdfModal({
       setParsing(true);
       setFileName(file.name);
       const arrayBuffer = await file.arrayBuffer();
-      const extractedApp = await parseQuickFloPdf(arrayBuffer);
+      const { app: extractedApp, kind } = await parseLenderPdf(arrayBuffer);
 
+      setDetectedKind(kind);
       setParsedApp(extractedApp);
-      toast.success("QuickFlo PDF parsed successfully", {
+      toast.success(`${FORM_LABELS[kind]} read successfully`, {
         description: `Extracted data for ${extractedApp.business.legalName || "Commercial Applicant"}`,
       });
     } catch (err) {
-      console.error("Failed to parse QuickFlo PDF:", err);
-      toast.error("Unable to parse PDF. Please ensure this is a fillable QuickFlo application form.");
+      console.error("Failed to parse lender PDF:", err);
+      toast.error("Unable to read this PDF. Upload a filled QuickFlo, Journey Capital, or CanaCap application.");
     } finally {
       setParsing(false);
     }
@@ -217,10 +227,10 @@ export function UploadQuickFloPdfModal({
             </div>
             <div>
               <DialogTitle className="text-lg font-bold text-foreground">
-                Upload Pre-Filled QuickFlo PDF
+                Upload Filled Application PDF
               </DialogTitle>
               <DialogDescription className="text-xs text-muted-foreground mt-0.5">
-                Upload a completed QuickFlo application PDF to auto-populate the data model and generate CanaCap & Journey Capital PDFs with 1 click.
+                Upload a completed QuickFlo, Journey Capital, or CanaCap application. We read the data and rebuild every other lender form with one click.
               </DialogDescription>
             </div>
           </div>
@@ -258,10 +268,10 @@ export function UploadQuickFloPdfModal({
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-foreground">
-                    {parsing ? "Parsing AcroForm fields..." : "Click to select or drag & drop filled QuickFlo PDF"}
+                    {parsing ? "Reading application fields..." : "Click to select or drag & drop a filled application PDF"}
                   </p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    Supports 2-page Master QuickFlo applications filled in Acrobat, Chrome, Preview, or Edge
+                    Accepts QuickFlo, Journey Capital / White-Label, and CanaCap applications
                   </p>
                 </div>
               </div>
@@ -276,7 +286,10 @@ export function UploadQuickFloPdfModal({
                 <div className="p-4 bg-muted/40 border-b border-border/60 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <FileText className="w-4 h-4 text-cyan-600" />
-                    <span className="text-xs font-semibold text-foreground">{fileName || "Filled QuickFlo PDF"}</span>
+                    <span className="text-xs font-semibold text-foreground">{fileName || "Filled application PDF"}</span>
+                    <Badge variant="outline" className="text-[9px] px-1.5 py-0 h-4">
+                      {FORM_LABELS[detectedKind]}
+                    </Badge>
                   </div>
                   <Button
                     type="button"

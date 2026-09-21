@@ -1681,6 +1681,14 @@ export async function parseQuickFloPdf(
     }
   }
 
+  return buildApplicationFromFieldMap(valMap);
+}
+
+// Shared builder: turns a flat qf_* value map (from AcroForm fields OR from
+// positional text extraction of a lender form) into a full application object.
+export async function buildApplicationFromFieldMap(
+  valMap: Map<string, string>
+): Promise<BusinessFinancingApplication> {
   const get = (key: string, fallback = ""): string => {
     return valMap.get(key) || fallback;
   };
