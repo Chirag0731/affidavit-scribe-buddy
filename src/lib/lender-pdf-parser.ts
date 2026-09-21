@@ -38,11 +38,15 @@ async function extractItems(bytes: Uint8Array): Promise<{ items: PositionedItem[
 const LABEL_RE =
   /^(mm\s*\/?\s*dd|yes|no|x|own|rent|lease|check if you|business|legal|city|province|postal|phone|fax|email|name|first|last|title|signature|print name|date|social insurance|% of ownership|years there|residence address|mobile|drivers? licen|from|to|start date|end date|provider|type of|if yes|owner\/officer)\b/i;
 
+// Pre-printed date placeholder fragments ("mm", "/", "dd", "yyyy").
+const PLACEHOLDER_RE = /^(\/|mm|dd|yyyy?|yyy|\/\s*(dd|yyyy?))$/i;
+
 function valueAt(
   items: PositionedItem[],
   x: number,
   y: number,
-  maxWidth = 120
+  maxWidth = 120,
+  allowLabelWords = false
 ): string {
   const row = items
     .filter(
@@ -50,7 +54,8 @@ function valueAt(
         Math.abs(it.y - y) <= 3 &&
         it.x >= x - 3 &&
         it.x <= x + maxWidth &&
-        !LABEL_RE.test(it.str) &&
+        !PLACEHOLDER_RE.test(it.str) &&
+        (allowLabelWords || !LABEL_RE.test(it.str)) &&
         !/:$/.test(it.str)
     )
     .sort((a, b) => a.x - b.x);
