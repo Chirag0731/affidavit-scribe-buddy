@@ -1,0 +1,209 @@
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Building2,
+  DollarSign,
+  Layers,
+  ArrowLeft,
+  CheckCircle2,
+  Download,
+  Plus,
+  ShieldCheck,
+  FileText,
+  Sliders,
+  Sparkles,
+} from "lucide-react";
+import { downloadPdfBlob } from "@/lib/lender-pdf-engine";
+import { WHITE_LABEL_PDF_BASE64, CANACAP_PDF_BASE64 } from "@/assets/lenders/lender-templates-asset";
+import { toast } from "sonner";
+
+export const Route = createFileRoute("/_authenticated/dashboard/financing/lenders")({
+  component: FinancingLendersPage,
+  ssr: false,
+});
+
+function FinancingLendersPage() {
+  const [downloading, setDownloading] = useState<string | null>(null);
+
+  const downloadBlankTemplate = (type: "white-label" | "canacap") => {
+    try {
+      setDownloading(type);
+      const b64 = type === "white-label" ? WHITE_LABEL_PDF_BASE64 : CANACAP_PDF_BASE64;
+      const cleanB64 = b64.replace(/^data:application\/pdf;base64,/, "");
+      const binary = atob(cleanB64);
+      const bytes = new Uint8Array(binary.length);
+      for (let i = 0; i < binary.length; i++) {
+        bytes[i] = binary.charCodeAt(i);
+      }
+      const filename = type === "white-label" ? "Blank_Business_Financing_Template.pdf" : "Blank_CanaCap_Template.pdf";
+      downloadPdfBlob(bytes, filename);
+      toast.success(`Downloaded blank ${filename}`);
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to download template");
+    } finally {
+      setDownloading(null);
+    }
+  };
+
+  return (
+    <div className="space-y-6 animate-fade-in p-2 sm:p-4">
+      {/* Top Header */}
+      <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-border/60">
+        <div className="flex items-center gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            asChild
+            className="h-9 text-xs"
+          >
+            <Link to="/dashboard/financing">
+              <ArrowLeft className="w-3.5 h-3.5 mr-1" />
+              All Applications
+            </Link>
+          </Button>
+
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight text-foreground">
+              Lender Templates Registry
+            </h1>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              Modular coordinate-based PDF generation engines connected to QuickFlo Financial
+            </p>
+          </div>
+        </div>
+
+        <Badge variant="outline" className="text-xs text-emerald-600 border-emerald-400 bg-emerald-50 dark:bg-emerald-950/30 font-semibold py-1">
+          <CheckCircle2 className="w-3.5 h-3.5 mr-1" />
+          2 Active Integrated Lenders
+        </Badge>
+      </div>
+
+      {/* Lender Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Lender 1: Business Financing Application */}
+        <Card className="rounded-2xl border-cyan-800/40 shadow-xs bg-card overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-cyan-950/20 to-transparent pb-4 border-b border-border/60">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2.5 rounded-xl bg-cyan-600/10 text-cyan-600">
+                  <Building2 className="w-5 h-5" />
+                </div>
+                <div>
+                  <CardTitle className="text-base font-bold">1. Business Financing Application</CardTitle>
+                  <CardDescription className="text-xs">Journey Capital standard format (EN)</CardDescription>
+                </div>
+              </div>
+              <Badge className="bg-emerald-600 text-[10px]">Active</Badge>
+            </div>
+          </CardHeader>
+          <CardContent className="pt-5 space-y-4 text-xs">
+            <div className="space-y-2">
+              <div className="flex justify-between border-b border-border/40 pb-1.5">
+                <span className="text-muted-foreground">Document Type:</span>
+                <span className="font-semibold text-foreground">Standard 1-Page Letter (612 × 792 pt)</span>
+              </div>
+              <div className="flex justify-between border-b border-border/40 pb-1.5">
+                <span className="text-muted-foreground">Mapped Field Coordinates:</span>
+                <span className="font-semibold text-cyan-600">34 Precision Target Anchors</span>
+              </div>
+              <div className="flex justify-between border-b border-border/40 pb-1.5">
+                <span className="text-muted-foreground">Digital Signature Line:</span>
+                <span className="font-semibold text-foreground">X: 110, Y: 180 (Width: 160)</span>
+              </div>
+              <div className="flex justify-between border-b border-border/40 pb-1.5">
+                <span className="text-muted-foreground">Primary Focus:</span>
+                <span className="font-semibold text-foreground">Revenue, Ownership, Funding Need</span>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-muted/30 border border-border/60 text-[11px] text-muted-foreground leading-relaxed">
+              Populates corporate identity, monthly and annual turnover, loan request details, 2 principal owners, and embeds legal E-SIGN authorization on line.
+            </div>
+
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => downloadBlankTemplate("white-label")}
+              disabled={downloading === "white-label"}
+              className="w-full h-8 text-xs font-semibold"
+            >
+              <Download className="w-3.5 h-3.5 mr-1.5" />
+              Download Blank Original PDF
+            </Button>
+          </CardContent>
+        </Card>
+
+        {/* Lender 2: CanaCap Business Information */}
+        <Card className="rounded-2xl border-purple-800/40 shadow-xs bg-card overflow-hidden">
+          <CardHeader className="bg-gradient-to-r from-purple-950/20 to-transparent pb-4 border-b border-border/60">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2.5 rounded-xl bg-purple-600/10 text-purple-600">
+                  <DollarSign className="w-5 h-5" />
+                </div>
+                <div>
+                  <CardTitle className="text-base font-bold">2. CanaCap Business Information</CardTitle>
+                  <CardDescription className="text-xs">Merchant processing & trade reference format</CardDescription>
+                </div>
+              </div>
+              <Badge className="bg-emerald-600 text-[10px]">Active</Badge>
+            </div>
+          </CardHeader>
+          <CardContent className="pt-5 space-y-4 text-xs">
+            <div className="space-y-2">
+              <div className="flex justify-between border-b border-border/40 pb-1.5">
+                <span className="text-muted-foreground">Document Type:</span>
+                <span className="font-semibold text-foreground">Standard 1-Page Letter (612 × 792 pt)</span>
+              </div>
+              <div className="flex justify-between border-b border-border/40 pb-1.5">
+                <span className="text-muted-foreground">Mapped Field Coordinates:</span>
+                <span className="font-semibold text-purple-600">42 Precision Target Anchors</span>
+              </div>
+              <div className="flex justify-between border-b border-border/40 pb-1.5">
+                <span className="text-muted-foreground">Circled Option Engine:</span>
+                <span className="font-semibold text-foreground">Red Oval Selection Marks</span>
+              </div>
+              <div className="flex justify-between border-b border-border/40 pb-1.5">
+                <span className="text-muted-foreground">Trade Reference Lines:</span>
+                <span className="font-semibold text-foreground">2 Wholesale Suppliers Mapped</span>
+              </div>
+            </div>
+
+            <div className="p-3 rounded-xl bg-muted/30 border border-border/60 text-[11px] text-muted-foreground leading-relaxed">
+              Populates corporate identity, payment processor details, card volume, seasonal highs/lows, trade references, and circles entity & card choices with authentic pen-mark styling.
+            </div>
+
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={() => downloadBlankTemplate("canacap")}
+              disabled={downloading === "canacap"}
+              className="w-full h-8 text-xs font-semibold"
+            >
+              <Download className="w-3.5 h-3.5 mr-1.5" />
+              Download Blank Original PDF
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* Extensibility Architecture Card */}
+      <Card className="rounded-2xl border-dashed border-2 border-border/80 shadow-xs bg-muted/10 p-6 text-center space-y-3">
+        <div className="mx-auto w-12 h-12 rounded-2xl bg-cyan-600/10 text-cyan-600 flex items-center justify-center">
+          <Layers className="w-6 h-6" />
+        </div>
+        <h3 className="text-base font-bold text-foreground">Modular Architecture Ready for More Lenders</h3>
+        <p className="text-xs text-muted-foreground max-w-lg mx-auto">
+          Need to connect Lender C, Lender D, or a new equipment leasing funder? The normalized data model in <code className="text-foreground font-mono">src/types/financing.ts</code> feeds any new PDF coordinate map without changing client inputs.
+        </p>
+      </Card>
+    </div>
+  );
+}

@@ -22,6 +22,9 @@ import {
   Sliders,
   Sparkles,
   GraduationCap,
+  Building2,
+  Layers,
+  Plus,
 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsAdmin } from "@/hooks/use-is-admin";
@@ -40,6 +43,12 @@ export function DashboardSidebar() {
     ...(isAdmin
       ? [{ icon: ShieldCheck, label: "Templates (Admin)", to: "/dashboard/admin/templates" as const }]
       : []),
+  ];
+
+  const financingNav = [
+    { icon: Building2, label: "Overview & Pipeline", to: "/dashboard/financing" as const, exact: true },
+    { icon: Plus, label: "New Application", to: "/dashboard/financing/new" as const },
+    { icon: Layers, label: "Lender Templates", to: "/dashboard/financing/lenders" as const },
   ];
 
   const osapNav = [
@@ -187,6 +196,38 @@ export function DashboardSidebar() {
                 </div>
                 <nav className="space-y-1">
                   {osapNav.map((item) => {
+                    const Icon = item.icon;
+                    const active = isActive(item.to, (item as { exact?: boolean }).exact);
+                    return (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        onClick={() => setMobileOpen(false)}
+                        className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-smooth ${
+                          active
+                            ? "bg-gold text-black font-bold shadow-sm"
+                            : "text-muted-foreground hover:bg-muted hover:text-foreground font-medium"
+                        }`}
+                      >
+                        <Icon className="w-4 h-4" />
+                        <span className="flex-1">{item.label}</span>
+                        {active && <ChevronRight className="w-3.5 h-3.5" />}
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </div>
+
+              {/* BUSINESS FINANCING GROUP */}
+              <div>
+                <div className="px-3 mb-2 text-[11px] font-bold tracking-wider uppercase text-muted-foreground/70 flex items-center justify-between">
+                  <span>Business Financing</span>
+                  <span className="text-[9px] bg-cyan-500/15 text-cyan-600 dark:text-cyan-400 border border-cyan-500/30 px-1.5 py-0.5 rounded font-semibold uppercase tracking-normal">
+                    White-Label
+                  </span>
+                </div>
+                <nav className="space-y-1">
+                  {financingNav.map((item) => {
                     const Icon = item.icon;
                     const active = isActive(item.to, (item as { exact?: boolean }).exact);
                     return (
